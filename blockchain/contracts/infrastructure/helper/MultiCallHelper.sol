@@ -16,8 +16,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity ^0.8.3;
 
-import "argent-trustlists/contracts/interfaces/IFilter.sol";
-import "argent-trustlists/contracts/DappRegistry.sol";
+//import "argent-trustlists/contracts/interfaces/IFilter.sol";
+//import "argent-trustlists/contracts/DappRegistry.sol";
+import "../IFilter.sol";
+import "../../infrastructure_0.5/DappRegistry.sol";
 import "../storage/ITransferStorage.sol";
 import "../../modules/common/Utils.sol";
 

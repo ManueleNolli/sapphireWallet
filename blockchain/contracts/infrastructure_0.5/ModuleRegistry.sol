@@ -17,6 +17,7 @@ pragma solidity ^0.8.20;
 import "../infrastructure/base/Owned.sol";
 //import "../../lib_0.5/other/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../infrastructure/IModuleRegistry.sol";
 
 /**
  * @title ModuleRegistry
@@ -24,7 +25,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * Modules must be registered before they can be authorised on a wallet.
  * @author Julien Niset - <julien@argent.im>
  */
-contract ModuleRegistry is Owned {
+contract ModuleRegistry is Owned, IModuleRegistry {
 
     mapping (address => Info) internal modules;
     mapping (address => Info) internal upgraders;

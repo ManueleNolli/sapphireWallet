@@ -16,7 +16,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity ^0.8.3;
 
-import "argent-trustlists/contracts/interfaces/IAuthoriser.sol";
+//import "argent-trustlists/contracts/interfaces/IAuthoriser.sol";
+import "../../infrastructure/IAuthoriser.sol";
 import "../../wallet/IWallet.sol";
 import "../../infrastructure/IModuleRegistry.sol";
 import "../../infrastructure/storage/IGuardianStorage.sol";
