@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-pragma solidity ^0.5.4;
+pragma solidity ^0.8.20;
 
 /**
  * @title MultiSig
@@ -92,7 +92,7 @@ contract MultiSigWallet {
             if (isOwner[recovered]) {
                 valid += 1;
                 if (valid >= threshold) {
-                    (bool success,) = _to.call.value(_value)(_data);
+                    (bool success,) = _to.call{value:_value}(_data);
                     require(success, "MSW: External call failed");
                     emit Executed(_to, _value, _data);
                     return;
@@ -161,7 +161,7 @@ contract MultiSigWallet {
     /**
      * @notice Fallback function to allow the multisig to receive ETH, which will fail if not implemented
      */
-    function () external payable {
+    fallback() external payable {
         emit Received(msg.value, msg.sender);
     }
 

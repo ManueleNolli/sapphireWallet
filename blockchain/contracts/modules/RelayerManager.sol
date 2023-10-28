@@ -358,7 +358,7 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
                 uint256 gasConsumed = _startGas - gasleft() + 37500;
                 uint256 tokenGasPrice = inToken(_refundToken, tx.gasprice);
                 refundAmount = Math.min(gasConsumed, _gasLimit) * (Math.min(_gasPrice, tokenGasPrice));
-                bytes memory methodData = abi.encodeWithSelector(ERC20.transfer.selector, refundAddress, refundAmount);
+                bytes memory methodData = abi.encodeWithSelector(IERC20.transfer.selector, refundAddress, refundAmount);
                 bytes memory transferSuccessBytes = invokeWallet(_wallet, _refundToken, 0, methodData);
                 // Check token refund is successful, when `transfer` returns a success bool result
                 if (transferSuccessBytes.length > 0) {

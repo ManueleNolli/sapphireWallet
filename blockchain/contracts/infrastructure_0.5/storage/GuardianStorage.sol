@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-pragma solidity ^0.5.4;
+pragma solidity ^0.8.20;
 
 import "./Storage.sol";
 import "../../infrastructure/storage/IGuardianStorage.sol";
@@ -57,7 +57,10 @@ contract GuardianStorage is IGuardianStorage, Storage {
     function addGuardian(address _wallet, address _guardian) external onlyModule(_wallet) {
         GuardianStorageConfig storage config = configs[_wallet];
         config.info[_guardian].exists = true;
-        config.info[_guardian].index = uint128(config.guardians.push(_guardian) - 1);
+//        config.info[_guardian].index = uint128(config.guardians.push(_guardian) - 1);
+        config.info[_guardian].index = uint128(config.guardians.length);
+        config.guardians.push(_guardian);
+
     }
 
     /**
@@ -73,7 +76,8 @@ contract GuardianStorage is IGuardianStorage, Storage {
             config.guardians[targetIndex] = lastGuardian;
             config.info[lastGuardian].index = targetIndex;
         }
-        config.guardians.length--;
+        config.guardians.pop();
+//        config.guardians.length--;
         delete config.info[_guardian];
     }
 
