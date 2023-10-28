@@ -5,19 +5,13 @@ import {deployBaseWalletAndFactory} from "./deploy/deployBaseWalletAndFactory";
 import {deployRegistries} from "./deploy/deployRegistries";
 import {deployArgentModule} from "./deploy/deployArgentModule";
 import {deployUniswapMock} from "./deploy/deployUniswapMock";
-import {envConfig} from "./utils/envConfig";
+import {setENVValue} from "./utils/envConfig";
 
 
 
 async function main() {
 
-    // Config
-    const config = new envConfig();
-    const network = await ethers.provider.getNetwork();
-    const networkName = network.name.toUpperCase();
-
-
-    // Accounts
+    /* Accounts */
     const [deployer, account1, account2] = await ethers.getSigners();
     const deployerAddress = await deployer.getAddress();
     const account1Address = await account1.getAddress();
@@ -27,52 +21,56 @@ async function main() {
     console.log("EAO account2:", account2Address);
 
 
-    // Storages
+    /* Storages */
     const {guardianStorage, transferStorage} = await deployStorages();
     const guardianStorageAddress = await guardianStorage.getAddress();
     const transferStorageAddress = await transferStorage.getAddress();
-    config.setValue(`${networkName}_GUARDIAN_STORAGE_ADDRESS`, guardianStorageAddress);
-    config.setValue(`${networkName}_TRANSFER_STORAGE_ADDRESS`, transferStorageAddress);
+    await setENVValue("GUARDIAN_STORAGE_ADDRESS", guardianStorageAddress);
+    await setENVValue("TRANSFER_STORAGE_ADDRESS", transferStorageAddress);
     console.log("GuardianStorage deployed to:", guardianStorageAddress);
     console.log("TransferStorage deployed to:", transferStorageAddress);
 
-    // BaseWallet and WalletFactory
+    /* BaseWallet and WalletFactory */
     const {baseWallet, walletFactory} = await deployBaseWalletAndFactory(guardianStorageAddress, account1Address);
     const baseWalletAddress = await baseWallet.getAddress();
     const walletFactoryAddress = await walletFactory.getAddress();
-    config.setValue(`${networkName}_BASE_WALLET_ADDRESS`, baseWalletAddress);
-    config.setValue(`${networkName}_WALLET_FACTORY_ADDRESS`, walletFactoryAddress);
+    await setENVValue("BASE_WALLET_ADDRESS", baseWalletAddress);
+    await setENVValue("WALLET_FACTORY_ADDRESS", walletFactoryAddress);
     console.log("BaseWallet deployed to:", baseWalletAddress);
     console.log("WalletFactory deployed to:", walletFactoryAddress);
 
-    // Registries
+    // Add deployer as manager
+    await walletFactory.connect(deployer).addManager(deployerAddress);
+
+
+    /* Registries */
     const {moduleRegistry, dapRegistry} = await deployRegistries();
     const moduleRegistryAddress = await moduleRegistry.getAddress();
     const dapRegistryAddress = await dapRegistry.getAddress();
-    config.setValue(`${networkName}_MODULE_REGISTRY_ADDRESS`, moduleRegistryAddress);
-    config.setValue(`${networkName}_DAP_REGISTRY_ADDRESS`, dapRegistryAddress);
+    await setENVValue("MODULE_REGISTRY_ADDRESS", moduleRegistryAddress);
+    await setENVValue("DAP_REGISTRY_ADDRESS", dapRegistryAddress);
     console.log("ModuleRegistry deployed to:", moduleRegistryAddress);
     console.log("DappRegistry deployed to:", dapRegistryAddress);
 
-    // Argent Wallet Detector : not needed for now
+    /* Argent Wallet Detector : not needed for now */
 
 
-    // MultiCallHelper : not needed for now
+    /* MultiCallHelper : not needed for now */
 
 
-    // Mock Uniswap
+    /* Mock Uniswap */
     const { uniswapFactory, uniswapRouter } = await deployUniswapMock();
     const uniswapFactoryAddress = await uniswapFactory.getAddress();
     const uniswapRouterAddress = await uniswapRouter.getAddress();
-    config.setValue(`${networkName}_UNISWAP_FACTORY_ADDRESS`, uniswapFactoryAddress);
-    config.setValue(`${networkName}_UNISWAP_ROUTER_ADDRESS`, uniswapRouterAddress);
+    await setENVValue("UNISWAP_FACTORY_ADDRESS", uniswapFactoryAddress);
+    await setENVValue("UNISWAP_ROUTER_ADDRESS", uniswapRouterAddress);
     console.log("UniswapFactory deployed to:", uniswapFactoryAddress);
     console.log("UniswapRouter deployed to:", uniswapRouterAddress);
 
-    // Argent Module
+    /* Argent Module */
     const { argentModule } = await deployArgentModule(moduleRegistryAddress, guardianStorageAddress, transferStorageAddress, dapRegistryAddress, uniswapRouterAddress);
     const argentModuleAddress = await argentModule.getAddress();
-    config.setValue(`${networkName}_ARGENT_MODULE_ADDRESS`, argentModuleAddress);
+    await setENVValue("ARGENT_MODULE_ADDRESS", argentModuleAddress);
     console.log("ArgentModule deployed to:", argentModuleAddress);
 
 

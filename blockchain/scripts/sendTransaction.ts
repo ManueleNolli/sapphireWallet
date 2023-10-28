@@ -1,34 +1,26 @@
-import { ethers } from "hardhat";
-import {envConfig} from './utils/envConfig';
+import {ethers} from "hardhat";
+import {getENVValue} from "./utils/envConfig";
+import {createWallet} from "./createWallet";
 
 async function main() {
 
-    const config = new envConfig();
+    // Accounts
+    const [deployer, account1, account2] = await ethers.getSigners();
+    const deployerAddress = await deployer.getAddress();
+    const account1Address = await account1.getAddress();
+    const account2Address = await account2.getAddress();
 
-    // Get network name
+    // WalletFactory
+    const walletFactoryAddress = await getENVValue("WALLET_FACTORY_ADDRESS");
+    console.log("WalletFactory address: ", walletFactoryAddress);
+    const walletFactory = await ethers.getContractAt("WalletFactory", walletFactoryAddress);
 
-    // const [account1, account2] = await ethers.getSigners();
-    // const account1Address = await account1.getAddress();
-    // const account2Address = await account2.getAddress();
-    // console.log("EAO account1:", account1Address);
-    // console.log("EAO account2:", account2Address);
-    //
-    // // Send 10 ETH from account1 to account2
-    // const tx = await account1.sendTransaction({
-    //     to: account2Address,
-    //     value: ethers.parseEther("10.0")
-    // });
-    //
-    // // The operation is NOT complete yet; we must wait until it is mined
-    // await tx.wait();
-    //
-    // console.log("Transaction complete");
-    //
-    // // print balances
-    // const balance1 = await ethers.provider.getBalance(account1Address);
-    // const balance2 = await ethers.provider.getBalance(account2Address);
-    // console.log("Balance account1:", ethers.formatEther(balance1));
-    // console.log("Balance account2:", ethers.formatEther(balance2));
+    // Create wallet for account1
+    const walletAccount1 = await createWallet(walletFactory, account1Address, account2Address, deployerAddress)
+    console.log("Wallet created for account1: ", walletAccount1);
+
+    const baseWallet = await ethers.getContractAt("BaseWallet", walletAccount1);
+    console.log("BaseWallet address: ", await baseWallet.getAddress());
 
 }
 
