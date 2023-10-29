@@ -72,7 +72,6 @@ async function main() {
     const argentModuleAddress = await argentModule.getAddress();
     await setENVValue("ARGENT_MODULE_ADDRESS", argentModuleAddress);
     console.log("ArgentModule deployed to:", argentModuleAddress);
-    const tx = await argentModule.clearSession(baseWalletAddress);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
