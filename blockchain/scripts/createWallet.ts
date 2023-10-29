@@ -1,17 +1,12 @@
 import {generateSalt} from "./utils/generateSalt";
-import {ContractTransactionResponse, ZeroAddress} from "ethers";
+import {EventLog, Log, ZeroAddress} from "ethers";
 import {WalletFactory} from "../typechain-types";
 import {getENVValue} from "./utils/envConfig";
 import {ethers} from "hardhat";
 
-async function getEvent(tx: ContractTransactionResponse) {
-    const receipt = await tx.wait();
-    const events = receipt?.logs[0];
-    return events?.topics
-}
-
 export async function createWallet(walletFactory: WalletFactory, owner: string, guardian: string, manager: string) {
-    const tx = await walletFactory.connect(await ethers.provider.getSigner("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")).createCounterfactualWallet(
+
+    const tx = await walletFactory.connect(await ethers.provider.getSigner(manager)).createCounterfactualWallet(
         owner,
         [getENVValue("BASE_WALLET_ADDRESS")],
         guardian,
@@ -22,11 +17,13 @@ export async function createWallet(walletFactory: WalletFactory, owner: string, 
         "0x"
     )
 
-    const eventValues = await getEvent(tx);
-    if (eventValues === undefined) {
-        throw new Error("No event found during wallet creation");
+    const receipt = await tx.wait();
+    const events = receipt?.logs[4];
+    if (events instanceof EventLog) { // TODO: check if this is the right way to do it, I tried with listener but it didn't work
+        return events.args[0]
+    } else {
+        throw new Error("No event found during wallet creation")
     }
-    return eventValues[0];
 }
 
 

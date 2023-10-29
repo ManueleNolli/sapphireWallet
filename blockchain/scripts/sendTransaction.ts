@@ -22,6 +22,13 @@ async function main() {
     const baseWallet = await ethers.getContractAt("BaseWallet", walletAccount1);
     console.log("BaseWallet address: ", await baseWallet.getAddress());
 
+    // Send eth from walletAccount1 to account2 EAO
+    const moduleAddress = await getENVValue("ARGENT_MODULE_ADDRESS");
+    const module = await ethers.getContractAt("ArgentModule", moduleAddress);
+
+    const transaction = {to: account2Address, value: ethers.parseEther("10"), data: "0x"};
+    const tx = await module.connect(account1).multiCall(walletAccount1, [transaction]);
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere

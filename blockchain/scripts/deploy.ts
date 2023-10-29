@@ -17,8 +17,8 @@ async function main() {
     const account1Address = await account1.getAddress();
     const account2Address = await account2.getAddress();
     console.log("Deploying contracts with the account:", deployerAddress);
-    console.log("EAO account1:", account1Address);
-    console.log("EAO account2:", account2Address);
+    console.log("EOA account1:", account1Address);
+    console.log("EOA account2:", account2Address);
 
 
     /* Storages */
@@ -48,7 +48,7 @@ async function main() {
     const moduleRegistryAddress = await moduleRegistry.getAddress();
     const dapRegistryAddress = await dapRegistry.getAddress();
     await setENVValue("MODULE_REGISTRY_ADDRESS", moduleRegistryAddress);
-    await setENVValue("DAP_REGISTRY_ADDRESS", dapRegistryAddress);
+    await setENVValue("DAPP_REGISTRY_ADDRESS", dapRegistryAddress);
     console.log("ModuleRegistry deployed to:", moduleRegistryAddress);
     console.log("DappRegistry deployed to:", dapRegistryAddress);
 
@@ -72,8 +72,7 @@ async function main() {
     const argentModuleAddress = await argentModule.getAddress();
     await setENVValue("ARGENT_MODULE_ADDRESS", argentModuleAddress);
     console.log("ArgentModule deployed to:", argentModuleAddress);
-
-
+    const tx = await argentModule.clearSession(baseWalletAddress);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
