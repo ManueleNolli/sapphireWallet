@@ -1,9 +1,16 @@
-import {generateSalt} from "./utils/generateSalt";
+import {generateSalt} from "./utils/genericUtils";
 import {EventLog, Log, ZeroAddress} from "ethers";
 import {WalletFactory} from "../typechain-types";
 import {getENVValue} from "./utils/env/envConfig";
 import {ethers} from "hardhat";
 
+/**
+ * Create a wallet
+ * @param walletFactory contract
+ * @param owner address
+ * @param guardian address
+ * @param manager address
+ */
 export async function createWallet(walletFactory: WalletFactory, owner: string, guardian: string, manager: string) {
 
     const tx = await walletFactory.connect(await ethers.provider.getSigner(manager)).createCounterfactualWallet(

@@ -1,68 +1,75 @@
-import {deployStorages} from "../scripts/deploy/deployStorages";
+import {createWallet} from "../scripts/createWallet";
 
-const {ethers} = require("hardhat");
-const {expect} = require("chai");
-import {SignerWithAddress} from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
-import {Contract} from "ethers";
-import {deployBaseWalletAndFactory} from "../scripts/deploy/deployBaseWalletAndFactory";
-import {deployRegistries} from "../scripts/deploy/deployRegistries";
-import {deployUniswapMock} from "../scripts/deploy/deployUniswapMock";
-import {deployArgentModule} from "../scripts/deploy/deployArgentModule";
+import {ethers} from "hardhat";
+import {expect} from "chai";
+import deployInfrastructure from "../scripts/deploy/deployInfrastructure";
+import {Infrastructure} from "../scripts/type/infrastructure";
+import {generateNonceForRelay, signOffchain} from "../scripts/utils/genericUtils";
+import {ZeroAddress} from "ethers";
+import {HardhatEthersSigner} from "@nomicfoundation/hardhat-ethers/signers";
 
 describe("SendTransaction", function () {
-    let deployer: SignerWithAddress;
-    let account1: SignerWithAddress;
-    let account2: SignerWithAddress;
+    let deployer: HardhatEthersSigner;
+    let account1: HardhatEthersSigner;
+    let account2: HardhatEthersSigner;
+
+    let infrastructure: Infrastructure;
 
     before(async function () {
-
         [deployer, account1, account2] = await ethers.getSigners();
 
-        let deployerAddress = await deployer.getAddress();
-        let account1Address = await account1.getAddress();
-        let account2Address = await account2.getAddress();
-
-        /* Storages */
-        const {guardianStorage, transferStorage} = await deployStorages();
-        const guardianStorageAddress = await guardianStorage.getAddress();
-        const transferStorageAddress = await transferStorage.getAddress();
-        console.log("GuardianStorage deployed to:", guardianStorageAddress);
-        console.log("TransferStorage deployed to:", transferStorageAddress);
-
-        /* BaseWallet and WalletFactory */
-        const {baseWallet, walletFactory} = await deployBaseWalletAndFactory(guardianStorageAddress, account1Address);
-        const baseWalletAddress = await baseWallet.getAddress();
-        const walletFactoryAddress = await walletFactory.getAddress();
-        console.log("BaseWallet deployed to:", baseWalletAddress);
-        console.log("WalletFactory deployed to:", walletFactoryAddress);
-
-        // Add deployer as manager
-        await walletFactory.addManager(deployerAddress);
-
-
-        /* Registries */
-        const {moduleRegistry, dappRegistry} = await deployRegistries();
-        const moduleRegistryAddress = await moduleRegistry.getAddress();
-        const dapRegistryAddress = await dappRegistry.getAddress();
-        console.log("ModuleRegistry deployed to:", moduleRegistryAddress);
-        console.log("DappRegistry deployed to:", dapRegistryAddress);
-
-        /* Mock Uniswap */
-        const {uniswapFactory, uniswapRouter} = await deployUniswapMock();
-        const uniswapFactoryAddress = await uniswapFactory.getAddress();
-        const uniswapRouterAddress = await uniswapRouter.getAddress();
-        console.log("UniswapFactory deployed to:", uniswapFactoryAddress);
-        console.log("UniswapRouter deployed to:", uniswapRouterAddress);
-
-        /* Argent Module */
-        const {argentModule} = await deployArgentModule(moduleRegistryAddress, guardianStorageAddress, transferStorageAddress, dapRegistryAddress, uniswapRouterAddress);
-        const argentModuleAddress = await argentModule.getAddress();
-        console.log("ArgentModule deployed to:", argentModuleAddress);
+        // Create an hardhat signer
+        // const deployerSigner: HardhatEthersSigner = await ethers.getSigner(deployer.address);
+        infrastructure = await deployInfrastructure(deployer);
     });
 
 
     it("Should send transaction", async function () {
-        expect(5).to.be.equal(5);
-    });
+        // Create wallet for account 1
+        const walletAccount1Address = await createWallet(infrastructure.walletFactory, account1.address, account2.address, deployer.address);
+        console.log("Wallet created for account1: ", walletAccount1Address);
 
+        // Preparing transaction to send eth from walletAccount1 to account2, it is a multiCall transaction
+        const transaction = {to: account2.address, value: ethers.parseEther("10"), data: "0x"};
+
+        // get the ABI of the function to call
+        const multiCallABI = infrastructure.argentModule.interface.getFunction("multiCall");
+        const multiCallInterface = new ethers.Interface([multiCallABI]);
+        const methodData = multiCallInterface.encodeFunctionData(multiCallABI, [walletAccount1Address, [transaction]]);
+
+        // Sign *offChain* the transaction
+        const chainId = (await ethers.provider.getNetwork()).chainId;
+        const nonce = await generateNonceForRelay();
+        const gasLimit = 1000000;
+
+        const signatures = await signOffchain(
+            [account1],
+            await infrastructure.argentModule.getAddress(),
+            0,
+            methodData,
+            chainId,
+            nonce,
+            0,
+            gasLimit,
+            "0x0000000000000000000000000000000000000000",
+            ZeroAddress
+        )
+
+        console.log("Signatures: ", signatures);
+
+        // Send the transaction
+
+        const tx = await infrastructure.argentModule.connect(deployer).execute(
+            walletAccount1Address,
+            methodData,
+            nonce,
+            signatures,
+            0,
+            gasLimit,
+            "0x0000000000000000000000000000000000000000",
+            "0x0000000000000000000000000000000000000000"
+        );
+
+
+    });
 });

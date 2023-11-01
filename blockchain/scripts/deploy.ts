@@ -1,8 +1,7 @@
 import {ethers} from "hardhat";
-import {Signer, ZeroAddress} from "ethers";
 import deployInfrastructure from "./deploy/deployInfrastructure";
 import updateInfrastructureENV from "./utils/env/updateInfrastructureENV";
-import {printInfrastructure} from "./utils/printInfrastructure";
+import printInfrastructure from "./utils/printInfrastructure";
 
 
 async function main() {

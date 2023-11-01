@@ -17,11 +17,17 @@ export type envValue = {
 
 const envPath = path.join(__dirname, '../../../.env');
 
+/**
+ * Get the name of the network.
+ */
 async function getNetworkName() {
     const network = await ethers.provider.getNetwork();
     return network.name.toUpperCase();
 }
 
+/**
+ * Get the values of all environment variables.
+ */
 function getENVValues(): envValue[] {
     const env = fs.readFileSync(envPath, 'utf-8');
     const lines = env.split('\n');
@@ -43,9 +49,10 @@ function getENVValues(): envValue[] {
     return values;
 }
 
-/*
-    Get the value of an environment variable.
-    networkDependent: if true, the variable is searched with a prefix of the network name
+/**
+ * Get the value of an environment variable.
+ * @param key
+ * @param networkPrefix if true, the variable is searched with a prefix of the network name
  */
 export async function getENVValue(key: string, networkPrefix = true): Promise<string> {
     const values = getENVValues();
@@ -59,10 +66,11 @@ export async function getENVValue(key: string, networkPrefix = true): Promise<st
 }
 
 
-/*
-    Set the value of an environment variable.
-    If the variable is not present, it is created.
-    networkDependent: if true, the variable is created/updated with a prefix of the network name
+/**
+ * Set the value of an environment variable.
+ * @param key
+ * @param value
+ * @param networkPrefix if true, the variable is created/updated with a prefix of the network name
  */
 export async function setENVValue(key: string, value: string, networkPrefix = true): Promise<void> {
     const values = getENVValues();
