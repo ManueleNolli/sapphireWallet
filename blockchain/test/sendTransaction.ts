@@ -4,8 +4,8 @@ import {ethers} from "hardhat";
 import {expect} from "chai";
 import deployInfrastructure from "../scripts/deploy/deployInfrastructure";
 import {Infrastructure} from "../scripts/type/infrastructure";
-import {generateNonceForRelay, signOffchain} from "../scripts/utils/genericUtils";
-import {ZeroAddress} from "ethers";
+import {generateMessageHash, generateNonceForRelay, signOffchain} from "../scripts/utils/genericUtils";
+import {recoverAddress, ZeroAddress} from "ethers";
 import {HardhatEthersSigner} from "@nomicfoundation/hardhat-ethers/signers";
 
 describe("SendTransaction", function () {
@@ -21,6 +21,19 @@ describe("SendTransaction", function () {
         console.log("Deployer: ", deployer.address);
         console.log("Account1: ", account1.address);
         console.log("Account2: ", account2.address);
+
+        const signingKey = new ethers.SigningKey("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
+
+        const message ="0x4e27ebdcd4b355980e99adaca61def0c4c4568397c814bad2fa3614c19d9ee66"
+
+        const sig = signingKey.sign(message);
+
+        console.log("Sig: ", sig);
+
+        const signer = ethers.recoverAddress(message, sig);
+
+        console.log("--Signer: ", signer);
+
 
         infrastructure = await deployInfrastructure(deployer);
     });
@@ -63,6 +76,20 @@ describe("SendTransaction", function () {
         )
 
         console.log("Signatures: ", signatures)
+
+        // Test to retrieve the signer
+        const s = recoverAddress(generateMessageHash(
+            await infrastructure.argentModule.getAddress(),
+            0,
+            methodData,
+            chainId,
+            nonce,
+            0,
+            gasLimit,
+            "0x0000000000000000000000000000000000000000",
+            ZeroAddress
+        ), signatures)
+        console.log("Signer: ", s)
 
         // Send the transaction
 

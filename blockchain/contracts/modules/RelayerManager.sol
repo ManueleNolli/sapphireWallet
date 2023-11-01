@@ -196,6 +196,23 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
     view
     returns (bytes32)
     {
+
+        bytes32 _temp =
+            keccak256(
+                abi.encodePacked(
+                    bytes1(0x19),
+                    bytes1(0),
+                    _from,
+                    _value,
+                    _data,
+                    block.chainid,
+                    _nonce,
+                    _gasPrice,
+                    _gasLimit,
+                    _refundToken,
+                    _refundAddress));
+        console.log("Message Hash - blockchain:");
+        console.logBytes32(_temp);
         return keccak256(
             abi.encodePacked(
                 "\x19Ethereum Signed Message:\n32",

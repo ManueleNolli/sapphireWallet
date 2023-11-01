@@ -1,5 +1,4 @@
-import {ethers} from "hardhat";
-import {Signer} from "ethers/lib.esm";
+import {config, ethers} from "hardhat";
 import {HardhatEthersSigner} from "@nomicfoundation/hardhat-ethers/signers";
 
 /**
@@ -111,11 +110,13 @@ export function generateMessageHash(
     // Add also the text "\x19Ethereum Signed Message:\n32" to the message hash
     // https://docs.ethers.io/v5/api/utils/hashing/#utils-keccak256
 
+    console.log("messageHash: ", messageHash)
+
     const prefix = ethers.hexlify(ethers.toUtf8Bytes("\x19Ethereum Signed Message:\n32"));
     const messageHashWithPrefix = ethers.keccak256(ethers.concat([prefix, messageHash]));
 
     console.log("messageHashWithPrefix: ", messageHashWithPrefix)
-    return messageHash;
+    return messageHashWithPrefix;
 }
 
 /**
@@ -124,9 +125,13 @@ export function generateMessageHash(
  * @param signer
  */
 export async function signMessage(message: string, signer: HardhatEthersSigner): Promise<string> {
+
     const sig = await signer.signMessage(message);
+
     let v = parseInt(sig.substring(130, 132), 16);
-    if (v < 27) v += 27;
+    if (v !== 27 && v !== 28) {
+        throw new Error("Invalid 'v' value in signature. Expected 27 or 28.");
+    }
     const normalizedSig = `${sig.substring(0, 130)}${v.toString(16)}`;
     return normalizedSig;
 }
