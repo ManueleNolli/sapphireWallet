@@ -32,11 +32,11 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
 
     uint256 constant internal BLOCKBOUND = 10000;
 
-    mapping (address => RelayerConfig) internal relayer;
+    mapping(address => RelayerConfig) internal relayer;
 
     struct RelayerConfig {
         uint256 nonce;
-        mapping (bytes32 => bool) executedTx;
+        mapping(bytes32 => bool) executedTx;
     }
 
     // Used to avoid stack too deep error
@@ -89,10 +89,9 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
         address _refundToken,
         address _refundAddress
     )
-        external
-        returns (bool)
+    external
+    returns (bool)
     {
-        console.log("Inizio funzione execute");
         // initial gas = 21k + non_zero_bytes * 16 + zero_bytes * 4
         //            ~= 21k + calldata.length * [1/3 * 16 + 2/3 * 4]
         uint256 startGas = gasleft() + 21000 + msg.data.length * 8;
@@ -115,6 +114,9 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
             _gasLimit,
             _refundToken,
             _refundAddress);
+
+        console.log("Message Hash with prefix - blockchain:");
+        console.logBytes32(stack.signHash);
         require(checkAndUpdateUniqueness(
             _wallet,
             _nonce,
@@ -122,7 +124,6 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
             stack.requiredSignatures,
             stack.ownerSignatureRequirement), "RM: Duplicate request");
 
-        console.log("Sono qui");
 
         if (stack.ownerSignatureRequirement == OwnerSignature.Session) {
             require(validateSession(_wallet, stack.signHash, _signatures), "RM: Invalid session");
@@ -191,9 +192,9 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
         address _refundToken,
         address _refundAddress
     )
-        internal
-        view
-        returns (bytes32)
+    internal
+    view
+    returns (bytes32)
     {
         return keccak256(
             abi.encodePacked(
@@ -210,7 +211,7 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
                     _gasLimit,
                     _refundToken,
                     _refundAddress))
-        ));
+            ));
     }
 
     /**
@@ -231,8 +232,8 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
         uint256 requiredSignatures,
         OwnerSignature ownerSignatureRequirement
     )
-        internal
-        returns (bool)
+    internal
+    returns (bool)
     {
         if (requiredSignatures == 1 &&
             (ownerSignatureRequirement == OwnerSignature.Required || ownerSignatureRequirement == OwnerSignature.Session)) {
@@ -266,6 +267,9 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
     */
     function validateSignatures(address _wallet, bytes32 _signHash, bytes memory _signatures, OwnerSignature _option) internal view returns (bool)
     {
+        console.log("Signatures - blockchain:");
+        console.logBytes(_signatures);
+
         if (_signatures.length == 0) {
             return true;
         }
@@ -276,15 +280,18 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
         }
         bool isGuardian;
 
+
         for (uint256 i = 0; i < _signatures.length / 65; i++) {
             address signer = Utils.recoverSigner(_signHash, _signatures, i);
-
+            console.log("Signer - blockchain:");
+            console.logAddress(signer);
             if (i == 0) {
                 if (_option == OwnerSignature.Required) {
                     // First signer must be owner
                     if (_isOwner(_wallet, signer)) {
                         continue;
                     }
+
                     return false;
                 } else if (_option == OwnerSignature.Optional) {
                     // First signer can be owner
@@ -312,7 +319,7 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
     * @param _signatures The signatures as a concatenated bytes array.
     * @return A boolean indicating whether the signature is valid.
     */
-    function validateSession(address _wallet, bytes32 _signHash, bytes calldata _signatures) internal view returns (bool) { 
+    function validateSession(address _wallet, bytes32 _signHash, bytes calldata _signatures) internal view returns (bool) {
         Session memory session = sessions[_wallet];
         address signer = Utils.recoverSigner(_signHash, _signatures, 0);
         return (signer == session.key && session.expires >= block.timestamp);
@@ -339,17 +346,17 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
         uint256 _requiredSignatures,
         OwnerSignature _option
     )
-        internal
+    internal
     {
         // Only refund when the owner is one of the signers or a session key was used
         if (_gasPrice > 0 && (_option == OwnerSignature.Required || _option == OwnerSignature.Session)) {
             address refundAddress = _refundAddress == address(0) ? msg.sender : _refundAddress;
             if (_requiredSignatures == 1 && _option == OwnerSignature.Required) {
-                    // refundAddress must be whitelisted/authorised
-                    if (!authoriser.isAuthorised(_wallet, refundAddress, address(0), EMPTY_BYTES)) {
-                        uint whitelistAfter = userWhitelist.getWhitelist(_wallet, refundAddress);
-                        require(whitelistAfter > 0 && whitelistAfter < block.timestamp, "RM: refund not authorised");
-                    }
+                // refundAddress must be whitelisted/authorised
+                if (!authoriser.isAuthorised(_wallet, refundAddress, address(0), EMPTY_BYTES)) {
+                    uint whitelistAfter = userWhitelist.getWhitelist(_wallet, refundAddress);
+                    require(whitelistAfter > 0 && whitelistAfter < block.timestamp, "RM: refund not authorised");
+                }
             }
             uint256 refundAmount;
             if (_refundToken == ETH_TOKEN) {
@@ -369,7 +376,7 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
                     require(abi.decode(transferSuccessBytes, (bool)), "RM: Refund transfer failed");
                 }
             }
-            emit Refund(_wallet, refundAddress, _refundToken, refundAmount);    
+            emit Refund(_wallet, refundAddress, _refundToken, refundAmount);
         }
     }
 
@@ -379,7 +386,7 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
     */
     function verifyData(address _wallet, bytes calldata _data) internal pure returns (bool) {
         require(_data.length >= 36, "RM: Invalid dataWallet");
-        address dataWallet = abi.decode(_data[4:], (address));
+        address dataWallet = abi.decode(_data[4 :], (address));
         return dataWallet == _wallet;
     }
 }

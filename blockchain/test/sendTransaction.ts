@@ -18,8 +18,10 @@ describe("SendTransaction", function () {
     before(async function () {
         [deployer, account1, account2] = await ethers.getSigners();
 
-        // Create an hardhat signer
-        // const deployerSigner: HardhatEthersSigner = await ethers.getSigner(deployer.address);
+        console.log("Deployer: ", deployer.address);
+        console.log("Account1: ", account1.address);
+        console.log("Account2: ", account2.address);
+
         infrastructure = await deployInfrastructure(deployer);
     });
 
@@ -28,6 +30,11 @@ describe("SendTransaction", function () {
         // Create wallet for account 1
         const walletAccount1Address = await createWallet(infrastructure.walletFactory, account1.address, account2.address, deployer.address);
         console.log("Wallet created for account1: ", walletAccount1Address);
+
+        // check owner
+        const walletAccount1 = await ethers.getContractAt("BaseWallet", walletAccount1Address);
+        const owner = await walletAccount1.owner();
+        console.log("Owner of the created wallet: ", owner);
 
         // Preparing transaction to send eth from walletAccount1 to account2, it is a multiCall transaction
         const transaction = {to: account2.address, value: ethers.parseEther("10"), data: "0x"};
@@ -55,7 +62,7 @@ describe("SendTransaction", function () {
             ZeroAddress
         )
 
-        console.log("Signatures: ", signatures);
+        console.log("Signatures: ", signatures)
 
         // Send the transaction
 

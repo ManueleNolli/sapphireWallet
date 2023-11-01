@@ -107,6 +107,14 @@ export function generateMessageHash(
         .join('')}`;
 
     const messageHash = ethers.keccak256(message);
+
+    // Add also the text "\x19Ethereum Signed Message:\n32" to the message hash
+    // https://docs.ethers.io/v5/api/utils/hashing/#utils-keccak256
+
+    const prefix = ethers.hexlify(ethers.toUtf8Bytes("\x19Ethereum Signed Message:\n32"));
+    const messageHashWithPrefix = ethers.keccak256(ethers.concat([prefix, messageHash]));
+
+    console.log("messageHashWithPrefix: ", messageHashWithPrefix)
     return messageHash;
 }
 
