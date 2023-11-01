@@ -14,5 +14,5 @@ export async function deployRegistries() {
     const dappRegistryDeployment = await DappRegistry.deploy(0);
     await dappRegistryDeployment.waitForDeployment();
 
-    return { moduleRegistry: moduleRegistryDeployment, dapRegistry: dappRegistryDeployment};
+    return { moduleRegistry: moduleRegistryDeployment, dappRegistry: dappRegistryDeployment};
 }

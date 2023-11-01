@@ -1,7 +1,7 @@
 import {generateSalt} from "./utils/generateSalt";
 import {EventLog, Log, ZeroAddress} from "ethers";
 import {WalletFactory} from "../typechain-types";
-import {getENVValue} from "./utils/envConfig";
+import {getENVValue} from "./utils/env/envConfig";
 import {ethers} from "hardhat";
 
 export async function createWallet(walletFactory: WalletFactory, owner: string, guardian: string, manager: string) {

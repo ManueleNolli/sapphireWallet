@@ -1,5 +1,5 @@
 import {ethers} from "hardhat";
-import {getENVValue} from "./utils/envConfig";
+import {getENVValue} from "./utils/env/envConfig";
 import {createWallet} from "./createWallet";
 import {Signer, ZeroAddress} from "ethers";
 

@@ -15,7 +15,7 @@ export type envValue = {
     value: string
 }
 
-const envPath = path.join(__dirname, '../../.env');
+const envPath = path.join(__dirname, '../../../.env');
 
 async function getNetworkName() {
     const network = await ethers.provider.getNetwork();

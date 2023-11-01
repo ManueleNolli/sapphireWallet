@@ -21,6 +21,7 @@ import "./common/Utils.sol";
 import "./common/BaseModule.sol";
 import "./common/SimpleOracle.sol";
 import "../infrastructure/storage/IGuardianStorage.sol";
+import "hardhat/console.sol";
 
 /**
  * @title RelayerManager
@@ -91,6 +92,7 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
         external
         returns (bool)
     {
+        console.log("Inizio funzione execute");
         // initial gas = 21k + non_zero_bytes * 16 + zero_bytes * 4
         //            ~= 21k + calldata.length * [1/3 * 16 + 2/3 * 4]
         uint256 startGas = gasleft() + 21000 + msg.data.length * 8;
@@ -119,6 +121,8 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
             stack.signHash,
             stack.requiredSignatures,
             stack.ownerSignatureRequirement), "RM: Duplicate request");
+
+        console.log("Sono qui");
 
         if (stack.ownerSignatureRequirement == OwnerSignature.Session) {
             require(validateSession(_wallet, stack.signHash, _signatures), "RM: Invalid session");
