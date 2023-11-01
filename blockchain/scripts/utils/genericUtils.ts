@@ -126,7 +126,7 @@ export function generateMessageHash(
  */
 export async function signMessage(message: string, signer: HardhatEthersSigner): Promise<string> {
 
-    const sig = await signer.signMessage(message);
+    const sig = await signer.signMessage(message); //FIX ME: this is signing with the public key of the signer, not with the private key
 
     let v = parseInt(sig.substring(130, 132), 16);
     if (v !== 27 && v !== 28) {
