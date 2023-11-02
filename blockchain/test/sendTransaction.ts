@@ -33,12 +33,17 @@ describe("SendTransaction", function () {
 
         // Create wallet for account 1
         const walletAccount1Address = await createWallet(infrastructure.walletFactory, account1.address, account2.address, deployer.address, await infrastructure.baseWallet.getAddress());
-        console.log("Wallet created for account1: ", walletAccount1Address);
 
         // check owner
         const walletAccount1 = await ethers.getContractAt("BaseWallet", walletAccount1Address);
         const owner = await walletAccount1.owner();
-        console.log("Owner of the created wallet: ", owner);
+        expect(owner).to.equal(account1.address);
+
+        // add account2 to whitelist
+        await infrastructure.argentModule.connect(account1).addToWhitelist(walletAccount1Address, account2.address);
+        console.log("Account2 added to whitelist");
+        // add argentModule to walletAccount1
+        await infrastructure.argentModule.connect(account1).addModule(walletAccount1Address, await infrastructure.argentModule.getAddress());
 
         // Preparing transaction to send eth from walletAccount1 to account2, it is a multiCall transaction
         const transaction = {to: account2.address, value: ethers.parseEther("10"), data: "0x"};
@@ -66,8 +71,6 @@ describe("SendTransaction", function () {
             ZeroAddress
         )
 
-        console.log("Signatures: ", signatures)
-
         // Test to retrieve the signer
         const s = recoverAddress(generateMessageHash(
             await infrastructure.argentModule.getAddress(),
@@ -80,11 +83,10 @@ describe("SendTransaction", function () {
             "0x0000000000000000000000000000000000000000",
             ZeroAddress
         ), signatures)
-        console.log("Signer: ", s)
 
         // Send the transaction
 
-        const tx = await infrastructure.argentModule.connect(deployer).execute(
+        const tx = await infrastructure.argentModule.execute(
             walletAccount1Address,
             methodData,
             nonce,

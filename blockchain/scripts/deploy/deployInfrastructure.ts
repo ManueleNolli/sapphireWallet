@@ -48,6 +48,13 @@ async function _deployInfrastructure(deployer: HardhatEthersSigner): Promise<Inf
     /* Argent Module */
     const {argentModule} = await deployArgentModule(moduleRegistryAddress, guardianStorageAddress, transferStorageAddress, dappRegistryAddress, uniswapRouterAddress);
 
+    // Add argentModule to moduleRegistry
+    const argentModuleName = "ArgentModule"
+
+    // convert to bitlike
+    const argentModuleBitlike = ethers.encodeBytes32String(argentModuleName);
+    await moduleRegistry.connect(deployer).registerModule(await argentModule.getAddress(), argentModuleBitlike);
+
     return {
         guardianStorage,
         transferStorage,

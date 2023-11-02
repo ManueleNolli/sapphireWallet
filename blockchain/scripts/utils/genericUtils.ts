@@ -54,8 +54,6 @@ export async function signOffchain(
         refundAddress
     );
 
-    console.log("messageHash: ", messageHash)
-
     const signatures = await Promise.all(
         signers.map(async (signer) => {
             const sig = await signMessage(messageHash, signer);
