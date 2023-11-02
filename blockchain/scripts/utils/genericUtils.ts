@@ -106,17 +106,7 @@ export function generateMessageHash(
         .join('')}`;
 
     const messageHash = ethers.keccak256(message);
-
-    // Add also the text "\x19Ethereum Signed Message:\n32" to the message hash
-    // https://docs.ethers.io/v5/api/utils/hashing/#utils-keccak256
-
-    console.log("messageHash: ", messageHash)
-
-    const prefix = ethers.hexlify(ethers.toUtf8Bytes("\x19Ethereum Signed Message:\n32"));
-    const messageHashWithPrefix = ethers.keccak256(ethers.concat([prefix, messageHash]));
-
-    console.log("messageHashWithPrefix: ", messageHashWithPrefix)
-    return messageHashWithPrefix;
+    return messageHash;
 }
 
 /**
@@ -126,7 +116,8 @@ export function generateMessageHash(
  */
 export async function signMessage(message: string, signer: HardhatEthersSigner): Promise<string> {
 
-    const sig = await signer.signMessage(message); //FIX ME: this is signing with the public key of the signer, not with the private key
+    // const sig = await signer.signMessage(message); //FIX ME: this is signing with the public key of the signer, not with the private key
+    const sig = await signer.signMessage(ethers.getBytes(message));
 
     let v = parseInt(sig.substring(130, 132), 16);
     if (v !== 27 && v !== 28) {

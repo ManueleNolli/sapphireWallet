@@ -22,26 +22,17 @@ describe("SendTransaction", function () {
         console.log("Account1: ", account1.address);
         console.log("Account2: ", account2.address);
 
-        const signingKey = new ethers.SigningKey("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
-
-        const message ="0x4e27ebdcd4b355980e99adaca61def0c4c4568397c814bad2fa3614c19d9ee66"
-
-        const sig = signingKey.sign(message);
-
-        console.log("Sig: ", sig);
-
-        const signer = ethers.recoverAddress(message, sig);
-
-        console.log("--Signer: ", signer);
-
-
         infrastructure = await deployInfrastructure(deployer);
     });
 
 
     it("Should send transaction", async function () {
+
+        const startBalance = await ethers.provider.getBalance(account2.address);
+        console.log("Starting Balance: ", startBalance.toString())
+
         // Create wallet for account 1
-        const walletAccount1Address = await createWallet(infrastructure.walletFactory, account1.address, account2.address, deployer.address);
+        const walletAccount1Address = await createWallet(infrastructure.walletFactory, account1.address, account2.address, deployer.address, await infrastructure.baseWallet.getAddress());
         console.log("Wallet created for account1: ", walletAccount1Address);
 
         // check owner
@@ -104,6 +95,10 @@ describe("SendTransaction", function () {
             "0x0000000000000000000000000000000000000000"
         );
 
+        await tx.wait();
+
+        const balance = await ethers.provider.getBalance(account2.address);
+        console.log("Balance: ", balance.toString())
 
     });
 });
