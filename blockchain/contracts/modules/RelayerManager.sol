@@ -115,8 +115,6 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
             _refundToken,
             _refundAddress);
 
-        console.log("Message Hash with prefix - blockchain:");
-        console.logBytes32(stack.signHash);
         require(checkAndUpdateUniqueness(
             _wallet,
             _nonce,
@@ -131,6 +129,7 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
             require(validateSignatures(_wallet, stack.signHash, _signatures, stack.ownerSignatureRequirement), "RM: Invalid signatures");
         }
         (stack.success, stack.returnData) = address(this).call(_data);
+        console.log("stack.success", stack.success);
         refund(
             _wallet,
             startGas,
@@ -196,23 +195,6 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
     view
     returns (bytes32)
     {
-
-        bytes32 _temp =
-            keccak256(
-                abi.encodePacked(
-                    bytes1(0x19),
-                    bytes1(0),
-                    _from,
-                    _value,
-                    _data,
-                    block.chainid,
-                    _nonce,
-                    _gasPrice,
-                    _gasLimit,
-                    _refundToken,
-                    _refundAddress));
-        console.log("Message Hash - blockchain:");
-        console.logBytes32(_temp);
         return keccak256(
             abi.encodePacked(
                 "\x19Ethereum Signed Message:\n32",
@@ -284,9 +266,6 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
     */
     function validateSignatures(address _wallet, bytes32 _signHash, bytes memory _signatures, OwnerSignature _option) internal view returns (bool)
     {
-        console.log("Signatures - blockchain:");
-        console.logBytes(_signatures);
-
         if (_signatures.length == 0) {
             return true;
         }
@@ -300,8 +279,6 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
 
         for (uint256 i = 0; i < _signatures.length / 65; i++) {
             address signer = Utils.recoverSigner(_signHash, _signatures, i);
-            console.log("Signer - blockchain:");
-            console.logAddress(signer);
             if (i == 0) {
                 if (_option == OwnerSignature.Required) {
                     // First signer must be owner

@@ -54,6 +54,8 @@ export async function signOffchain(
         refundAddress
     );
 
+    console.log("messageHash: ", messageHash)
+
     const signatures = await Promise.all(
         signers.map(async (signer) => {
             const sig = await signMessage(messageHash, signer);
@@ -116,7 +118,6 @@ export function generateMessageHash(
  */
 export async function signMessage(message: string, signer: HardhatEthersSigner): Promise<string> {
 
-    // const sig = await signer.signMessage(message); //FIX ME: this is signing with the public key of the signer, not with the private key
     const sig = await signer.signMessage(ethers.getBytes(message));
 
     let v = parseInt(sig.substring(130, 132), 16);
