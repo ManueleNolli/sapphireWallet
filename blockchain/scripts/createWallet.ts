@@ -11,25 +11,29 @@ import {ethers} from "hardhat";
  * @param guardian address
  * @param manager address
  */
-export async function createWallet(walletFactory: WalletFactory, owner: string, guardian: string, manager: string, baseWalletAddress: string) {
+export async function createWallet(walletFactory: WalletFactory, owner: string, guardian: string, manager: string, authorisedModule: string) {
+    const salt = await generateSalt();
+
+    const expectedAddress = await walletFactory.getAddressForCounterfactualWallet(
+        owner,
+        [authorisedModule],
+        guardian,
+        salt
+    )
 
     const tx = await walletFactory.connect(await ethers.provider.getSigner(manager)).createCounterfactualWallet(
         owner,
-        [baseWalletAddress],
+        [authorisedModule],
         guardian,
-        await generateSalt(),
+        salt,
         0,
         ZeroAddress,
         "0x",
         "0x"
     )
-    const receipt = await tx.wait();
-    const events = receipt?.logs[4];
-    if (events instanceof EventLog) { // TODO: check if this is the right way to do it, I tried with listener but it didn't work
-        return events.args[0]
-    } else {
-        throw new Error("No event found during wallet creation")
-    }
+    await tx.wait();
+
+    return expectedAddress
 }
 
 

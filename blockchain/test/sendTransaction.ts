@@ -32,7 +32,8 @@ describe("SendTransaction", function () {
         console.log("Starting Balance: ", startBalance.toString())
 
         // Create wallet for account 1
-        const walletAccount1Address = await createWallet(infrastructure.walletFactory, account1.address, account2.address, deployer.address, await infrastructure.baseWallet.getAddress());
+        const walletAccount1Address = await createWallet(infrastructure.walletFactory, account1.address, account2.address, deployer.address, await infrastructure.argentModule.getAddress());
+        console.log("Wallet created: ", walletAccount1Address);
 
         // check owner
         const walletAccount1 = await ethers.getContractAt("BaseWallet", walletAccount1Address);
@@ -42,8 +43,6 @@ describe("SendTransaction", function () {
         // add account2 to whitelist
         await infrastructure.argentModule.connect(account1).addToWhitelist(walletAccount1Address, account2.address);
         console.log("Account2 added to whitelist");
-        // add argentModule to walletAccount1
-        await infrastructure.argentModule.connect(account1).addModule(walletAccount1Address, await infrastructure.argentModule.getAddress());
 
         // Preparing transaction to send eth from walletAccount1 to account2, it is a multiCall transaction
         const transaction = {to: account2.address, value: ethers.parseEther("10"), data: "0x"};
