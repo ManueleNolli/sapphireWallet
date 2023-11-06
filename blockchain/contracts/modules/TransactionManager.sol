@@ -20,7 +20,6 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import "./common/Utils.sol";
 import "./common/BaseModule.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "hardhat/console.sol";
 
 /**
  * @title TransactionManager
@@ -78,7 +77,6 @@ abstract contract TransactionManager is BaseModule {
         bytes[] memory results = new bytes[](_transactions.length);
         for(uint i = 0; i < _transactions.length; i++) {
             address spender = Utils.recoverSpender(_transactions[i].to, _transactions[i].data);
-            console.log("isWhitelisted(_wallet, spender)", isWhitelisted(_wallet, spender));
             require(
                 (_transactions[i].value == 0 || spender == _transactions[i].to) &&
                 (isWhitelisted(_wallet, spender) || authoriser.isAuthorised(_wallet, spender, _transactions[i].to, _transactions[i].data)),
@@ -166,7 +164,6 @@ abstract contract TransactionManager is BaseModule {
         require(!isWhitelisted(_wallet, _target), "TM: target already whitelisted");
 
         uint256 whitelistAfter = block.timestamp + whitelistPeriod;
-        console.log("HEREEE");
         setWhitelist(_wallet, _target, whitelistAfter);
 
         emit AddedToWhitelist(_wallet, _target, uint64(whitelistAfter));

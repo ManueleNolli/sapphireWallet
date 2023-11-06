@@ -21,7 +21,6 @@ import "./common/Utils.sol";
 import "./common/BaseModule.sol";
 import "./common/SimpleOracle.sol";
 import "../infrastructure/storage/IGuardianStorage.sol";
-import "hardhat/console.sol";
 
 /**
  * @title RelayerManager
@@ -129,7 +128,6 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
             require(validateSignatures(_wallet, stack.signHash, _signatures, stack.ownerSignatureRequirement), "RM: Invalid signatures");
         }
         (stack.success, stack.returnData) = address(this).call(_data);
-        console.log("stack.success", stack.success);
         refund(
             _wallet,
             startGas,
