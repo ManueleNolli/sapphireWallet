@@ -1,6 +1,6 @@
-# Sapphire Wallet
+#  Sapphire Wallet
 
-Sapphire Wallet is a POC of a mobile wallet using Account Abstraction.
+Sapphire Wallet is a POC of Account Abstraction using Argent's wallet contract.
 
 ## Prerequisites
 
