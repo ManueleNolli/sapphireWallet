@@ -1,13 +1,18 @@
-# Sample Hardhat Project
+# Hardhat project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This project includes the Argent smart contracts of those two repositories:
 
-Try running some of the following tasks:
+* [Argent Contracts](https://github.com/argentlabs/argent-contracts) (commit: 320e3d82a8a0625b896e1380e9088812e22db759)
+* [Argent Trustlist](https://github.com/argentlabs/argent-trustlists) (commit: 41bc368a66bef247809560fe1bec1dd01e3fd236)
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deployInfrastructure.ts
+## Pre-requisites
+
+* [Node.js](https://nodejs.org/en/) (18.18.2)
+* [Yarn](https://yarnpkg.com/) (1.22.19)
+
+## Install
+
+```bash
+yarn install
 ```
+
