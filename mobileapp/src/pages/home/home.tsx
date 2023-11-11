@@ -1,16 +1,17 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import {
   Button,
   Divider,
   Icon,
   Layout,
   Text,
-  TopNavigation,
+  useTheme,
 } from '@ui-kitten/components'
-import * as eva from '@eva-design/eva'
 
 export const HomeScreen = ({ navigation }: any) => {
+  const theme = useTheme()
+
   const navigateDetails = () => {
     navigation.navigate('Details')
   }
@@ -24,7 +25,7 @@ export const HomeScreen = ({ navigation }: any) => {
           style={{
             width: 32,
             height: 32,
-            tintColor: eva.light['color-primary-100'],
+            tintColor: theme['color-primary-100'],
           }}
         />
         <Text>Open up App.tsx to start working on your app!</Text>

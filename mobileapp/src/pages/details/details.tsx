@@ -1,24 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { SafeAreaView } from 'react-native'
-import {
-  Divider,
-  Icon,
-  Layout,
-  Text,
-  TopNavigation,
-  TopNavigationAction,
-} from '@ui-kitten/components'
-
-const BackIcon = (props: any) => <Icon {...props} name="arrow-back" />
+import { Button, Divider, Layout, Text, useTheme } from '@ui-kitten/components'
+import { ThemeContext } from '../../context/themeContext'
 
 export const DetailsScreen = ({ navigation }: any) => {
-  const navigateBack = () => {
-    navigation.goBack()
-  }
-
-  const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
-  )
+  const theme = useTheme()
+  const { toggleTheme } = useContext(ThemeContext)
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -26,7 +13,11 @@ export const DetailsScreen = ({ navigation }: any) => {
       <Layout
         style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
       >
-        <Text category="h1">DETAILS</Text>
+        <Text category="h1" style={{ color: theme['color-primary-500'] }}>
+          DETAILS
+        </Text>
+
+        <Button onPress={toggleTheme}>Toggle theme</Button>
       </Layout>
     </SafeAreaView>
   )
