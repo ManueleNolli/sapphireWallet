@@ -15,6 +15,12 @@ yarn install
 
 ## Run
 
+Firstly, modify .env file and fill your information.
+```bash
+mv .env.example .env
+```
+
+
 ```bash
 yarn start
 ```

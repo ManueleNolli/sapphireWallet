@@ -16,3 +16,33 @@ This project includes the Argent smart contracts of those two repositories:
 yarn install
 ```
 
+## Compile
+
+The hardhat task `compile` has been override to copy typechain artifacts to the `backend` and `mobileapp` folder. 
+
+```bash
+npx hardhat compile
+```
+
+## Run local hardhat network
+
+```bash
+npx hardhat node
+```
+
+## Deploy 
+Deploy will call the `compile` task and then upload the `.env` files to the necessary modules.
+The updated .env are:
+* .env
+* backend/wallet-factory/.env
+* mobileapp/.env
+
+For know which keys are updated please check the `deploy.ts` file.
+
+```bash
+npx hardhat run scripts\deploy.ts --network <network>
+```
+
+where `<network>` can be:
+* `localhost` (default) for a local hardhat network
+* `sepolia` for the Sepolia testnet 

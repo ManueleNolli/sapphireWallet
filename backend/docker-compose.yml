@@ -1,0 +1,21 @@
+services:
+  wallet-factory:
+    build:
+      context: ./wallet-factory
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    networks:
+        - backend
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+        - backend
+
+networks:
+    backend:

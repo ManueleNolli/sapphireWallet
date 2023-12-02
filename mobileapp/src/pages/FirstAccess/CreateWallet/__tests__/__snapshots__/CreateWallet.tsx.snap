@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateWallet Render correctly 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    appearance="default"
+    level="1"
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+        },
+        {
+          "flex": 1,
+        },
+      ]
+    }
+  >
+    <RNCSafeAreaView
+      edges={
+        {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "additive",
+        }
+      }
+      style={
+        [
+          {
+            "flex": 1,
+            "marginHorizontal": 37.5,
+            "marginVertical": 66.7,
+          },
+          {
+            "marginVertical": 266.8,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+          }
+        }
+      >
+        <ViewManagerAdapter_ExpoImage
+          contentFit="contain"
+          contentPosition={
+            {
+              "left": "50%",
+              "top": "50%",
+            }
+          }
+          flex={1}
+          onError={[Function]}
+          onLoad={[Function]}
+          onLoadStart={[Function]}
+          onProgress={[Function]}
+          placeholder={[]}
+          source={[]}
+          style={
+            {
+              "contentFit": "contain",
+              "flex": 1,
+            }
+          }
+          transition={null}
+        />
+      </View>
+      <View
+        style={
+          [
+            {
+              "flex": 1,
+            },
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "rgba(51, 102, 255, 0.08)",
+              "borderColor": "#3366FF",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minHeight": 56,
+              "minWidth": 56,
+              "opacity": 1,
+              "paddingHorizontal": 12,
+              "paddingVertical": 16,
+            }
+          }
+        >
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#222B45",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "color": "#3366FF",
+                  "fontFamily": "System",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginHorizontal": 12,
+                },
+              ]
+            }
+          >
+            Create wallet
+          </Text>
+        </View>
+      </View>
+    </RNCSafeAreaView>
+  </View>
+</View>
+`;

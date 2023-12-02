@@ -1,0 +1,33 @@
+stages:
+  - 🤞 test
+
+
+test_mobileapp:
+  stage: 🤞 test
+  image: node:latest
+  script:
+    - cd mobileapp
+    - yarn install
+    - yarn test:ci
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+
+test_api-gateway:
+    stage: 🤞 test
+    image: node:latest
+    script:
+        - cd backend/api-gateway
+        - yarn install
+        - yarn test:cov
+    coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+
+test_wallet-factory:
+  stage: 🤞 test
+  image: node:latest
+  script:
+    - cd blockchain
+    - yarn install
+    - npx hardhat compile
+    - cd ../backend/wallet-factory
+    - yarn install
+    - yarn test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/

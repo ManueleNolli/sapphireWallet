@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SafeAreaView Render correctly 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <RNCSafeAreaView
+    edges={
+      {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "additive",
+      }
+    }
+    style={
+      [
+        {
+          "flex": 1,
+          "marginHorizontal": 37.5,
+          "marginVertical": 66.7,
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text>
+      Test
+    </Text>
+  </RNCSafeAreaView>
+</View>
+`;
