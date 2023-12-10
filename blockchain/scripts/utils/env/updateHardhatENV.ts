@@ -1,16 +1,16 @@
 import {
-  Infrastructure,
+  InfrastructureTypes,
   InfrastructureAddresses,
-} from "../../types/infrastructure";
+} from "../../argentContracts/utils/infrastructureTypes";
 import { setENVValue } from "./envConfig";
-
+import Constants from "../../constants/constants";
 /**
  * Update the ENV variables with the infrastructure addresses
  * @param infrastructure
  * @return {Promise<InfrastructureAddresses>}
  */
 export default async function updateHardhatENV(
-  infrastructure: Infrastructure
+  infrastructure: InfrastructureTypes
 ): Promise<InfrastructureAddresses> {
   const [
     guardianStorageAddress,
@@ -35,15 +35,21 @@ export default async function updateHardhatENV(
   ]);
 
   console.log("Updating Harhat ENV variables...");
-  await setENVValue("GUARDIAN_STORAGE_ADDRESS", guardianStorageAddress);
-  await setENVValue("TRANSFER_STORAGE_ADDRESS", transferStorageAddress);
-  await setENVValue("BASE_WALLET_ADDRESS", baseWalletAddress);
-  await setENVValue("WALLET_FACTORY_ADDRESS", walletFactoryAddress);
-  await setENVValue("MODULE_REGISTRY_ADDRESS", moduleRegistryAddress);
-  await setENVValue("DAPP_REGISTRY_ADDRESS", dappRegistryAddress);
-  await setENVValue("UNISWAP_FACTORY_ADDRESS", uniswapFactoryAddress);
-  await setENVValue("UNISWAP_ROUTER_ADDRESS", uniswapRouterAddress);
-  await setENVValue("ARGENT_MODULE_ADDRESS", argentModuleAddress);
+  await setENVValue(
+    Constants.envValues.guardianStorage,
+    guardianStorageAddress
+  );
+  await setENVValue(
+    Constants.envValues.transferStorage,
+    transferStorageAddress
+  );
+  await setENVValue(Constants.envValues.baseWallet, baseWalletAddress);
+  await setENVValue(Constants.envValues.walletFactory, walletFactoryAddress);
+  await setENVValue(Constants.envValues.moduleRegistry, moduleRegistryAddress);
+  await setENVValue(Constants.envValues.dappRegistry, dappRegistryAddress);
+  await setENVValue(Constants.envValues.uniswapFactory, uniswapFactoryAddress);
+  await setENVValue(Constants.envValues.uniswapRouter, uniswapRouterAddress);
+  await setENVValue(Constants.envValues.argentModule, argentModuleAddress);
   console.log("Updated Harhat ENV variables!");
 
   return {

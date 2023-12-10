@@ -1,4 +1,13 @@
 services:
+  sapphire-relayer:
+    build:
+      context: ./sapphire-relayer
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    networks:
+      - backend
+
   wallet-factory:
     build:
       context: ./wallet-factory

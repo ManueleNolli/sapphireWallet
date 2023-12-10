@@ -1,12 +1,27 @@
 stages:
+  - 🏗 compile
   - 🤞 test
 
+compile_contracts:
+  stage: 🏗 compile
+  image: node:latest
+  script:
+    - cd blockchain
+    - yarn install
+    - npx hardhat compile
+  artifacts:
+    paths:
+      - blockchain/typechain-types
 
 test_mobileapp:
   stage: 🤞 test
   image: node:latest
+  before_script:
+    - mkdir -p mobileapp/src/contracts
+    - cp -r blockchain/typechain-types/* mobileapp/src/contracts/
   script:
     - cd mobileapp
+    - mv .env.example .env
     - yarn install
     - yarn test:ci
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
@@ -23,11 +38,27 @@ test_api-gateway:
 test_wallet-factory:
   stage: 🤞 test
   image: node:latest
+  before_script:
+    - mkdir -p backend/wallet-factory/src/contracts
+    - cp -r blockchain/typechain-types/* backend/wallet-factory/src/contracts/
   script:
-    - cd blockchain
-    - yarn install
-    - npx hardhat compile
-    - cd ../backend/wallet-factory
+    - cd backend/wallet-factory
     - yarn install
     - yarn test:cov
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  dependencies:
+    - compile_contracts
+
+test_sapphire-relayer:
+  stage: 🤞 test
+  image: node:latest
+  before_script:
+    - mkdir -p backend/sapphire-relayer/src/contracts
+    - cp -r blockchain/typechain-types/* backend/sapphire-relayer/src/contracts/
+  script:
+    - cd backend/sapphire-relayer
+    - yarn install
+    - yarn test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  dependencies:
+    - compile_contracts

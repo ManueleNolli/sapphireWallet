@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useLoading from '../hooks/useLoading'
-import { getData, storeData } from '../services/AsyncStorageHelper'
+import { getData, storeData } from '../services/storage/'
 import constants from '../constants/Constants'
 import Loading from '../pages/Loading/Loading'
 import { FirstAccessContext } from '../context/FirstAccessContext'

@@ -50,6 +50,7 @@ abstract contract TransactionManager is BaseModule {
     event RemovedFromWhitelist(address indexed wallet, address indexed target);
     event SessionCreated(address indexed wallet, address sessionKey, uint64 expires);
     event SessionCleared(address indexed wallet, address sessionKey);
+
     // *************** Constructor ************************ //
 
     constructor(uint256 _whitelistPeriod) {

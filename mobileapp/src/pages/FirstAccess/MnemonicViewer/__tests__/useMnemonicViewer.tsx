@@ -5,13 +5,13 @@ import { FirstAccessContext } from '../../../../context/FirstAccessContext'
 import renderWithTheme from '../../../../TestHelper'
 import { Button } from 'react-native'
 import { MnemonicViewerProps } from '../../../../navigation/FirstAccessStack'
-import { requestContractWallet } from '../../../../services/WalletFactory'
+import { requestContractWallet } from '../../../../services/wallet'
 import { useContext } from 'react'
 
 jest.mock('expo-clipboard', () => ({
   setStringAsync: jest.fn(),
 }))
-jest.mock('../../../../services/WalletFactory', () => ({
+jest.mock('../../../../services/wallet', () => ({
   requestContractWallet: jest.fn(),
 }))
 jest.mock('react', () => ({
@@ -26,25 +26,6 @@ const routeMock = {
 }
 
 describe('useMnemonicViewer', () => {
-  // it('should create a wallet and set the mnemonic', () => {
-  //   const { result } = renderHook(() =>
-  //     useMnemonicViewer(routeMock as unknown as MnemonicViewerProps['route'])
-  //   )
-  //
-  //   expect(result.current.mnemonic).toEqual([
-  //     'a',
-  //     'b',
-  //     'c',
-  //     'd',
-  //     'e',
-  //     'f',
-  //     'g',
-  //     'h',
-  //     'i',
-  //     'j',
-  //   ])
-  // })
-
   it('should copy the mnemonic to the clipboard', async () => {
     ;(setStringAsync as jest.Mock).mockResolvedValueOnce(undefined)
     ;(useContext as jest.Mock).mockReturnValue({
@@ -101,7 +82,7 @@ describe('useMnemonicViewer', () => {
     expect(toggle).toHaveBeenCalled()
   })
 
-  it('should not toggle if errror', async () => {
+  it('should not toggle if error', async () => {
     ;(requestContractWallet as jest.Mock).mockRejectedValue('error')
     const spyConsoleError = jest.spyOn(console, 'error').mockImplementation()
     const getEOAAddressMock = jest.fn().mockReturnValue('0x123')

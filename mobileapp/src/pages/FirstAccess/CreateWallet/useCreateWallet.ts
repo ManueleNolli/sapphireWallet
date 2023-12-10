@@ -1,5 +1,5 @@
 import { CreateWalletProps } from '../../../navigation/FirstAccessStack'
-import { createWallet, getMnemonic } from '../../../services/LocalWallet'
+import { createWallet, getMnemonic } from '../../../services/wallet'
 import { useContext } from 'react'
 import { WalletContext } from '../../../context/WalletContext'
 

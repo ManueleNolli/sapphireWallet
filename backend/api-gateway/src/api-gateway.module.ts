@@ -11,7 +11,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         transport: Transport.TCP,
         options: {
           port: 3001,
-          // host: 'wallet-factory',
+        },
+      },
+      {
+        name: 'SAPPHIRE_RELAYER',
+        transport: Transport.TCP,
+        options: {
+          port: 3002,
         },
       },
     ]),

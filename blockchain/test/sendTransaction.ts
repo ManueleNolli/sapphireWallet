@@ -1,13 +1,13 @@
-import { createWallet } from "../scripts/createWallet";
+import { createWallet } from "../scripts/argentContracts/createWallet";
 
 import { ethers } from "hardhat";
 import { expect } from "chai";
-import deployInfrastructure from "../scripts/deploy/deployInfrastructure";
-import { Infrastructure } from "../scripts/types/infrastructure";
+import deployInfrastructure from "../scripts/argentContracts/deployInfrastructure";
+import { InfrastructureTypes } from "../scripts/argentContracts/utils/infrastructureTypes";
 import {
   generateNonceForRelay,
   signOffchain,
-} from "../scripts/utils/genericUtils";
+} from "../scripts/argentContracts/utils/genericUtils";
 import { ZeroAddress } from "ethers";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 
@@ -16,7 +16,7 @@ describe("SendTransaction", function () {
   let account1: HardhatEthersSigner;
   let account2: HardhatEthersSigner;
 
-  let infrastructure: Infrastructure;
+  let infrastructure: InfrastructureTypes;
 
   before(async function () {
     [deployer, account1, account2] = await ethers.getSigners();
@@ -49,11 +49,13 @@ describe("SendTransaction", function () {
       value: ethers.parseEther("100"),
     });
 
-    // It is necessary just one of those two calls (a relayer is registered globally or in the whitelist for the wallet)
-    // Add dapp authorized
+    /* OLD BUT WORKS FOR ARGENT DAPP REGISTRY
+    //It is necessary just one of those two calls (a relayer is registered globally or in the whitelist for the wallet)
+    //Add dapp authorized
     await infrastructure.dappRegistry.addDapp(0, account2.address, ZeroAddress);
+    */
 
-    //  Add account2 to whitelist
+    //Add account2 to whitelist
     await infrastructure.argentModule
       .connect(account1)
       .addToWhitelist(walletAccount1Address, account2.address);
@@ -65,14 +67,10 @@ describe("SendTransaction", function () {
       data: "0x",
     };
 
-    // get the ABI of the function to call
-    const multiCallABI =
-      infrastructure.argentModule.interface.getFunction("multiCall");
-    const multiCallInterface = new ethers.Interface([multiCallABI]);
-    const methodData = multiCallInterface.encodeFunctionData(multiCallABI, [
-      walletAccount1Address,
-      [transaction],
-    ]);
+    const methodData = infrastructure.argentModule.interface.encodeFunctionData(
+      "multiCall",
+      [walletAccount1Address, [transaction]]
+    );
 
     // Sign *offChain* the transaction
     const chainId = (await ethers.provider.getNetwork()).chainId;

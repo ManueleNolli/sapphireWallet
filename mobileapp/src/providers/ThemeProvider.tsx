@@ -3,7 +3,7 @@ import { ThemeContext } from '../context/ThemeContext'
 import * as eva from '@eva-design/eva'
 import { default as theme } from '../../assets/theme/theme.json'
 import { ApplicationProvider } from '@ui-kitten/components'
-import { getData, storeData } from '../services/AsyncStorageHelper'
+import { getData, storeData } from '../services/storage/'
 import constants from '../constants/Constants'
 import useLoading from '../hooks/useLoading'
 

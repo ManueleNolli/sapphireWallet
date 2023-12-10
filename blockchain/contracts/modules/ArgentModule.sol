@@ -80,7 +80,8 @@ contract ArgentModule is BaseModule, RelayerManager, SecurityManager, Transactio
             methodId == SecurityManager.addGuardian.selector ||
             methodId == SecurityManager.revokeGuardian.selector ||
             methodId == SecurityManager.cancelGuardianAddition.selector ||
-            methodId == SecurityManager.cancelGuardianRevokation.selector)
+            methodId == SecurityManager.cancelGuardianRevokation.selector
+        )
         {
             // owner
             return (1, OwnerSignature.Required);

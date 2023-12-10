@@ -1,8 +1,9 @@
 import { ethers } from "hardhat";
-import deployInfrastructure from "./deploy/deployInfrastructure";
+import deployInfrastructure from "./argentContracts/deployInfrastructure";
 import updateHardhatENV from "./utils/env/updateHardhatENV";
-import printInfrastructure from "./utils/printInfrastructure";
-import updateExternalEnv, { EnvValue } from "./external/updateExternalEnv";
+import printInfrastructure from "./argentContracts/utils/printInfrastructure";
+import updateExternalEnv, { EnvValue } from "./utils/env/updateExternalEnv";
+import Constants from "./constants/constants";
 
 export default async function deploy() {
   const [deployer] = await ethers.getSigners();
@@ -26,14 +27,15 @@ export default async function deploy() {
   ////////////////////////
   console.log("\nCopy env key to external module (mobileapp, backend)...");
 
+  // WalletFactory
   console.log("Updating wallet-factory backend env...");
   const walletFactoryBackendEnv: EnvValue[] = [
     {
-      key: networkName + "_" + "WALLET_FACTORY_ADDRESS",
+      key: networkName + "_" + Constants.envValues.walletFactory,
       value: result.walletFactoryAddress,
     },
     {
-      key: networkName + "_" + "ARGENT_MODULE_ADDRESS",
+      key: networkName + "_" + Constants.envValues.argentModule,
       value: result.argentModuleAddress,
     },
   ];
@@ -43,6 +45,38 @@ export default async function deploy() {
   );
   console.log("Updated wallet-factory backend env!");
 
+  // SapphireRelayer
+  console.log("Updating sapphire-relayer backend env...");
+  const sapphireRelayerBackendEnv: EnvValue[] = [
+    {
+      key: networkName + "_" + Constants.envValues.dappRegistry,
+      value: result.dappRegistryAddress,
+    },
+    {
+      key: networkName + "_" + Constants.envValues.argentModule,
+      value: result.argentModuleAddress,
+    },
+  ];
+  await updateExternalEnv(
+    "../backend/sapphire-relayer/.env",
+    sapphireRelayerBackendEnv
+  );
+  console.log("Updated sapphire-relayer backend env!");
+
+  // MobileApp
+  console.log("Updating mobileapp env...");
+  const mobileappEnv: EnvValue[] = [
+    {
+      key: networkName + "_" + Constants.envValues.argentModule,
+      value: result.argentModuleAddress,
+    },
+  ];
+  await updateExternalEnv("../mobileapp/.env", mobileappEnv);
+  console.log("Updated mobileapp env!");
+
+  ////////////
+  // DONE :)
+  ////////////
   console.log("\x1b[32mDone\x1b[0m");
 }
 

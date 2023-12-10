@@ -1,22 +1,15 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiGatewayService } from './api-gateway.service';
-import { CreateWalletRequest } from './dto/create-wallet-request.dto';
 import { ApiResponse } from '@nestjs/swagger';
+import { CreateWalletRequest } from './dto/create-wallet-request.dto';
+import { AddAuthorised } from './dto/add-authorised.dto';
+import { ExecuteTransaction } from './dto/execute-transaction.dto';
 
 @Controller()
 export class ApiGatewayController {
   constructor(private readonly apiGatewayService: ApiGatewayService) {}
 
   @Post('/create-wallet')
-  @ApiResponse({
-    status: 500,
-    description: 'Internal server error. Connection failed to microservice',
-  })
-  @ApiResponse({
-    status: 400,
-    description:
-      'Bad request. Network not found or Connection to blockchain failed',
-  })
   @ApiResponse({
     status: 201,
     description:
@@ -30,6 +23,10 @@ export class ApiGatewayController {
               type: 'string',
               example: '0x1234567890123456789012345678901234567890',
             },
+            network: {
+              type: 'string',
+              example: 'localhost',
+            },
           },
         },
       },
@@ -37,5 +34,56 @@ export class ApiGatewayController {
   })
   createWallet(@Body() createWalletRequest: CreateWalletRequest) {
     return this.apiGatewayService.createWallet(createWalletRequest);
+  }
+
+  @Post('/add-authorised')
+  @ApiResponse({
+    status: 201,
+    description:
+      'Authorised added successfully. It will return the authorised address',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            address: {
+              type: 'string',
+              example: '0x1234567890123456789012345678901234567890',
+            },
+            network: {
+              type: 'string',
+              example: 'localhost',
+            },
+          },
+        },
+      },
+    },
+  })
+  addAuthorised(@Body() addAuthorisedRequest: AddAuthorised) {
+    return this.apiGatewayService.addAuthorised(addAuthorisedRequest);
+  }
+
+  @Post('/execute-transaction')
+  @ApiResponse({
+    status: 201,
+    description:
+      'Transaction executed successfully. It will return the transaction hash',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            transactionHash: {
+              type: 'string',
+              example:
+                '0x82b9eea000ba798f1cae87bc89024a7cb55bc180db6e9545096e3eb2a7f38c9275d51018b41fc8779577b5f73c36ae5c5a1bd4a48a6a63bd880b1493bb20ad701c',
+            },
+          },
+        },
+      },
+    },
+  })
+  executeTransaction(@Body() executeTransactionRequest: ExecuteTransaction) {
+    return this.apiGatewayService.executeTransaction(executeTransactionRequest);
   }
 }

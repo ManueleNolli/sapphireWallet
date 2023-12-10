@@ -5,7 +5,7 @@ import { WalletContext } from '../../context/WalletContext'
 import renderWithTheme from '../../TestHelper'
 import * as SecureStore from 'expo-secure-store'
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
-import { getData, storeData } from '../../services/AsyncStorageHelper'
+import { getData, storeData } from '../../services/storage/'
 import constants from '../../constants/Constants'
 
 // MOCKS
@@ -14,7 +14,7 @@ jest.mock('expo-secure-store', () => ({
   getItemAsync: jest.fn(),
 }))
 
-jest.mock('../../services/AsyncStorageHelper', () => ({
+jest.mock('../../services/storage', () => ({
   getData: jest.fn(),
   storeData: jest.fn(),
 }))

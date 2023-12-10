@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Text } from 'react-native'
-import { getData } from '../../services/AsyncStorageHelper'
+import { getData } from '../../services/storage/'
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
 import renderWithTheme from '../../TestHelper'
 import { ThemeProvider } from '../ThemeProvider'
@@ -12,7 +12,7 @@ const MockComponent = () => {
 }
 
 jest.mock('../../pages/Loading/Loading')
-jest.mock('../../services/AsyncStorageHelper')
+jest.mock('../../services/storage/')
 describe('ThemeProvider', () => {
   it('Load Children', async () => {
     ;(getData as jest.Mock).mockReturnValue(Promise.resolve('light'))

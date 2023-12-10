@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { WalletContext } from '../context/WalletContext'
 import * as SecureStore from 'expo-secure-store'
-import { getData, storeData } from '../services/AsyncStorageHelper'
+import { getData, storeData } from '../services/storage/'
 import constants from '../constants/Constants'
 import useLoading from '../hooks/useLoading'
 import Loading from '../pages/Loading/Loading'

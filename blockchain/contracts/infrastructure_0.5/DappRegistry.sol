@@ -88,7 +88,7 @@ contract DappRegistry is IAuthoriser {
         for(uint registryId = 0; registryId == 0 || (registries >> registryId) > 0; registryId++) {
             bool isEnabled = (((registries >> registryId) & 1) > 0) /* "is bit set for regId?" */ == (registryId > 0) /* "not Argent registry?" */;
             if(isEnabled) { // if registryId is enabled
-                uint auth = uint(authorisations[uint8(registryId)][_spender]); 
+                uint auth = uint(authorisations[uint8(registryId)][_spender]);
                 uint validAfter = auth & 0xffffffffffffffff;
                 if (0 < validAfter && validAfter <= block.timestamp) { // if the current time is greater than the validity time
                     address filter = address(uint160(auth >> 64));

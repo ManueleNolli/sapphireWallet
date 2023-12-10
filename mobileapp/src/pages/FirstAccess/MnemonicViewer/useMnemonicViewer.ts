@@ -3,7 +3,7 @@ import * as Clipboard from 'expo-clipboard'
 import { FirstAccessContext } from '../../../context/FirstAccessContext'
 import { MnemonicViewerProps } from '../../../navigation/FirstAccessStack'
 import useLoading from '../../../hooks/useLoading'
-import { requestContractWallet } from '../../../services/WalletFactory'
+import { requestContractWallet } from '../../../services/wallet'
 import { WalletContext } from '../../../context/WalletContext'
 
 export default function useMnemonicViewer(route: MnemonicViewerProps['route']) {

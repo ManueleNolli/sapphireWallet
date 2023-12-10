@@ -14,6 +14,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           host: 'wallet-factory',
         },
       },
+      {
+        name: 'SAPPHIRE_RELAYER',
+        transport: Transport.TCP,
+        options: {
+          port: 3002,
+          host: 'sapphire-relayer',
+        },
+      },
     ]),
   ],
   controllers: [ApiGatewayController],

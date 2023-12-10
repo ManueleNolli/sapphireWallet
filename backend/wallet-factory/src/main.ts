@@ -10,7 +10,6 @@ async function bootstrap() {
       transport: Transport.TCP,
       options: {
         port: 3001,
-        // host: 'wallet-factory',
       },
     },
   );

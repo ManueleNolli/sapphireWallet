@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, Button } from 'react-native'
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
 import { FirstAccessProvider } from '../FirstAccessProvider'
-import { getData } from '../../services/AsyncStorageHelper'
+import { getData } from '../../services/storage/'
 import { FirstAccessContext } from '../../context/FirstAccessContext'
 import renderWithTheme from '../../TestHelper'
 
@@ -13,7 +13,7 @@ const MockComponent = () => {
 
 jest.mock('../../pages/Loading/Loading')
 jest.mock('../../navigation/FirstAccessStack')
-jest.mock('../../services/AsyncStorageHelper')
+jest.mock('../../services/storage/')
 
 describe('FirstAccessProvider', () => {
   it('Load First Access Stack', async () => {

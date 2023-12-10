@@ -16,35 +16,22 @@ export class WalletFactoryController {
 
   @EventPattern('create_wallet_request', Transport.TCP)
   async handleCreateWalletRequest(data: CreateWalletRequestEvent) {
-    let provider: Provider;
-    let signer: Wallet;
+    const apiKey = this.environmentService.getUnhandled(
+      'API_KEY',
+      data.network,
+    );
 
-    if (data.network === 'localhost') {
-      provider = await this.blockchainService.getHardhatProvider();
-      signer = await this.blockchainService.getSigner(
-        this.environmentService.get('LOCALHOST_SIGNER_PRIVATE_KEY'),
-        provider,
-      );
-    } else if (data.network === 'sepolia') {
-      provider = await this.blockchainService.getSepoliaProvider(
-        this.environmentService.get('SEPOLIA_API_KEY'),
-      );
-      signer = await this.blockchainService.getSigner(
-        this.environmentService.get('SEPOLIA_SIGNER_PRIVATE_KEY'),
-        provider,
-      );
-    } else {
-      throw new RpcException(
-        new BadRequestException(`Network '${data.network}' not found`),
-      );
-    }
+    const signer = await this.blockchainService.getProviderAndSigner(
+      data.network,
+      this.environmentService.getWithNetwork(
+        'SIGNER_PRIVATE_KEY',
+        data.network,
+      ),
+      apiKey,
+    );
 
     return await this.walletFactoryService.callWalletFactoryContract(
       signer,
-      this.environmentService.getContractAddress(
-        'WALLET_FACTORY_ADDRESS',
-        data.network,
-      ),
       data,
     );
   }
