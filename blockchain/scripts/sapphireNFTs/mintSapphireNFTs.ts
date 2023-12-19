@@ -9,7 +9,7 @@ async function mintSapphireNFTs() {
 
   // mint
   const mintTx = await sapphireNFTs.safeMint(
-    "0x6adA85aAb4D1Cb8ecbf843F685Dc473C2c1cE388"
+    "0x887992aa3CC4A8868c86F2A7Db0687f757286057"
   );
 
   await mintTx.wait();

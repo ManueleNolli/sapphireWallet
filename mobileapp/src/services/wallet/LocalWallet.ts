@@ -21,6 +21,7 @@ export function getMnemonic(wallet: HDNodeWallet) {
 export function getSigner(privateKey: string, network: NETWORKS) {
   let provider
   if (network === NETWORKS.LOCALHOST) {
+    console.log(`http://${BACKEND_ADDRESS}:8545`)
     provider = new JsonRpcProvider(`http://${BACKEND_ADDRESS}:8545`)
   } else if (network === NETWORKS.SEPOLIA) {
     throw new Error('Not implemented')

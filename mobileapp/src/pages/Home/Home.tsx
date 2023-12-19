@@ -23,8 +23,8 @@ export default function Home({ navigation }: any) {
   const sendTransaction = async () => {
     const response = await requestERC721TokenTransfer(
       getWalletContractAddress(),
-      '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-      0,
+      '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
+      2,
       getSigner(
         await getPrivateKey('Sign transaction to send NFT'),
         NETWORKS.LOCALHOST
@@ -37,7 +37,7 @@ export default function Home({ navigation }: any) {
   const sendETHTransaction = async () => {
     const response = await requestETHTransfer(
       getWalletContractAddress(),
-      '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+      '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
       0.5,
       getSigner(
         await getPrivateKey('Sign transaction to send ETH'),
