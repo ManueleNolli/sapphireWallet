@@ -15,6 +15,7 @@ This project includes the Argent smart contracts of those two repositories:
 ```bash
 yarn install
 ```
+:warning: fill your personal information inside `.env`
 
 ## Compile
 Hardhat compile has been wrapped in yarn, also typechain types are copied.
@@ -30,14 +31,6 @@ yarn start:local
 ```
 
 ## Deploy 
-Deploy will call the `compile` task and then upload the `.env` files to the necessary modules.
-The updated .env are:
-* .env
-* backend/wallet-factory/.env
-* mobileapp/.env
-
-For know which keys are updated please check the `deploy.ts` file.
-
 ```bash
 npx hardhat run scripts\deploy.ts --network <network>
 ```
@@ -45,3 +38,14 @@ npx hardhat run scripts\deploy.ts --network <network>
 where `<network>` can be:
 * `localhost` (default) for a local hardhat network
 * `sepolia` for the Sepolia testnet 
+
+### Envs autoupdate
+Deploy will update the `.env` files to the necessary modules.
+The updated .env are:
+* [.env](.env)
+* [backend/wallet-factory/.env](../backend/wallet-factory/.env)
+* [backend/sapphire-relayer/.env](../backend/sapphire-relayer/.env)
+* [mobileapp/.env](../mobileapp/.env)
+
+For know which keys are updated please check the `deploy.ts` file.
+

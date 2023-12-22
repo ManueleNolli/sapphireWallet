@@ -5,6 +5,15 @@
 * [Node.js](https://nodejs.org/en/) (18.18.2)
 * [Yarn](https://yarnpkg.com/) (1.22.19)
 
-## Environment Variables
+## Setup
 
-There are different environment variables that can be set to configure the application. More information are available in each module. 
+Run setup file:
+
+```shell
+./setup.sh
+```
+
+Go to those folders and follow the setup procedure:
+1. [blockchain](blockchain)
+2. [backend](backend)
+3. [mobileapp](mobileapp)
