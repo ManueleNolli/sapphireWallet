@@ -17,17 +17,16 @@ yarn install
 ```
 
 ## Compile
-
-The hardhat task `compile` has been override to copy typechain artifacts to the `backend` and `mobileapp` folder. 
+Hardhat compile has been wrapped in yarn, also typechain types are copied.
 
 ```bash
-npx hardhat compile --copy-types True
+yarn compile
 ```
 
 ## Run local hardhat network
 
 ```bash
-npx hardhat node --hostname 0.0.0.0
+yarn start:local
 ```
 
 ## Deploy 

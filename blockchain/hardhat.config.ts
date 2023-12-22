@@ -1,31 +1,9 @@
-import { HardhatUserConfig, task, types } from "hardhat/config";
+import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 
 import "@typechain/hardhat";
 import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
-import copyTypechainTypes from "./scripts/utils/copyTypechainTypes";
-
-/**
- * Override the built-in compile task to copy the TypeChain types to the mobile app and backend
- */
-task("compile")
-  .addOptionalParam(
-    "copyTypes",
-    "Copy TypeChain types to the mobile app and backend",
-    false,
-    types.boolean
-  )
-  .setAction(async (args, hre, runSuper) => {
-    await runSuper(); // runs the built-in compile task
-    if (args.copyTypes) {
-      await copyTypechainTypes("typechain-types", [
-        "../mobileapp/src/contracts",
-        "../backend/wallet-factory/src/contracts",
-        "../backend/sapphire-relayer/src/contracts",
-      ]);
-    }
-  });
 
 const config: HardhatUserConfig = {
   solidity: {

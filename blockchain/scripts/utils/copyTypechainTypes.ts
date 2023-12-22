@@ -1,9 +1,13 @@
 import fs from "fs-extra";
 
-export default async function copyTypechainTypes(
-  sourcePath: string,
-  destinationPaths: string[]
-) {
+const sourcePath = "typechain-types"
+const destinationPaths = [
+    "../mobileapp/src/contracts",
+    "../backend/wallet-factory/src/contracts",
+    "../backend/sapphire-relayer/src/contracts",
+]
+
+async function copyTypechainTypes() {
   if (destinationPaths.length === 0) {
     console.error("No destination paths specified!");
     return;
@@ -22,3 +26,8 @@ export default async function copyTypechainTypes(
     }
   }
 }
+
+copyTypechainTypes().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
