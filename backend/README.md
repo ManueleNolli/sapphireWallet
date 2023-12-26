@@ -17,6 +17,8 @@ http://localhost:3000/api
 
 ## Running the app in Docker
 
+<i class="fa-duotone fa-triangle-exclamation" style="--fa-primary-color: #ff0000; --fa-secondary-color: #000000;"></i> fill your personal information inside `.env` files (project sapphire-relayer and wallet-factory)
+
 ```bash
 docker-compose up 
 ```
@@ -24,12 +26,6 @@ or
 ```bash
 docker-compose up --build
 ```
- ## Running the app locally
+ ## Install apps locally
 
-```bash
-cd wallet-factory && yarn install && yarn run start
-cd ..
-cd sapphire-wallet && yarn install && yarn run start
-cd ..
-cd api-gateway && yarn install && yarn run start
-```
+Follow the README.md inside each microservice folder.

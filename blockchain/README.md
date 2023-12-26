@@ -15,7 +15,7 @@ This project includes the Argent smart contracts of those two repositories:
 ```bash
 yarn install
 ```
-:warning: fill your personal information inside `.env`
+<i class="fa-duotone fa-triangle-exclamation" style="--fa-primary-color: #ff0000; --fa-secondary-color: #000000;"></i> fill your personal information inside `.env`
 
 ## Compile
 Hardhat compile has been wrapped in yarn, also typechain types are copied.
@@ -47,5 +47,5 @@ The updated .env are:
 * [backend/sapphire-relayer/.env](../backend/sapphire-relayer/.env)
 * [mobileapp/.env](../mobileapp/.env)
 
-For know which keys are updated please check the `deploy.ts` file.
+For know which keys are added/updated please check the `deploy.ts` file.
 

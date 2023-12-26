@@ -12,7 +12,7 @@ Sapphire Wallet is a POC of Account Abstraction using Argent's wallet contract.
 ```bash
 yarn install
 ```
-:warning: fill your personal information inside `.env`
+<i class="fa-duotone fa-triangle-exclamation" style="--fa-primary-color: #ff0000; --fa-secondary-color: #000000;"></i> fill your personal information inside `.env`
 
 
 ## Run
