@@ -17,6 +17,8 @@ yarn install
 ```
 <i class="fa-duotone fa-triangle-exclamation" style="--fa-primary-color: #ff0000; --fa-secondary-color: #000000;"></i> fill your personal information inside `.env`
 
+<i class="fab fa-gitlab fa-fw" style="color:rgb(252,109,38); font-size:.85em" aria-hidden="true"></i> Tested on Gitlab CI/CD
+
 ## Compile
 Hardhat compile has been wrapped in yarn, also typechain types are copied.
 
