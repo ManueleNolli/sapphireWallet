@@ -15,9 +15,9 @@ This project includes the Argent smart contracts of those two repositories:
 ```bash
 yarn install
 ```
-<i class="fa-duotone fa-triangle-exclamation" style="--fa-primary-color: #ff0000; --fa-secondary-color: #000000;"></i> fill your personal information inside `.env`
 
-<i class="fab fa-gitlab fa-fw" style="color:rgb(252,109,38); font-size:.85em" aria-hidden="true"></i> Tested on Gitlab CI/CD
+![](https://gitlab-edu.supsi.ch/dti-isin/giuliano.gremlich/progetti_master/2023_2024/manuele-nolli/aa-interoperability/uploads/7247c41762af1229ee0f92b6e0d5573f/attention.png)
+fill your personal information inside `.env`
 
 ## Compile
 Hardhat compile has been wrapped in yarn, also typechain types are copied.
