@@ -15,7 +15,7 @@ This project includes the Argent smart contracts of those two repositories:
 ```bash
 yarn install
 ```
-<img src="https://gitlab-edu.supsi.ch/dti-isin/giuliano.gremlich/progetti_master/2023_2024/manuele-nolli/aa-interoperability/uploads/7247c41762af1229ee0f92b6e0d5573f/attention.png" alt="Attention icon" style="height: 10px; width:10px;"/> fill your personal information inside `.env`
+<img src="https://gitlab-edu.supsi.ch/dti-isin/giuliano.gremlich/progetti_master/2023_2024/manuele-nolli/aa-interoperability/uploads/7247c41762af1229ee0f92b6e0d5573f/attention.png" alt="attention image" width="40" height="auto"> fill your personal information inside `.env`
 
 ## Compile
 Hardhat compile has been wrapped in yarn, also typechain types are copied.
