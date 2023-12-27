@@ -12,8 +12,8 @@ export class BlockchainService {
     });
   }
 
-  async getHardhatProvider() {
-    const provider = new JsonRpcProvider('http://127.0.0.1:8545');
+  async getHardhatProvider(localHostAddress: string) {
+    const provider = new JsonRpcProvider(`http://${localHostAddress}:8545`);
     await this.testConnection(provider);
     return provider;
   }
@@ -32,27 +32,26 @@ export class BlockchainService {
   }
 
   /**
-   * Get provider and signer for a given network
-   * @param network
-   * @param signerKey
-   * @param apiKey - Only required if network needs an API key
-   */
-  async getProviderAndSigner(
-    network: string,
-    signerKey: string,
-    apiKey?: string,
-  ) {
+   * Get provider and signer for a given network. Params are wrapped in an object to avoid ambiguity in optional params.
+   * @param details - Object containing network, signerKey, localHostAddress (Only required if network is localhost) and apiKey (Only required if network is sepolia)
+   * */
+  async getProviderAndSigner(details: {
+    network: string;
+    signerKey: string;
+    localHostAddress?: string;
+    apiKey?: string;
+  }) {
     let signer: Wallet;
 
-    if (network === 'localhost') {
-      const provider = await this.getHardhatProvider();
-      signer = await this.getSigner(signerKey, provider);
-    } else if (network === 'sepolia' && apiKey) {
-      const provider = await this.getSepoliaProvider(apiKey);
-      signer = await this.getSigner(signerKey, provider);
+    if (details.network === 'localhost' && details.localHostAddress) {
+      const provider = await this.getHardhatProvider(details.localHostAddress);
+      signer = await this.getSigner(details.signerKey, provider);
+    } else if (details.network === 'sepolia' && details.apiKey) {
+      const provider = await this.getSepoliaProvider(details.apiKey);
+      signer = await this.getSigner(details.signerKey, provider);
     } else {
       throw new RpcException(
-        new BadRequestException(`Network '${network}' not found`),
+        new BadRequestException(`Network '${details.network}' not found`),
       );
     }
 

@@ -1,10 +1,9 @@
-import { BadRequestException, Controller } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { WalletFactoryService } from './wallet-factory.service';
-import { EventPattern, RpcException, Transport } from '@nestjs/microservices';
+import { EventPattern, Transport } from '@nestjs/microservices';
 import { CreateWalletRequestEvent } from './events/create-wallet-request.event';
 import { EnvironmentService } from './environment/environment.service';
 import { BlockchainService } from './blockchain/blockchain.service';
-import { Provider, Wallet } from 'ethers';
 
 @Controller()
 export class WalletFactoryController {
@@ -21,14 +20,20 @@ export class WalletFactoryController {
       data.network,
     );
 
-    const signer = await this.blockchainService.getProviderAndSigner(
+    const backendAddress = this.environmentService.getUnhandled(
+      'ADDRESS',
       data.network,
-      this.environmentService.getWithNetwork(
+    );
+
+    const signer = await this.blockchainService.getProviderAndSigner({
+      network: data.network,
+      signerKey: this.environmentService.getWithNetwork(
         'SIGNER_PRIVATE_KEY',
         data.network,
       ),
-      apiKey,
-    );
+      localHostAddress: backendAddress,
+      apiKey: apiKey,
+    });
 
     return await this.walletFactoryService.callWalletFactoryContract(
       signer,

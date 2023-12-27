@@ -44,7 +44,7 @@ describe('BlockchainService', () => {
         .spyOn(blockchainService, 'testConnection')
         .mockResolvedValueOnce(undefined);
 
-      const provider = await blockchainService.getHardhatProvider();
+      const provider = await blockchainService.getHardhatProvider('address');
 
       expect(provider).toBeInstanceOf(JsonRpcProvider);
     });
@@ -89,10 +89,11 @@ describe('BlockchainService', () => {
         .spyOn(blockchainService, 'getSigner')
         .mockResolvedValueOnce({} as Wallet);
 
-      const signer = await blockchainService.getProviderAndSigner(
-        'localhost',
-        'test_private_key',
-      );
+      await blockchainService.getProviderAndSigner({
+        network: 'localhost',
+        signerKey: 'test_private_key',
+        localHostAddress: 'test_local_host_address',
+      });
 
       expect(blockchainService.getHardhatProvider).toHaveBeenCalled();
       expect(blockchainService.getSigner).toHaveBeenCalled();
@@ -106,11 +107,11 @@ describe('BlockchainService', () => {
         .spyOn(blockchainService, 'getSigner')
         .mockResolvedValueOnce({} as Wallet);
 
-      const signer = await blockchainService.getProviderAndSigner(
-        'sepolia',
-        'test_private_key',
-        'test_api_key',
-      );
+      await blockchainService.getProviderAndSigner({
+        network: 'sepolia',
+        signerKey: 'test_private_key',
+        apiKey: 'test_api_key',
+      });
 
       expect(blockchainService.getSepoliaProvider).toHaveBeenCalled();
       expect(blockchainService.getSigner).toHaveBeenCalled();
@@ -118,10 +119,10 @@ describe('BlockchainService', () => {
 
     it('should return a network not found', async () => {
       await expect(
-        blockchainService.getProviderAndSigner(
-          'sapphire_network',
-          'test_private_key',
-        ),
+        blockchainService.getProviderAndSigner({
+          network: 'sapphire_network',
+          signerKey: 'test_private_key',
+        }),
       ).rejects.toThrow(
         new RpcException(
           new BadRequestException(`Network 'sapphire_network' not found`),

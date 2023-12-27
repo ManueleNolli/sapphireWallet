@@ -24,7 +24,7 @@ export default function Home({ navigation }: any) {
     const response = await requestERC721TokenTransfer(
       getWalletContractAddress(),
       '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
-      2,
+      0,
       getSigner(
         await getPrivateKey('Sign transaction to send NFT'),
         NETWORKS.LOCALHOST
