@@ -6,12 +6,14 @@ import {
   Icon,
   IconElement,
 } from '@ui-kitten/components'
+import { Image } from 'expo-image'
+import { logo } from '../assets/AssetsRegistry'
 
 // Pages
 import Home from '../pages/Home/Home'
 import Details from '../pages/Details/Details'
 import Settings from '../pages/Settings/Settings'
-import { ImageProps } from 'react-native'
+import { Button, ImageProps, View } from 'react-native'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -76,12 +78,47 @@ const BottomTabBar = ({ navigation, state }: any) => {
   )
 }
 
+function LogoIcon() {
+  return (
+    <Image
+      contentFit={'contain'}
+      style={{
+        width: 32,
+        height: 32,
+        marginLeft: 8,
+      }}
+      source={logo}
+    />
+  )
+}
+
+function NetworkIcon() {
+  return (
+    <Image
+      contentFit={'contain'}
+      style={{
+        width: 32,
+        height: 32,
+        marginRight: 8,
+      }}
+      source={logo}
+    />
+  )
+}
+
 const BottomTabNavigator = () => (
   <Navigator
-    screenOptions={{ headerShown: false }}
+    screenOptions={{ headerTransparent: true, headerTitleAlign: 'center' }}
     tabBar={(props) => <BottomTabBar {...props} />}
   >
-    <Screen name="Home" component={Home} />
+    <Screen
+      name="Home"
+      component={Home}
+      options={({ navigation, route }) => ({
+        headerLeft: () => <LogoIcon />,
+        headerRight: () => <NetworkIcon />,
+      })}
+    />
     <Screen name="Details" component={Details} />
     <Screen name="Settings" component={Settings} />
   </Navigator>
