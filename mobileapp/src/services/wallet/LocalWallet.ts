@@ -1,6 +1,7 @@
 import { HDNodeWallet, JsonRpcProvider, Wallet } from 'ethers'
 import { NETWORKS } from '../../constants/Networks'
 import { BACKEND_ADDRESS } from '@env'
+import { getProvider } from '../blockchain/'
 
 /**
  * Service used to manage local wallet
@@ -19,12 +20,6 @@ export function getMnemonic(wallet: HDNodeWallet) {
 }
 
 export function getSigner(privateKey: string, network: NETWORKS) {
-  let provider
-  if (network === NETWORKS.LOCALHOST) {
-    console.log(`http://${BACKEND_ADDRESS}:8545`)
-    provider = new JsonRpcProvider(`http://${BACKEND_ADDRESS}:8545`)
-  } else if (network === NETWORKS.SEPOLIA) {
-    throw new Error('Not implemented')
-  }
+  let provider = getProvider(network)
   return new Wallet(privateKey, provider)
 }
