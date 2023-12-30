@@ -16,6 +16,7 @@ import { StatusBar } from 'expo-status-bar'
 // Navigation
 import { NavigationContainer } from '@react-navigation/native'
 import BottomTabNavigator from './src/navigation/BottomTab'
+import { BlockchainProvider } from './src/providers/BlockchainProvider'
 
 export default function App() {
   return (
@@ -26,7 +27,9 @@ export default function App() {
         <ThemeProvider>
           <WalletProvider>
             <FirstAccessProvider>
-              <BottomTabNavigator />
+              <BlockchainProvider>
+                <BottomTabNavigator />
+              </BlockchainProvider>
             </FirstAccessProvider>
           </WalletProvider>
         </ThemeProvider>

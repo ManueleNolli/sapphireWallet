@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   BottomNavigation,
@@ -7,13 +7,15 @@ import {
   IconElement,
 } from '@ui-kitten/components'
 import { Image } from 'expo-image'
-import { logo } from '../assets/AssetsRegistry'
+import { logo, networkLogo } from '../assets/AssetsRegistry'
 
 // Pages
 import Home from '../pages/Home/Home'
 import Details from '../pages/Details/Details'
 import Settings from '../pages/Settings/Settings'
 import { Button, ImageProps, View } from 'react-native'
+import { BlockchainContext } from '../context/BlockchainContext'
+import { NETWORKS } from '../constants/Networks'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -78,50 +80,54 @@ const BottomTabBar = ({ navigation, state }: any) => {
   )
 }
 
-function LogoIcon() {
+const BottomTabNavigator = () => {
+  const { currentNetwork } = useContext(BlockchainContext)
+
+  function LogoIcon() {
+    return (
+      <Image
+        contentFit={'contain'}
+        style={{
+          width: 32,
+          height: 32,
+          marginLeft: 8,
+        }}
+        source={logo}
+      />
+    )
+  }
+
+  function NetworkIcon() {
+    return (
+      <Image
+        contentFit={'contain'}
+        style={{
+          width: 32,
+          height: 32,
+          marginRight: 8,
+        }}
+        source={networkLogo(currentNetwork)}
+      />
+    )
+  }
+
   return (
-    <Image
-      contentFit={'contain'}
-      style={{
-        width: 32,
-        height: 32,
-        marginLeft: 8,
-      }}
-      source={logo}
-    />
+    <Navigator
+      screenOptions={{ headerTransparent: true, headerTitleAlign: 'center' }}
+      tabBar={(props) => <BottomTabBar {...props} />}
+    >
+      <Screen
+        name="Home"
+        component={Home}
+        options={({ navigation, route }) => ({
+          headerLeft: () => <LogoIcon />,
+          headerRight: () => <NetworkIcon />,
+        })}
+      />
+      <Screen name="Details" component={Details} />
+      <Screen name="Settings" component={Settings} />
+    </Navigator>
   )
 }
-
-function NetworkIcon() {
-  return (
-    <Image
-      contentFit={'contain'}
-      style={{
-        width: 32,
-        height: 32,
-        marginRight: 8,
-      }}
-      source={logo}
-    />
-  )
-}
-
-const BottomTabNavigator = () => (
-  <Navigator
-    screenOptions={{ headerTransparent: true, headerTitleAlign: 'center' }}
-    tabBar={(props) => <BottomTabBar {...props} />}
-  >
-    <Screen
-      name="Home"
-      component={Home}
-      options={({ navigation, route }) => ({
-        headerLeft: () => <LogoIcon />,
-        headerRight: () => <NetworkIcon />,
-      })}
-    />
-    <Screen name="Details" component={Details} />
-    <Screen name="Settings" component={Settings} />
-  </Navigator>
-)
 
 export default BottomTabNavigator
