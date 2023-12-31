@@ -27,21 +27,59 @@ export default function Home({ navigation }: any) {
   } = useHome()
   const styles = useStyleSheet(themedStyles)
 
+  {
+    /* SCROLL ANIMATION */
+  }
+  const scrollY = useRef(new Animated.Value(0)).current
+
+  const scrollThreshold = 30 * vh
+
+  const imageContainerTranslateY = scrollY.interpolate({
+    inputRange: [0, scrollThreshold],
+    outputRange: [0, -scrollThreshold],
+    extrapolate: 'clamp',
+  })
+
+  const balanceContainerTranslateY = scrollY.interpolate({
+    inputRange: [0, scrollThreshold],
+    outputRange: [0, scrollThreshold / 2 + 2 * vh],
+    extrapolate: 'clamp',
+  })
+
+  const onScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: false }
+  )
+
   return (
     <Layout style={{ flex: 1 }}>
-      <View style={styles.imageContainer}>
+      <Animated.View
+        style={[
+          styles.imageContainer,
+          {
+            transform: [{ translateY: imageContainerTranslateY }],
+          },
+        ]}
+      >
         <ImageBackground
           source={backgroundImage}
           contentFit="cover"
           style={styles.imageBackground}
         >
-          <View style={styles.balanceContainer}>
+          <Animated.View
+            style={[
+              styles.balanceContainer,
+              {
+                transform: [{ translateY: balanceContainerTranslateY }],
+              },
+            ]}
+          >
             <BlurView intensity={20} style={styles.balanceBlurContainer}>
               <Text style={styles.balanceText} category="h4">
                 {balance} ETH
               </Text>
             </BlurView>
-          </View>
+          </Animated.View>
         </ImageBackground>
 
         <View style={styles.addressContainer}>
@@ -56,20 +94,19 @@ export default function Home({ navigation }: any) {
             </BlurView>
           </TouchableWithoutFeedback>
         </View>
-      </View>
-
-      <View>
-        <View
-          style={{
-            width: '100%',
-            height: 1000,
-            marginTop: 56 * vh,
-            paddingTop: 8 * vh,
-          }}
-        >
-          <Text>Ciao</Text>
+      </Animated.View>
+      <ScrollView style={{ paddingTop: 64 * vh }} onScroll={onScroll}>
+        <View>
+          <View
+            style={{
+              width: '100%',
+              height: 1500,
+            }}
+          >
+            <Text>Ciao</Text>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </Layout>
   )
 }
@@ -77,9 +114,8 @@ export default function Home({ navigation }: any) {
 const themedStyles = StyleService.create({
   imageContainer: {
     position: 'absolute',
-    top: 0,
-    left: -20 * vw,
     zIndex: 1,
+    left: -20 * vw,
     height: 60 * vh,
     width: 140 * vw,
   },
