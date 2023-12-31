@@ -31,4 +31,17 @@ const networkLogo = (network: NETWORKS) => {
   }
 }
 
-export { logo, logoAnimated, logoWithFullText, homeBackground, networkLogo }
+const qrCode = require(assetsPath + 'QrCode.png')
+const sendETH = require(assetsPath + 'SendETH.png')
+const sendNFTs = require(assetsPath + 'SendNFTs.png')
+
+export {
+  logo,
+  logoAnimated,
+  logoWithFullText,
+  homeBackground,
+  networkLogo,
+  qrCode,
+  sendETH,
+  sendNFTs,
+}

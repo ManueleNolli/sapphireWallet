@@ -8,16 +8,49 @@ import {
 import {
   Animated,
   ScrollView,
-  StyleSheet,
+  Image,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  FlatList,
 } from 'react-native'
 import { ImageBackground } from 'expo-image'
 import { appStyles, vh, vw } from '../../Styles'
 import { BlurView } from 'expo-blur'
 import { formatBlockchainAddress } from '../../utils/formatBlockchainData'
 import useHome from './useHome'
+import { qrCode, sendETH, sendNFTs } from '../../assets/AssetsRegistry'
 
+const buttonData = [
+  {
+    id: 1,
+    title: 'Receive',
+    description:
+      'Receive ETH or NFT by showing a QR code of your wallet address',
+    image: qrCode,
+    action: () => {
+      console.log('pressed Receive')
+    },
+  },
+  {
+    id: 2,
+    title: 'Send ETH',
+    description: 'Send ETH to another wallet address',
+    image: sendETH,
+    action: () => {
+      console.log('pressed Send ETH')
+    },
+  },
+  {
+    id: 3,
+    title: 'Send NFTs',
+    description: 'Send NFTs to another wallet address',
+    image: sendNFTs,
+    action: () => {
+      console.log('pressed Send NFTs')
+    },
+  },
+]
 export default function Home({ navigation }: any) {
   const {
     backgroundImage,
@@ -49,6 +82,53 @@ export default function Home({ navigation }: any) {
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
     { useNativeDriver: false }
+  )
+
+  {
+    /*
+  BUTTON 
+  */
+  }
+
+  const RenderButton = ({
+    title,
+    description,
+    image,
+    action,
+  }: {
+    title: string
+    description: string
+    image: any
+    action: () => void
+  }) => (
+    <TouchableOpacity onPress={action} style={styles.buttonContainer}>
+      <View
+        style={{
+          paddingVertical: 1 * vh,
+          paddingHorizontal: 2 * vw,
+        }}
+      >
+        <Image
+          source={image}
+          style={{
+            width: 10 * vh,
+            height: 10 * vh,
+          }}
+        />
+      </View>
+
+      <View
+        style={{
+          flex: 1,
+          marginLeft: 2 * vw,
+          paddingVertical: 1 * vh,
+          paddingHorizontal: 2 * vw,
+        }}
+      >
+        <Text category={'h6'}>{title}</Text>
+        <Text category={'label'}>{description}</Text>
+      </View>
+    </TouchableOpacity>
   )
 
   return (
@@ -95,17 +175,19 @@ export default function Home({ navigation }: any) {
           </TouchableWithoutFeedback>
         </View>
       </Animated.View>
-      <ScrollView style={{ paddingTop: 64 * vh }} onScroll={onScroll}>
-        <View>
-          <View
-            style={{
-              width: '100%',
-              height: 1500,
-            }}
-          >
-            <Text>Ciao</Text>
-          </View>
-        </View>
+
+      <ScrollView onScroll={onScroll} showsVerticalScrollIndicator={false}>
+        <View style={{ height: 64 * vh }} />
+
+        {buttonData.map((item) => (
+          <RenderButton
+            key={item.id}
+            title={item.title}
+            description={item.description}
+            image={item.image}
+            action={item.action}
+          />
+        ))}
       </ScrollView>
     </Layout>
   )
@@ -166,5 +248,16 @@ const themedStyles = StyleService.create({
     shadowOpacity: 0.5,
     shadowRadius: 10,
     elevation: 15,
+  },
+  buttonContainer: {
+    width: 90 * vw,
+    margin: 5 * vw,
+    borderRadius: 5,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'color-primary-400',
+    paddingHorizontal: 2 * vw,
+    paddingVertical: 1 * vw,
   },
 })
