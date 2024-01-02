@@ -21,7 +21,8 @@ export function BlockchainProvider({ children }: BlockchainProviderProps) {
   const setEthersProvider = async (network: NETWORKS) => {
     let connectedProvider
     try {
-      connectedProvider = await getProvider(currentNetwork)
+      connectedProvider = await getProvider(network)
+      setCurrentNetwork(network)
     } catch (e) {
       setIsError(true)
       console.log('Error connecting to blockchain', e)
@@ -48,7 +49,6 @@ export function BlockchainProvider({ children }: BlockchainProviderProps) {
     <BlockchainContext.Provider
       value={{
         currentNetwork: currentNetworkLocal,
-        setCurrentNetwork,
         ethersProvider: provider,
         setEthersProvider,
       }}

@@ -5,6 +5,7 @@ import {
   BottomNavigationTab,
   Icon,
   IconElement,
+  Text,
 } from '@ui-kitten/components'
 import { Image } from 'expo-image'
 import { logo, networkLogo } from '../assets/AssetsRegistry'
@@ -113,7 +114,11 @@ const BottomTabNavigator = () => {
 
   return (
     <Navigator
-      screenOptions={{ headerTransparent: true, headerTitleAlign: 'center' }}
+      screenOptions={{
+        headerTransparent: true,
+        headerTitleAlign: 'center',
+        headerTitle: (props) => <Text category={'h6'}> {props.children} </Text>,
+      }}
       tabBar={(props) => <BottomTabBar {...props} />}
     >
       <Screen
