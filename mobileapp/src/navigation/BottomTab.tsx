@@ -14,9 +14,8 @@ import { logo, networkLogo } from '../assets/AssetsRegistry'
 import Home from '../pages/Home/Home'
 import Details from '../pages/Details/Details'
 import Settings from '../pages/Settings/Settings'
-import { Button, ImageProps, View } from 'react-native'
+import { ImageProps } from 'react-native'
 import { BlockchainContext } from '../context/BlockchainContext'
-import { NETWORKS } from '../constants/Networks'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -74,7 +73,7 @@ const BottomTabBar = ({ navigation, state }: any) => {
       selectedIndex={state.index}
       onSelect={(index) => navigation.navigate(state.routeNames[index])}
     >
-      <BottomNavigationTab title="Balance" icon={HomeIcon} />
+      <BottomNavigationTab title="Home" icon={HomeIcon} />
       <BottomNavigationTab title="NFTs" icon={NFTsIcon} />
       <BottomNavigationTab title="Settings" icon={SettingsIcon} />
     </BottomNavigation>
@@ -124,7 +123,7 @@ const BottomTabNavigator = () => {
       <Screen
         name="Home"
         component={Home}
-        options={({ navigation, route }) => ({
+        options={({}) => ({
           headerLeft: () => <LogoIcon />,
           headerRight: () => <NetworkIcon />,
         })}

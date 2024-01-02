@@ -18,7 +18,7 @@ describe('BottomTabNavigator', () => {
     )
 
     // Assert that the initial screen is rendered
-    expect(tree.getByText('Balance')).toBeDefined()
+    expect(tree.getAllByText('Home')).toBeDefined()
     expect(tree.getByText('NFTs')).toBeDefined()
     expect(tree.getByText('Settings')).toBeDefined()
     expect(tree.toJSON()).toMatchSnapshot()

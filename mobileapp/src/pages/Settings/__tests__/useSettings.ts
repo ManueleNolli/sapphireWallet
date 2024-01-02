@@ -6,6 +6,7 @@ jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useContext: jest.fn(),
 }))
+
 describe('useSettings hook', () => {
   it('should toggle theme without Icon ref', async () => {
     const toggleThemeMock = jest.fn()
@@ -44,5 +45,26 @@ describe('useSettings hook', () => {
 
     expect(toggleThemeMock).toHaveBeenCalled()
     expect(startAnimationMock).toHaveBeenCalled()
+  })
+
+  it('network select should call setEthersProvider', async () => {
+    const toggleThemeMock = jest.fn()
+    const setEthersProviderMock = jest.fn()
+    const currentNetworkMock = 'localhost'
+    ;(useContext as jest.Mock).mockReturnValue({
+      theme: 'light',
+      toggleTheme: toggleThemeMock,
+      toggleFirstAccess: jest.fn(),
+      currentNetwork: currentNetworkMock,
+      setEthersProvider: setEthersProviderMock,
+    })
+
+    const { result } = renderHook(() => useSettings())
+
+    await act(() => {
+      result.current.onNetworkSelect(0)
+    })
+
+    expect(setEthersProviderMock).toHaveBeenCalledWith('localhost')
   })
 })

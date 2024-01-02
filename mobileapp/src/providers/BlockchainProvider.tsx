@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react'
-import { ethers, Provider } from 'ethers'
+import { Provider } from 'ethers'
 import useLoading from '../hooks/useLoading'
 import { BlockchainContext } from '../context/BlockchainContext'
 import { getProvider } from '../services/blockchain'
 import { NETWORKS } from '../constants/Networks'
 import Loading from '../pages/Loading/Loading'
+import Error from '../pages/Error/Error'
 
 type BlockchainProviderProps = {
   children: React.ReactNode
@@ -25,7 +26,7 @@ export function BlockchainProvider({ children }: BlockchainProviderProps) {
       setCurrentNetwork(network)
     } catch (e) {
       setIsError(true)
-      console.log('Error connecting to blockchain', e)
+      console.error('Error connecting to blockchain')
     }
 
     if (connectedProvider) {
@@ -35,14 +36,14 @@ export function BlockchainProvider({ children }: BlockchainProviderProps) {
 
   useEffect(() => {
     setEthersProvider(currentNetwork).then(() => setIsLoading(false))
-  }, [currentNetwork])
+  }, [])
 
   if (isLoading) {
     return <Loading text={'Connecting to blockchain...'} />
   }
 
   if (isError) {
-    return <Loading text={'Error connecting to blockchain'} />
+    return <Error text={'Error connecting to blockchain'} />
   }
 
   return (

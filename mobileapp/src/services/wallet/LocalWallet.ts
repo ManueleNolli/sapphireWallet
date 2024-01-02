@@ -1,6 +1,5 @@
-import { HDNodeWallet, JsonRpcProvider, Wallet } from 'ethers'
+import { HDNodeWallet, Wallet } from 'ethers'
 import { NETWORKS } from '../../constants/Networks'
-import { BACKEND_ADDRESS } from '@env'
 import { getProvider } from '../blockchain/'
 
 /**
@@ -19,7 +18,7 @@ export function getMnemonic(wallet: HDNodeWallet) {
   return mnemonic.split(' ')
 }
 
-export function getSigner(privateKey: string, network: NETWORKS) {
-  let provider = getProvider(network)
+export async function getSigner(privateKey: string, network: NETWORKS) {
+  let provider = await getProvider(network)
   return new Wallet(privateKey, provider)
 }

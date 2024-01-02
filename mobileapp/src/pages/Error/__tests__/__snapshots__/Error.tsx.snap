@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error Render correctly with text 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      },
+    ]
+  }
+>
+  <ViewManagerAdapter_ExpoImage
+    contentFit="cover"
+    contentPosition={
+      {
+        "left": "50%",
+        "top": "50%",
+      }
+    }
+    height={375}
+    maxHeight={250}
+    maxWidth={250}
+    onError={[Function]}
+    onLoad={[Function]}
+    onLoadStart={[Function]}
+    onProgress={[Function]}
+    placeholder={[]}
+    source={[]}
+    style={
+      {
+        "height": 375,
+        "maxHeight": 250,
+        "maxWidth": 250,
+        "width": 375,
+      }
+    }
+    transition={null}
+    width={375}
+  />
+  <Text
+    appearance="default"
+    category="h6"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 18,
+          "fontWeight": "800",
+        },
+        undefined,
+      ]
+    }
+  >
+    Error!
+  </Text>
+</View>
+`;
+
+exports[`Error Render correctly without text 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      },
+    ]
+  }
+>
+  <ViewManagerAdapter_ExpoImage
+    contentFit="cover"
+    contentPosition={
+      {
+        "left": "50%",
+        "top": "50%",
+      }
+    }
+    height={375}
+    maxHeight={250}
+    maxWidth={250}
+    onError={[Function]}
+    onLoad={[Function]}
+    onLoadStart={[Function]}
+    onProgress={[Function]}
+    placeholder={[]}
+    source={[]}
+    style={
+      {
+        "height": 375,
+        "maxHeight": 250,
+        "maxWidth": 250,
+        "width": 375,
+      }
+    }
+    transition={null}
+    width={375}
+  />
+</View>
+`;

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockchainProvider render loading 1`] = `
+<div
+  data-testid="Loading"
+>
+  Loading
+</div>
+`;
+
+exports[`BlockchainProvider should catch error at start up 1`] = `
+<div
+  data-testid="Error"
+>
+  Error
+</div>
+`;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import { WalletContext } from '../../context/WalletContext'
 import { getBalance } from '../../services/transactions/Balance'
@@ -8,10 +8,9 @@ import { homeBackground } from '../../assets/AssetsRegistry'
 
 export default function useHome() {
   const { ethersProvider } = useContext(BlockchainContext)
-  const { getEOAAddress, getWalletContractAddress } = useContext(WalletContext)
-  const { getPrivateKey } = useContext(WalletContext)
-  const [balance, setBalance] = React.useState<string>('')
-  const [backgroundImage] = React.useState(homeBackground())
+  const { getWalletContractAddress } = useContext(WalletContext)
+  const [balance, setBalance] = useState<string>('')
+  const [backgroundImage] = useState(homeBackground())
 
   // const sendTransaction = async () => {
   //   const response = await requestERC721TokenTransfer(

@@ -12,7 +12,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  FlatList,
 } from 'react-native'
 import { ImageBackground } from 'expo-image'
 import { appStyles, vh, vw } from '../../Styles'
@@ -51,7 +50,8 @@ const buttonData = [
     },
   },
 ]
-export default function Home({ navigation }: any) {
+
+export default function Home() {
   const {
     backgroundImage,
     balance,

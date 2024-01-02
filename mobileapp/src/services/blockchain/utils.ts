@@ -1,5 +1,5 @@
 import { NETWORKS } from '../../constants/Networks'
-import { AlchemyProvider, JsonRpcProvider, Provider } from 'ethers'
+import { AlchemyProvider, JsonRpcProvider } from 'ethers'
 import { BACKEND_ADDRESS, SEPOLIA_API_KEY } from '@env'
 
 export async function getProvider(network: NETWORKS) {
@@ -13,12 +13,12 @@ export async function getProvider(network: NETWORKS) {
   }
 
   // test connection
-  provider.getBlockNumber().catch((error: Error) => {
-    console.error('Error connecting to blockchain', error)
-    throw error
-  })
+  try {
+    await provider.getBlockNumber()
+  } catch (error) {
+    console.error('Error connecting to blockchain')
+    throw new Error('Unable to test connection to blockchain')
+  }
 
   return provider
 }
-
-export function getNetwork(provider: Provider) {}

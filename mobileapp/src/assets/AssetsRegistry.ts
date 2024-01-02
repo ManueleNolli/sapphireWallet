@@ -2,6 +2,7 @@ import { NETWORKS } from '../constants/Networks'
 
 const assetsPath = '../../assets/'
 
+const attention = require(assetsPath + 'Attention.png')
 const logo = require(assetsPath + 'Sapphire.png')
 const logoAnimated = require(assetsPath + 'SapphireAnimated.gif')
 const logoWithFullText = require(assetsPath + 'LogoFullText.png')
@@ -36,6 +37,7 @@ const sendETH = require(assetsPath + 'SendETH.png')
 const sendNFTs = require(assetsPath + 'SendNFTs.png')
 
 export {
+  attention,
   logo,
   logoAnimated,
   logoWithFullText,

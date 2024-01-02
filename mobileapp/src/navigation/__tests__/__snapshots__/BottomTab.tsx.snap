@@ -79,6 +79,177 @@ exports[`BottomTabNavigator Renders correctly first page 1`] = `
             Home
           </div>
         </View>
+        <View
+          onLayout={[Function]}
+          style={
+            {
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          />
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "alignItems": "flex-start",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginStart": 0,
+                  }
+                }
+              >
+                <ViewManagerAdapter_ExpoImage
+                  contentFit="contain"
+                  contentPosition={
+                    {
+                      "left": "50%",
+                      "top": "50%",
+                    }
+                  }
+                  height={32}
+                  marginLeft={8}
+                  onError={[Function]}
+                  onLoad={[Function]}
+                  onLoadStart={[Function]}
+                  onProgress={[Function]}
+                  placeholder={[]}
+                  source={[]}
+                  style={
+                    {
+                      "height": 32,
+                      "marginLeft": 8,
+                      "width": 32,
+                    }
+                  }
+                  transition={null}
+                  width={32}
+                />
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "justifyContent": "center",
+                    "marginHorizontal": 16,
+                    "maxWidth": 590,
+                  }
+                }
+              >
+                <Text
+                  appearance="default"
+                  category="h6"
+                  status="basic"
+                  style={
+                    [
+                      {
+                        "color": "#222B45",
+                        "fontFamily": "System",
+                        "fontSize": 18,
+                        "fontWeight": "800",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                   
+                  Home
+                   
+                </Text>
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "alignItems": "flex-end",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginEnd": 0,
+                  }
+                }
+              >
+                <ViewManagerAdapter_ExpoImage
+                  contentFit="contain"
+                  contentPosition={
+                    {
+                      "left": "50%",
+                      "top": "50%",
+                    }
+                  }
+                  height={32}
+                  marginRight={8}
+                  onError={[Function]}
+                  onLoad={[Function]}
+                  onLoadStart={[Function]}
+                  onProgress={[Function]}
+                  placeholder={[]}
+                  source={[]}
+                  style={
+                    {
+                      "height": 32,
+                      "marginRight": 8,
+                      "width": 32,
+                    }
+                  }
+                  transition={null}
+                  width={32}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
     </RNSScreen>
   </RNSScreenNavigationContainer>
@@ -297,7 +468,7 @@ exports[`BottomTabNavigator Renders correctly first page 1`] = `
             ]
           }
         >
-          Balance
+          Home
         </Text>
       </View>
       <View
