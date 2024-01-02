@@ -33,7 +33,7 @@ describe('BlockchainProvider', () => {
       )
     })
 
-    expect(tree.getByText('localhost')).toBeTruthy()
+    expect(tree.getByText('Localhost')).toBeTruthy()
   })
 
   it('should catch error at start up', async () => {

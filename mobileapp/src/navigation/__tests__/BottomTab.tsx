@@ -6,7 +6,7 @@ import { act, fireEvent, waitFor } from '@testing-library/react-native'
 
 // MOCKS
 jest.mock('../../pages/Home/Home')
-jest.mock('../../pages/Details/Details')
+jest.mock('../../pages/NFTs/NFTs')
 jest.mock('../../pages/Settings/Settings')
 
 describe('BottomTabNavigator', () => {

@@ -36,6 +36,8 @@ const qrCode = require(assetsPath + 'QrCode.png')
 const sendETH = require(assetsPath + 'SendETH.png')
 const sendNFTs = require(assetsPath + 'SendNFTs.png')
 
+const NFTPlaceholder = require(assetsPath + 'NFTPlaceholder.png')
+
 export {
   attention,
   logo,
@@ -46,4 +48,5 @@ export {
   qrCode,
   sendETH,
   sendNFTs,
+  NFTPlaceholder,
 }

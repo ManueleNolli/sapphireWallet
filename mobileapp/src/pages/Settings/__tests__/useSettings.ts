@@ -50,7 +50,7 @@ describe('useSettings hook', () => {
   it('network select should call setEthersProvider', async () => {
     const toggleThemeMock = jest.fn()
     const setEthersProviderMock = jest.fn()
-    const currentNetworkMock = 'localhost'
+    const currentNetworkMock = 'Localhost'
     ;(useContext as jest.Mock).mockReturnValue({
       theme: 'light',
       toggleTheme: toggleThemeMock,
@@ -65,6 +65,6 @@ describe('useSettings hook', () => {
       result.current.onNetworkSelect(0)
     })
 
-    expect(setEthersProviderMock).toHaveBeenCalledWith('localhost')
+    expect(setEthersProviderMock).toHaveBeenCalledWith('Localhost')
   })
 })

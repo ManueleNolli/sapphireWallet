@@ -12,7 +12,7 @@ import { logo, networkLogo } from '../assets/AssetsRegistry'
 
 // Pages
 import Home from '../pages/Home/Home'
-import Details from '../pages/Details/Details'
+import NFTs from '../pages/NFTs/NFTs'
 import Settings from '../pages/Settings/Settings'
 import { ImageProps } from 'react-native'
 import { BlockchainContext } from '../context/BlockchainContext'
@@ -128,7 +128,7 @@ const BottomTabNavigator = () => {
           headerRight: () => <NetworkIcon />,
         })}
       />
-      <Screen name="Details" component={Details} />
+      <Screen name="NFTs" component={NFTs} />
       <Screen name="Settings" component={Settings} />
     </Navigator>
   )

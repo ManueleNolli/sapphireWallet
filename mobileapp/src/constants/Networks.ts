@@ -1,4 +1,4 @@
 export enum NETWORKS {
-  LOCALHOST = 'localhost',
-  SEPOLIA = 'sepolia',
+  LOCALHOST = 'Localhost',
+  SEPOLIA = 'Sepolia',
 }
