@@ -36,6 +36,9 @@ export default function Settings() {
     <Icon {...props} name="alert-triangle" />
   )
 
+  const networkUppercase = (network: string) =>
+    network.charAt(0).toUpperCase() + network.slice(1)
+
   return (
     <SafeAreaView style={{ paddingTop: 5 * vh }}>
       <Text category="h6">Network</Text>
@@ -43,7 +46,7 @@ export default function Settings() {
       <RadioGroup selectedIndex={selectedIndex} onChange={onNetworkSelect}>
         {Object.values(NETWORKS).map((network, index) => (
           <Radio key={index}>
-            <Text category="s1">{network}</Text>
+            <Text category="s1">{networkUppercase(network)}</Text>
           </Radio>
         ))}
       </RadioGroup>

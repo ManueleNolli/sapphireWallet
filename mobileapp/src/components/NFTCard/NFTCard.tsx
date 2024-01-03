@@ -72,9 +72,7 @@ export function NFTCard({
         >
           <BlurView intensity={50} style={styles.blurContainer}>
             <View style={{ width: '90%' }}>
-              <Text category="h4">
-                {name} #{tokenId}
-              </Text>
+              <Text category="h4">{name}</Text>
               <Collapsible collapsed={collapsed}>
                 <View>
                   <View style={styles.networkContainer}>

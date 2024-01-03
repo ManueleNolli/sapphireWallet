@@ -16,6 +16,10 @@ jest.mock('react', () => ({
 }))
 
 describe('useCreateWallet hook', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('should create and navigate', async () => {
     const setPrivateKeyMock = jest.fn().mockResolvedValue('value')
     const setEOAAddressMock = jest.fn().mockResolvedValue('value')

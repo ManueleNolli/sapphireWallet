@@ -157,8 +157,6 @@ exports[`NFTCard collapsible should work 1`] = `
             }
           >
             NFT Name
-             #
-            1234567890
           </Text>
           <View
             collapsable={false}
@@ -539,8 +537,6 @@ exports[`NFTCard should render correctly 1`] = `
             }
           >
             NFT Name
-             #
-            1234567890
           </Text>
           <View
             collapsable={false}

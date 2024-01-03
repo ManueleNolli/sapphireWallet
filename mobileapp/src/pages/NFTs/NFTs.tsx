@@ -1,59 +1,66 @@
-import React, { useContext } from 'react'
-import { Button, Divider, Layout, useTheme } from '@ui-kitten/components'
-import { ThemeContext } from '../../context/ThemeContext'
+import React, { useContext, useEffect, useState } from 'react'
 import SafeAreaView from '../../utils/SafeAreaView'
 import { NFTCard } from '../../components/NFTCard/NFTCard'
 import { NETWORKS } from '../../constants/Networks'
-import { NFTPlaceholder } from '../../assets/AssetsRegistry'
-import { ScrollView } from 'react-native'
-import { vh } from '../../Styles'
-
-const NFTsData = [
-  {
-    name: 'Purple cat',
-    tokenId: '3022',
-    collectionName: 'collectionName',
-    collectionDescription: 'collectionDescription',
-    image: NFTPlaceholder,
-    network: NETWORKS.SEPOLIA,
-  },
-  {
-    name: 'Jungle cat',
-    tokenId: '2034',
-    collectionName: 'collectionName',
-    collectionDescription:
-      'collectionDescriptioncollectionDescriptioncollectionDescription',
-    image: NFTPlaceholder,
-    network: NETWORKS.LOCALHOST,
-  },
-  {
-    name: 'Aqua cat',
-    tokenId: '234',
-    collectionName: 'collectionName',
-    collectionDescription:
-      'collectionDescriptioncollectionDescriptioncollectionDescription',
-    image: NFTPlaceholder,
-    network: NETWORKS.LOCALHOST,
-  },
-]
+import { ScrollView, View } from 'react-native'
+import { appStyles, vh } from '../../Styles'
+import { Layout, Spinner, Text } from '@ui-kitten/components'
+import useNFTs from './useNFTs'
 
 export default function NFTs() {
+  const { isLoading, nfts } = useNFTs()
+
   return (
-    <ScrollView>
-      <SafeAreaView style={{ paddingTop: 5 * vh, marginBottom: 0 }}>
-        {NFTsData.map((nft, index) => (
-          <NFTCard
-            key={index}
-            name={nft.name}
-            tokenId={nft.tokenId}
-            collectionName={nft.collectionName}
-            collectionDescription={nft.collectionDescription}
-            image={nft.image}
-            network={nft.network}
-            style={{ marginBottom: 2 * vh }}
-          />
-        ))}
-      </SafeAreaView>
-    </ScrollView>
+    <Layout style={{ flex: 1 }}>
+      <ScrollView>
+        <SafeAreaView
+          style={{
+            paddingTop: 5 * vh,
+            marginBottom: 0,
+          }}
+        >
+          {isLoading && (
+            <View style={appStyles.center}>
+              <Spinner
+                size="giant"
+                status="basic"
+                style={{
+                  marginBottom: 2 * vh,
+                }}
+              />
+            </View>
+          )}
+          {nfts.length === 0 && !isLoading && (
+            <View style={appStyles.center}>
+              <Text category={'label'}>No NFTs found</Text>
+            </View>
+          )}
+          {nfts.map(
+            (
+              nft: {
+                name: string
+                tokenId: string
+                collectionName: string
+                collectionDescription: string
+                image: string
+                network: NETWORKS
+              },
+              index: number
+            ) => (
+              <NFTCard
+                key={index}
+                name={nft.name}
+                tokenId={nft.tokenId}
+                collectionName={nft.collectionName}
+                collectionDescription={nft.collectionDescription}
+                image={nft.image}
+                network={nft.network}
+                style={{ marginBottom: 2 * vh }}
+              />
+            )
+          )}
+        </SafeAreaView>
+      </ScrollView>
+    </Layout>
   )
 }

@@ -3,6 +3,7 @@ import updateExternalEnv, { EnvValue } from "../utils/env/updateExternalEnv";
 
 export default async function deploy() {
   const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with the account:", deployer.address);
   const deployerAddress = await deployer.getAddress();
 
   const network = await ethers.provider.getNetwork();

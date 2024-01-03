@@ -7,7 +7,7 @@ import * as Clipboard from 'expo-clipboard'
 import { homeBackground } from '../../assets/AssetsRegistry'
 
 export default function useHome() {
-  const { ethersProvider } = useContext(BlockchainContext)
+  const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
   const { getWalletContractAddress } = useContext(WalletContext)
   const [balance, setBalance] = useState<string>('')
   const [backgroundImage] = useState(homeBackground())
@@ -45,7 +45,7 @@ export default function useHome() {
 
   useEffect(() => {
     getBalances()
-  }, [])
+  }, [ethersProvider])
 
   return {
     backgroundImage,

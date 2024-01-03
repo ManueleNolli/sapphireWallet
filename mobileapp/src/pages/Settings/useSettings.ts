@@ -22,8 +22,8 @@ export default function useSettings() {
   }
 
   const onNetworkSelect = async (index: number) => {
-    setSelectedIndex(index)
     await setEthersProvider(Object.values(NETWORKS)[index])
+    setSelectedIndex(index)
   }
 
   return {

@@ -128,7 +128,13 @@ const BottomTabNavigator = () => {
           headerRight: () => <NetworkIcon />,
         })}
       />
-      <Screen name="NFTs" component={NFTs} />
+      <Screen
+        name="NFTs"
+        component={NFTs}
+        options={({}) => ({
+          headerRight: () => <NetworkIcon />,
+        })}
+      />
       <Screen name="Settings" component={Settings} />
     </Navigator>
   )

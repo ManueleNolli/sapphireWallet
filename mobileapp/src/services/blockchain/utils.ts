@@ -19,6 +19,5 @@ export async function getProvider(network: NETWORKS) {
     console.error('Error connecting to blockchain')
     throw new Error('Unable to test connection to blockchain')
   }
-
   return provider
 }
