@@ -11,7 +11,8 @@ export default function useHome() {
   const { getWalletContractAddress } = useContext(WalletContext)
   const [balance, setBalance] = useState<string>('')
   const [backgroundImage] = useState(homeBackground())
-
+  const [isReceiveModalVisible, setIsReceiveModalVisible] =
+    useState<boolean>(false)
   // const sendTransaction = async () => {
   //   const response = await requestERC721TokenTransfer(
   //     getWalletContractAddress(),
@@ -57,5 +58,7 @@ export default function useHome() {
     balance,
     getWalletContractAddress,
     copyAddressToClipboard,
+    isReceiveModalVisible,
+    setIsReceiveModalVisible,
   }
 }

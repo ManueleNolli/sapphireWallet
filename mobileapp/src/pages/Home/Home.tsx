@@ -4,6 +4,7 @@ import {
   Text,
   StyleService,
   useStyleSheet,
+  Modal,
 } from '@ui-kitten/components'
 import {
   Animated,
@@ -19,37 +20,7 @@ import { BlurView } from 'expo-blur'
 import { formatBlockchainAddress } from '../../utils/formatBlockchainData'
 import useHome from './useHome'
 import { qrCode, sendETH, sendNFTs } from '../../assets/AssetsRegistry'
-
-const buttonData = [
-  {
-    id: 1,
-    title: 'Receive',
-    description:
-      'Receive ETH or NFT by showing a QR code of your wallet address',
-    image: qrCode,
-    action: () => {
-      console.log('pressed Receive')
-    },
-  },
-  {
-    id: 2,
-    title: 'Send ETH',
-    description: 'Send ETH to another wallet address',
-    image: sendETH,
-    action: () => {
-      console.log('pressed Send ETH')
-    },
-  },
-  {
-    id: 3,
-    title: 'Send NFTs',
-    description: 'Send NFTs to another wallet address',
-    image: sendNFTs,
-    action: () => {
-      console.log('pressed Send NFTs')
-    },
-  },
-]
+import { Receive } from '../../components/Receive/Receive'
 
 export default function Home() {
   const {
@@ -57,12 +28,44 @@ export default function Home() {
     balance,
     getWalletContractAddress,
     copyAddressToClipboard,
+    isReceiveModalVisible,
+    setIsReceiveModalVisible,
   } = useHome()
   const styles = useStyleSheet(themedStyles)
 
-  {
-    /* SCROLL ANIMATION */
-  }
+  // DATA
+  const buttonData = [
+    {
+      id: 1,
+      title: 'Receive',
+      description:
+        'Receive ETH or NFT by showing a QR code of your wallet address',
+      image: qrCode,
+      action: () => {
+        setIsReceiveModalVisible(true)
+      },
+    },
+    {
+      id: 2,
+      title: 'Send ETH',
+      description: 'Send ETH to another wallet address',
+      image: sendETH,
+      action: () => {
+        console.log('pressed Send ETH')
+      },
+    },
+    {
+      id: 3,
+      title: 'Send NFTs',
+      description: 'Send NFTs to another wallet address',
+      image: sendNFTs,
+      action: () => {
+        console.log('pressed Send NFTs')
+      },
+    },
+  ]
+
+  // SCROLL ANIMATION
   const scrollY = useRef(new Animated.Value(0)).current
 
   const scrollThreshold = 30 * vh
@@ -84,11 +87,7 @@ export default function Home() {
     { useNativeDriver: false }
   )
 
-  {
-    /*
-  BUTTON 
-  */
-  }
+  // BUTTON
 
   const RenderButton = ({
     title,
@@ -131,8 +130,24 @@ export default function Home() {
     </TouchableOpacity>
   )
 
+  // MODAL
+
+  const ModalReceive = () => {
+    return (
+      <Modal
+        animationType={'fade'}
+        visible={isReceiveModalVisible}
+        backdropStyle={styles.modalBackdrop}
+        onBackdropPress={() => setIsReceiveModalVisible(false)}
+      >
+        <Receive address={getWalletContractAddress()} />
+      </Modal>
+    )
+  }
+
   return (
     <Layout style={{ flex: 1 }}>
+      <ModalReceive />
       <Animated.View
         style={[
           styles.imageContainer,
@@ -259,5 +274,8 @@ const themedStyles = StyleService.create({
     borderColor: 'color-primary-400',
     paddingHorizontal: 2 * vw,
     paddingVertical: 1 * vw,
+  },
+  modalBackdrop: {
+    backgroundColor: 'color-basic-transparent-600',
   },
 })

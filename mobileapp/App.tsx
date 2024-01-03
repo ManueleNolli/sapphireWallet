@@ -3,7 +3,7 @@ import 'react-native-gesture-handler' // MUST be before react navigation
 
 // UI Kitten
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
-import { IconRegistry } from '@ui-kitten/components'
+import { IconRegistry, ModalService } from '@ui-kitten/components'
 
 // Providers
 import { ThemeProvider } from './src/providers/ThemeProvider'
@@ -17,6 +17,8 @@ import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
 import BottomTabNavigator from './src/navigation/BottomTab'
 import { BlockchainProvider } from './src/providers/BlockchainProvider'
+
+ModalService.setShouldUseTopInsets = true //applies StatusBar additional offset
 
 export default function App() {
   return (
