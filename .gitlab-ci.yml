@@ -7,6 +7,7 @@ compile_contracts:
   image: node:latest
   script:
     - cd blockchain
+    - mv .env.example .env
     - yarn install
     - npx hardhat compile
   artifacts:
