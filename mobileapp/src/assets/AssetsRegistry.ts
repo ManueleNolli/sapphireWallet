@@ -33,6 +33,8 @@ const networkLogo = (network: NETWORKS) => {
 }
 
 const qrCode = require(assetsPath + 'QrCode.png')
+const qrCodeSmall = require(assetsPath + 'QrCodeSmall.png')
+
 const sendETH = require(assetsPath + 'SendETH.png')
 const sendNFTs = require(assetsPath + 'SendNFTs.png')
 
@@ -46,6 +48,7 @@ export {
   homeBackground,
   networkLogo,
   qrCode,
+  qrCodeSmall,
   sendETH,
   sendNFTs,
   NFTPlaceholder,

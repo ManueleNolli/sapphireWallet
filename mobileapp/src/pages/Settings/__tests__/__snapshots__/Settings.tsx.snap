@@ -192,7 +192,7 @@ exports[`Settings renders correctly 1`] = `
             ]
           }
         >
-          Localhost
+          localhost
         </Text>
       </View>
       <View
@@ -307,7 +307,7 @@ exports[`Settings renders correctly 1`] = `
             ]
           }
         >
-          Sepolia
+          sepolia
         </Text>
       </View>
     </View>

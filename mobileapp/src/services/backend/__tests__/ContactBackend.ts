@@ -31,7 +31,7 @@ describe('contactBackend', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ network: 'Localhost', eoaAddress }),
+        body: JSON.stringify({ network: 'localhost', eoaAddress }),
       }
     )
 
@@ -56,7 +56,7 @@ describe('contactBackend', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ network: 'Localhost', eoaAddress }),
+        body: JSON.stringify({ network: 'localhost', eoaAddress }),
       }
     )
 
@@ -81,7 +81,7 @@ describe('contactBackend', () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ network: 'Localhost', eoaAddress }),
+        body: JSON.stringify({ network: 'localhost', eoaAddress }),
       }
     )
 
@@ -112,7 +112,7 @@ describe('contactBackend', () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          network: 'Localhost',
+          network: 'localhost',
           eoaAddress: 'testEOAAddress',
         }),
       }

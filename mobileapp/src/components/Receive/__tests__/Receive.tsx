@@ -1,5 +1,5 @@
 import renderWithTheme from '../../../TestHelper'
-import { Receive } from '../Receive'
+import Receive from '../Receive'
 import { act, fireEvent } from '@testing-library/react-native'
 import { Share } from 'react-native'
 

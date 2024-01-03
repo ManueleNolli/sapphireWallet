@@ -20,7 +20,8 @@ import { BlurView } from 'expo-blur'
 import { formatBlockchainAddress } from '../../utils/formatBlockchainData'
 import useHome from './useHome'
 import { qrCode, sendETH, sendNFTs } from '../../assets/AssetsRegistry'
-import { Receive } from '../../components/Receive/Receive'
+import Receive from '../../components/Receive/Receive'
+import SendETH from '../../components/SendETH/SendETH'
 
 export default function Home() {
   const {
@@ -30,6 +31,9 @@ export default function Home() {
     copyAddressToClipboard,
     isReceiveModalVisible,
     setIsReceiveModalVisible,
+    isSendETHModalVisible,
+    setIsSendETHModalVisible,
+    closeSendETHModal,
   } = useHome()
   const styles = useStyleSheet(themedStyles)
 
@@ -51,7 +55,7 @@ export default function Home() {
       description: 'Send ETH to another wallet address',
       image: sendETH,
       action: () => {
-        console.log('pressed Send ETH')
+        setIsSendETHModalVisible(true)
       },
     },
     {
@@ -145,9 +149,27 @@ export default function Home() {
     )
   }
 
+  const ModalSendETH = () => {
+    return (
+      <Modal
+        animationType={'fade'}
+        visible={isSendETHModalVisible}
+        backdropStyle={styles.modalBackdrop}
+        onBackdropPress={() => setIsSendETHModalVisible(false)}
+      >
+        <SendETH
+          close={closeSendETHModal}
+          address={getWalletContractAddress()}
+          balance={Number.parseFloat(balance)}
+        />
+      </Modal>
+    )
+  }
+
   return (
     <Layout style={{ flex: 1 }}>
       <ModalReceive />
+      <ModalSendETH />
       <Animated.View
         style={[
           styles.imageContainer,

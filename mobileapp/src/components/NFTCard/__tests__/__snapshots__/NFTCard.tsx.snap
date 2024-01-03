@@ -227,7 +227,7 @@ exports[`NFTCard collapsible should work 1`] = `
                       ]
                     }
                   >
-                    Localhost
+                    localhost
                   </Text>
                 </View>
                 <Text
@@ -609,7 +609,7 @@ exports[`NFTCard should render correctly 1`] = `
                       ]
                     }
                   >
-                    Localhost
+                    localhost
                   </Text>
                 </View>
                 <Text

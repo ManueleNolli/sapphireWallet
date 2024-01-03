@@ -6,6 +6,7 @@ import { getProvider } from '../../services/blockchain'
 import { Text } from 'react-native'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import { Provider } from 'ethers'
+import { NETWORKS } from '../../constants/Networks'
 
 jest.mock('../../pages/Loading/Loading')
 jest.mock('../../pages/Error/Error')
@@ -33,7 +34,7 @@ describe('BlockchainProvider', () => {
       )
     })
 
-    expect(tree.getByText('Localhost')).toBeTruthy()
+    expect(tree.getByText(NETWORKS.LOCALHOST)).toBeTruthy()
   })
 
   it('should catch error at start up', async () => {

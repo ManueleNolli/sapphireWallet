@@ -12,6 +12,8 @@ exports[`Receive should render correctly 1`] = `
       {
         "alignItems": "center",
         "borderRadius": 10,
+        "maxHeight": 1000.5,
+        "maxWidth": 675,
         "paddingHorizontal": 30,
         "paddingVertical": 53.36,
       },

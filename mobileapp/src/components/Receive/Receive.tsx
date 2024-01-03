@@ -15,7 +15,7 @@ import { Share } from 'react-native'
 type ReceiveProps = {
   address: string
 }
-export function Receive({ address }: ReceiveProps) {
+export default function Receive({ address }: ReceiveProps) {
   const styles = useStyleSheet(themedStyles)
 
   const onShare = async () => {
@@ -58,5 +58,7 @@ const themedStyles = StyleService.create({
     paddingHorizontal: 4 * vw,
     alignItems: 'center',
     borderRadius: 10,
+    maxHeight: 75 * vh,
+    maxWidth: 90 * vw,
   },
 })

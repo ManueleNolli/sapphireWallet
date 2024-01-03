@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react-native'
 import useSettings from '../useSettings'
 import { useContext } from 'react'
+import { NETWORKS } from '../../../constants/Networks'
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -50,7 +51,7 @@ describe('useSettings hook', () => {
   it('network select should call setEthersProvider', async () => {
     const toggleThemeMock = jest.fn()
     const setEthersProviderMock = jest.fn()
-    const currentNetworkMock = 'Localhost'
+    const currentNetworkMock = NETWORKS.LOCALHOST
     ;(useContext as jest.Mock).mockReturnValue({
       theme: 'light',
       toggleTheme: toggleThemeMock,
@@ -65,6 +66,6 @@ describe('useSettings hook', () => {
       result.current.onNetworkSelect(0)
     })
 
-    expect(setEthersProviderMock).toHaveBeenCalledWith('Localhost')
+    expect(setEthersProviderMock).toHaveBeenCalledWith('localhost')
   })
 })

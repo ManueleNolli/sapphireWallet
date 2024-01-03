@@ -13,6 +13,8 @@ export default function useHome() {
   const [backgroundImage] = useState(homeBackground())
   const [isReceiveModalVisible, setIsReceiveModalVisible] =
     useState<boolean>(false)
+  const [isSendETHModalVisible, setIsSendETHModalVisible] =
+    useState<boolean>(false)
   // const sendTransaction = async () => {
   //   const response = await requestERC721TokenTransfer(
   //     getWalletContractAddress(),
@@ -26,19 +28,6 @@ export default function useHome() {
   //
   //   console.log('responseNFT', response)
   // }
-  //
-  // const sendETHTransaction = async () => {
-  //   const response = await requestETHTransfer(
-  //     getWalletContractAddress(),
-  //     '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
-  //     0.5,
-  //     getSigner(
-  //       await getPrivateKey('Sign transaction to send ETH'),
-  //       NETWORKS.LOCALHOST
-  //     )
-  //   )
-  //   console.log('responseETH', response)
-  // }
 
   const getBalances = async () => {
     const balance = await getBalance(ethersProvider, getWalletContractAddress())
@@ -47,6 +36,11 @@ export default function useHome() {
 
   const copyAddressToClipboard = async () => {
     await Clipboard.setStringAsync(getWalletContractAddress())
+  }
+
+  const closeSendETHModal = (needRefresh: boolean) => {
+    setIsSendETHModalVisible(false)
+    if (needRefresh) getBalances()
   }
 
   useEffect(() => {
@@ -60,5 +54,8 @@ export default function useHome() {
     copyAddressToClipboard,
     isReceiveModalVisible,
     setIsReceiveModalVisible,
+    isSendETHModalVisible,
+    setIsSendETHModalVisible,
+    closeSendETHModal,
   }
 }

@@ -8,7 +8,7 @@ export default async function utils() {
   );
 
   // check balance
-  const mobileAppAddress = "0x111d6FB539c5126cDa7414feBE9E28e8f3D78945";
+  const mobileAppAddress = "0x79988E436e79aEE669F7980e55cB5102f92b91CC";
   const balanceMobileApp = await sapphireNFTs.balanceOf(mobileAppAddress);
   const balanceMobileAppETH = await ethers.provider.getBalance(
     mobileAppAddress

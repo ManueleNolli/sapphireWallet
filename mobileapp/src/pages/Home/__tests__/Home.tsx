@@ -13,6 +13,11 @@ describe('Home', () => {
       balance: '100',
       getWalletContractAddress: jest.fn().mockReturnValue('0x123456789'),
       copyAddressToClipboard: jest.fn(),
+      isReceiveModalVisible: false,
+      setIsReceiveModalVisible: jest.fn(),
+      isSendETHModalVisible: false,
+      setIsSendETHModalVisible: jest.fn(),
+      closeSendETHModal: jest.fn(),
     })
 
     const { toJSON } = renderWithTheme(<Home />)
@@ -20,33 +25,45 @@ describe('Home', () => {
   })
 
   it('press Receive', () => {
+    const openModal = jest.fn()
     ;(useHome as jest.Mock).mockReturnValue({
       backgroundImage: 'light',
       balance: '100',
       getWalletContractAddress: jest.fn().mockReturnValue('0x123456789'),
       copyAddressToClipboard: jest.fn(),
+      isReceiveModalVisible: false,
+      setIsReceiveModalVisible: openModal,
+      isSendETHModalVisible: false,
+      setIsSendETHModalVisible: jest.fn(),
+      closeSendETHModal: jest.fn(),
     })
 
     const tree = renderWithTheme(<Home />)
     const button = tree.getAllByText('Receive')[0]
     fireEvent.press(button)
 
-    // FINISH HERE
+    expect(openModal).toHaveBeenCalled()
   })
 
   it('press Send ETH', () => {
+    const openModal = jest.fn()
     ;(useHome as jest.Mock).mockReturnValue({
       backgroundImage: 'light',
       balance: '100',
       getWalletContractAddress: jest.fn().mockReturnValue('0x123456789'),
       copyAddressToClipboard: jest.fn(),
+      isReceiveModalVisible: false,
+      setIsReceiveModalVisible: jest.fn(),
+      isSendETHModalVisible: false,
+      setIsSendETHModalVisible: openModal,
+      closeSendETHModal: jest.fn(),
     })
 
     const tree = renderWithTheme(<Home />)
     const button = tree.getAllByText('Send ETH')[0]
     fireEvent.press(button)
 
-    // FINISH HERE
+    expect(openModal).toHaveBeenCalled()
   })
 
   it('press Send NFTs', () => {
@@ -61,6 +78,6 @@ describe('Home', () => {
     const button = tree.getAllByText('Send NFTs')[0]
     fireEvent.press(button)
 
-    // FINISH HERE
+    // TODO: FINISH HERE
   })
 })
