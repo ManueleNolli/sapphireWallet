@@ -3,6 +3,7 @@ import useCreateWallet from '../useCreateWallet'
 import { CreateWalletProps } from '../../../../navigation/FirstAccessStack'
 import { useContext } from 'react'
 import { Wallet } from 'ethers'
+import { createWallet, getMnemonic } from '../../../../services/wallet'
 
 jest.mock('ethers', () => ({
   HDNodeWallet: jest.fn(),
@@ -15,6 +16,11 @@ jest.mock('react', () => ({
   useContext: jest.fn(),
 }))
 
+jest.mock('../../../../services/wallet', () => ({
+  createWallet: jest.fn(),
+  getMnemonic: jest.fn(),
+}))
+
 describe('useCreateWallet hook', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -23,15 +29,27 @@ describe('useCreateWallet hook', () => {
   it('should create and navigate', async () => {
     const setPrivateKeyMock = jest.fn().mockResolvedValue('value')
     const setEOAAddressMock = jest.fn().mockResolvedValue('value')
-    ;(useContext as jest.Mock).mockReturnValueOnce({
-      setPrivateKey: setPrivateKeyMock,
-      setEOAAddress: setEOAAddressMock,
-    })
-    ;(Wallet.createRandom as jest.Mock).mockReturnValueOnce({
+    ;(createWallet as jest.Mock).mockReturnValue({
       mnemonic: {
         phrase: 'a b c d e f g h i j',
       },
       privateKey: '0x123',
+    })
+    ;(getMnemonic as jest.Mock).mockReturnValue([
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'g',
+      'h',
+      'i',
+      'j',
+    ])
+    ;(useContext as jest.Mock).mockReturnValueOnce({
+      setPrivateKey: setPrivateKeyMock,
+      setEOAAddress: setEOAAddressMock,
     })
 
     const navigate = jest.fn()
@@ -53,8 +71,9 @@ describe('useCreateWallet hook', () => {
   it('Should console error', async () => {
     const setPrivateKeyMock = jest.fn().mockRejectedValue('error')
     const setEOAAddressMock = jest.fn().mockRejectedValue('error')
-    const spyConsoleError = jest.spyOn(console, 'error').mockImplementation()
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
+    ;(createWallet as jest.Mock).mockReturnValue('wallet')
     ;(useContext as jest.Mock).mockReturnValueOnce({
       setPrivateKey: setPrivateKeyMock,
       setEOAAddress: setEOAAddressMock,
@@ -77,6 +96,6 @@ describe('useCreateWallet hook', () => {
     })
 
     expect(navigate).not.toHaveBeenCalled()
-    expect(spyConsoleError).toHaveBeenCalledWith('error')
+    expect(spy).toHaveBeenCalledWith('error')
   })
 })
