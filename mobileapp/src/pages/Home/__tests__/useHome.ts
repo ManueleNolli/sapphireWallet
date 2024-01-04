@@ -48,4 +48,25 @@ describe('useHome', () => {
 
     expect(setStringAsync).toHaveBeenCalledWith('0x123')
   })
+
+  it('call closeSendETHModal', async () => {
+    ;(setStringAsync as jest.Mock).mockResolvedValueOnce(undefined)
+    ;(useContext as jest.Mock).mockReturnValue({
+      ethersProvider: null,
+      getWalletContractAddress: jest.fn().mockReturnValue('0x123'),
+    })
+    ;(getBalance as jest.Mock).mockReturnValue(1000000000000000000n)
+
+    let resultHook: any
+    await waitFor(async () => {
+      const { result } = renderHook(() => useHome())
+      resultHook = result
+    })
+
+    await act(async () => {
+      await resultHook.current.closeSendETHModal(true)
+    })
+
+    expect(getBalance).toHaveBeenCalled()
+  })
 })

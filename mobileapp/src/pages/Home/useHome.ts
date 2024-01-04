@@ -7,7 +7,7 @@ import * as Clipboard from 'expo-clipboard'
 import { homeBackground } from '../../assets/AssetsRegistry'
 
 export default function useHome() {
-  const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
+  const { ethersProvider } = useContext(BlockchainContext)
   const { getWalletContractAddress } = useContext(WalletContext)
   const [balance, setBalance] = useState<string>('')
   const [backgroundImage] = useState(homeBackground())
@@ -15,19 +15,8 @@ export default function useHome() {
     useState<boolean>(false)
   const [isSendETHModalVisible, setIsSendETHModalVisible] =
     useState<boolean>(false)
-  // const sendTransaction = async () => {
-  //   const response = await requestERC721TokenTransfer(
-  //     getWalletContractAddress(),
-  //     '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
-  //     0,
-  //     getSigner(
-  //       await getPrivateKey('Sign transaction to send NFT'),
-  //       NETWORKS.LOCALHOST
-  //     )
-  //   )
-  //
-  //   console.log('responseNFT', response)
-  // }
+  const [isSendNFTModalVisible, setIsSendNFTModalVisible] =
+    useState<boolean>(false)
 
   const getBalances = async () => {
     const balance = await getBalance(ethersProvider, getWalletContractAddress())
@@ -57,5 +46,7 @@ export default function useHome() {
     isSendETHModalVisible,
     setIsSendETHModalVisible,
     closeSendETHModal,
+    isSendNFTModalVisible,
+    setIsSendNFTModalVisible,
   }
 }

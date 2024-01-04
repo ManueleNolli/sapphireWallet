@@ -34,7 +34,7 @@ export default function useNFTs() {
         setNFTs(nfts)
       })
       .catch((err) => setNFTs([]))
-    setIsLoading(false)
+      .finally(() => setIsLoading(false))
   }, [ethersProvider])
 
   return {

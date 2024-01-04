@@ -67,17 +67,21 @@ describe('Home', () => {
   })
 
   it('press Send NFTs', () => {
+    const openModal = jest.fn()
+
     ;(useHome as jest.Mock).mockReturnValue({
       backgroundImage: 'light',
       balance: '100',
       getWalletContractAddress: jest.fn().mockReturnValue('0x123456789'),
       copyAddressToClipboard: jest.fn(),
+      isSendNFTModalVisible: false,
+      setIsSendNFTModalVisible: openModal,
     })
 
     const tree = renderWithTheme(<Home />)
     const button = tree.getAllByText('Send NFTs')[0]
     fireEvent.press(button)
 
-    // TODO: FINISH HERE
+    expect(openModal).toHaveBeenCalled()
   })
 })

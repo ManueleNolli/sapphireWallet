@@ -57,7 +57,10 @@ export function NFTCard({
   )
 
   return (
-    <View style={[styles.container, { ...style }]}>
+    <View
+      style={[styles.container, { ...style }]}
+      testID={`NFTCard-${tokenId}`}
+    >
       <ImageBackground
         source={image}
         contentFit="cover"

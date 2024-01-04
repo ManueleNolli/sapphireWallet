@@ -93,6 +93,13 @@ export async function contactBackend(
       throw new Error(`${responseJson.error}: ${responseJson.message}`)
     }
 
+    if (
+      'statusCode' in responseJson &&
+      (responseJson.statusCode !== 200 || responseJson.statusCode !== 201)
+    ) {
+      throw new Error(`${responseJson.statusCode}: ${responseJson.message}`)
+    }
+
     return responseJson as backendResponse[typeof endpoint]
   } catch (error: any) {
     return {

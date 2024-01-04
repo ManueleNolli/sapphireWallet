@@ -22,6 +22,7 @@ import useHome from './useHome'
 import { qrCode, sendETH, sendNFTs } from '../../assets/AssetsRegistry'
 import Receive from '../../components/Receive/Receive'
 import SendETH from '../../components/SendETH/SendETH'
+import SendNFT from '../../components/SendNFT/SendNFT'
 
 export default function Home() {
   const {
@@ -34,6 +35,8 @@ export default function Home() {
     isSendETHModalVisible,
     setIsSendETHModalVisible,
     closeSendETHModal,
+    isSendNFTModalVisible,
+    setIsSendNFTModalVisible,
   } = useHome()
   const styles = useStyleSheet(themedStyles)
 
@@ -64,7 +67,7 @@ export default function Home() {
       description: 'Send NFTs to another wallet address',
       image: sendNFTs,
       action: () => {
-        console.log('pressed Send NFTs')
+        setIsSendNFTModalVisible(true)
       },
     },
   ]
@@ -166,10 +169,27 @@ export default function Home() {
     )
   }
 
+  const ModalSendNFT = () => {
+    return (
+      <Modal
+        animationType={'fade'}
+        visible={isSendNFTModalVisible}
+        backdropStyle={styles.modalBackdrop}
+        onBackdropPress={() => setIsSendNFTModalVisible(false)}
+      >
+        <SendNFT
+          address={getWalletContractAddress()}
+          close={() => setIsSendNFTModalVisible(false)}
+        />
+      </Modal>
+    )
+  }
+
   return (
     <Layout style={{ flex: 1 }}>
       <ModalReceive />
       <ModalSendETH />
+      <ModalSendNFT />
       <Animated.View
         style={[
           styles.imageContainer,

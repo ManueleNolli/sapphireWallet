@@ -15,6 +15,7 @@ exports[`NFTCard collapsible should work 1`] = `
       {},
     ]
   }
+  testID="NFTCard-1234567890"
 >
   <View
     style={
@@ -395,6 +396,7 @@ exports[`NFTCard should render correctly 1`] = `
       {},
     ]
   }
+  testID="NFTCard-1234567890"
 >
   <View
     style={

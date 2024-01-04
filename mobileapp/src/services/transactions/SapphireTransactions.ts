@@ -20,6 +20,7 @@ import { NETWORKS } from '../../constants/Networks'
 import {
   LOCALHOST_ARGENT_MODULE_ADDRESS,
   LOCALHOST_SAPPHIRE_NFTS_ADDRESS,
+  SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
 } from '@env'
 
 export type TransactionArgent = {
@@ -117,7 +118,8 @@ export async function requestERC721TokenTransfer(
   walletAddress: string,
   to: string,
   tokenId: number,
-  signer: Signer
+  signer: Signer,
+  network: NETWORKS
 ) {
   const ArgentModule = ArgentModule__factory.connect(
     LOCALHOST_ARGENT_MODULE_ADDRESS as string,
@@ -125,7 +127,9 @@ export async function requestERC721TokenTransfer(
   )
 
   const SapphireNFTs = SapphireNFTs__factory.connect(
-    LOCALHOST_SAPPHIRE_NFTS_ADDRESS as string,
+    network === NETWORKS.LOCALHOST
+      ? LOCALHOST_SAPPHIRE_NFTS_ADDRESS
+      : SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
     signer
   )
 
@@ -146,7 +150,7 @@ export async function requestERC721TokenTransfer(
   )
 
   const result = (await contactBackend(BACKEND_ENDPOINTS.EXECUTE_TRANSACTION, {
-    network: NETWORKS.LOCALHOST,
+    network: network,
     walletAddress: walletAddress,
     nonce,
     signedTransaction,
@@ -189,7 +193,7 @@ export async function requestETHTransfer(
     signedTransaction,
     transactionData,
   })) as executeTransactionResponse | backendErrorResponse
-
+  console.log('result', result)
   if ('error' in result) {
     throw new Error(result.error)
   }
