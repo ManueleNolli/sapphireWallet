@@ -36,8 +36,6 @@ export default function SendNFT({ address, close }: SendETHProps) {
     close,
   })
 
-  console.log('setSelectedNFT', setSelectedNFT)
-
   const LoadingIndicator = (props: any) => {
     return (
       isSendLoading && (

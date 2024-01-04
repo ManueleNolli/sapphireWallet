@@ -28,7 +28,13 @@ export default function useSendETH({ address, close }: useSendETHProps) {
     )
 
     try {
-      await requestETHTransfer(address, valueAddress, value, signer)
+      await requestETHTransfer(
+        address,
+        valueAddress,
+        value,
+        signer,
+        currentNetwork
+      )
       setIsLoading(false)
       close(true)
       Toast.show({

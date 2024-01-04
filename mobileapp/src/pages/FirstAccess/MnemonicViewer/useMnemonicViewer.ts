@@ -5,9 +5,11 @@ import { MnemonicViewerProps } from '../../../navigation/FirstAccessStack'
 import useLoading from '../../../hooks/useLoading'
 import { requestContractWallet } from '../../../services/wallet'
 import { WalletContext } from '../../../context/WalletContext'
+import { BlockchainContext } from '../../../context/BlockchainContext'
 
 export default function useMnemonicViewer(route: MnemonicViewerProps['route']) {
   const { toggleFirstAccess } = useContext(FirstAccessContext)
+  const { currentNetwork } = useContext(BlockchainContext)
   const { getEOAAddress, setWalletContractAddress } = useContext(WalletContext)
   const { isLoading, setIsLoading } = useLoading(false)
   const [mnemonic, setMnemonic] = useState<string[]>(route.params.mnemonic)
@@ -19,7 +21,10 @@ export default function useMnemonicViewer(route: MnemonicViewerProps['route']) {
   const finishFirstAccess = async () => {
     setIsLoading(true)
     try {
-      const contractWalletAddress = await requestContractWallet(getEOAAddress())
+      const contractWalletAddress = await requestContractWallet(
+        getEOAAddress(),
+        currentNetwork
+      )
       await setWalletContractAddress(contractWalletAddress.address)
 
       await toggleFirstAccess()

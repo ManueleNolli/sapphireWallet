@@ -25,6 +25,7 @@ export async function ownedNFTs(
   )
   const balance = await contract.balanceOf(accountAddress)
   const balanceInt = parseInt(balance.toString())
+
   const tokens: OwnedNFT[] = []
 
   for (let i = 0; i < balanceInt; i++) {

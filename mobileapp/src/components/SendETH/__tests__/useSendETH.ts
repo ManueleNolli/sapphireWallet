@@ -59,7 +59,8 @@ describe('useSendETH hook', () => {
       'address',
       '',
       NaN,
-      'signer'
+      'signer',
+      NETWORKS.LOCALHOST
     )
 
     expect(Toast.show).toHaveBeenCalledWith({
@@ -104,7 +105,8 @@ describe('useSendETH hook', () => {
       'address',
       '',
       NaN,
-      'signer'
+      'signer',
+      NETWORKS.LOCALHOST
     )
 
     expect(Toast.show).toHaveBeenCalledWith({

@@ -7,6 +7,7 @@ import { Button } from 'react-native'
 import { MnemonicViewerProps } from '../../../../navigation/FirstAccessStack'
 import { requestContractWallet } from '../../../../services/wallet'
 import { useContext } from 'react'
+import { NETWORKS } from '../../../../constants/Networks'
 
 jest.mock('expo-clipboard', () => ({
   setStringAsync: jest.fn(),
@@ -54,6 +55,7 @@ describe('useMnemonicViewer', () => {
       getEOAAddress: getEOAAddressMock,
       setWalletContractAddress: jest.fn(),
       toggleFirstAccess: toggle,
+      currentNetwork: NETWORKS.LOCALHOST,
     })
 
     const MockComponent = () => {
@@ -77,7 +79,10 @@ describe('useMnemonicViewer', () => {
       fireEvent.press(button)
     })
 
-    expect(requestContractWallet).toHaveBeenCalledWith('0x123')
+    expect(requestContractWallet).toHaveBeenCalledWith(
+      '0x123',
+      NETWORKS.LOCALHOST
+    )
     expect(getEOAAddressMock).toHaveBeenCalled()
     expect(toggle).toHaveBeenCalled()
   })
@@ -91,6 +96,7 @@ describe('useMnemonicViewer', () => {
       getEOAAddress: getEOAAddressMock,
       setWalletContractAddress: jest.fn(),
       toggleFirstAccess: toggle,
+      currentNetwork: NETWORKS.LOCALHOST,
     })
 
     const MockComponent = () => {
@@ -114,7 +120,10 @@ describe('useMnemonicViewer', () => {
       fireEvent.press(button)
     })
 
-    expect(requestContractWallet).toHaveBeenCalledWith('0x123')
+    expect(requestContractWallet).toHaveBeenCalledWith(
+      '0x123',
+      NETWORKS.LOCALHOST
+    )
     expect(getEOAAddressMock).toHaveBeenCalled()
     expect(toggle).not.toHaveBeenCalled()
     expect(spyConsoleError).toHaveBeenCalledWith('error')

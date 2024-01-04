@@ -34,7 +34,7 @@ describe('BlockchainProvider', () => {
       )
     })
 
-    expect(tree.getByText(NETWORKS.LOCALHOST)).toBeTruthy()
+    expect(tree.getByText(NETWORKS.SEPOLIA)).toBeTruthy()
   })
 
   it('should catch error at start up', async () => {

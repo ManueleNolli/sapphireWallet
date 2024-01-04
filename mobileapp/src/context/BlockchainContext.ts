@@ -10,7 +10,7 @@ type BlockchainContextType = {
 export const BlockchainContext = createContext<BlockchainContextType>(<
   BlockchainContextType
 >{
-  currentNetwork: NETWORKS.LOCALHOST,
+  currentNetwork: NETWORKS.SEPOLIA,
   ethersProvider: null,
   setEthersProvider: async (network: NETWORKS): Promise<void> => {},
 })
