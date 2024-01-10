@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import { Wallet } from 'ethers'
 import { createWallet, getMnemonic } from '../../../../services/wallet'
 import { NETWORKS } from '../../../../constants/Networks'
+import { IndexPath } from '@ui-kitten/components'
 
 jest.mock('ethers', () => ({
   HDNodeWallet: jest.fn(),
@@ -102,5 +103,26 @@ describe('useCreateWallet hook', () => {
 
     expect(navigate).not.toHaveBeenCalled()
     expect(spy).toHaveBeenCalledWith('error')
+  })
+
+  it('should select network', async () => {
+    const setEthersProviderMock = jest.fn()
+
+    ;(useContext as jest.Mock).mockReturnValue({
+      setEthersProvider: setEthersProviderMock,
+    })
+
+    const navigate = jest.fn()
+    const navigation = { push: navigate }
+    const { result } = renderHook(() =>
+      useCreateWallet(navigation as unknown as CreateWalletProps['navigation'])
+    )
+
+    await act(() => {
+      result.current.onNetworkSelect(new IndexPath(1))
+    })
+
+    expect(setEthersProviderMock).toHaveBeenCalledWith(NETWORKS.SEPOLIA)
+
   })
 })
