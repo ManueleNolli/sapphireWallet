@@ -17,6 +17,7 @@ describe('CreateWallet', () => {
   beforeEach(() => {
     ;(useCreateWallet as jest.Mock).mockReturnValue({
       createAndNavigate: jest.fn(),
+      selectedNetwork: { row: 0, section: 0 },
     })
   })
 

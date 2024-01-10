@@ -30,11 +30,11 @@ export default function App() {
         <IconRegistry icons={EvaIconsPack} />
         <ThemeProvider>
           <WalletProvider>
-            <FirstAccessProvider>
-              <BlockchainProvider>
+            <BlockchainProvider>
+              <FirstAccessProvider>
                 <BottomTabNavigator />
-              </BlockchainProvider>
             </FirstAccessProvider>
+            </BlockchainProvider>
           </WalletProvider>
         </ThemeProvider>
       </NavigationContainer>

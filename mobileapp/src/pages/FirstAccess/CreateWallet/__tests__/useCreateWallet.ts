@@ -4,6 +4,7 @@ import { CreateWalletProps } from '../../../../navigation/FirstAccessStack'
 import { useContext } from 'react'
 import { Wallet } from 'ethers'
 import { createWallet, getMnemonic } from '../../../../services/wallet'
+import { NETWORKS } from '../../../../constants/Networks'
 
 jest.mock('ethers', () => ({
   HDNodeWallet: jest.fn(),
@@ -47,9 +48,11 @@ describe('useCreateWallet hook', () => {
       'i',
       'j',
     ])
-    ;(useContext as jest.Mock).mockReturnValueOnce({
+    ;(useContext as jest.Mock).mockReturnValue({
       setPrivateKey: setPrivateKeyMock,
       setEOAAddress: setEOAAddressMock,
+      currentNetwork: NETWORKS.LOCALHOST,
+      setEthersProvider: jest.fn(),
     })
 
     const navigate = jest.fn()
@@ -74,9 +77,11 @@ describe('useCreateWallet hook', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
     ;(createWallet as jest.Mock).mockReturnValue('wallet')
-    ;(useContext as jest.Mock).mockReturnValueOnce({
+    ;(useContext as jest.Mock).mockReturnValue({
       setPrivateKey: setPrivateKeyMock,
       setEOAAddress: setEOAAddressMock,
+      currentNetwork: NETWORKS.LOCALHOST,
+      setEthersProvider: jest.fn(),
     })
     ;(Wallet.createRandom as jest.Mock).mockReturnValueOnce({
       mnemonic: {
