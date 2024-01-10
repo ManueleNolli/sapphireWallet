@@ -16,7 +16,7 @@ import { NETWORKS } from '../../constants/Networks'
 export default function Settings() {
   const {
     theme,
-    toggleFirstAccess,
+    resetLocalWallet,
     toggleThemeWithAnimation,
     themeIconRef,
     selectedIndex,
@@ -69,7 +69,7 @@ export default function Settings() {
         appearance="outline"
         status="danger"
         accessoryLeft={DeleteIcon}
-        onPress={toggleFirstAccess}
+        onPress={resetLocalWallet}
       >
         Reset local wallet
       </Button>

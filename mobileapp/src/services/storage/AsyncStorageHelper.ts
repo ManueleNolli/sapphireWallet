@@ -24,3 +24,15 @@ export const getData = async (key: string): Promise<string | null> => {
   }
   return null
 }
+
+/**
+ * Remove data from AsyncStorage
+ * @param key
+ */
+export const removeData = async (key: string): Promise<void> => {
+  await AsyncStorage.removeItem(key).catch((e) => {
+    console.error('Error removing data', e)
+  })
+}
+
+

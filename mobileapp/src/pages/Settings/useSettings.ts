@@ -5,10 +5,12 @@ import { Icon } from '@ui-kitten/components'
 import { ImageProps } from 'react-native'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import { NETWORKS } from '../../constants/Networks'
+import { WalletContext } from '../../context/WalletContext'
 
 export default function useSettings() {
   const { theme, toggleTheme } = useContext(ThemeContext)
   const { toggleFirstAccess } = useContext(FirstAccessContext)
+  const { resetWallet } = useContext(WalletContext)
   const { currentNetwork, setEthersProvider } = useContext(BlockchainContext)
   const [selectedIndex, setSelectedIndex] = React.useState(
     Object.values(NETWORKS).indexOf(currentNetwork)
@@ -26,9 +28,19 @@ export default function useSettings() {
     setSelectedIndex(index)
   }
 
+  const resetLocalWallet = async () => {
+    await Promise.all(
+      [
+        resetWallet(),
+        toggleFirstAccess()
+      ]
+    )
+
+  }
+
   return {
     theme,
-    toggleFirstAccess,
+    resetLocalWallet,
     toggleThemeWithAnimation,
     themeIconRef,
     selectedIndex,

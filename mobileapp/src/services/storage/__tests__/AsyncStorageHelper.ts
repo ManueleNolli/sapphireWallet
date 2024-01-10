@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { storeData, getData } from '../index'
+import { storeData, getData, removeData } from '../index'
 
 jest.mock('@react-native-async-storage/async-storage')
 
@@ -60,6 +60,32 @@ describe('AsyncStorageHelper', () => {
     expect(spy).toHaveBeenCalledWith(
       'Error getting data',
       'Error during storing data'
+    )
+    spy.mockRestore()
+  })
+
+  it('should remove data', async () => {
+    ;(AsyncStorage.removeItem as jest.Mock).mockResolvedValueOnce(null)
+    const result = await removeData('key')
+    expect(AsyncStorage.removeItem).toHaveBeenCalledWith('key')
+  })
+
+    it('should console error when removing data', async () => {
+    ;(AsyncStorage.removeItem as jest.Mock).mockRejectedValueOnce(
+      'Error during removing data'
+    )
+    // spy on console.error
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    await removeData('key')
+
+    // Verify that the error is thrown
+    expect(AsyncStorage.removeItem).toHaveBeenCalledWith('key')
+
+    // Verify that the error is logged
+    expect(spy).toHaveBeenCalledWith(
+      'Error removing data',
+      'Error during removing data'
     )
     spy.mockRestore()
   })

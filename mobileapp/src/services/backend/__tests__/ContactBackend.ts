@@ -120,4 +120,37 @@ describe('contactBackend', () => {
 
     expect(result).toEqual({ error: 'Mocked error: Mocked message' })
   })
+
+    it('should handle non 200 or 201 status', async () => {
+    const jsonMock = jest.fn().mockResolvedValue({
+      message: 'Error message',
+      statusCode: 404,
+    })
+    const fetchMock = jest.fn().mockResolvedValue({
+      json: jsonMock,
+    })
+    jest.spyOn(global, 'fetch').mockImplementation(fetchMock)
+
+    const result = await contactBackend(BACKEND_ENDPOINTS.CREATE_WALLET, {
+      network: NETWORKS.LOCALHOST,
+      eoaAddress: 'testEOAAddress',
+    })
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `http://${process.env.BACKEND_ADDRESS}:3000/create-wallet`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          network: 'localhost',
+          eoaAddress: 'testEOAAddress',
+        }),
+      }
+    )
+
+    expect(result).toEqual({ error: '404: Error message' })
+  })
+
 })

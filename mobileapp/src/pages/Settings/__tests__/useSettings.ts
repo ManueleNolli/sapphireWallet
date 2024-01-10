@@ -68,4 +68,23 @@ describe('useSettings hook', () => {
 
     expect(setEthersProviderMock).toHaveBeenCalledWith('localhost')
   })
+
+  it('should reset local wallet', async () => {
+    const resetWalletMock = jest.fn()
+    const toggleFirstAccessMock = jest.fn()
+        ;(useContext as jest.Mock).mockReturnValue({
+      theme: 'light',
+      resetWallet: resetWalletMock,
+      toggleFirstAccess: toggleFirstAccessMock,
+    })
+
+    const { result } = renderHook(() => useSettings())
+
+    await act(() => {
+      result.current.resetLocalWallet()
+    })
+
+    expect(resetWalletMock).toHaveBeenCalled()
+    expect(toggleFirstAccessMock).toHaveBeenCalled()
+  })
 })
