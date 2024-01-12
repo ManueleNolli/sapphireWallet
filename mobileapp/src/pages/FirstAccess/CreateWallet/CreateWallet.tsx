@@ -47,13 +47,14 @@ export default function CreateWallet({ navigation }: CreateWalletProps) {
 
          <View style={{bottom:0}}>
              <Select
+               testID={'select'}
                label='Network'
                value={networkUppercase(Object.values(NETWORKS)[selectedNetwork.row])}
              selectedIndex={selectedNetwork}
-              onSelect={index => onNetworkSelect(index)}
+              onSelect={onNetworkSelect}
              >
                {Object.values(NETWORKS).map((network, index) => (
-            <SelectItem title={networkUppercase(network)} key={index} accessoryLeft={() => <NetworkIcon network={network} />}  />
+            <SelectItem testID={`selectItem-${network}`} title={networkUppercase(network)} key={index} accessoryLeft={() => <NetworkIcon network={network} />}  />
           ))}
           </Select>
           </View>

@@ -5,6 +5,7 @@ import { getBalance } from '../../services/transactions/Balance'
 import { formatEther } from 'ethers'
 import * as Clipboard from 'expo-clipboard'
 import { homeBackground } from '../../assets/AssetsRegistry'
+import useLoading from '../../hooks/useLoading'
 
 export default function useHome() {
   const { ethersProvider } = useContext(BlockchainContext)
@@ -17,6 +18,13 @@ export default function useHome() {
     useState<boolean>(false)
   const [isSendNFTModalVisible, setIsSendNFTModalVisible] =
     useState<boolean>(false)
+  const {isLoading: isRefreshing, setIsLoading : setRefreshing} = useLoading(false)
+
+  const onRefresh = async () => {
+    setRefreshing(true)
+    await getBalances()
+    setRefreshing(false)
+  }
 
   const getBalances = async () => {
     const balance = await getBalance(ethersProvider, getWalletContractAddress())
@@ -48,5 +56,11 @@ export default function useHome() {
     closeSendETHModal,
     isSendNFTModalVisible,
     setIsSendNFTModalVisible,
+    onRefresh,
+    isRefreshing,
+    modalReceiveBackdrop: () => setIsReceiveModalVisible(false),
+    modalSendBackdrop: () => setIsSendETHModalVisible(false),
+    modalSendNFTBackdrop: () => setIsSendNFTModalVisible(false),
+    closeSendNFTModal: () => setIsSendNFTModalVisible(false)
   }
 }

@@ -69,4 +69,61 @@ describe('useHome', () => {
 
     expect(getBalance).toHaveBeenCalled()
   })
+
+  it('call onRefresh', async () => {
+    ;(useContext as jest.Mock).mockReturnValue({
+      ethersProvider: null,
+      getWalletContractAddress: jest.fn().mockReturnValue('0x123'),
+    })
+    ;(getBalance as jest.Mock).mockReturnValue(1000000000000000000n)
+
+    let resultHook: any
+    await waitFor(async () => {
+      const { result } = renderHook(() => useHome())
+      resultHook = result
+    })
+
+    expect(getBalance).toHaveBeenCalledTimes(5)
+
+    await act(async () => {
+      await resultHook.current.onRefresh()
+    })
+
+    expect(getBalance).toHaveBeenCalledTimes(6)
+
+  })
+
+    it('call backdrp', async () => {
+    ;(useContext as jest.Mock).mockReturnValue({
+      ethersProvider: null,
+      getWalletContractAddress: jest.fn().mockReturnValue('0x123'),
+    })
+    ;(getBalance as jest.Mock).mockReturnValue(1000000000000000000n)
+
+    let resultHook: any
+    await waitFor(async () => {
+      const { result } = renderHook(() => useHome())
+      resultHook = result
+    })
+
+    await act(async () => {
+      await resultHook.current.modalReceiveBackdrop()
+    })
+
+    await act(async () => {
+      await resultHook.current.modalSendBackdrop()
+    })
+
+    await act(async () => {
+      await resultHook.current.modalSendNFTBackdrop()
+    })
+
+    await act(async () => {
+      await resultHook.current.closeSendNFTModal()
+    })
+
+    expect(resultHook.current.isReceiveModalVisible).toBe(false)
+    expect(resultHook.current.isSendETHModalVisible).toBe(false)
+    expect(resultHook.current.isSendNFTModalVisible).toBe(false)
+  })
 })

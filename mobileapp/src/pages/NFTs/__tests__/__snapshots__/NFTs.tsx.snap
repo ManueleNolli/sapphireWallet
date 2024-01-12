@@ -15,7 +15,22 @@ exports[`NFTs render correctly 1`] = `
     ]
   }
 >
-  <RCTScrollView>
+  <RCTScrollView
+    refreshControl={
+      <RefreshControlMock
+        colors={
+          [
+            "#F2F6FF",
+            "#3366FF",
+            "#091C7A",
+          ]
+        }
+        progressBackgroundColor="white"
+        progressViewOffset={200.1}
+      />
+    }
+  >
+    <RCTRefreshControl />
     <View>
       <View
         appearance="default"
@@ -856,7 +871,22 @@ exports[`NFTs render correctly loading 1`] = `
     ]
   }
 >
-  <RCTScrollView>
+  <RCTScrollView
+    refreshControl={
+      <RefreshControlMock
+        colors={
+          [
+            "#F2F6FF",
+            "#3366FF",
+            "#091C7A",
+          ]
+        }
+        progressBackgroundColor="white"
+        progressViewOffset={200.1}
+      />
+    }
+  >
+    <RCTRefreshControl />
     <View>
       <View
         appearance="default"
@@ -930,7 +960,22 @@ exports[`NFTs render correctly without nfts 1`] = `
     ]
   }
 >
-  <RCTScrollView>
+  <RCTScrollView
+    refreshControl={
+      <RefreshControlMock
+        colors={
+          [
+            "#F2F6FF",
+            "#3366FF",
+            "#091C7A",
+          ]
+        }
+        progressBackgroundColor="white"
+        progressViewOffset={200.1}
+      />
+    }
+  >
+    <RCTRefreshControl />
     <View>
       <View
         appearance="default"

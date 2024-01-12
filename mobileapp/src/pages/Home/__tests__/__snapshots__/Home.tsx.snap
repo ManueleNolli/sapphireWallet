@@ -90,74 +90,105 @@ exports[`Home renders correctly 1`] = `
         top={0}
         transition={null}
       />
-      <View
-        collapsable={false}
+      <RCTScrollView
+        contentContainerStyle={
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        refreshControl={
+          <RefreshControlMock
+            colors={
+              [
+                "#F2F6FF",
+                "#3366FF",
+                "#091C7A",
+              ]
+            }
+            progressBackgroundColor="white"
+            progressViewOffset={106.72}
+          />
+        }
         style={
           {
-            "borderRadius": 20,
-            "height": 133.4,
-            "overflow": "hidden",
-            "transform": [
-              {
-                "translateY": 0,
-              },
-            ],
-            "width": 375,
+            "width": "100%",
           }
         }
       >
-        <View
-          style={
-            [
-              {
-                "backgroundColor": "transparent",
-              },
-              {
-                "alignItems": "center",
-                "flex": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-              },
-            ]
-          }
-        >
-          <ViewManagerAdapter_ExpoBlurView
-            blurReductionFactor={4}
-            intensity={20}
+        <RCTRefreshControl />
+        <View>
+          <View
+            collapsable={false}
             style={
               {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
+                "borderRadius": 20,
+                "height": 133.4,
+                "overflow": "hidden",
+                "transform": [
+                  {
+                    "translateY": 0,
+                  },
+                ],
+                "width": 375,
               }
             }
-            tint="default"
-          />
-          <Text
-            appearance="default"
-            category="h4"
-            status="basic"
-            style={
-              [
-                {
-                  "color": "#222B45",
-                  "fontFamily": "System",
-                  "fontSize": 26,
-                  "fontWeight": "800",
-                },
-                {
-                  "color": "white",
-                },
-              ]
-            }
           >
-            100
-             ETH
-          </Text>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                  },
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                ]
+              }
+            >
+              <ViewManagerAdapter_ExpoBlurView
+                blurReductionFactor={4}
+                intensity={20}
+                style={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                tint="default"
+              />
+              <Text
+                appearance="default"
+                category="h4"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#222B45",
+                      "fontFamily": "System",
+                      "fontSize": 26,
+                      "fontWeight": "800",
+                    },
+                    {
+                      "color": "white",
+                    },
+                  ]
+                }
+              >
+                100
+                 ETH
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
+      </RCTScrollView>
     </View>
     <View
       style={

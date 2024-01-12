@@ -2,17 +2,24 @@ import React, { useContext, useEffect, useState } from 'react'
 import SafeAreaView from '../../utils/SafeAreaView'
 import { NFTCard } from '../../components/NFTCard/NFTCard'
 import { NETWORKS } from '../../constants/Networks'
-import { ScrollView, View } from 'react-native'
+import { RefreshControl, ScrollView, View } from 'react-native'
 import { appStyles, vh } from '../../Styles'
-import { Layout, Spinner, Text } from '@ui-kitten/components'
+import { Layout, Spinner, Text, useTheme } from '@ui-kitten/components'
 import useNFTs from './useNFTs'
 
 export default function NFTs() {
-  const { isLoading, nfts } = useNFTs()
+  const { isLoading, nfts,isRefreshing,    refreshNFTs } = useNFTs()
+  const theme = useTheme();
 
   return (
     <Layout style={{ flex: 1 }}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={refreshNFTs} colors={[theme['color-primary-100'],theme['color-primary-500'],theme['color-primary-900']]}
+          progressBackgroundColor={'white'}
+                          progressViewOffset={15 * vh}
+          /> }
+      >
         <SafeAreaView
           style={{
             paddingTop: 5 * vh,

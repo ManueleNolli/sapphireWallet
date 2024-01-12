@@ -13,21 +13,31 @@ export default function useNFTs() {
   const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
   const { getWalletContractAddress } = useContext(WalletContext)
   const { isLoading, setIsLoading } = useLoading(false)
+  const {isLoading: isRefreshing, setIsLoading : setRefreshing} = useLoading(false)
+
   const [nfts, setNFTs] = useState<OwnedNFT[]>([])
 
-  useEffect(() => {
-    const getNFTs = async () => {
-      let nfts = await ownedNFTs(
-        getWalletContractAddress(),
-        currentNetwork === NETWORKS.LOCALHOST
-          ? LOCALHOST_SAPPHIRE_NFTS_ADDRESS
-          : SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
-        ethersProvider,
-        currentNetwork
-      )
+  const getNFTs = async () => {
+    let nfts = await ownedNFTs(
+      getWalletContractAddress(),
+      currentNetwork === NETWORKS.LOCALHOST
+        ? LOCALHOST_SAPPHIRE_NFTS_ADDRESS
+        : SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
+      ethersProvider,
+      currentNetwork
+    )
 
-      return nfts
-    }
+    return nfts
+  }
+
+  const refreshNFTs = async () => {
+    setRefreshing(true)
+    let nfts = await getNFTs()
+    setNFTs(nfts)
+    setRefreshing(false)
+  }
+
+  useEffect(() => {
     setIsLoading(true)
     getNFTs()
       .then((nfts) => {
@@ -40,5 +50,7 @@ export default function useNFTs() {
   return {
     isLoading,
     nfts,
+    isRefreshing,
+    refreshNFTs
   }
 }

@@ -4,7 +4,7 @@ import {
   Text,
   StyleService,
   useStyleSheet,
-  Modal,
+  Modal, useTheme,
 } from '@ui-kitten/components'
 import {
   Animated,
@@ -12,7 +12,7 @@ import {
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View, RefreshControl,
 } from 'react-native'
 import { ImageBackground } from 'expo-image'
 import { appStyles, vh, vw } from '../../Styles'
@@ -32,13 +32,20 @@ export default function Home() {
     copyAddressToClipboard,
     isReceiveModalVisible,
     setIsReceiveModalVisible,
+    modalReceiveBackdrop,
     isSendETHModalVisible,
     setIsSendETHModalVisible,
     closeSendETHModal,
+    modalSendBackdrop,
     isSendNFTModalVisible,
     setIsSendNFTModalVisible,
+    modalSendNFTBackdrop,
+    closeSendNFTModal,
+    onRefresh,
+    isRefreshing
   } = useHome()
   const styles = useStyleSheet(themedStyles)
+  const theme = useTheme();
 
   // DATA
   const buttonData = [
@@ -145,7 +152,7 @@ export default function Home() {
         animationType={'fade'}
         visible={isReceiveModalVisible}
         backdropStyle={styles.modalBackdrop}
-        onBackdropPress={() => setIsReceiveModalVisible(false)}
+        onBackdropPress={modalReceiveBackdrop}
       >
         <Receive address={getWalletContractAddress()} />
       </Modal>
@@ -158,7 +165,7 @@ export default function Home() {
         animationType={'fade'}
         visible={isSendETHModalVisible}
         backdropStyle={styles.modalBackdrop}
-        onBackdropPress={() => setIsSendETHModalVisible(false)}
+        onBackdropPress={modalSendBackdrop}
       >
         <SendETH
           close={closeSendETHModal}
@@ -175,11 +182,11 @@ export default function Home() {
         animationType={'fade'}
         visible={isSendNFTModalVisible}
         backdropStyle={styles.modalBackdrop}
-        onBackdropPress={() => setIsSendNFTModalVisible(false)}
+        onBackdropPress={modalSendNFTBackdrop}
       >
         <SendNFT
           address={getWalletContractAddress()}
-          close={() => setIsSendNFTModalVisible(false)}
+          close={closeSendNFTModal}
         />
       </Modal>
     )
@@ -203,6 +210,13 @@ export default function Home() {
           contentFit="cover"
           style={styles.imageBackground}
         >
+        <ScrollView contentContainerStyle={appStyles.center} style={{ width:'100%'}}
+                    refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} colors={[theme['color-primary-100'],theme['color-primary-500'],theme['color-primary-900']]}
+          progressBackgroundColor={'white'}
+                          progressViewOffset={8 * vh}
+          /> }>
+
           <Animated.View
             style={[
               styles.balanceContainer,
@@ -217,6 +231,8 @@ export default function Home() {
               </Text>
             </BlurView>
           </Animated.View>
+      </ScrollView>
+
         </ImageBackground>
 
         <View style={styles.addressContainer}>

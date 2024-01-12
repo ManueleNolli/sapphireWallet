@@ -234,6 +234,7 @@ exports[`CreateWallet Render correctly 1`] = `
                 "paddingVertical": 7,
               }
             }
+            testID="select"
           >
             <Text
               appearance="default"
