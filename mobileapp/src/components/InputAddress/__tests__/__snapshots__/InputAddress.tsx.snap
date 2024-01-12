@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputAddress Component renders correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "opacity": 1,
+    }
+  }
+  testID="@undefined/container"
+>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        [
+          {
+            "color": "#8F9BB3",
+            "fontFamily": "System",
+            "fontSize": 12,
+            "fontWeight": "800",
+            "marginBottom": 4,
+          },
+          {
+            "textAlign": "left",
+          },
+        ],
+      ]
+    }
+  >
+    To
+  </Text>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "#F7F9FC",
+          "borderColor": "#E4E9F2",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "minHeight": 40,
+          "paddingHorizontal": 8,
+          "paddingVertical": 7,
+        },
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <TextInput
+      appearance="default"
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      placeholder="Address"
+      placeholderTextColor="#8F9BB3"
+      size="medium"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "normal",
+            "marginHorizontal": 8,
+          },
+          {
+            "flexBasis": "auto",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          },
+          null,
+          undefined,
+        ]
+      }
+      testID="@undefined/input"
+      value=""
+    />
+    <Image
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      source={1}
+      style={
+        {
+          "height": 24,
+          "marginHorizontal": 8,
+          "tintColor": "#8F9BB3",
+          "width": 24,
+        }
+      }
+      testID="qr-code-icon"
+    />
+  </View>
+</View>
+`;

@@ -5,18 +5,20 @@ import { WalletContext } from '../../context/WalletContext'
 import renderWithTheme from '../../TestHelper'
 import * as SecureStore from 'expo-secure-store'
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
-import { getData, storeData } from '../../services/storage/'
+import { getData, removeData, storeData } from '../../services/storage/'
 import constants from '../../constants/Constants'
 
 // MOCKS
 jest.mock('expo-secure-store', () => ({
   setItemAsync: jest.fn(),
   getItemAsync: jest.fn(),
+  deleteItemAsync: jest.fn(),
 }))
 
 jest.mock('../../services/storage', () => ({
   getData: jest.fn(),
   storeData: jest.fn(),
+  removeData: jest.fn(),
 }))
 
 const MockComponent = () => {
@@ -27,6 +29,7 @@ const MockComponent = () => {
     setEOAAddress,
     setWalletContractAddress,
     getWalletContractAddress,
+    resetWallet
   } = React.useContext(WalletContext)
   const [privateKey, setPrivateKeyState] = React.useState<string>('')
   const [EOAAddress, setEOAAddressState] = React.useState<string>('')
@@ -95,6 +98,11 @@ const MockComponent = () => {
         title={'Get WalletContractAddress'}
       />
       <Text>{walletContractAddress}</Text>
+
+      <Button
+        onPress={() => resetWallet()}
+        title={'Reset Wallet'}
+      />
     </div>
   )
 }
@@ -250,8 +258,6 @@ describe('WalletProvider', () => {
     })
   })
 
-  describe('WalletContractAddress', () => {})
-
   describe('WalletContractAddress', () => {
     it('Set WalletContractAddress', async () => {
       ;(getData as jest.Mock).mockReturnValue(
@@ -328,6 +334,28 @@ describe('WalletProvider', () => {
       })
 
       expect(tree.getByText('Wallet Contract Address not found')).toBeTruthy()
+    })
+  })
+
+  describe('Reset wallet', () => {
+    it('Reset wallet', async () => {
+      let tree: any
+
+      await waitFor(async () => {
+        tree = renderWithTheme(
+          <WalletProvider>
+            <MockComponent />
+          </WalletProvider>
+        )
+      })
+
+      await act(async () => {
+        const button = tree.getByText('Reset Wallet')
+        fireEvent.press(button)
+      })
+
+      expect(removeData).toHaveBeenCalledTimes(2)
+      expect(SecureStore.deleteItemAsync).toHaveBeenCalledTimes(1)
     })
   })
 })

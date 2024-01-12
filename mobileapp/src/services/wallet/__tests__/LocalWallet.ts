@@ -1,8 +1,10 @@
 import { createWallet, getMnemonic, getSigner } from '../LocalWallet'
-import { JsonRpcProvider, Wallet } from 'ethers'
+import { AlchemyProvider, JsonRpcProvider, Wallet } from 'ethers'
 import { NETWORKS } from '../../../constants/Networks'
+import { getProvider } from '../../blockchain'
 
 jest.mock('ethers')
+jest.mock('../../blockchain')
 
 describe('LocalWallet', () => {
   describe('createWallet', () => {
@@ -52,24 +54,25 @@ describe('LocalWallet', () => {
   })
 
   describe('getSigner', () => {
-    it('should return localhost provider', () => {
+    it('should return localhost provider', async () => {
+      ;(getProvider as jest.Mock).mockReturnValueOnce({} as JsonRpcProvider)
       const privatekey = '0x1234567890'
       const network = NETWORKS.LOCALHOST
 
-      getSigner(privatekey, network)
+      await getSigner(privatekey, network)
 
-      expect(JsonRpcProvider).toHaveBeenCalled()
-      expect(Wallet).toHaveBeenCalledWith(
-        privatekey,
-        expect.any(JsonRpcProvider)
-      )
+      expect(Wallet).toHaveBeenCalledWith(privatekey, {})
     })
 
-    it('should return localhost provider', () => {
+    it('should return sepolia provider', async () => {
+      ;(getProvider as jest.Mock).mockReturnValueOnce({} as AlchemyProvider)
+
       const privatekey = '0x1234567890'
       const network = NETWORKS.SEPOLIA
 
-      expect(() => getSigner(privatekey, network)).toThrow('Not implemented')
+      await getSigner(privatekey, network)
+
+      expect(Wallet).toHaveBeenCalledWith(privatekey, {})
     })
   })
 })

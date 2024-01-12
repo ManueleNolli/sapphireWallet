@@ -3,11 +3,11 @@ import { ethers } from "hardhat";
 async function sendETH() {
   const [account1] = await ethers.getSigners();
 
-  const to = "0x887992aa3CC4A8868c86F2A7Db0687f757286057";
+  const to = "0x66ec4895160D11bB7389E169129E36b4ed2CABCd";
 
   const tx = await account1.sendTransaction({
     to,
-    value: ethers.parseEther("1"),
+    value: ethers.parseEther("1.5"),
   });
 
   await tx.wait();

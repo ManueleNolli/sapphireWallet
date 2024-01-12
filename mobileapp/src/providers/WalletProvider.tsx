@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { WalletContext } from '../context/WalletContext'
 import * as SecureStore from 'expo-secure-store'
-import { getData, storeData } from '../services/storage/'
+import { getData, storeData, removeData } from '../services/storage/'
 import constants from '../constants/Constants'
 import useLoading from '../hooks/useLoading'
 import Loading from '../pages/Loading/Loading'
@@ -46,7 +46,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
    * @param privateKey
    */
   const setPrivateKey = async (privateKey: string) => {
-    await SecureStore.setItemAsync('privateKey', privateKey, {
+    await SecureStore.setItemAsync(constants.secureStoreKeys.privateKey, privateKey, {
       authenticationPrompt: 'Please authenticate to save your private key',
       requireAuthentication: true,
     })
@@ -57,7 +57,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
    * @returns privateKey
    */
   const getPrivateKey = async (purposeMessage: string) => {
-    const privateKey = await SecureStore.getItemAsync('privateKey', {
+    const privateKey = await SecureStore.getItemAsync(constants.secureStoreKeys.privateKey, {
       authenticationPrompt: purposeMessage,
     })
     if (privateKey) {
@@ -95,6 +95,14 @@ export function WalletProvider({ children }: WalletProviderProps) {
     setWalletContractAddress(walletContractAddress)
   }
 
+  const resetWallet = async () => {
+    await SecureStore.deleteItemAsync(constants.secureStoreKeys.privateKey)
+    await removeData(constants.asyncStoreKeys.EOAAddress)
+    await removeData(constants.asyncStoreKeys.walletContractAddress)
+    setEOAAddress(null)
+    setWalletContractAddress(null)
+  }
+
   if (isLoading) {
     return <Loading text={'Checking wallet information...'} />
   }
@@ -108,6 +116,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
         setEOAAddress: setEOAAddressStorage,
         getWalletContractAddress,
         setWalletContractAddress: setWalletContractAddressStorage,
+        resetWallet,
       }}
     >
       {children}

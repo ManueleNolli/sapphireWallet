@@ -78,7 +78,6 @@ export async function contactBackend(
   endpoint: BACKEND_ENDPOINTS,
   body: backendBody[typeof endpoint]
 ): Promise<backendResponse[typeof endpoint] | backendErrorResponse> {
-  console.log(`http://${BACKEND_ADDRESS}:3000/${endpoint}`)
   try {
     const response = await fetch(`http://${BACKEND_ADDRESS}:3000/${endpoint}`, {
       method: 'POST',
@@ -92,6 +91,13 @@ export async function contactBackend(
 
     if ('error' in responseJson) {
       throw new Error(`${responseJson.error}: ${responseJson.message}`)
+    }
+
+    if (
+      'statusCode' in responseJson &&
+      (responseJson.statusCode !== 200 || responseJson.statusCode !== 201)
+    ) {
+      throw new Error(`${responseJson.statusCode}: ${responseJson.message}`)
     }
 
     return responseJson as backendResponse[typeof endpoint]

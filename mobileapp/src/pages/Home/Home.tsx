@@ -1,85 +1,339 @@
-import React, { useContext, useEffect } from 'react'
-import { Button, Text } from '@ui-kitten/components'
-import { WalletContext } from '../../context/WalletContext'
-import SafeAreaView from '../../utils/SafeAreaView'
-import { getSigner } from '../../services/wallet/'
+import React, { useRef } from 'react'
 import {
-  requestERC721TokenTransfer,
-  requestETHTransfer,
-} from '../../services/transactions'
-import { NETWORKS } from '../../constants/Networks'
-import ethers, { formatEther, JsonRpcProvider } from 'ethers'
-import { BACKEND_ADDRESS } from '@env'
+  Layout,
+  Text,
+  StyleService,
+  useStyleSheet,
+  Modal, useTheme,
+} from '@ui-kitten/components'
+import {
+  Animated,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View, RefreshControl,
+} from 'react-native'
+import { ImageBackground } from 'expo-image'
+import { appStyles, vh, vw } from '../../Styles'
+import { BlurView } from 'expo-blur'
+import { formatBlockchainAddress } from '../../utils/formatBlockchainData'
+import useHome from './useHome'
+import { qrCode, sendETH, sendNFTs } from '../../assets/AssetsRegistry'
+import Receive from '../../components/Receive/Receive'
+import SendETH from '../../components/SendETH/SendETH'
+import SendNFT from '../../components/SendNFT/SendNFT'
 
-export default function Home({ navigation }: any) {
-  const { getEOAAddress, getWalletContractAddress } = useContext(WalletContext)
-  const { getPrivateKey } = useContext(WalletContext)
-  const [oeaBalance, setOeaBalance] = React.useState<string>('')
-  const [walletContractBalance, setWalletContractBalance] =
-    React.useState<string>('')
+export default function Home() {
+  const {
+    backgroundImage,
+    balance,
+    getWalletContractAddress,
+    copyAddressToClipboard,
+    isReceiveModalVisible,
+    setIsReceiveModalVisible,
+    modalReceiveBackdrop,
+    isSendETHModalVisible,
+    setIsSendETHModalVisible,
+    closeSendETHModal,
+    modalSendBackdrop,
+    isSendNFTModalVisible,
+    setIsSendNFTModalVisible,
+    modalSendNFTBackdrop,
+    closeSendNFTModal,
+    onRefresh,
+    isRefreshing
+  } = useHome()
+  const styles = useStyleSheet(themedStyles)
+  const theme = useTheme();
 
-  console.log('getWalletContractAddress', getWalletContractAddress())
+  // DATA
+  const buttonData = [
+    {
+      id: 1,
+      title: 'Receive',
+      description:
+        'Receive ETH or NFT by showing a QR code of your wallet address',
+      image: qrCode,
+      action: () => {
+        setIsReceiveModalVisible(true)
+      },
+    },
+    {
+      id: 2,
+      title: 'Send ETH',
+      description: 'Send ETH to another wallet address',
+      image: sendETH,
+      action: () => {
+        setIsSendETHModalVisible(true)
+      },
+    },
+    {
+      id: 3,
+      title: 'Send NFTs',
+      description: 'Send NFTs to another wallet address',
+      image: sendNFTs,
+      action: () => {
+        setIsSendNFTModalVisible(true)
+      },
+    },
+  ]
 
-  const sendTransaction = async () => {
-    const response = await requestERC721TokenTransfer(
-      getWalletContractAddress(),
-      '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
-      2,
-      getSigner(
-        await getPrivateKey('Sign transaction to send NFT'),
-        NETWORKS.LOCALHOST
-      )
+  // SCROLL ANIMATION
+  const scrollY = useRef(new Animated.Value(0)).current
+
+  const scrollThreshold = 30 * vh
+
+  const imageContainerTranslateY = scrollY.interpolate({
+    inputRange: [0, scrollThreshold],
+    outputRange: [0, -scrollThreshold],
+    extrapolate: 'clamp',
+  })
+
+  const balanceContainerTranslateY = scrollY.interpolate({
+    inputRange: [0, scrollThreshold],
+    outputRange: [0, scrollThreshold / 2 + 2 * vh],
+    extrapolate: 'clamp',
+  })
+
+  const onScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: false }
+  )
+
+  // BUTTON
+
+  const RenderButton = ({
+    title,
+    description,
+    image,
+    action,
+  }: {
+    title: string
+    description: string
+    image: any
+    action: () => void
+  }) => (
+    <TouchableOpacity onPress={action} style={styles.buttonContainer}>
+      <View
+        style={{
+          paddingVertical: 1 * vh,
+          paddingHorizontal: 2 * vw,
+        }}
+      >
+        <Image
+          source={image}
+          style={{
+            width: 10 * vh,
+            height: 10 * vh,
+          }}
+        />
+      </View>
+
+      <View
+        style={{
+          flex: 1,
+          marginLeft: 2 * vw,
+          paddingVertical: 1 * vh,
+          paddingHorizontal: 2 * vw,
+        }}
+      >
+        <Text category={'h6'}>{title}</Text>
+        <Text category={'label'}>{description}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+
+  // MODAL
+
+  const ModalReceive = () => {
+    return (
+      <Modal
+        animationType={'fade'}
+        visible={isReceiveModalVisible}
+        backdropStyle={styles.modalBackdrop}
+        onBackdropPress={modalReceiveBackdrop}
+      >
+        <Receive address={getWalletContractAddress()} />
+      </Modal>
     )
-
-    console.log('responseNFT', response)
   }
 
-  const sendETHTransaction = async () => {
-    const response = await requestETHTransfer(
-      getWalletContractAddress(),
-      '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
-      0.5,
-      getSigner(
-        await getPrivateKey('Sign transaction to send ETH'),
-        NETWORKS.LOCALHOST
-      )
+  const ModalSendETH = () => {
+    return (
+      <Modal
+        animationType={'fade'}
+        visible={isSendETHModalVisible}
+        backdropStyle={styles.modalBackdrop}
+        onBackdropPress={modalSendBackdrop}
+      >
+        <SendETH
+          close={closeSendETHModal}
+          address={getWalletContractAddress()}
+          balance={Number.parseFloat(balance)}
+        />
+      </Modal>
     )
-    console.log('responseETH', response)
   }
 
-  const getBalances = async () => {
-    const provider = new JsonRpcProvider(`http://${BACKEND_ADDRESS}:8545`)
-    const eoaBalance = await provider.getBalance(getEOAAddress())
-    const walletContractBalance = await provider.getBalance(
-      getWalletContractAddress()
+  const ModalSendNFT = () => {
+    return (
+      <Modal
+        animationType={'fade'}
+        visible={isSendNFTModalVisible}
+        backdropStyle={styles.modalBackdrop}
+        onBackdropPress={modalSendNFTBackdrop}
+      >
+        <SendNFT
+          address={getWalletContractAddress()}
+          close={closeSendNFTModal}
+        />
+      </Modal>
     )
-    setOeaBalance(formatEther(eoaBalance))
-    setWalletContractBalance(formatEther(walletContractBalance))
   }
-
-  useEffect(() => {
-    getBalances()
-  }, [])
 
   return (
-    <SafeAreaView>
-      <Text category={'h1'}>Home</Text>
-      <Text category={'h6'}>EOA Address</Text>
-      <Text>address: {getEOAAddress()}</Text>
-      <Text>balance: {oeaBalance}</Text>
-      <Text category={'h6'} style={{ marginTop: 20 }}>
-        Wallet Contract Address
-      </Text>
-      <Text>address: {getWalletContractAddress()}</Text>
-      <Text>balance: {walletContractBalance}</Text>
+    <Layout style={{ flex: 1 }}>
+      <ModalReceive />
+      <ModalSendETH />
+      <ModalSendNFT />
+      <Animated.View
+        style={[
+          styles.imageContainer,
+          {
+            transform: [{ translateY: imageContainerTranslateY }],
+          },
+        ]}
+      >
+        <ImageBackground
+          source={backgroundImage}
+          contentFit="cover"
+          style={styles.imageBackground}
+        >
+        <ScrollView contentContainerStyle={appStyles.center} style={{ width:'100%'}}
+                    refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} colors={[theme['color-primary-100'],theme['color-primary-500'],theme['color-primary-900']]}
+          progressBackgroundColor={'white'}
+                          progressViewOffset={8 * vh}
+          /> }>
 
-      <Button style={{ marginTop: 20 }} onPress={() => sendTransaction()}>
-        Transfer NFT
-      </Button>
+          <Animated.View
+            style={[
+              styles.balanceContainer,
+              {
+                transform: [{ translateY: balanceContainerTranslateY }],
+              },
+            ]}
+          >
+            <BlurView intensity={20} style={styles.balanceBlurContainer}>
+              <Text style={styles.balanceText} category="h4">
+                {balance} ETH
+              </Text>
+            </BlurView>
+          </Animated.View>
+      </ScrollView>
 
-      <Button style={{ marginTop: 20 }} onPress={() => sendETHTransaction()}>
-        Transfer ETH
-      </Button>
-    </SafeAreaView>
+        </ImageBackground>
+
+        <View style={styles.addressContainer}>
+          <TouchableWithoutFeedback
+            onPress={copyAddressToClipboard}
+            style={{ flex: 1 }}
+          >
+            <BlurView style={appStyles.center} intensity={100}>
+              <Text category="label">
+                {formatBlockchainAddress(getWalletContractAddress())}
+              </Text>
+            </BlurView>
+          </TouchableWithoutFeedback>
+        </View>
+      </Animated.View>
+
+      <ScrollView onScroll={onScroll} showsVerticalScrollIndicator={false}>
+        <View style={{ height: 64 * vh }} />
+
+        {buttonData.map((item) => (
+          <RenderButton
+            key={item.id}
+            title={item.title}
+            description={item.description}
+            image={item.image}
+            action={item.action}
+          />
+        ))}
+      </ScrollView>
+    </Layout>
   )
 }
+
+const themedStyles = StyleService.create({
+  imageContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    left: -20 * vw,
+    height: 60 * vh,
+    width: 140 * vw,
+  },
+  imageBackground: {
+    ...appStyles.center,
+    borderBottomLeftRadius: 150,
+    borderBottomRightRadius: 150,
+    overflow: 'hidden',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 15,
+  },
+
+  balanceContainer: {
+    width: 50 * vw,
+    height: 10 * vh,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  balanceBlurContainer: {
+    ...appStyles.center,
+    flexDirection: 'row',
+  },
+  balanceText: {
+    color: 'white',
+  },
+  addressContainer: {
+    position: 'absolute',
+    bottom: -4 * vh,
+    left: 50 * vw,
+    zIndex: 2,
+    width: 40 * vw,
+    height: 8 * vh,
+    borderRadius: 10,
+    overflow: 'hidden',
+    borderColor: 'color-primary-400',
+    borderWidth: 1,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 15,
+  },
+  buttonContainer: {
+    width: 90 * vw,
+    margin: 5 * vw,
+    borderRadius: 5,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'color-primary-400',
+    paddingHorizontal: 2 * vw,
+    paddingVertical: 1 * vw,
+  },
+  modalBackdrop: {
+    backgroundColor: 'color-basic-transparent-600',
+  },
+})

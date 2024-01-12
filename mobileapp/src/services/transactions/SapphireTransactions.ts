@@ -20,6 +20,8 @@ import { NETWORKS } from '../../constants/Networks'
 import {
   LOCALHOST_ARGENT_MODULE_ADDRESS,
   LOCALHOST_SAPPHIRE_NFTS_ADDRESS,
+  SEPOLIA_ARGENT_MODULE_ADDRESS,
+  SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
 } from '@env'
 
 export type TransactionArgent = {
@@ -90,7 +92,8 @@ export function wrapInMultiCall(
 
 export async function signTransaction(
   unsignedTransaction: string,
-  signer: Signer
+  signer: Signer,
+  argentModuleAddress: string
 ) {
   const provider = signer.provider
   if (!provider) {
@@ -101,7 +104,7 @@ export async function signTransaction(
   const nonce = await generateNonceForRelay(provider)
   const signedTransaction = await signOffchain(
     signer,
-    LOCALHOST_ARGENT_MODULE_ADDRESS,
+    argentModuleAddress,
     unsignedTransaction,
     chainId,
     nonce
@@ -117,15 +120,20 @@ export async function requestERC721TokenTransfer(
   walletAddress: string,
   to: string,
   tokenId: number,
-  signer: Signer
+  signer: Signer,
+  network: NETWORKS
 ) {
   const ArgentModule = ArgentModule__factory.connect(
-    LOCALHOST_ARGENT_MODULE_ADDRESS as string,
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string),
     signer
   )
 
   const SapphireNFTs = SapphireNFTs__factory.connect(
-    LOCALHOST_SAPPHIRE_NFTS_ADDRESS as string,
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_SAPPHIRE_NFTS_ADDRESS as string)
+      : (SEPOLIA_SAPPHIRE_NFTS_ADDRESS as string),
     signer
   )
 
@@ -142,11 +150,14 @@ export async function requestERC721TokenTransfer(
 
   const { signedTransaction, nonce } = await signTransaction(
     transactionData,
-    signer
+    signer,
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string)
   )
 
   const result = (await contactBackend(BACKEND_ENDPOINTS.EXECUTE_TRANSACTION, {
-    network: NETWORKS.LOCALHOST,
+    network: network,
     walletAddress: walletAddress,
     nonce,
     signedTransaction,
@@ -164,10 +175,13 @@ export async function requestETHTransfer(
   walletAddress: string,
   to: string,
   value: number,
-  signer: Signer
+  signer: Signer,
+  network: NETWORKS
 ) {
   const ArgentModule = ArgentModule__factory.connect(
-    LOCALHOST_ARGENT_MODULE_ADDRESS as string,
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string),
     signer
   )
 
@@ -179,17 +193,19 @@ export async function requestETHTransfer(
 
   const { signedTransaction, nonce } = await signTransaction(
     transactionData,
-    signer
+    signer,
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string)
   )
 
   const result = (await contactBackend(BACKEND_ENDPOINTS.EXECUTE_TRANSACTION, {
-    network: NETWORKS.LOCALHOST,
+    network: network,
     walletAddress: walletAddress,
     nonce,
     signedTransaction,
     transactionData,
   })) as executeTransactionResponse | backendErrorResponse
-
   if ('error' in result) {
     throw new Error(result.error)
   }

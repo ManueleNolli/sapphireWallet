@@ -1,24 +1,41 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-import { Button, Layout } from '@ui-kitten/components'
+import { Button, Layout, Radio, Select, SelectItem, Text } from '@ui-kitten/components'
 import { View } from 'react-native'
 import { appStyles, vh } from '../../../Styles'
 import { Image } from 'expo-image'
-import { logoWithFullText } from '../../../assets/AssetsRegistry'
+import { logoWithFullText, networkLogo } from '../../../assets/AssetsRegistry'
 import useCreateWallet from './useCreateWallet'
 import SafeAreaView from '../../../utils/SafeAreaView'
 import { CreateWalletProps } from '../../../navigation/FirstAccessStack'
+import { NETWORKS } from '../../../constants/Networks'
 
 export default function CreateWallet({ navigation }: CreateWalletProps) {
-  const { createAndNavigate } = useCreateWallet(navigation)
+  const { createAndNavigate, selectedNetwork,onNetworkSelect} = useCreateWallet(navigation)
+
+    const networkUppercase = (network: string) =>
+    network.charAt(0).toUpperCase() + network.slice(1)
+
+    function NetworkIcon({ network }: NETWORKS) {
+    return (
+      <Image
+        contentFit={'contain'}
+        style={{
+          width: 32,
+          height: 32,
+          marginRight: 8,
+        }}
+        source={networkLogo(network)}
+      />
+    )
+  }
 
   return (
-    <Layout style={{ flex: 1 }}>
-      <SafeAreaView style={{ marginVertical: 20 * vh }}>
-        <View style={{ flex: 1 }}>
+      <SafeAreaView>
+        <View style={{ flex: 1, marginTop:10*vh}}>
           <Image style={appStyles.imageContain} source={logoWithFullText} />
         </View>
-        <View style={[{ flex: 1 }, appStyles.centerNoFlex]}>
+        <View style={[{ flex: 1 , marginBottom:10*vh }, appStyles.centerNoFlex]}>
           <Button
             appearance="outline"
             size={'giant'}
@@ -27,7 +44,20 @@ export default function CreateWallet({ navigation }: CreateWalletProps) {
             Create wallet
           </Button>
         </View>
+
+         <View style={{bottom:0}}>
+             <Select
+               testID={'select'}
+               label='Network'
+               value={networkUppercase(Object.values(NETWORKS)[selectedNetwork.row])}
+             selectedIndex={selectedNetwork}
+              onSelect={onNetworkSelect}
+             >
+               {Object.values(NETWORKS).map((network, index) => (
+            <SelectItem testID={`selectItem-${network}`} title={networkUppercase(network)} key={index} accessoryLeft={() => <NetworkIcon network={network} />}  />
+          ))}
+          </Select>
+          </View>
       </SafeAreaView>
-    </Layout>
   )
 }

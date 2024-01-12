@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "compile": "npx hardhat compile && npx hardhat run scripts/utils/copyTypechainTypes.ts",
+    "start:local": "npx hardhat node --hostname 0.0.0.0"
+  },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
     "@nomicfoundation/hardhat-ethers": "^3.0.0",

@@ -7,6 +7,7 @@ type WalletContextType = {
   setEOAAddress: (eoaAddress: string) => Promise<void>
   getWalletContractAddress: () => string
   setWalletContractAddress: (walletContractAddress: string) => Promise<void>
+  resetWallet: () => Promise<void>
 }
 
 export const WalletContext = createContext<WalletContextType>(<
@@ -29,4 +30,5 @@ export const WalletContext = createContext<WalletContextType>(<
   setWalletContractAddress: async (
     walletContractAddress: string
   ): Promise<void> => {},
+  resetWallet: async (): Promise<void> => {},
 })

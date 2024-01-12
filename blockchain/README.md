@@ -15,30 +15,22 @@ This project includes the Argent smart contracts of those two repositories:
 ```bash
 yarn install
 ```
+<img src="https://gitlab-edu.supsi.ch/dti-isin/giuliano.gremlich/progetti_master/2023_2024/manuele-nolli/aa-interoperability/uploads/7247c41762af1229ee0f92b6e0d5573f/attention.png" alt="attention image" width="40" height="auto"> fill your personal information inside `.env`
 
 ## Compile
-
-The hardhat task `compile` has been override to copy typechain artifacts to the `backend` and `mobileapp` folder. 
+Hardhat compile has been wrapped in yarn, also typechain types are copied.
 
 ```bash
-npx hardhat compile --copy-types True
+yarn compile
 ```
 
 ## Run local hardhat network
 
 ```bash
-npx hardhat node --hostname 0.0.0.0
+yarn start:local
 ```
 
 ## Deploy 
-Deploy will call the `compile` task and then upload the `.env` files to the necessary modules.
-The updated .env are:
-* .env
-* backend/wallet-factory/.env
-* mobileapp/.env
-
-For know which keys are updated please check the `deploy.ts` file.
-
 ```bash
 npx hardhat run scripts\deploy.ts --network <network>
 ```
@@ -46,3 +38,14 @@ npx hardhat run scripts\deploy.ts --network <network>
 where `<network>` can be:
 * `localhost` (default) for a local hardhat network
 * `sepolia` for the Sepolia testnet 
+
+### Envs autoupdate
+Deploy will update the `.env` files to the necessary modules.
+The updated .env are:
+* [.env](.env)
+* [backend/wallet-factory/.env](../backend/wallet-factory/.env)
+* [backend/sapphire-relayer/.env](../backend/sapphire-relayer/.env)
+* [mobileapp/.env](../mobileapp/.env)
+
+For know which keys are added/updated please check the `deploy.ts` file.
+

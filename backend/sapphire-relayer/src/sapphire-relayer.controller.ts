@@ -21,14 +21,20 @@ export class SapphireRelayerController {
       data.network,
     );
 
-    const signer = await this.blockchainService.getProviderAndSigner(
+    const backendAddress = this.environmentService.getUnhandled(
+      'ADDRESS',
       data.network,
-      this.environmentService.getWithNetwork(
+    );
+
+    const signer = await this.blockchainService.getProviderAndSigner({
+      network: data.network,
+      signerKey: this.environmentService.getWithNetwork(
         'SIGNER_PRIVATE_KEY',
         data.network,
       ),
-      apiKey,
-    );
+      localHostAddress: backendAddress,
+      apiKey: apiKey,
+    });
 
     return await this.sapphireService.addAuthorised(
       signer,
@@ -47,14 +53,20 @@ export class SapphireRelayerController {
       data.network,
     );
 
-    const signer = await this.blockchainService.getProviderAndSigner(
+    const backendAddress = this.environmentService.getUnhandled(
+      'ADDRESS',
       data.network,
-      this.environmentService.getWithNetwork(
+    );
+
+    const signer = await this.blockchainService.getProviderAndSigner({
+      network: data.network,
+      signerKey: this.environmentService.getWithNetwork(
         'SIGNER_PRIVATE_KEY',
         data.network,
       ),
-      apiKey,
-    );
+      localHostAddress: backendAddress,
+      apiKey: apiKey,
+    });
 
     return await this.sapphireService.executeTransaction(
       signer,

@@ -1,17 +1,21 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   BottomNavigation,
   BottomNavigationTab,
   Icon,
   IconElement,
+  Text,
 } from '@ui-kitten/components'
+import { Image } from 'expo-image'
+import { logo, networkLogo } from '../assets/AssetsRegistry'
 
 // Pages
 import Home from '../pages/Home/Home'
-import Details from '../pages/Details/Details'
+import NFTs from '../pages/NFTs/NFTs'
 import Settings from '../pages/Settings/Settings'
 import { ImageProps } from 'react-native'
+import { BlockchainContext } from '../context/BlockchainContext'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -69,22 +73,71 @@ const BottomTabBar = ({ navigation, state }: any) => {
       selectedIndex={state.index}
       onSelect={(index) => navigation.navigate(state.routeNames[index])}
     >
-      <BottomNavigationTab title="Balance" icon={HomeIcon} />
+      <BottomNavigationTab title="Home" icon={HomeIcon} />
       <BottomNavigationTab title="NFTs" icon={NFTsIcon} />
       <BottomNavigationTab title="Settings" icon={SettingsIcon} />
     </BottomNavigation>
   )
 }
 
-const BottomTabNavigator = () => (
-  <Navigator
-    screenOptions={{ headerShown: false }}
-    tabBar={(props) => <BottomTabBar {...props} />}
-  >
-    <Screen name="Home" component={Home} />
-    <Screen name="Details" component={Details} />
-    <Screen name="Settings" component={Settings} />
-  </Navigator>
-)
+const BottomTabNavigator = () => {
+  const { currentNetwork } = useContext(BlockchainContext)
+
+  function LogoIcon() {
+    return (
+      <Image
+        contentFit={'contain'}
+        style={{
+          width: 32,
+          height: 32,
+          marginLeft: 8,
+        }}
+        source={logo}
+      />
+    )
+  }
+
+  function NetworkIcon() {
+    return (
+      <Image
+        contentFit={'contain'}
+        style={{
+          width: 32,
+          height: 32,
+          marginRight: 8,
+        }}
+        source={networkLogo(currentNetwork)}
+      />
+    )
+  }
+
+  return (
+    <Navigator
+      screenOptions={{
+        headerTransparent: true,
+        headerTitleAlign: 'center',
+        headerTitle: (props) => <Text category={'h6'}> {props.children} </Text>,
+      }}
+      tabBar={(props) => <BottomTabBar {...props} />}
+    >
+      <Screen
+        name="Home"
+        component={Home}
+        options={({}) => ({
+          headerLeft: () => <LogoIcon />,
+          headerRight: () => <NetworkIcon />,
+        })}
+      />
+      <Screen
+        name="NFTs"
+        component={NFTs}
+        options={({}) => ({
+          headerRight: () => <NetworkIcon />,
+        })}
+      />
+      <Screen name="Settings" component={Settings} />
+    </Navigator>
+  )
+}
 
 export default BottomTabNavigator
