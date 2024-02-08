@@ -42,7 +42,7 @@ describe("SendTransaction NFT", function () {
     const sapphireNFT = await sapphireNFTDeployment.waitForDeployment();
     const sapphireNFTAddress = await sapphireNFT.getAddress();
 
-    await sapphireNFT.safeMint(walletAccount1Address);
+    await sapphireNFT.safeMint(walletAccount1Address, "https://sapphire/");
 
     // Check NFT balance of account1
     const balanceAccount1 = await sapphireNFT.balanceOf(walletAccount1Address);
