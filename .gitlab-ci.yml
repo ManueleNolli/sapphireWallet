@@ -16,7 +16,7 @@ compile_contracts:
   only:
     - main
     - dev
-    - sprint*
+    - /sprint[0-9]+/
 
 test_mobileapp:
   stage: 🤞 test
