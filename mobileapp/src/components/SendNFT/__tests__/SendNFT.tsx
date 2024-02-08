@@ -3,11 +3,13 @@ import { NFTPlaceholder } from '../../../assets/AssetsRegistry'
 import renderWithTheme from '../../../TestHelper'
 import useSendNFT from '../useSendNFT'
 import SendNFT from '../SendNFT'
-import { fireEvent } from '@testing-library/react-native'
+import { fireEvent, waitFor } from '@testing-library/react-native'
+import React from 'react'
 
 jest.mock('../useSendNFT', () => jest.fn())
 jest.mock('../../InputAddress/InputAddress')
 jest.mock('../../InputNumeric/InputNumeric')
+jest.mock('../../QRCodeScanner/QRCodeScanner')
 
 jest.mock('@ui-kitten/components', () => {
   const { View } = require('react-native')
@@ -138,5 +140,30 @@ describe('SendNFT', () => {
     fireEvent.press(NFTCard)
 
     expect(setSelectedNFT).toHaveBeenCalledWith(1)
+  })
+
+  it('Show QRCode Scanner', async () => {
+    const sendETHMock = jest.fn()
+    ;(useSendNFT as jest.Mock).mockReturnValue({
+      isLoading: true,
+      sendETHTransaction: sendETHMock,
+      valueAddress: '0x123456789',
+      setValueAddress: jest.fn(),
+      isAddressValid: true,
+      setIsAddressValid: jest.fn(),
+      valueAmount: '100',
+      setValueAmount: jest.fn(),
+      isAmountValid: true,
+      setIsAmountValid: jest.fn(),
+      isQRCodeScanning: true,
+    })
+
+    let tree: any
+
+    await waitFor(async () => {
+      tree = renderWithTheme(<SendNFT address={'address'} close={() => {}} />)
+    })
+
+    expect(tree).toMatchSnapshot()
   })
 })

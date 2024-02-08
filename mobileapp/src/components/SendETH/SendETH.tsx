@@ -12,6 +12,7 @@ import useSendETH from './useSendETH'
 import InputAddress from '../InputAddress/InputAddress'
 import InputNumeric from '../InputNumeric/InputNumeric'
 import { View } from 'react-native'
+import QRCodeScanner from '../QRCodeScanner/QRCodeScanner'
 
 type SendETHProps = {
   address: string
@@ -31,6 +32,9 @@ export default function SendETH({ address, balance, close }: SendETHProps) {
     setValueAmount,
     isAmountValid,
     setIsAmountValid,
+    isQRCodeScanning,
+    setIsQRCodeScanning,
+    QRCodeFinishedScanning,
   } = useSendETH({
     address,
     close,
@@ -46,6 +50,9 @@ export default function SendETH({ address, balance, close }: SendETHProps) {
     )
   }
 
+  if (isQRCodeScanning)
+    return <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />
+
   return (
     <Layout style={styles.container}>
       <Text category={'h6'}>Send ETH</Text>
@@ -57,6 +64,7 @@ export default function SendETH({ address, balance, close }: SendETHProps) {
         setValue={setValueAddress}
         isValid={isAddressValid}
         setIsValid={setIsAddressValid}
+        setIsQRCodeScanning={setIsQRCodeScanning}
       />
       <InputNumeric
         value={valueAmount}

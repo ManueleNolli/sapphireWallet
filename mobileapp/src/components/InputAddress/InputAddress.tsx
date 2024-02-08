@@ -1,6 +1,6 @@
 import { Image, TouchableWithoutFeedback } from 'react-native'
 import React, { useEffect } from 'react'
-import { Icon, Input } from '@ui-kitten/components'
+import { Input } from '@ui-kitten/components'
 import { qrCodeSmall } from '../../assets/AssetsRegistry'
 import { isAddress } from 'ethers'
 
@@ -9,6 +9,7 @@ type InputAddressProps = {
   setValue: (value: string) => void
   isValid: boolean
   setIsValid: (isValid: boolean) => void
+  setIsQRCodeScanning: (isQRCodeScanning: boolean) => void
 }
 
 export default function InputAddress({
@@ -16,6 +17,7 @@ export default function InputAddress({
   setValue,
   isValid,
   setIsValid,
+  setIsQRCodeScanning,
 }: InputAddressProps) {
   useEffect(() => {
     isAddress(value) ? setIsValid(true) : setIsValid(false)
@@ -25,7 +27,7 @@ export default function InputAddress({
     <TouchableWithoutFeedback
       testID={'qr-code-icon'}
       onPress={() => {
-        console.log('QrCodeIcon')
+        setIsQRCodeScanning(true)
       }}
     >
       <Image {...props} source={qrCodeSmall} />

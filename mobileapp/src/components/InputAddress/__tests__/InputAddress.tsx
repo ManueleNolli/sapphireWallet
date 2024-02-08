@@ -15,6 +15,7 @@ describe('InputAddress Component', () => {
         setValue={() => {}}
         isValid={false}
         setIsValid={() => {}}
+        setIsQRCodeScanning={() => {}}
       />
     )
 
@@ -33,6 +34,7 @@ describe('InputAddress Component', () => {
         setValue={() => {}}
         isValid={false}
         setIsValid={setIsValidMock}
+        setIsQRCodeScanning={() => {}}
       />
     )
 
@@ -51,6 +53,7 @@ describe('InputAddress Component', () => {
         setValue={() => {}}
         isValid={false}
         setIsValid={() => {}}
+        setIsQRCodeScanning={() => {}}
       />
     )
 
@@ -65,6 +68,7 @@ describe('InputAddress Component', () => {
         setValue={() => {}}
         isValid={true}
         setIsValid={() => {}}
+        setIsQRCodeScanning={() => {}}
       />
     )
 
@@ -78,6 +82,7 @@ describe('InputAddress Component', () => {
         setValue={() => {}}
         isValid={false}
         setIsValid={() => {}}
+        setIsQRCodeScanning={() => {}}
       />
     )
 
@@ -86,16 +91,19 @@ describe('InputAddress Component', () => {
   })
 
   it('calls QrCodeIcon onPress correctly', () => {
+    const setIsQRCodeScanningMock = jest.fn()
     const { getByTestId } = renderWithTheme(
       <InputAddress
         value=""
         setValue={() => {}}
         isValid={false}
         setIsValid={() => {}}
+        setIsQRCodeScanning={setIsQRCodeScanningMock}
       />
     )
 
     // Triggering QrCodeIcon onPress
     fireEvent.press(getByTestId('qr-code-icon'))
+    expect(setIsQRCodeScanningMock).toHaveBeenCalledWith(true)
   })
 })

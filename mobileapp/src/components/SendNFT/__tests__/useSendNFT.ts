@@ -6,6 +6,7 @@ import useSendNFT from '../useSendNFT'
 import { getSigner } from '../../../services/wallet'
 import { requestERC721TokenTransfer } from '../../../services/transactions'
 import Toast from 'react-native-toast-message'
+import useSendETH from '../../SendETH/useSendETH'
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -214,5 +215,29 @@ describe('useSendNFTs Hook', () => {
     })
 
     expect(close).toHaveBeenCalled()
+  })
+
+  it('should set value address when qrcode finished', async () => {
+    const getPrivateKeyMock = jest.fn().mockResolvedValue('getPrivateKeyMock')
+    ;(useContext as jest.Mock).mockReturnValue({
+      getPrivateKey: getPrivateKeyMock,
+      currentNetwork: NETWORKS.LOCALHOST,
+    })
+
+    const close = jest.fn()
+    let resultHook: any
+    await waitFor(async () => {
+      const { result } = renderHook(() =>
+        useSendNFT({ address: 'address', close: close })
+      )
+      resultHook = result
+    })
+
+    await act(async () => {
+      resultHook.current.QRCodeFinishedScanning('dataexample')
+    })
+
+    expect(resultHook.current.valueAddress).toBe('dataexample')
+    expect(resultHook.current.isQRCodeScanning).toBe(false)
   })
 })

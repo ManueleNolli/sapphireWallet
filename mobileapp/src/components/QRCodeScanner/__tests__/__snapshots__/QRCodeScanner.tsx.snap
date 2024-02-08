@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QRCodeScanner renders correctly android 1`] = `
+<View
+  style={
+    [
+      {
+        "height": 949.9999999999999,
+        "width": 712.5,
+      },
+      {
+        "borderRadius": 10,
+        "overflow": "hidden",
+      },
+    ]
+  }
+>
+  <ViewManagerAdapter_ExpoBarCodeScanner
+    barCodeTypes={[]}
+    onBarCodeScanned={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Image
+      source={1}
+      style={
+        {
+          "height": 450,
+          "opacity": 0.8,
+          "width": 450,
+        }
+      }
+    />
+  </ViewManagerAdapter_ExpoBarCodeScanner>
+</View>
+`;
+
+exports[`QRCodeScanner renders correctly not android 1`] = `
+<View
+  style={
+    [
+      {
+        "height": 1200.6,
+        "width": 712.5,
+      },
+      {
+        "borderRadius": 10,
+        "overflow": "hidden",
+      },
+    ]
+  }
+>
+  <ViewManagerAdapter_ExpoBarCodeScanner
+    barCodeTypes={[]}
+    onBarCodeScanned={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Image
+      source={1}
+      style={
+        {
+          "height": 450,
+          "opacity": 0.8,
+          "width": 450,
+        }
+      }
+    />
+  </ViewManagerAdapter_ExpoBarCodeScanner>
+</View>
+`;

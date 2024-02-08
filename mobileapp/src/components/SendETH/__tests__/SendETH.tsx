@@ -7,6 +7,7 @@ import { act, fireEvent, waitFor } from '@testing-library/react-native'
 jest.mock('../useSendETH', () => jest.fn())
 jest.mock('../../InputAddress/InputAddress')
 jest.mock('../../InputNumeric/InputNumeric')
+jest.mock('../../QRCodeScanner/QRCodeScanner')
 jest.mock('@ui-kitten/components', () => {
   const { View } = require('react-native')
   return {
@@ -94,5 +95,32 @@ describe('SendETH', () => {
     })
 
     expect(sendETHMock).toHaveBeenCalled()
+  })
+
+  it('Show QRCode Scanner', async () => {
+    const sendETHMock = jest.fn()
+    ;(useSendETH as jest.Mock).mockReturnValue({
+      isLoading: true,
+      sendETHTransaction: sendETHMock,
+      valueAddress: '0x123456789',
+      setValueAddress: jest.fn(),
+      isAddressValid: true,
+      setIsAddressValid: jest.fn(),
+      valueAmount: '100',
+      setValueAmount: jest.fn(),
+      isAmountValid: true,
+      setIsAmountValid: jest.fn(),
+      isQRCodeScanning: true,
+    })
+
+    let tree: any
+
+    await waitFor(async () => {
+      tree = renderWithTheme(
+        <SendETH address={'0x123456789'} balance={100} close={jest.fn()} />
+      )
+    })
+
+    expect(tree).toMatchSnapshot()
   })
 })

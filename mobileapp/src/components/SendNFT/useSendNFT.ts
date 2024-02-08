@@ -27,6 +27,7 @@ export default function useSendNFT({ address, close }: useSendNFTProps) {
   const [isAddressValid, setIsAddressValid] = useState<boolean>(false)
   const [nfts, setNFTs] = useState<OwnedNFT[]>([])
   const [selectedNFT, setSelectedNFT] = useState(0)
+  const [isQRCodeScanning, setIsQRCodeScanning] = useState<boolean>(false)
 
   useEffect(() => {
     const getNFTs = async () => {
@@ -84,6 +85,11 @@ export default function useSendNFT({ address, close }: useSendNFTProps) {
     }
   }
 
+  const QRCodeFinishedScanning = (data: string) => {
+    setValueAddress(data)
+    setIsQRCodeScanning(false)
+  }
+
   return {
     isSendLoading,
     isNFTLoading,
@@ -95,5 +101,8 @@ export default function useSendNFT({ address, close }: useSendNFTProps) {
     nfts,
     selectedNFT,
     setSelectedNFT,
+    isQRCodeScanning,
+    setIsQRCodeScanning,
+    QRCodeFinishedScanning,
   }
 }

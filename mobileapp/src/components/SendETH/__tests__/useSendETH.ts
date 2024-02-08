@@ -117,4 +117,28 @@ describe('useSendETH hook', () => {
 
     expect(close).toHaveBeenCalledWith(false)
   })
+
+  it('should set value address when qrcode finished', async () => {
+    const getPrivateKeyMock = jest.fn().mockResolvedValue('getPrivateKeyMock')
+    ;(useContext as jest.Mock).mockReturnValue({
+      getPrivateKey: getPrivateKeyMock,
+      currentNetwork: NETWORKS.LOCALHOST,
+    })
+
+    const close = jest.fn((needRefresh: boolean) => needRefresh)
+    let resultHook: any
+    await waitFor(async () => {
+      const { result } = renderHook(() =>
+        useSendETH({ address: 'address', close })
+      )
+      resultHook = result
+    })
+
+    await act(async () => {
+      resultHook.current.QRCodeFinishedScanning('dataexample')
+    })
+
+    expect(resultHook.current.valueAddress).toBe('dataexample')
+    expect(resultHook.current.isQRCodeScanning).toBe(false)
+  })
 })
