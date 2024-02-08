@@ -33,7 +33,7 @@ test_mobileapp:
   only:
     - main
     - dev
-    - sprint*
+    - /sprint[0-9]+/
 
 test_api-gateway:
   stage: 🤞 test
@@ -46,7 +46,7 @@ test_api-gateway:
   only:
       - main
       - dev
-      - sprint*
+      - /sprint[0-9]+/
 
 test_wallet-factory:
   stage: 🤞 test
@@ -64,7 +64,7 @@ test_wallet-factory:
   only:
     - main
     - dev
-    - sprint*
+    - /sprint[0-9]+/
 
 test_sapphire-relayer:
   stage: 🤞 test
@@ -82,4 +82,4 @@ test_sapphire-relayer:
   only:
     - main
     - dev
-    - sprint*
+    - /sprint[0-9]+/
