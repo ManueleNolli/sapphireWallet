@@ -52,5 +52,15 @@ describe("AccountContract", function () {
       );
       expect(balance).to.equal(ethers.parseEther("1"));
     });
+
+    it("should emit event Deposit", async function () {
+      await expect(
+        AccountContract.connect(account1).deposit({
+          value: ethers.parseEther("1"),
+        })
+      )
+        .to.emit(AccountContract, "Deposit")
+        .withArgs(account1.address, "1000000000000000000");
+    });
   });
 });

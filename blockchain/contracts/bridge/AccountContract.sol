@@ -4,6 +4,7 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract AccountContract is Ownable {
+    event Deposit(address indexed from, uint256 value);
 
     constructor(address initialOwner)
         Ownable(initialOwner)
@@ -24,6 +25,7 @@ contract AccountContract is Ownable {
     */
     function deposit() public payable {
         require(msg.value > 0, "Deposit amount must be greater than 0");
+        emit Deposit(msg.sender, msg.value);
     }
 
     function execute(address _to, uint256 _value, bytes calldata _data) public onlyOwner returns (bytes memory) {

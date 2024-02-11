@@ -5,6 +5,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./AccountContract.sol";
 
 contract ArgentWrappedAccounts is Ownable {
+    event Deposit(address indexed from, address indexed to, uint256 value);
+    event AccountContractCreated(address indexed wallet, address indexed accountContract);
+
 
     mapping (address => address) private accountContracts; // address on base chain => address on side chain (both are contracts)
 
@@ -28,6 +31,7 @@ contract ArgentWrappedAccounts is Ownable {
     */
     function deposit() public payable {
         require(msg.value > 0, "Deposit amount must be greater than 0");
+        emit Deposit(msg.sender, address(this), msg.value);
     }
 
     /**
@@ -44,6 +48,7 @@ contract ArgentWrappedAccounts is Ownable {
         }
 
         AccountContract(payable(accountContract)).deposit{value: _value}();
+        emit Deposit(address(this),accountContract, _value);
     }
 
     /**
@@ -54,6 +59,9 @@ contract ArgentWrappedAccounts is Ownable {
         require(accountContracts[_wallet] == address(0), "Account contract already exists");
         address AccountContractAddress = address(new AccountContract(_wallet));
         accountContracts[_wallet] = AccountContractAddress;
+
+        emit AccountContractCreated(_wallet, AccountContractAddress);
+
         return AccountContractAddress;
     }
 
