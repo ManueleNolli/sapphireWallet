@@ -60,6 +60,12 @@ abstract contract BaseModule is IModule {
         uint64 expires;
     }
 
+    struct Call {
+        address to;
+        uint256 value;
+        bytes data;
+    }
+
     // Maps wallet to session
     mapping (address => Session) internal sessions;
 
@@ -172,7 +178,7 @@ abstract contract BaseModule is IModule {
      * @param _value The value of the transaction.
      * @param _data The data of the transaction.
      */
-    function invokeWallet(address _wallet, address _to, uint256 _value, bytes memory _data) internal returns (bytes memory _res) {
+    function invokeWallet(address _wallet, address _to, uint256 _value, bytes memory _data) internal returns (bool _success, bytes memory _res) {
         bool success;
         (success, _res) = _wallet.call(abi.encodeWithSignature("invoke(address,uint256,bytes)", _to, _value, _data));
         if (success && _res.length > 0) { //_res is empty if _wallet is an "old" BaseWallet that can't return output values
@@ -186,5 +192,7 @@ abstract contract BaseModule is IModule {
         } else if (!success) {
             revert("BM: wallet invoke reverted");
         }
+
+        return (success, _res);
     }
 }

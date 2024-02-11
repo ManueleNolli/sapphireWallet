@@ -14,14 +14,14 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        // runs: 200,
+        runs: 1000,
       },
     },
   },
-
   networks: {
     hardhat: {
       chainId: 1337,
+      allowUnlimitedContractSize: true,
     },
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/${SEPOLIA_API_KEY}`,

@@ -25,6 +25,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * @title TransactionManager
  * @notice Module to execute transactions in sequence to e.g. transfer tokens (ETH, ERC20, ERC721, ERC1155) or call third-party contracts.
  * @author Julien Niset - <julien@argent.xyz>
+ * @author Manuele Nolli - <manuele.nolli@supsi.ch>
  */
 abstract contract TransactionManager is BaseModule {
 
@@ -34,12 +35,6 @@ abstract contract TransactionManager is BaseModule {
     bytes4 private constant ERC1155_RECEIVED = bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"));
     bytes4 private constant ERC1155_BATCH_RECEIVED = bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"));
     bytes4 private constant ERC165_INTERFACE = bytes4(keccak256("supportsInterface(bytes4)"));
-
-    struct Call {
-        address to;
-        uint256 value;
-        bytes data;
-    }
 
     // The time delay for adding a trusted contact
     uint256 internal immutable whitelistPeriod;
@@ -82,7 +77,8 @@ abstract contract TransactionManager is BaseModule {
                 (_transactions[i].value == 0 || spender == _transactions[i].to) &&
                 (isWhitelisted(_wallet, spender) || authoriser.isAuthorised(_wallet, spender, _transactions[i].to, _transactions[i].data)),
                 "TM: call not authorised");
-            results[i] = invokeWallet(_wallet, _transactions[i].to, _transactions[i].value, _transactions[i].data);
+            (, bytes memory returnValue) = invokeWallet(_wallet, _transactions[i].to, _transactions[i].value, _transactions[i].data);
+            results[i] = returnValue;
         }
         return results;
     }
@@ -261,7 +257,8 @@ abstract contract TransactionManager is BaseModule {
     function multiCallWithApproval(address _wallet, Call[] calldata _transactions) internal returns (bytes[] memory) {
         bytes[] memory results = new bytes[](_transactions.length);
         for(uint i = 0; i < _transactions.length; i++) {
-            results[i] = invokeWallet(_wallet, _transactions[i].to, _transactions[i].value, _transactions[i].data);
+            (, bytes memory returnValue) = invokeWallet(_wallet, _transactions[i].to, _transactions[i].value, _transactions[i].data);
+            results[i] = returnValue;
         }
         return results;
     }

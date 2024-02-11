@@ -21,13 +21,14 @@ import "./common/BaseModule.sol";
 import "./RelayerManager.sol";
 import "./SecurityManager.sol";
 import "./TransactionManager.sol";
+import "./InteroperabilityManager.sol";
 
 /**
  * @title ArgentModule
  * @notice Single module for the Argent wallet.
  * @author Julien Niset - <julien@argent.xyz>
  */
-contract ArgentModule is BaseModule, RelayerManager, SecurityManager, TransactionManager {
+contract ArgentModule is BaseModule, RelayerManager, SecurityManager, TransactionManager, InteroperabilityManager {
 
     bytes32 constant public NAME = "ArgentModule";
 
@@ -80,7 +81,8 @@ contract ArgentModule is BaseModule, RelayerManager, SecurityManager, Transactio
             methodId == SecurityManager.addGuardian.selector ||
             methodId == SecurityManager.revokeGuardian.selector ||
             methodId == SecurityManager.cancelGuardianAddition.selector ||
-            methodId == SecurityManager.cancelGuardianRevokation.selector
+            methodId == SecurityManager.cancelGuardianRevokation.selector ||
+            methodId == InteroperabilityManager.bridgeCall.selector
         )
         {
             // owner

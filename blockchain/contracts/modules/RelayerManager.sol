@@ -21,6 +21,7 @@ import "./common/Utils.sol";
 import "./common/BaseModule.sol";
 import "./common/SimpleOracle.sol";
 import "../infrastructure/storage/IGuardianStorage.sol";
+
 /**
  * @title RelayerManager
  * @notice Abstract Module to execute transactions signed by ETH-less accounts and sent by a relayer.
@@ -361,7 +362,7 @@ abstract contract RelayerManager is BaseModule, SimpleOracle {
                 uint256 tokenGasPrice = inToken(_refundToken, tx.gasprice);
                 refundAmount = Math.min(gasConsumed, _gasLimit) * (Math.min(_gasPrice, tokenGasPrice));
                 bytes memory methodData = abi.encodeWithSelector(IERC20.transfer.selector, refundAddress, refundAmount);
-                bytes memory transferSuccessBytes = invokeWallet(_wallet, _refundToken, 0, methodData);
+                (,bytes memory transferSuccessBytes) = invokeWallet(_wallet, _refundToken, 0, methodData);
                 // Check token refund is successful, when `transfer` returns a success bool result
                 if (transferSuccessBytes.length > 0) {
                     require(abi.decode(transferSuccessBytes, (bool)), "RM: Refund transfer failed");

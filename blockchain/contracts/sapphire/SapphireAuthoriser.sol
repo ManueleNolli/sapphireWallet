@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import "../infrastructure/IAuthoriser.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
