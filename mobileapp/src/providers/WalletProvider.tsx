@@ -5,6 +5,7 @@ import { getData, storeData, removeData } from '../services/storage/'
 import constants from '../constants/Constants'
 import useLoading from '../hooks/useLoading'
 import Loading from '../pages/Loading/Loading'
+import { Platform } from 'react-native'
 
 type WalletProviderProps = {
   children: React.ReactNode
@@ -46,10 +47,27 @@ export function WalletProvider({ children }: WalletProviderProps) {
    * @param privateKey
    */
   const setPrivateKey = async (privateKey: string) => {
+    try {
+
     await SecureStore.setItemAsync(constants.secureStoreKeys.privateKey, privateKey, {
       authenticationPrompt: 'Please authenticate to save your private key',
       requireAuthentication: true,
     })
+    } catch (error) {
+      // handle error if it is: Calling the 'setValueWithKeyAsync' function has failed
+      // This can happen in expo go with IOS (not supported yet: https://github.com/expo/expo/issues/21694)
+      console.log("ERROR", error, Platform.OS)
+      if (error.message.includes("`NSFaceIDUsageDescription`") && Platform.OS === 'ios') {
+        console.log("QUI", error.message)
+        // save the privateKey in asyncStorage
+        await SecureStore.setItemAsync(constants.secureStoreKeys.privateKey, privateKey, {
+          authenticationPrompt: 'Please authenticate to save your private key',
+        })
+      } else {
+        throw new Error(error)
+      }
+    }
+
   }
 
   /**

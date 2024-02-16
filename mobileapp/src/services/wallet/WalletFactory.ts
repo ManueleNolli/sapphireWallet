@@ -19,8 +19,10 @@ export async function requestContractWallet(
     eoaAddress,
   })) as createWalletResponse | backendErrorResponse
 
+  console.log("result: ", result)
   if ('error' in result) {
     throw new Error(result.error)
   }
+
   return result
 }
