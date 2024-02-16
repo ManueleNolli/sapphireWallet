@@ -25,7 +25,7 @@ export default async function deploy() {
   ////////////////////////
   // UPDATE EXTERNAL ENV
   ////////////////////////
-  console.log("\nCopy env key to external module (mobileapp, backend)...");
+  console.log("\nCopy env key to external module (mobileapp, backend, bridge)...");
 
   // WalletFactory
   console.log("Updating wallet-factory backend env...");
@@ -73,6 +73,18 @@ export default async function deploy() {
   ];
   await updateExternalEnv("../mobileapp/.env", mobileappEnv);
   console.log("Updated mobileapp env!");
+
+    // MobileApp
+  console.log("Updating bridge env...");
+  const bridgeEnv: EnvValue[] = [
+    {
+      key: networkName + "_" + Constants.envValues.argentModule,
+      value: result.argentModuleAddress,
+    },
+  ];
+  await updateExternalEnv("../bridge/basicOffChainBridge/.env", mobileappEnv);
+  console.log("Updated bridge env!");
+
 
   ////////////
   // DONE :)

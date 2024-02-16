@@ -5,6 +5,7 @@ const destinationPaths = [
     "../mobileapp/src/contracts",
     "../backend/wallet-factory/src/contracts",
     "../backend/sapphire-relayer/src/contracts",
+    "../bridge/basicOffChainBridge/src/contracts",
 ]
 
 async function copyTypechainTypes() {

@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "compile": "npx hardhat compile && npx hardhat run scripts/utils/copyTypechainTypes.ts",
-    "start:local": "npx hardhat node --hostname 0.0.0.0"
+    "start:local": "npx hardhat node --hostname 0.0.0.0",
+    "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",

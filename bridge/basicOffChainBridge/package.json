@@ -1,0 +1,20 @@
+{
+  "name": "basic-offchain-bridge",
+  "version": "1.0.0",
+  "description": "Basic Off Chain Bridge",
+  "main": "index.js",
+  "author": "Nolli Manuele",
+  "license": "MIT",
+  "scripts": {
+    "start:local": "ts-node src/index.ts localhost",
+    "start:sepolia": "ts-node src/index.ts sepolia"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.4",
+    "ethers": "^6.11.1",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

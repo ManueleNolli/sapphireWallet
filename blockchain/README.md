@@ -32,11 +32,11 @@ yarn start:local
 
 ## Deploy 
 ```bash
-npx hardhat run scripts\deploy.ts --network <network>
+yarn deploy:<network>
 ```
 
 where `<network>` can be:
-* `localhost` (default) for a local hardhat network
+* `local` for a local hardhat network
 * `sepolia` for the Sepolia testnet 
 
 ### Envs autoupdate
