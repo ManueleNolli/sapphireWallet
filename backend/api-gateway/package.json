@@ -24,6 +24,9 @@
     "@nestjs/microservices": "^10.2.9",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.16",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "ethers": "^6.11.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
@@ -63,7 +66,7 @@
     },
     "collectCoverageFrom": [
       "src/*.(t|j)s",
-        "src/**/*.(t|j)s"
+      "src/**/*.(t|j)s"
     ],
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
