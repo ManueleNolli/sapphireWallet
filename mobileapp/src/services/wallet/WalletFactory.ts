@@ -5,7 +5,6 @@ import {
   createWalletResponse,
 } from '../backend/'
 import { NETWORKS } from '../../constants/Networks'
-import * as net from 'net'
 
 /**
  * Service to contact wallet factory microservice through API
@@ -19,7 +18,6 @@ export async function requestContractWallet(
     eoaAddress,
   })) as createWalletResponse | backendErrorResponse
 
-  console.log("result: ", result)
   if ('error' in result) {
     throw new Error(result.error)
   }
