@@ -11,8 +11,8 @@ contract ArgentWrappedAccounts is Ownable {
 
     mapping (address => address) private accountContracts; // address on base chain => address on side chain (both are contracts)
 
-    constructor(address initialOwner)
-        Ownable(initialOwner)
+    constructor()
+        Ownable(msg.sender)
      {}
 
     /*
@@ -35,7 +35,7 @@ contract ArgentWrappedAccounts is Ownable {
     }
 
     /**
-    * @notice Deposit ether to account contract (tr
+    * @notice Deposit ether to account contract
     * @param _wallet The address of base chain wallet
     */
     function depositToAccountContract(address _wallet, uint256 _value) onlyOwner public {

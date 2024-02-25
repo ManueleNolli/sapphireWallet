@@ -5,8 +5,8 @@
 import {
   ArgentModule,
   ArgentModule__factory,
-  SapphireNFTs__factory,
   ERC721,
+  SapphireNFTs__factory,
 } from '../../contracts'
 import { parseEther, Signer } from 'ethers'
 import { generateNonceForRelay, signOffchain } from './TransactionUtils'
@@ -85,6 +85,17 @@ export function wrapInMultiCall(
   transactionArgent: TransactionArgent[]
 ) {
   return ArgentModule.interface.encodeFunctionData('multiCall', [
+    from,
+    transactionArgent,
+  ])
+}
+
+export function wrapInBridgeCall(
+  ArgentModule: ArgentModule,
+  from: string,
+  transactionArgent: TransactionArgent
+) {
+  return ArgentModule.interface.encodeFunctionData('bridgeCall', [
     from,
     transactionArgent,
   ])
@@ -209,6 +220,57 @@ export async function requestETHTransfer(
   if ('error' in result) {
     throw new Error(result.error)
   }
+
+  return result
+}
+
+export async function requestETHBridgeCall(
+  walletAddress: string,
+  to: string,
+  value: number,
+  signer: Signer,
+  network: NETWORKS
+) {
+  const ArgentModule = ArgentModule__factory.connect(
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string),
+    signer
+  )
+  console.log('Bridge 1')
+  const ethTransferTransaction = await prepareETHTransferTransaction(to, value)
+  console.log('Bridge 2')
+
+  const transactionData = wrapInBridgeCall(
+    ArgentModule,
+    walletAddress,
+    ethTransferTransaction
+  )
+  console.log('Bridge 3')
+
+  const { signedTransaction, nonce } = await signTransaction(
+    transactionData,
+    signer,
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string)
+  )
+
+  console.log('Bridge 4')
+  const result = (await contactBackend(BACKEND_ENDPOINTS.EXECUTE_TRANSACTION, {
+    network: network,
+    walletAddress: walletAddress,
+    nonce,
+    signedTransaction,
+    transactionData,
+  })) as executeTransactionResponse | backendErrorResponse
+  console.log('Bridge 5')
+
+  if ('error' in result) {
+    console.log('Bridge error', result)
+    throw new Error(result.error)
+  }
+  console.log('Bridge 6')
 
   return result
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Button,
   Divider,
@@ -12,6 +12,14 @@ import SafeAreaView from '../../utils/SafeAreaView'
 import { vh } from '../../Styles'
 import useSettings from './useSettings'
 import { NETWORKS } from '../../constants/Networks'
+import {
+  requestERC721TokenTransfer,
+  requestETHBridgeCall,
+} from '../../services/transactions'
+import Toast from 'react-native-toast-message'
+import { WalletContext } from '../../context/WalletContext'
+import { getSigner } from '../../services/wallet'
+import { BlockchainContext } from '../../context/BlockchainContext'
 
 export default function Settings() {
   const {
@@ -22,6 +30,9 @@ export default function Settings() {
     selectedIndex,
     onNetworkSelect,
   } = useSettings()
+
+  const { getWalletContractAddress, getPrivateKey } = useContext(WalletContext)
+  const { currentNetwork } = useContext(BlockchainContext)
 
   const ThemeIcon = (props: any): IconElement => (
     <Icon
@@ -38,6 +49,23 @@ export default function Settings() {
 
   const networkUppercase = (network: string) =>
     network.charAt(0).toUpperCase() + network.slice(1)
+
+  const temp = async () => {
+    try {
+      await requestETHBridgeCall(
+        getWalletContractAddress(),
+        getWalletContractAddress(),
+        0.02,
+        await getSigner(
+          await getPrivateKey('Sign transaction to send ETH'),
+          currentNetwork
+        ),
+        currentNetwork
+      )
+    } catch (e: any) {
+      console.log('catched erorr', e)
+    }
+  }
 
   return (
     <SafeAreaView style={{ paddingTop: 5 * vh }}>
@@ -72,6 +100,10 @@ export default function Settings() {
         onPress={resetLocalWallet}
       >
         Reset local wallet
+      </Button>
+
+      <Button status="danger" onPress={temp}>
+        Temp
       </Button>
     </SafeAreaView>
   )

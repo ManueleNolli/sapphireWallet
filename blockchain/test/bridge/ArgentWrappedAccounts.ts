@@ -17,7 +17,7 @@ describe("ArgentWrappedAccounts", function () {
 
     ArgentWrappedAccounts = await ArgentWrappedAccountsContract.connect(
       deployer
-    ).deploy(deployer.address);
+    ).deploy();
   });
 
   describe("createAccountContract", async function () {

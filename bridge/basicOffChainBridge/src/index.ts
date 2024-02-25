@@ -1,7 +1,14 @@
 import 'dotenv/config'
-import { AlchemyProvider, JsonRpcProvider, Wallet } from 'ethers'
-import { ArgentModule__factory } from './contracts'
+import { AlchemyProvider, ethers, JsonRpcProvider, Wallet } from "ethers";
+import { ArgentModule__factory, ArgentWrappedAccounts__factory } from './contracts'
 
+type BridgeCallType = {
+  id: BigInt,
+  wallet: string,
+  to: string,
+  value: BigInt,
+  data: string
+}
 
 function parseNetwork(): string {
   return process.argv[2];
@@ -19,8 +26,7 @@ function parseArgentModuleAddress(): string {
   }
 }
 
-function getProviderAndSigner(): {provider: JsonRpcProvider | AlchemyProvider, signer: Wallet} {
-  const network = parseNetwork()
+function getProviderAndSigner(network: string): {provider: JsonRpcProvider | AlchemyProvider, signer: Wallet} {
   let provider;
   let signerKey;
 
@@ -30,7 +36,10 @@ function getProviderAndSigner(): {provider: JsonRpcProvider | AlchemyProvider, s
   } else if (network === 'sepolia' && process.env.SEPOLIA_API_KEY && process.env.SEPOLIA_SIGNER_PRIVATE_KEY) {
     provider =   new AlchemyProvider('sepolia', process.env.SEPOLIA_API_KEY);
     signerKey = process.env.SEPOLIA_SIGNER_PRIVATE_KEY;
-  } else {
+  } else if (network === 'mumbai' && process.env.MUMBAI_API_KEY && process.env.MUMBAI_SIGNER_PRIVATE_KEY) {
+    provider =   new AlchemyProvider('matic-mumbai', process.env.MUMBAI_API_KEY);
+    signerKey = process.env.MUMBAI_SIGNER_PRIVATE_KEY;
+  }  else {
     throw new Error(`Provider not found for network ${network}`);
   }
 
@@ -42,52 +51,32 @@ function getProviderAndSigner(): {provider: JsonRpcProvider | AlchemyProvider, s
   }
 }
 
+/**
+ * Effective call when an event is detected
+ */
+async function bridgeAction({ id, wallet, to, value, data }: BridgeCallType) {
+  const { provider, signer } = getProviderAndSigner("mumbai");
+  const ArgentWrappedAccountsAddress = process.env.MUMBAI_ARGENT_WRAPPED_ACCOUNTS_ADDRESS as string
+  console.log("value", value)
+  console.log("to", to)
+  // const argentWrappedAccounts = ArgentWrappedAccounts__factory.connect(ArgentWrappedAccountsAddress, signer);
+  // await argentWrappedAccounts.depositToAccountContract(to, value as ethers.BigNumberish)
+}
+
+
+/**
+ * Main function. It listens to the BridgeCall event and calls bridgeAction when it is detected
+ */
 async function main() {
   const argentModuleAddress = parseArgentModuleAddress();
-  const {provider, signer} = getProviderAndSigner();
+  const {provider, signer} = getProviderAndSigner(parseNetwork());
 
   const argentModuleContract = ArgentModule__factory.connect(argentModuleAddress, signer);
 
-  let blockNumber = await provider.getBlockNumber();
-  console.log("Start block number: ", blockNumber);
-  let checkedBlockNumber = blockNumber - 1;
-
   await argentModuleContract.addListener('BridgeCall',
-    (from, to, value, data, blockNumber, transactionHash, logIndex, event) => {
-      console.log("BridgeCall event: ", from, to, value, data, blockNumber, transactionHash, logIndex, event);
+    (id: BigInt, wallet: string, to: string, value: BigInt, data: string) => {
+      bridgeAction({id, wallet, to, value, data});
     })
-
-  console.log("Listening for BridgeCall events")
-
-  // while(true){
-  //
-  //   if (blockNumber > checkedBlockNumber) {
-  //     console.log("Some new blocks found")
-  //     for (let i = checkedBlockNumber + 1; i <= blockNumber; i++) {
-  //       // CHECKING BLOCK
-  //
-  //       // Check argent module BridgeCall event
-  //       const filter = argentModuleContract.filters.BridgeCall
-  //       const events = await provider.getLogs({
-  //         ...filter,
-  //         fromBlock: i,
-  //         toBlock: i
-  //       })
-  //
-  //     }
-  //
-  //     checkedBlockNumber = blockNumber;
-  //   }
-  //
-  //   // WAIT 1 SECOND
-  //   await new Promise((resolve) => setTimeout(resolve, 12000));
-  //
-  //   // GETTING NEW BLOCK NUMBER
-  //   blockNumber = await provider.getBlockNumber();
-  //   console.log("Retrieved block number: ", blockNumber);
-  // }
-
-
 }
 
 main().catch((error) => {
