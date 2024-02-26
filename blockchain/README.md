@@ -70,7 +70,7 @@ The updated .env are:
 * [backend/wallet-factory/.env](../backend/wallet-factory/.env)
 * [backend/sapphire-relayer/.env](../backend/sapphire-relayer/.env)
 * [mobileapp/.env](../mobileapp/.env)
-* [bridge/.env](../bridge/.env)
+* [bridge/.env](../bridge/basicOffChainBridge/.env)
 
 For know which keys are added/updated please check the `deployBaseChain.ts` and `deployDestinationChain.ts` files.
 

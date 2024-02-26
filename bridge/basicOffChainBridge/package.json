@@ -6,8 +6,7 @@
   "author": "Nolli Manuele",
   "license": "MIT",
   "scripts": {
-    "start:local": "ts-node src/index.ts localhost",
-    "start:sepolia": "ts-node src/index.ts sepolia"
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
     "dotenv": "^16.4.4",

@@ -1,7 +1,4 @@
 import { ethers } from "hardhat";
-import deployInfrastructure from "./argentContracts/deployInfrastructure";
-import updateHardhatENV from "./utils/env/updateHardhatENV";
-import printInfrastructure from "./argentContracts/utils/printInfrastructure";
 import updateExternalEnv, { EnvValue } from "./utils/env/updateExternalEnv";
 import Constants from "./constants/constants";
 
@@ -24,10 +21,19 @@ export default async function deployDestinationChain() {
   const argentWrappedAccountsDeployment = await ArgentWrappedAccounts.deploy();
   await argentWrappedAccountsDeployment.waitForDeployment();
 
-  console.log(
-    "ArgentWrappedAccounts deployed to:",
-    await argentWrappedAccountsDeployment.getAddress()
-  );
+  ////////////////////////
+  // UPDATE EXTERNAL ENV
+  ////////////////////////
+  // Bridge
+  console.log("Updating bridge env...");
+  const bridgeEnv: EnvValue[] = [
+    {
+      key: networkName + "_" + Constants.envValues.argentWrappedAccounts,
+      value: await argentWrappedAccountsDeployment.getAddress(),
+    },
+  ];
+  await updateExternalEnv("../bridge/basicOffChainBridge/.env", bridgeEnv);
+  console.log("Updated bridge env!");
 
   ////////////
   // DONE :)

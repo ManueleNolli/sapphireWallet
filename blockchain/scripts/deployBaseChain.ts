@@ -76,7 +76,7 @@ export default async function deployBaseChain() {
   await updateExternalEnv("../mobileapp/.env", mobileappEnv);
   console.log("Updated mobileapp env!");
 
-  // MobileApp
+  // Bridge
   console.log("Updating bridge env...");
   const bridgeEnv: EnvValue[] = [
     {
@@ -84,7 +84,7 @@ export default async function deployBaseChain() {
       value: result.argentModuleAddress,
     },
   ];
-  await updateExternalEnv("../bridge/basicOffChainBridge/.env", mobileappEnv);
+  await updateExternalEnv("../bridge/basicOffChainBridge/.env", bridgeEnv);
   console.log("Updated bridge env!");
 
   ////////////

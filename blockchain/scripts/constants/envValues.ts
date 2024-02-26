@@ -7,6 +7,7 @@ const dappRegistry = "DAPP_REGISTRY_ADDRESS";
 const uniswapFactory = "UNISWAP_FACTORY_ADDRESS";
 const uniswapRouter = "UNISWAP_ROUTER_ADDRESS";
 const argentModule = "ARGENT_MODULE_ADDRESS";
+const argentWrappedAccounts = "ARGENT_WRAPPED_ACCOUNTS_ADDRESS";
 
 export {
   guardianStorage,
@@ -18,4 +19,5 @@ export {
   uniswapFactory,
   uniswapRouter,
   argentModule,
+  argentWrappedAccounts,
 };
