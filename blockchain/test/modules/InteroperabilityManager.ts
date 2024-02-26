@@ -105,7 +105,48 @@ describe("InteroperabilityManager", function () {
       const returnData = eventArgs[2];
       const expectedError = ethers.solidityPacked(
         ["string"],
-        ["InteroperabilityManager: Invalid transaction"]
+        [
+          "InteroperabilityManager: Invalid transaction. Only value or data can be set",
+        ]
+      );
+      expect(returnData).to.include(expectedError.slice(2));
+    });
+
+    it("Should revert if value and data are provided", async function () {
+      const walletAccount1Address = await createWallet(
+        infrastructure.walletFactory,
+        account1.address,
+        account2.address,
+        deployer.address,
+        await infrastructure.argentModule.getAddress()
+      );
+
+      let tx = await utilsSignTransaction(
+        account1,
+        walletAccount1Address,
+        deployer,
+        infrastructure.argentModule,
+        account2.address,
+        10,
+        "0x1234"
+      );
+
+      let txResponse = await tx.wait();
+
+      // Check if the event was emitted
+      const event = txResponse?.logs[0] as EventLog;
+      const eventName = event?.fragment.name;
+      expect(eventName).to.equal("TransactionExecuted");
+      const eventArgs = event?.args;
+      expect(eventArgs[0]).to.equal(walletAccount1Address);
+      expect(eventArgs[1]).to.be.false;
+
+      const returnData = eventArgs[2];
+      const expectedError = ethers.solidityPacked(
+        ["string"],
+        [
+          "InteroperabilityManager: Invalid transaction. Only value or data can be set",
+        ]
       );
       expect(returnData).to.include(expectedError.slice(2));
     });
@@ -142,7 +183,7 @@ describe("InteroperabilityManager", function () {
       expect(eventArgs[4]).to.equal("0x1234");
     });
 
-    it("Should not revert if value is valid", async function () {
+    it("Should revert if value is valid but not enough", async function () {
       const walletAccount1Address = await createWallet(
         infrastructure.walletFactory,
         account1.address,
@@ -150,6 +191,54 @@ describe("InteroperabilityManager", function () {
         deployer.address,
         await infrastructure.argentModule.getAddress()
       );
+
+      // ATTENTION: walletAccount1Address has no funds
+
+      let tx = await utilsSignTransaction(
+        account1,
+        walletAccount1Address,
+        deployer,
+        infrastructure.argentModule,
+        account2.address,
+        10,
+        "0x"
+      );
+
+      let txResponse = await tx.wait();
+
+      const event = txResponse?.logs[0] as EventLog;
+      const eventName = event?.fragment.name;
+      expect(eventName).to.equal("TransactionExecuted");
+      const eventArgs = event?.args;
+      expect(eventArgs[0]).to.equal(walletAccount1Address);
+      expect(eventArgs[1]).to.be.false;
+
+      const returnData = eventArgs[2];
+      const expectedError = ethers.solidityPacked(
+        ["string"],
+        ["InteroperabilityManager: Not enough balance"]
+      );
+      expect(returnData).to.include(expectedError.slice(2));
+    });
+
+    it("Should not revert if value is valid", async function () {
+      const argentModuleBalanceBefore = await ethers.provider.getBalance(
+        await infrastructure.argentModule.getAddress()
+      );
+
+      const walletAccount1Address = await createWallet(
+        infrastructure.walletFactory,
+        account1.address,
+        account2.address,
+        deployer.address,
+        await infrastructure.argentModule.getAddress()
+      );
+
+      // SENDING 10 ETH TO walletAccount1Address
+      await deployer.sendTransaction({
+        to: walletAccount1Address,
+        value: parseEther("10"),
+      });
 
       let tx = await utilsSignTransaction(
         account1,
@@ -164,8 +253,10 @@ describe("InteroperabilityManager", function () {
       let txResponse = await tx.wait();
 
       /* Check if the events was emitted */
-      // EVENT 1 = BridgeCall
-      const event = txResponse?.logs[0] as EventLog;
+      // EVENT 0 = something else
+      // EVENT 2 = BridgeCall
+      const event = txResponse?.logs[1] as EventLog;
+
       const eventName = event?.fragment.name;
       expect(eventName).to.equal("BridgeCall");
       const eventArgs = event?.args;
@@ -176,12 +267,19 @@ describe("InteroperabilityManager", function () {
       expect(eventArgs[4]).to.equal("0x");
 
       // EVENT 2 = TransactionExecuted
-      const event2 = txResponse?.logs[1] as EventLog;
+      const event2 = txResponse?.logs[2] as EventLog;
       const eventName2 = event2?.fragment.name;
       expect(eventName2).to.equal("TransactionExecuted");
       const eventArgs2 = event2?.args;
       expect(eventArgs2[0]).to.equal(walletAccount1Address);
       expect(eventArgs2[1]).to.be.true;
+
+      const argentModuleBalanceAfter = await ethers.provider.getBalance(
+        await infrastructure.argentModule.getAddress()
+      );
+      expect(argentModuleBalanceAfter).to.equal(
+        argentModuleBalanceBefore + parseEther("10")
+      );
     });
   });
 

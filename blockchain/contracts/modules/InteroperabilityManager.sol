@@ -2,7 +2,13 @@
 pragma solidity ^0.8.20;
 
 import "./common/BaseModule.sol";
+import "hardhat/console.sol";
 
+/**
+ * @title InteroperabilityManager
+ * @notice Abstract Module to request the wallet to execute a transaction on another chain. Lock and release the wallet's assets.
+ * @author Manuele Nolli - <manuele.nolli@supsi.ch>
+ */
 abstract contract InteroperabilityManager is BaseModule {
 
      uint256 private bridgeCallCount = 0;
@@ -26,8 +32,28 @@ abstract contract InteroperabilityManager is BaseModule {
         onlySelf()
         onlyWhenUnlocked(_wallet)
         returns (uint256){
-        require(_transaction.value != 0 || _transaction.data.length != 0, "InteroperabilityManager: Invalid transaction");
+        require(
+            (_transaction.value != 0 && _transaction.data.length == 0) ||
+            (_transaction.value == 0 && _transaction.data.length != 0),
+            "InteroperabilityManager: Invalid transaction. Only value or data can be set"
+        );
+
+        if (_transaction.value != 0) {
+            require(address(_wallet).balance >= _transaction.value, "InteroperabilityManager: Not enough balance");
+            (bool _success, ) = invokeWallet(_wallet, address(this), _transaction.value, _transaction.data);
+            require(_success, "InteroperabilityManager: Wallet ETH transfer failed");
+        }
+
+
+
         emit BridgeCall(bridgeCallCount++, _wallet, _transaction.to, _transaction.value, _transaction.data);
+        console.log("Bridge call emitted");
         return bridgeCallCount;
     }
+
+
+    /**
+    * @notice Receive ether
+    */
+    receive() external payable {}
 }

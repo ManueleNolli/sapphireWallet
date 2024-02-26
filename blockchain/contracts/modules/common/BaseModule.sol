@@ -23,7 +23,6 @@ import "../../infrastructure/storage/IGuardianStorage.sol";
 import "../../infrastructure/storage/ITransferStorage.sol";
 import "./IModule.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
 /**
  * @title BaseModule
  * @notice Base Module contract that contains methods common to all Modules.
