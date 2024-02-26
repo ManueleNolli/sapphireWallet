@@ -5,7 +5,7 @@ import printInfrastructure from "./argentContracts/utils/printInfrastructure";
 import updateExternalEnv, { EnvValue } from "./utils/env/updateExternalEnv";
 import Constants from "./constants/constants";
 
-export default async function deployDestinationChainBridge() {
+export default async function deployDestinationChain() {
   const [deployer] = await ethers.getSigners();
   const deployerAddress = await deployer.getAddress();
 
@@ -37,7 +37,7 @@ export default async function deployDestinationChainBridge() {
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-deployDestinationChainBridge().catch((error) => {
+deployDestinationChain().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });

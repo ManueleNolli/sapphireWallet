@@ -5,7 +5,7 @@ import printInfrastructure from "./argentContracts/utils/printInfrastructure";
 import updateExternalEnv, { EnvValue } from "./utils/env/updateExternalEnv";
 import Constants from "./constants/constants";
 
-export default async function deploy() {
+export default async function deployBaseChain() {
   const [deployer] = await ethers.getSigners();
   const deployerAddress = await deployer.getAddress();
 
@@ -25,7 +25,9 @@ export default async function deploy() {
   ////////////////////////
   // UPDATE EXTERNAL ENV
   ////////////////////////
-  console.log("\nCopy env key to external module (mobileapp, backend, bridge)...");
+  console.log(
+    "\nCopy env key to external module (mobileapp, backend, bridge)..."
+  );
 
   // WalletFactory
   console.log("Updating wallet-factory backend env...");
@@ -74,7 +76,7 @@ export default async function deploy() {
   await updateExternalEnv("../mobileapp/.env", mobileappEnv);
   console.log("Updated mobileapp env!");
 
-    // MobileApp
+  // MobileApp
   console.log("Updating bridge env...");
   const bridgeEnv: EnvValue[] = [
     {
@@ -85,7 +87,6 @@ export default async function deploy() {
   await updateExternalEnv("../bridge/basicOffChainBridge/.env", mobileappEnv);
   console.log("Updated bridge env!");
 
-
   ////////////
   // DONE :)
   ////////////
@@ -94,7 +95,7 @@ export default async function deploy() {
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-deploy().catch((error) => {
+deployBaseChain().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
