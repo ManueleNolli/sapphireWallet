@@ -44,13 +44,9 @@ abstract contract InteroperabilityManager is BaseModule {
             require(_success, "InteroperabilityManager: Wallet ETH transfer failed");
         }
 
-
-
         emit BridgeCall(bridgeCallCount++, _wallet, _transaction.to, _transaction.value, _transaction.data);
-        console.log("Bridge call emitted");
         return bridgeCallCount;
     }
-
 
     /**
     * @notice Receive ether
