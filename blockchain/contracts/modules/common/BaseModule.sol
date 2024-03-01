@@ -59,12 +59,6 @@ abstract contract BaseModule is IModule {
         uint64 expires;
     }
 
-    struct Call {
-        address to;
-        uint256 value;
-        bytes data;
-    }
-
     // Maps wallet to session
     mapping (address => Session) internal sessions;
 

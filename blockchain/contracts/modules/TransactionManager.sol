@@ -39,6 +39,12 @@ abstract contract TransactionManager is BaseModule {
     // The time delay for adding a trusted contact
     uint256 internal immutable whitelistPeriod;
 
+    struct Call {
+        address to;
+        uint256 value;
+        bytes data;
+    }
+
     // *************** Events *************************** //
 
     event AddedToWhitelist(address indexed wallet, address indexed target, uint64 whitelistAfter);

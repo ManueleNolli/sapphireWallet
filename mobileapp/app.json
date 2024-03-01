@@ -21,7 +21,7 @@
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
       },
-      "bundleIdentifier": "com.manunolli.SapphireWallet"
+      "bundleIdentifier": "ch.supsi.dti.sapphirewallet"
     },
     "android": {
       "adaptiveIcon": {
