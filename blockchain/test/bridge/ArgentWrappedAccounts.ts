@@ -3,11 +3,7 @@ import { expect } from "chai";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 import { ArgentWrappedAccounts } from "../../typechain-types";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
-import {
-  signOffchain,
-  signOffChainForBridge,
-} from "../../scripts/argentContracts/utils/genericUtils";
-import { EventLog, ZeroAddress } from "ethers";
+import { signOffChainForBridge } from "../../scripts/argentContracts/utils/genericUtils";
 
 describe("ArgentWrappedAccounts", function () {
   let deployer: HardhatEthersSigner;
