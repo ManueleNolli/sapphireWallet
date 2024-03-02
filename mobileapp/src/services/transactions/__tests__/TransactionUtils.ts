@@ -2,7 +2,7 @@ import {
   generateMessageHash,
   generateNonceForRelay,
   signMessage,
-  signOffchain,
+  signOffChain,
 } from '../TransactionUtils'
 import { ethers, ZeroAddress } from 'ethers'
 
@@ -142,7 +142,7 @@ describe('TransactionUtils', () => {
         signMessage: jest.fn().mockResolvedValue(mockedSignature),
       } as any
 
-      await signOffchain(mockSigner, ZeroAddress, data, chainId, nonce)
+      await signOffChain(mockSigner, ZeroAddress, data, chainId, nonce)
 
       expect(mockSigner.signMessage).toHaveBeenCalledTimes(1)
 

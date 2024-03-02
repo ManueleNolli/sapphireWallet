@@ -3,14 +3,20 @@ import { expect } from "chai";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 import { ArgentWrappedAccounts } from "../../typechain-types";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import {
+  signOffchain,
+  signOffChainForBridge,
+} from "../../scripts/argentContracts/utils/genericUtils";
+import { EventLog, ZeroAddress } from "ethers";
 
 describe("ArgentWrappedAccounts", function () {
   let deployer: HardhatEthersSigner;
   let account1: HardhatEthersSigner;
+  let account2: HardhatEthersSigner;
   let ArgentWrappedAccounts: ArgentWrappedAccounts;
 
   beforeEach(async function () {
-    [deployer, account1] = await ethers.getSigners();
+    [deployer, account1, account2] = await ethers.getSigners();
     const ArgentWrappedAccountsContract = await ethers.getContractFactory(
       "ArgentWrappedAccounts"
     );
@@ -205,6 +211,160 @@ describe("ArgentWrappedAccounts", function () {
       );
       expect(await accountContract.getAddress()).to.equal(
         accountContractAddress
+      );
+    });
+  });
+
+  describe("execute", async function () {
+    it("should revert if account contract does not exist", async function () {
+      await expect(
+        ArgentWrappedAccounts.connect(deployer).execute(
+          account1,
+          account1,
+          "0x1234",
+          "0x1234"
+        )
+      ).to.be.revertedWith("Account contract does not exist");
+    });
+
+    it("should emit event Execute", async function () {
+      const transaction = {
+        to: account2.address,
+        value: ethers.parseEther("10"),
+        data: "0x",
+      };
+
+      await ArgentWrappedAccounts.createAccountContract(account1.address);
+      const accountContract = await ArgentWrappedAccounts.getAccountContract(
+        account1.address
+      );
+
+      const AccountContract = await ethers.getContractAt(
+        "AccountContract",
+        accountContract
+      );
+
+      const methodData = AccountContract.interface.encodeFunctionData(
+        "execute",
+        [transaction.to, transaction.value, transaction.data]
+      );
+
+      const chainId = (await ethers.provider.getNetwork()).chainId;
+
+      const signatures = await signOffChainForBridge(
+        account1,
+        account1.address, // In bridge that will be the Wallet Smart Contract
+        methodData,
+        chainId
+      );
+
+      expect(
+        await ArgentWrappedAccounts.connect(deployer).execute(
+          account1.address,
+          account1.address,
+          methodData,
+          signatures
+        )
+      ).to.emit(ArgentWrappedAccounts, "TransactionExecuted");
+    });
+
+    it("should revert if signature is not valid", async function () {
+      const transaction = {
+        to: account2.address,
+        value: ethers.parseEther("10"),
+        data: "0x",
+      };
+
+      await ArgentWrappedAccounts.createAccountContract(account1.address);
+      const accountContract = await ArgentWrappedAccounts.getAccountContract(
+        account1.address
+      );
+
+      const AccountContract = await ethers.getContractAt(
+        "AccountContract",
+        accountContract
+      );
+
+      const methodData = AccountContract.interface.encodeFunctionData(
+        "execute",
+        [transaction.to, transaction.value, transaction.data]
+      );
+
+      const chainId = (await ethers.provider.getNetwork()).chainId;
+
+      const signatures = await signOffChainForBridge(
+        account1,
+        account2.address, // WRONG address
+        methodData,
+        chainId
+      );
+
+      await expect(
+        ArgentWrappedAccounts.connect(deployer).execute(
+          account1.address,
+          account1.address,
+          methodData,
+          signatures
+        )
+      ).to.be.revertedWith("Invalid signature");
+    });
+  });
+
+  // ADD INTEGRATION TEST
+
+  describe("Integration with Account Contract", async function () {
+    it("execute", async function () {
+      // Check account 2 balance
+      const startBalance = await ethers.provider.getBalance(account2.address);
+
+      const transaction = {
+        to: account2.address,
+        value: ethers.parseEther("10"),
+        data: "0x",
+      };
+
+      await ArgentWrappedAccounts.createAccountContract(account1.address);
+      const accountContract = await ArgentWrappedAccounts.getAccountContract(
+        account1.address
+      );
+
+      // send 10 eth to accountContract
+      await deployer.sendTransaction({
+        to: accountContract,
+        value: ethers.parseEther("10"),
+      });
+
+      const AccountContract = await ethers.getContractAt(
+        "AccountContract",
+        accountContract
+      );
+
+      const methodData = AccountContract.interface.encodeFunctionData(
+        "execute",
+        [transaction.to, transaction.value, transaction.data]
+      );
+
+      const chainId = (await ethers.provider.getNetwork()).chainId;
+
+      const signatures = await signOffChainForBridge(
+        account1,
+        account1.address, // In bridge that will be the Wallet Smart Contract
+        methodData,
+        chainId
+      );
+
+      expect(
+        await ArgentWrappedAccounts.connect(deployer).execute(
+          account1.address,
+          account1.address,
+          methodData,
+          signatures
+        )
+      ).to.emit(ArgentWrappedAccounts, "TransactionExecuted");
+
+      const balance = await ethers.provider.getBalance(account2.address);
+      expect(balance).to.equal(
+        BigInt(startBalance) + BigInt(ethers.parseEther("10"))
       );
     });
   });

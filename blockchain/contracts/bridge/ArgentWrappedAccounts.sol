@@ -7,7 +7,7 @@ import "./AccountContract.sol";
 contract ArgentWrappedAccounts is Ownable {
     event Deposit(address indexed from, address indexed to, uint256 value);
     event AccountContractCreated(address indexed wallet, address indexed accountContract);
-
+    event TransactionExecuted(address indexed wallet, bool success, bytes returnData, bytes32 signHash);
 
     mapping (address => address) private accountContracts; // address on base chain => address on side chain (both are contracts)
 
@@ -73,18 +73,68 @@ contract ArgentWrappedAccounts is Ownable {
         return accountContracts[_wallet];
     }
 
-//    function execute(address _wallet, bytes calldata _data) public onlyOwner returns (bytes memory) {
-//        require(accountContracts[_wallet] != address(0), "Account contract not found");
-//        return AccountContract(accountContracts[_wallet]).execute(_data);
-//    }
+    function execute(address _wallet, address _owner, bytes calldata _data, bytes calldata _signature) public onlyOwner returns (bool res, bytes memory) {
 
-//    /**
-//    * @notice Checks that the wallet address provided as the first parameter of _data matches the side chain address.
-//    * @return false if the addresses are different.
-//    */
-//    function verifyData(address _wallet, bytes calldata _data) internal view returns (bool) {
-//        require(_data.length >= 36, "RM: Invalid dataWallet");
-//        address dataWallet = abi.decode(_data[4 :], (address));
-//        return dataWallet == accountContracts[_wallet];
-//    }
+        address accountContract = accountContracts[_wallet];
+        require(accountContract != address(0), "Account contract does not exist");
+
+        bytes32 hash = getSignHash(_wallet, _data);
+        address signer = recoverSigner(hash, _signature);
+
+        require(signer == _owner, "Invalid signature");
+
+        (bool success, bytes memory result) = address(accountContract).call(_data);
+        emit TransactionExecuted(_wallet, success, result, hash);
+        return (success, result);
+    }
+
+    function getSignHash(
+        address _wallet,
+        bytes memory _data
+    )
+    internal
+    view
+    returns (bytes32)
+    {
+        return keccak256(
+            abi.encodePacked(
+                "\x19Ethereum Signed Message:\n32",
+                keccak256(abi.encodePacked(
+                    bytes1(0x19),
+                    bytes1(0),
+                    _wallet,
+                    _data,
+                    block.chainid))
+            ));
+    }
+
+    function recoverSigner(bytes32 _hash, bytes memory _signature) public pure returns (address) {
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+
+        // Check the signature length
+        if (_signature.length != 65) {
+            return address(0);
+        }
+
+        // Divide the signature in r, s and v variables
+        assembly {
+            r := mload(add(_signature, 32))
+            s := mload(add(_signature, 64))
+            v := byte(0, mload(add(_signature, 96)))
+        }
+
+        // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature unique
+        if (v < 27) {
+            v += 27;
+        }
+
+        // If the signature is valid (and not malleable), return the signer address
+        if (v != 27 && v != 28) {
+            return address(0);
+        } else {
+            return ecrecover(_hash, v, r, s);
+        }
+    }
 }

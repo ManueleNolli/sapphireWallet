@@ -85,7 +85,7 @@ export async function signMessage(
  * @param chainId
  * @param nonce
  */
-export async function signOffchain(
+export async function signOffChain(
   signer: Signer,
   argentModuleAddress: string,
   data: string,
@@ -103,5 +103,26 @@ export async function signOffchain(
     ZeroAddress,
     ZeroAddress
   )
+  return await signMessage(messageHash, signer)
+}
+
+export async function signOffChainForBridge(
+  signer: Signer,
+  walletContractAddress: string,
+  data: string,
+  chainId: bigint
+) {
+  const message = `0x${[
+    '0x19',
+    '0x00',
+    walletContractAddress,
+    data,
+    ethers.zeroPadValue(ethers.toBeHex(chainId), 32),
+  ]
+    .map((hex) => hex.slice(2))
+    .join('')}`
+
+  const messageHash = ethers.keccak256(message)
+
   return await signMessage(messageHash, signer)
 }

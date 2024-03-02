@@ -6,16 +6,17 @@ import { AccountContract } from "../../typechain-types";
 describe("AccountContract", function () {
   let deployer: HardhatEthersSigner;
   let account1: HardhatEthersSigner;
+  let account2: HardhatEthersSigner;
   let AccountContract: AccountContract;
 
   beforeEach(async function () {
-    [deployer, account1] = await ethers.getSigners();
+    [deployer, account1, account2] = await ethers.getSigners();
     const AccountContractContract = await ethers.getContractFactory(
       "AccountContract"
     );
 
     AccountContract = await AccountContractContract.connect(deployer).deploy(
-      deployer.address
+      account1.address
     );
   });
 
@@ -61,6 +62,41 @@ describe("AccountContract", function () {
       )
         .to.emit(AccountContract, "Deposit")
         .withArgs(account1.address, "1000000000000000000");
+    });
+  });
+
+  describe("execute", async function () {
+    it("should revert if not called by owner", async function () {
+      await expect(
+        AccountContract.connect(account2).execute(account2.address, 10, "0x")
+      ).to.be.revertedWith(
+        "Only owner or ArgentWrappedAccounts can call this function"
+      );
+    });
+
+    it("should revert if transaction fail", async function () {
+      await expect(
+        AccountContract.connect(account1).execute(account1.address, 10, "0x")
+      ).to.be.revertedWith("AccountContract: call failed");
+    });
+
+    it("should emit if transaction success", async function () {
+      const startBalance = await ethers.provider.getBalance(account2.address);
+
+      await deployer.sendTransaction({
+        to: await AccountContract.getAddress(),
+        value: ethers.parseEther("10"),
+      });
+
+      await expect(
+        AccountContract.connect(account1).execute(account2.address, 10, "0x")
+      ).to.emit(AccountContract, "Execute");
+
+      const balance = await ethers.provider.getBalance(account2.address);
+
+      expect(balance).to.equal(
+        BigInt(startBalance) + BigInt(ethers.parseEther("10"))
+      );
     });
   });
 });

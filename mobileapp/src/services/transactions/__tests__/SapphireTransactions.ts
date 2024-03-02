@@ -12,7 +12,7 @@ import {
   ERC721,
   SapphireNFTs__factory,
 } from '../../../contracts'
-import { generateNonceForRelay, signOffchain } from '../TransactionUtils'
+import { generateNonceForRelay, signOffChain } from '../TransactionUtils'
 import { contactBackend } from '../../backend'
 import { NETWORKS } from '../../../constants/Networks'
 
@@ -90,7 +90,7 @@ describe('TransactionUtils', () => {
   describe('signTransaction', () => {
     it('should return a signed transaction', async () => {
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
-      ;(signOffchain as jest.Mock).mockResolvedValue('0x9876543210')
+      ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
       const unsignedTransaction = '0x1234567890'
       const mockSigner = {
@@ -115,7 +115,7 @@ describe('TransactionUtils', () => {
 
     it('should throw if no provider', async () => {
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
-      ;(signOffchain as jest.Mock).mockResolvedValue('0x9876543210')
+      ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
       const unsignedTransaction = '0x1234567890'
       const mockSigner = {}
@@ -132,7 +132,7 @@ describe('TransactionUtils', () => {
         hash: 'backendResponse',
       })
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
-      ;(signOffchain as jest.Mock).mockResolvedValue('0x9876543210')
+      ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
       const argentModuleMock = {
         interface: {
@@ -238,7 +238,7 @@ describe('TransactionUtils', () => {
         hash: 'backendResponse',
       })
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
-      ;(signOffchain as jest.Mock).mockResolvedValue('0x9876543210')
+      ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
       const argentModuleMock = {
         interface: {

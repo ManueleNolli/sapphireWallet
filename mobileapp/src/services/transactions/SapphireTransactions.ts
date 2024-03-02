@@ -9,7 +9,7 @@ import {
   SapphireNFTs__factory,
 } from '../../contracts'
 import { parseEther, Signer } from 'ethers'
-import { generateNonceForRelay, signOffchain } from './TransactionUtils'
+import { generateNonceForRelay, signOffChain } from './TransactionUtils'
 import {
   BACKEND_ENDPOINTS,
   backendErrorResponse,
@@ -113,7 +113,7 @@ export async function signTransaction(
 
   const chainId = (await provider.getNetwork()).chainId
   const nonce = await generateNonceForRelay(provider)
-  const signedTransaction = await signOffchain(
+  const signedTransaction = await signOffChain(
     signer,
     argentModuleAddress,
     unsignedTransaction,

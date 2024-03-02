@@ -2,7 +2,6 @@
 pragma solidity ^0.8.20;
 
 import "./common/BaseModule.sol";
-import "hardhat/console.sol";
 
 /**
  * @title InteroperabilityManager
@@ -27,7 +26,7 @@ abstract contract InteroperabilityManager is BaseModule {
     }
 
     // *************** Events *************************** //
-    event BridgeCall(uint256 indexed CallID, address indexed wallet, BridgeCallType indexed callType, address to, uint256 value, bytes data);
+    event BridgeCall(uint256 indexed CallID, address indexed wallet, BridgeCallType indexed callType, address to, uint256 value, bytes data, address owner);
 
 
     // *************** External functions ************************ //
@@ -45,15 +44,12 @@ abstract contract InteroperabilityManager is BaseModule {
         onlySelf()
         onlyWhenUnlocked(_wallet)
         returns (uint256){
-        console.log("Si parte");
         require(
             (_transaction.value != 0 && _transaction.data.length == 0) ||
             (_transaction.value == 0 && _transaction.data.length != 0),
             "InteroperabilityManager: Invalid transaction. Only value or data can be set"
         );
-
-        console.log("Primo check superato");
-
+        address owner = IWallet(_wallet).owner();
         if(_transaction.callType == BridgeCallType.BRIDGE){
             if (_transaction.value != 0) { // ETH transfer
                 require(address(_wallet).balance >= _transaction.value, "InteroperabilityManager: Not enough balance");
@@ -64,20 +60,18 @@ abstract contract InteroperabilityManager is BaseModule {
                 // Transaction Data must be an NFT Call to address(this)
             }
         } else if(_transaction.callType == BridgeCallType.DEST){
-            console.log("Sono qui");
             require(_transaction.value == 0, "InteroperabilityManager: Invalid transaction. Value can not be set in type DEST");
             // So, data has some value
         } else {
             revert("InteroperabilityManager: Invalid transaction type");
         }
-        console.log("Ora qui");
 
-        emit BridgeCall(bridgeCallCount++, _wallet, _transaction.callType, _transaction.to, _transaction.value, _transaction.data);
+        emit BridgeCall(bridgeCallCount++, _wallet, _transaction.callType, _transaction.to, _transaction.value, _transaction.data, owner);
         return bridgeCallCount;
     }
 
     /**
-    * @notice Receive ether
+    * @notice Receive ETH for Locking
     */
     receive() external payable {}
 }
