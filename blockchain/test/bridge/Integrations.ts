@@ -43,12 +43,12 @@ describe("Bridge Integration", function () {
   });
 
   it("Full ETH Transfer Bridge, type DEST", async function () {
-    const startBalance = await ethers.provider.getBalance(account2DestChain.address);
+    const startBalanceAccount2 = await ethers.provider.getBalance(account2DestChain.address);
 
     /////////////////////////////////////////
     //// INFRASTRUCTURE PREPARATION
     /////////////////////////////////////////
-6
+
     // Create wallet for account 1
     const walletAccount1Address = await createWallet(
       infrastructure.walletFactory,
@@ -66,6 +66,23 @@ describe("Bridge Integration", function () {
 
     // Create Bridge Account
     await argentWrappedAccounts.createAccountContract(walletAccount1Address);
+
+    // send eth to argentWrappedAccounts
+    await deployer.sendTransaction({
+      to: await argentWrappedAccounts.getAddress(),
+      value: ethers.parseEther("1000"),
+    });
+
+    // Deposit ETH to AccountContract
+      await argentWrappedAccounts.depositToAccountContract(
+        walletAccount1Address,
+        parseEther("100")
+      );
+
+      const account1DestChain = await argentWrappedAccounts.getAccountContract(
+        walletAccount1Address
+      );
+      const startBalanceAccount1DestChain = await ethers.provider.getBalance(account1DestChain);
 
     /////////////////////////////////////////
     //// TRANSACTION PREPARATION
@@ -97,7 +114,7 @@ describe("Bridge Integration", function () {
         to: account2DestChain.address,
         value: 0,
         data: transactionWrappedForDestChain,
-        signedData: signedTransactionWrappedForDestChain
+        signature: signedTransactionWrappedForDestChain
     }
 
     const transactionWrappedForBaseChain = infrastructure.argentModule.interface.encodeFunctionData(
@@ -146,7 +163,6 @@ describe("Bridge Integration", function () {
     /////////////////////////////////////////
 
     // check event emitted
-    console.log("txResponse", txResponse?.logs)
     const event = txResponse?.logs[0] as EventLog;
     const eventName = event?.fragment.name;
     expect(eventName).to.equal("BridgeCall");
@@ -157,22 +173,35 @@ describe("Bridge Integration", function () {
     const event_destAddress = eventArgs[3];
     const event_value = eventArgs[4];
     const event_data = eventArgs[5];
-    const event_owner = eventArgs[6];
+    const event_signature = eventArgs[6];
+    const event_owner = eventArgs[7];
     expect(event_callId).to.equal(0);
     expect(event_wallet).to.equal(walletAccount1Address);
     expect(event_callType).to.equal(BridgeCallType.DEST);
     expect(event_destAddress).to.equal(account2DestChain.address);
     expect(event_value).to.equal(parseEther("0"));
-    expect(event_data).to.equal(signedTransactionWrappedForDestChain);
+    expect(event_data).to.equal(transactionWrappedForDestChain);
+    expect(event_signature).to.equal(signedTransactionWrappedForDestChain);
     expect(event_owner).to.equal(account1BaseChain.address);
 
     // Bridge will call the destination chain contract
     await argentWrappedAccounts.connect(deployer).execute(
-          event_wallet,
-          event_owner,
-          methodData,
-          event_data
+        event_wallet,
+        event_owner,
+        event_data,
+        event_signature
         )
 
+
+    /////////////////////////////////////////
+    //// Final checks
+    /////////////////////////////////////////
+
+    const endBalanceAccount2 = await ethers.provider.getBalance(account2DestChain.address);
+    const endBalanceAccount1DestChain = await ethers.provider.getBalance(account1DestChain);
+
+
+    expect(endBalanceAccount2).to.equal(startBalanceAccount2 + parseEther("10"));
+    expect(endBalanceAccount1DestChain).to.equal(startBalanceAccount1DestChain - parseEther("10"));
   });
 });
