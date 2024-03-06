@@ -24,13 +24,15 @@ async function utilsSignTransaction(
   callType: BridgeCallType,
   to: string,
   value: number,
-  data: string
+  data: string,
+  signature: string
 ) {
   const transaction = {
     callType,
     to,
     value: parseEther(value.toString()),
     data,
+    signature
   };
 
   const methodData = argentModule.interface.encodeFunctionData("bridgeCall", [
@@ -97,6 +99,7 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.BRIDGE,
         account2.address,
         0,
+        "0x",
         "0x"
       );
 
@@ -137,7 +140,8 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.BRIDGE,
         account2.address,
         10,
-        "0x1234"
+        "0x1234",
+          "0x"
       );
 
       let txResponse = await tx.wait();
@@ -177,7 +181,8 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.BRIDGE,
         account2.address,
         0,
-        "0x1234"
+        "0x1234",
+        "0x"
       );
 
       let txResponse = await tx.wait();
@@ -215,6 +220,7 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.BRIDGE,
         account2.address,
         10,
+        "0x",
         "0x"
       );
 
@@ -262,6 +268,7 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.BRIDGE,
         account2.address,
         10,
+        "0x",
         "0x"
       );
 
@@ -317,6 +324,7 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.DEST,
         account2.address,
         10,
+        "0x",
         "0x"
       );
 
@@ -334,6 +342,48 @@ describe("InteroperabilityManager", function () {
         ["string"],
         [
           "InteroperabilityManager: Invalid transaction. Value can not be set in type DEST",
+        ]
+      );
+      expect(returnData).to.include(expectedError.slice(2));
+    });
+
+    it("Should revert if data is something but no signature in DEST callType", async function () {
+      const walletAccount1Address = await createWallet(
+        infrastructure.walletFactory,
+        account1.address,
+        account2.address,
+        deployer.address,
+        await infrastructure.argentModule.getAddress()
+      );
+
+      // ATTENTION: walletAccount1Address has no funds
+
+      let tx = await utilsSignTransaction(
+        account1,
+        walletAccount1Address,
+        deployer,
+        infrastructure.argentModule,
+        BridgeCallType.DEST,
+        account2.address,
+        0,
+        "0x1234",
+        "0x"
+      );
+
+      let txResponse = await tx.wait();
+
+      const event = txResponse?.logs[0] as EventLog;
+      const eventName = event?.fragment.name;
+      expect(eventName).to.equal("TransactionExecuted");
+      const eventArgs = event?.args;
+      expect(eventArgs[0]).to.equal(walletAccount1Address);
+      expect(eventArgs[1]).to.be.false;
+
+      const returnData = eventArgs[2];
+      const expectedError = ethers.solidityPacked(
+        ["string"],
+        [
+          "InteroperabilityManager: Invalid transaction. Signature must be set in type DEST",
         ]
       );
       expect(returnData).to.include(expectedError.slice(2));
@@ -358,7 +408,8 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.DEST,
         account2.address,
         0,
-        "0x1234"
+        "0x1234",
+        "0x4321"
       );
 
       let txResponse = await tx.wait();
@@ -376,6 +427,7 @@ describe("InteroperabilityManager", function () {
       expect(eventArgs[3]).to.equal(account2.address);
       expect(eventArgs[4]).to.equal(parseEther("0"));
       expect(eventArgs[5]).to.equal("0x1234");
+      expect(eventArgs[6]).to.equal("0x4321");
 
       // EVENT 2 = TransactionExecuted
       const event2 = txResponse?.logs[1] as EventLog;
@@ -410,6 +462,7 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.BRIDGE,
         account2.address,
         5,
+        "0x",
         "0x"
       );
 
@@ -433,6 +486,7 @@ describe("InteroperabilityManager", function () {
         BridgeCallType.BRIDGE,
         account2.address,
         5,
+        "0x",
         "0x"
       );
 

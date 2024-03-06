@@ -48,7 +48,7 @@ describe("Bridge Integration", function () {
     /////////////////////////////////////////
     //// INFRASTRUCTURE PREPARATION
     /////////////////////////////////////////
-
+6
     // Create wallet for account 1
     const walletAccount1Address = await createWallet(
       infrastructure.walletFactory,

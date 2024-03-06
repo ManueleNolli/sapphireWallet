@@ -23,10 +23,11 @@ abstract contract InteroperabilityManager is BaseModule {
         address to;
         uint256 value;
         bytes data;
+        bytes signature;
     }
 
     // *************** Events *************************** //
-    event BridgeCall(uint256 indexed CallID, address indexed wallet, BridgeCallType indexed callType, address to, uint256 value, bytes data, address owner);
+    event BridgeCall(uint256 indexed CallID, address indexed wallet, BridgeCallType indexed callType, address to, uint256 value, bytes data, bytes signature, address owner);
 
 
     // *************** External functions ************************ //
@@ -61,12 +62,13 @@ abstract contract InteroperabilityManager is BaseModule {
             }
         } else if(_transaction.callType == BridgeCallType.DEST){
             require(_transaction.value == 0, "InteroperabilityManager: Invalid transaction. Value can not be set in type DEST");
+            require(_transaction.signature.length != 0, "InteroperabilityManager: Invalid transaction. Signature must be set in type DEST");
             // So, data has some value
         } else {
             revert("InteroperabilityManager: Invalid transaction type");
         }
 
-        emit BridgeCall(bridgeCallCount++, _wallet, _transaction.callType, _transaction.to, _transaction.value, _transaction.data, owner);
+        emit BridgeCall(bridgeCallCount++, _wallet, _transaction.callType, _transaction.to, _transaction.value, _transaction.data, _transaction.signature, owner);
         return bridgeCallCount;
     }
 

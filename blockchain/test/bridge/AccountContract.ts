@@ -89,7 +89,7 @@ describe("AccountContract", function () {
       });
 
       await expect(
-        AccountContract.connect(account1).execute(account2.address, 10, "0x")
+        AccountContract.connect(account1).execute(account2.address, ethers.parseEther("10"), "0x")
       ).to.emit(AccountContract, "Execute");
 
       const balance = await ethers.provider.getBalance(account2.address);
