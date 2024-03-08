@@ -176,12 +176,14 @@ abstract contract BaseModule is IModule {
         (success, _res) = _wallet.call(abi.encodeWithSignature("invoke(address,uint256,bytes)", _to, _value, _data));
         if (success && _res.length > 0) { //_res is empty if _wallet is an "old" BaseWallet that can't return output values
             (_res) = abi.decode(_res, (bytes));
-        } else if (_res.length > 0) {
+        }
+        else if (_res.length > 0) {
             // solhint-disable-next-line no-inline-assembly
-            assembly {
-                returndatacopy(0, 0, returndatasize())
-                revert(0, returndatasize())
-            }
+            // Commented out because if
+//            assembly {
+//                returndatacopy(0, 0, returndatasize())
+//                revert(0, returndatasize())
+//            }
         } else if (!success) {
             revert("BM: wallet invoke reverted");
         }

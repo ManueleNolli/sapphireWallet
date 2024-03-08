@@ -18,8 +18,9 @@ import {
 import { anyUint } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 
 enum BridgeCallType {
-  DEST, // Call to be executed on the destination chain. Ex: Transfer ETH from the AccountContract in the Destination chain to the someone in the Destination chain
-  BRIDGE, // Call to be executed on the bridge contract    Ex: Transfer ETH from the source chain to the AccountContract in the destination chain
+  DEST,
+  BRIDGE_ETH,
+  BRIDGE_NFT,
 }
 
 describe("Bridge Integration", function () {
@@ -44,7 +45,7 @@ describe("Bridge Integration", function () {
     ).deploy();
   });
 
-  it("Full ETH Transfer Bridge, type BRIDGE", async function () {
+  it("Full ETH Transfer Bridge, type BRIDGE_ETH", async function () {
     const startBalanceArgentModule = await ethers.provider.getBalance(
       await infrastructure.argentModule.getAddress()
     );
@@ -82,7 +83,7 @@ describe("Bridge Integration", function () {
     /////////////////////////////////////////
 
     const transactionToBeExecutedOnBaseChain = {
-      callType: BridgeCallType.BRIDGE,
+      callType: BridgeCallType.BRIDGE_ETH,
       to: walletAccount1Address,
       value: ethers.parseEther("10"),
       data: "0x",
@@ -150,7 +151,7 @@ describe("Bridge Integration", function () {
     const event_owner = eventArgs[7];
     anyUint(event_callId);
     expect(event_wallet).to.equal(walletAccount1Address);
-    expect(event_callType).to.equal(BridgeCallType.BRIDGE);
+    expect(event_callType).to.equal(BridgeCallType.BRIDGE_ETH);
     expect(event_destAddress).to.equal(walletAccount1Address);
     expect(event_value).to.equal(parseEther("10"));
     expect(event_data).to.equal("0x");
