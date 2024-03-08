@@ -3,17 +3,22 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./AccountContract.sol";
+import "./NFTStorage.sol";
 
 contract ArgentWrappedAccounts is Ownable {
     event Deposit(address indexed from, address indexed to, uint256 value);
     event AccountContractCreated(address indexed wallet, address indexed accountContract);
     event TransactionExecuted(address indexed wallet, bool success, bytes returnData, bytes32 signHash);
+    event NFTMinted(address indexed wallet, string uri, string originalContractAddress, uint256 originalTokenID);
 
     mapping (address => address) private accountContracts; // address on base chain => address on side chain (both are contracts)
+    NFTStorage private nftStorage;
 
-    constructor()
+    constructor(address _nftStorage)
         Ownable(msg.sender)
-     {}
+     {
+        nftStorage = NFTStorage(_nftStorage);
+    }
 
     /*
     * @notice Fallback function to receive ether
@@ -49,6 +54,20 @@ contract ArgentWrappedAccounts is Ownable {
 
         AccountContract(payable(accountContract)).deposit{value: _value}();
         emit Deposit(address(this),accountContract, _value);
+    }
+
+    /**
+    * @notice Mint NFT to account contract
+    * @param _wallet The address of base chain wallet
+    */
+    function depositToAccountContract(address _wallet, string memory _uri, string memory originalContractAddress, uint256 originalTokenID) onlyOwner public {
+        address accountContract = accountContracts[_wallet];
+        if (accountContract == address(0)) {
+            accountContract = createAccountContract(_wallet);
+        }
+
+        nftStorage.safeMint(accountContract, _uri, originalContractAddress, originalTokenID);
+        emit NFTMinted(_wallet, _uri, originalContractAddress, originalTokenID);
     }
 
     /**
