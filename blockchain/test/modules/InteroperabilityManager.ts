@@ -580,7 +580,7 @@ describe("InteroperabilityManager", function () {
         // EVENT 0-1 = something else
         // EVENT 2 = BridgeCall
         const event1 = txResponse?.logs[2] as EventLog;
-        console.log(event1);
+
         const eventName = event1?.fragment.name;
         expect(eventName).to.equal("BridgeCall");
         const eventArgs = event1?.args;

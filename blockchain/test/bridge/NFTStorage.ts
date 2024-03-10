@@ -12,7 +12,7 @@ describe("NFTStorage", function () {
     [deployer, account1] = await ethers.getSigners();
     const NFTStorageContract = await ethers.getContractFactory("NFTStorage");
 
-    nftStorage = await NFTStorageContract.deploy(deployer);
+    nftStorage = await NFTStorageContract.deploy();
   });
 
   describe("safeMint", async function () {

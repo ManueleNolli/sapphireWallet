@@ -18,9 +18,9 @@ contract NFTStorage is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
 
     mapping(uint256 => originalInfo) private originalInfos;
 
-    constructor(address initialOwner)
+    constructor()
         ERC721("Argent Bridge NFT Storage", "ABNS")
-        Ownable(initialOwner)
+        Ownable(_msgSender())
     {}
 
     function safeMint(address to, string memory uri, string memory originalContractAddress, uint256 originalTokenID) public onlyOwner {

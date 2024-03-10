@@ -2,8 +2,9 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
-contract AccountContract is Ownable {
+contract AccountContract is Ownable, IERC721Receiver {
      address private _awa; // ArgentWrappedAccounts contract address
 
     event Deposit(address indexed from, uint256 value);
@@ -44,4 +45,9 @@ contract AccountContract is Ownable {
         emit Execute(_to, _value, _data);
         return result;
     }
+
+    function onERC721Received(address, address, uint256, bytes calldata) external pure returns (bytes4) {
+        return IERC721Receiver.onERC721Received.selector;
+    }
+
 }

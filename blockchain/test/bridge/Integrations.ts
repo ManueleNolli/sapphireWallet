@@ -14,6 +14,9 @@ import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 import {
   AccountContract__factory,
   ArgentWrappedAccounts,
+  NFTStorage,
+  SapphireNFTs,
+  SapphireNFTs__factory,
 } from "../../typechain-types";
 import { anyUint } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 
@@ -30,19 +33,35 @@ describe("Bridge Integration", function () {
 
   let infrastructure: InfrastructureTypes;
   let argentWrappedAccounts: ArgentWrappedAccounts;
+  let nftStorage: NFTStorage;
+  let baseChainNFT: SapphireNFTs;
 
   before(async function () {
     [deployer, account1BaseChain, account2DestChain] =
       await ethers.getSigners();
     infrastructure = await deployInfrastructure(deployer);
 
+    const NFTStorageContract = await ethers.getContractFactory("NFTStorage");
+    nftStorage = await NFTStorageContract.connect(deployer).deploy();
+
     const ArgentWrappedAccountsContract = await ethers.getContractFactory(
       "ArgentWrappedAccounts"
     );
 
+    const SapphireNFTsContract = await ethers.getContractFactory(
+      "SapphireNFTs"
+    );
+    baseChainNFT = await SapphireNFTsContract.connect(deployer).deploy(
+      deployer
+    );
+
     argentWrappedAccounts = await ArgentWrappedAccountsContract.connect(
       deployer
-    ).deploy();
+    ).deploy(nftStorage);
+
+    await nftStorage.transferOwnership(
+      await argentWrappedAccounts.getAddress()
+    );
   });
 
   it("Full ETH Transfer Bridge, type BRIDGE_ETH", async function () {
@@ -191,6 +210,160 @@ describe("Bridge Integration", function () {
     );
 
     expect(balanceAccount1DestChain).to.equal(parseEther("10"));
+  });
+
+  it("Full NFT Transfer Bridge, type BRIDGE_NFT", async function () {
+    /////////////////////////////////////////
+    //// INFRASTRUCTURE PREPARATION
+    /////////////////////////////////////////
+
+    // Create wallet for account 1
+    const walletAccount1Address = await createWallet(
+      infrastructure.walletFactory,
+      account1BaseChain.address,
+      deployer.address,
+      deployer.address,
+      await infrastructure.argentModule.getAddress()
+    );
+
+    // Mint NFT in BaseChain
+    const uri = "https://ipfs.io/ipfs/ABCDEF/0";
+    await baseChainNFT.safeMint(walletAccount1Address, uri);
+
+    // Check that the NFT is minted
+    const tokenId = 0;
+    expect(walletAccount1Address).to.equal(await baseChainNFT.ownerOf(tokenId));
+
+    /////////////////////////////////////////
+    //// TRANSACTION PREPARATION
+    /////////////////////////////////////////
+    const transactionData =
+      SapphireNFTs__factory.createInterface().encodeFunctionData(
+        "safeTransferFrom(address,address,uint256)",
+        [
+          walletAccount1Address,
+          await infrastructure.argentModule.getAddress(),
+          0,
+        ]
+      );
+
+    const transactionToBeExecutedOnBaseChain = {
+      callType: BridgeCallType.BRIDGE_NFT,
+      to: await baseChainNFT.getAddress(),
+      value: 0,
+      data: transactionData,
+      signature: "0x",
+    };
+
+    const transactionWrappedForBaseChain =
+      infrastructure.argentModule.interface.encodeFunctionData("bridgeCall", [
+        walletAccount1Address,
+        transactionToBeExecutedOnBaseChain,
+      ]);
+
+    // Sign *offChain* the transaction
+    const baseChainId = (await ethers.provider.getNetwork()).chainId;
+    const nonce = await generateNonceForRelay();
+    const gasLimit = 1000000;
+
+    const signatures = await signOffchain(
+      [account1BaseChain],
+      await infrastructure.argentModule.getAddress(),
+      0,
+      transactionWrappedForBaseChain,
+      baseChainId,
+      nonce,
+      0,
+      gasLimit,
+      "0x0000000000000000000000000000000000000000",
+      ZeroAddress
+    );
+    /////////////////////////////////////////
+    //// TRANSACTION EXECUTION
+    /////////////////////////////////////////
+    const tx = await infrastructure.argentModule
+      .connect(deployer)
+      .execute(
+        walletAccount1Address,
+        transactionWrappedForBaseChain,
+        nonce,
+        signatures,
+        0,
+        gasLimit,
+        "0x0000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000"
+      );
+
+    const txResponse = await tx.wait();
+
+    /////////////////////////////////////////
+    //// BRIDGE
+    /////////////////////////////////////////
+
+    // check event emitted
+    const event = txResponse?.logs[2] as EventLog;
+    const eventName = event?.fragment.name;
+    expect(eventName).to.equal("BridgeCall");
+    const eventArgs = event?.args;
+    const event_callId = eventArgs[0];
+    const event_wallet = eventArgs[1];
+    const event_callType = eventArgs[2];
+    const event_destAddress = eventArgs[3];
+    const event_value = eventArgs[4];
+    const event_data = eventArgs[5];
+    const event_signature = eventArgs[6];
+    const event_owner = eventArgs[7];
+    anyUint(event_callId);
+    expect(event_wallet).to.equal(walletAccount1Address);
+    expect(event_callType).to.equal(BridgeCallType.BRIDGE_NFT);
+    expect(event_destAddress).to.equal(await baseChainNFT.getAddress());
+    expect(event_value).to.equal(parseEther("0"));
+    expect(event_data).to.equal(transactionData);
+    expect(event_signature).to.equal("0x");
+    expect(event_owner).to.equal(account1BaseChain.address);
+
+    // owner of the new NFT = event_owner account contract in the destination chain
+    // original NFT address = event_destAddress
+    // original NFT id = inside event_data
+
+    // decode data
+    const decodedData =
+      SapphireNFTs__factory.createInterface().decodeFunctionData(
+        "safeTransferFrom(address,address,uint256)",
+        event_data
+      );
+    expect(decodedData[0]).to.equal(walletAccount1Address);
+    expect(decodedData[1]).to.equal(
+      await infrastructure.argentModule.getAddress()
+    );
+    expect(decodedData[2]).to.equal(tokenId);
+
+    // Bridge will get uri information from the original NFT
+    const uri_baseChain = await baseChainNFT.tokenURI(tokenId);
+    await argentWrappedAccounts
+      .connect(deployer)
+      .safeMint(event_wallet, uri_baseChain, event_destAddress, tokenId);
+
+    /////////////////////////////////////////
+    //// Final checks
+    /////////////////////////////////////////
+
+    // Check that the NFT is minted
+    const account1DestChain = await argentWrappedAccounts.getAccountContract(
+      walletAccount1Address
+    );
+
+    const balanceAccount1DestChain = await nftStorage.balanceOf(
+      account1DestChain
+    );
+    expect(balanceAccount1DestChain).to.equal(1);
+
+    const tokenURI = await nftStorage.tokenURI(0);
+    expect(tokenURI).to.equal(uri_baseChain);
+
+    // Check base chain NFT
+    const owner = await baseChainNFT.ownerOf(tokenId);
+    expect(owner).to.equal(await infrastructure.argentModule.getAddress());
   });
 
   it("Full ETH Transfer Bridge, type DEST", async function () {

@@ -1,15 +1,17 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
-import { ArgentWrappedAccounts } from "../../typechain-types";
+import { ArgentWrappedAccounts, NFTStorage } from "../../typechain-types";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { signOffChainForBridge } from "../../scripts/argentContracts/utils/genericUtils";
+import { ZeroAddress } from "ethers";
 
 describe("ArgentWrappedAccounts", function () {
   let deployer: HardhatEthersSigner;
   let account1: HardhatEthersSigner;
   let account2: HardhatEthersSigner;
   let ArgentWrappedAccounts: ArgentWrappedAccounts;
+  let NFTStorage: NFTStorage;
 
   beforeEach(async function () {
     [deployer, account1, account2] = await ethers.getSigners();
@@ -17,9 +19,17 @@ describe("ArgentWrappedAccounts", function () {
       "ArgentWrappedAccounts"
     );
 
+    const NFTStorageContract = await ethers.getContractFactory("NFTStorage");
+    NFTStorage = await NFTStorageContract.connect(deployer).deploy();
+    const NFTStorageAddress = await NFTStorage.getAddress();
+
     ArgentWrappedAccounts = await ArgentWrappedAccountsContract.connect(
       deployer
-    ).deploy();
+    ).deploy(NFTStorageAddress);
+
+    await NFTStorage.transferOwnership(
+      await ArgentWrappedAccounts.getAddress()
+    );
   });
 
   describe("createAccountContract", async function () {
@@ -199,6 +209,96 @@ describe("ArgentWrappedAccounts", function () {
       expect(accountContractAddress).to.not.equal(ethers.ZeroAddress);
       const balance = await ethers.provider.getBalance(accountContractAddress);
       expect(balance).to.equal(ethers.parseEther("0.5"));
+
+      // check if accountContractAddress is a AccountContract type
+      const accountContract = await ethers.getContractAt(
+        "AccountContract",
+        accountContractAddress
+      );
+      expect(await accountContract.getAddress()).to.equal(
+        accountContractAddress
+      );
+    });
+  });
+
+  describe("safeMint", async function () {
+    it("only owner can call the function", async function () {
+      // should revert with revert OwnableUnauthorizedAccount error
+      await expect(
+        ArgentWrappedAccounts.connect(account1).safeMint(
+          account1.address,
+          "https://www.google.com",
+          ZeroAddress,
+          0
+        )
+      ).to.be.reverted;
+    });
+
+    it("should emit event NFTMinted", async function () {
+      await account1.sendTransaction({
+        to: await ArgentWrappedAccounts.getAddress(),
+        value: ethers.parseEther("1"),
+      });
+
+      await ArgentWrappedAccounts.createAccountContract(account1.address);
+      const accountContractAddress =
+        await ArgentWrappedAccounts.getAccountContract(account1.address);
+
+      await expect(
+        ArgentWrappedAccounts.connect(deployer).safeMint(
+          account1.address,
+          "https://www.google.com",
+          accountContractAddress,
+          0
+        )
+      )
+        .to.emit(ArgentWrappedAccounts, "NFTMinted")
+        .withArgs(
+          accountContractAddress,
+          "https://www.google.com",
+          accountContractAddress,
+          0
+        );
+    });
+
+    it("should mint to an existing account contract", async function () {
+      await ArgentWrappedAccounts.createAccountContract(account1.address);
+      await ArgentWrappedAccounts.connect(deployer).safeMint(
+        account1.address,
+        "https://www.google.com",
+        ZeroAddress,
+        0
+      );
+
+      const accountContractAddress =
+        await ArgentWrappedAccounts.getAccountContract(account1.address);
+
+      const balance = await NFTStorage.balanceOf(accountContractAddress);
+      expect(balance).to.equal(1);
+
+      // check if accountContractAddress is a AccountContract type
+      const accountContract = await ethers.getContractAt(
+        "AccountContract",
+        accountContractAddress
+      );
+      expect(await accountContract.getAddress()).to.equal(
+        accountContractAddress
+      );
+    });
+
+    it("should mint to a non existing account contract", async function () {
+      await ArgentWrappedAccounts.safeMint(
+        account1.address,
+        "https://www.google.com",
+        ZeroAddress,
+        0
+      );
+
+      const accountContractAddress =
+        await ArgentWrappedAccounts.getAccountContract(account1.address);
+      expect(accountContractAddress).to.not.equal(ethers.ZeroAddress);
+      const balance = await NFTStorage.balanceOf(accountContractAddress);
+      expect(balance).to.equal(1);
 
       // check if accountContractAddress is a AccountContract type
       const accountContract = await ethers.getContractAt(

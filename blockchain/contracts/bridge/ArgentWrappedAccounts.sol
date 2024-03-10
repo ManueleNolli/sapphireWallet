@@ -60,14 +60,14 @@ contract ArgentWrappedAccounts is Ownable {
     * @notice Mint NFT to account contract
     * @param _wallet The address of base chain wallet
     */
-    function depositToAccountContract(address _wallet, string memory _uri, string memory originalContractAddress, uint256 originalTokenID) onlyOwner public {
+    function safeMint(address _wallet, string memory _uri, string memory originalContractAddress, uint256 originalTokenID) onlyOwner public {
         address accountContract = accountContracts[_wallet];
         if (accountContract == address(0)) {
             accountContract = createAccountContract(_wallet);
         }
 
         nftStorage.safeMint(accountContract, _uri, originalContractAddress, originalTokenID);
-        emit NFTMinted(_wallet, _uri, originalContractAddress, originalTokenID);
+        emit NFTMinted(accountContract, _uri, originalContractAddress, originalTokenID);
     }
 
     /**
