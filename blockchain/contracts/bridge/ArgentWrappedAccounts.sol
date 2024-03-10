@@ -103,6 +103,7 @@ contract ArgentWrappedAccounts is Ownable {
         require(signer == _owner, "Invalid signature");
 
         (bool success, bytes memory result) = address(accountContract).call(_data);
+
         emit TransactionExecuted(_wallet, success, result, hash);
         return (success, result);
     }
