@@ -1,11 +1,10 @@
 import 'dotenv/config'
-import { ethers } from "ethers";
-import { ArgentModule__factory, ArgentWrappedAccounts__factory } from './contracts'
+import { ArgentModule__factory } from './contracts'
 import {parseArgentModuleAddress, parseArgentWrappedAccountsAddress, parseNetworks} from "./argsParsers";
 import {BridgeActionType, BridgeCallType} from "./contracts/types";
 import {getProviderAndSigner} from "./ethersUtils";
 import {bridgeLogger} from "./logger";
-import {handleDEST} from "./contracts/handleDEST";
+import {handleDEST} from "./handleDEST";
 import {handleBridgeETH} from "./handleBridgeETH";
 import {handleBridgeNFT} from "./handleBridgeNFT";
 
@@ -18,18 +17,16 @@ async function bridgeAction({signer, argentWrappedAccountsAddress, callID, walle
 
   switch (callType) {
     case BridgeCallType.DEST:
-      await handleDEST()
+      await handleDEST(argentWrappedAccountsAddress, wallet, owner, data, signature, signer)
       break;
     case BridgeCallType.BRIDGE_ETH:
-      await handleBridgeETH()
+      await handleBridgeETH(argentWrappedAccountsAddress, to, value, signer)
       break;
     case BridgeCallType.BRIDGE_NFT:
-      await handleBridgeNFT()
+      await handleBridgeNFT(argentWrappedAccountsAddress, wallet, to, data, signer)
       break;
   }
 
-  const argentWrappedAccounts = ArgentWrappedAccounts__factory.connect(argentWrappedAccountsAddress, signer);
-  await argentWrappedAccounts.depositToAccountContract(to, value as ethers.BigNumberish)
 }
 
 /**

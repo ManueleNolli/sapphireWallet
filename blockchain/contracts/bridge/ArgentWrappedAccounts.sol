@@ -53,7 +53,7 @@ contract ArgentWrappedAccounts is Ownable {
         }
 
         AccountContract(payable(accountContract)).deposit{value: _value}();
-        emit Deposit(address(this),accountContract, _value);
+        emit Deposit(address(this),_wallet, _value);
     }
 
     /**
@@ -67,7 +67,7 @@ contract ArgentWrappedAccounts is Ownable {
         }
 
         nftStorage.safeMint(accountContract, _uri, originalContractAddress, originalTokenID);
-        emit NFTMinted(accountContract, _uri, originalContractAddress, originalTokenID);
+        emit NFTMinted(_wallet, _uri, originalContractAddress, originalTokenID);
     }
 
     /**
