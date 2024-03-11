@@ -1,95 +1,36 @@
 import 'dotenv/config'
-import { AlchemyProvider, ethers, JsonRpcProvider, Wallet } from "ethers";
+import { ethers } from "ethers";
 import { ArgentModule__factory, ArgentWrappedAccounts__factory } from './contracts'
-
-type BridgeCallType = {
-  id: BigInt,
-  wallet: string,
-  to: string,
-  value: BigInt,
-  data: string
-}
-
-function parseNetworks(): {baseChain: string, destinationChain: string} {
-  const baseChain = process.argv[2];
-  const destinationChain = process.argv[3];
-
-  if(!baseChain || !destinationChain){
-    throw new Error(`Base chain and destination chain are required, got ${baseChain} and ${destinationChain}\nUsage: yarn start <baseChain> <destinationChain>`);
-  }
-
-  return {
-    baseChain,
-    destinationChain
-  }
-}
-
-function parseArgentModuleAddress(network: string): string {
-  if(network === 'local' && process.env.LOCALHOST_ARGENT_MODULE_ADDRESS){
-    return process.env.LOCALHOST_ARGENT_MODULE_ADDRESS;
-  } else if(network === 'sepolia' && process.env.SEPOLIA_ARGENT_MODULE_ADDRESS){
-    return process.env.SEPOLIA_ARGENT_MODULE_ADDRESS;
-  } else if(network === 'mumbai' && process.env.MUMBAI_ARGENT_MODULE_ADDRESS){
-    return process.env.MUMBAI_ARGENT_MODULE_ADDRESS;
-  }  else {
-    throw new Error(`Argent module address not found for network ${network}`);
-  }
-}
-
-function parseArgentWrappedAccountsAddress(network: string): string {
-  if(network === 'local' && process.env.LOCALHOST_ARGENT_WRAPPED_ACCOUNTS_ADDRESS){
-    return process.env.LOCALHOST_ARGENT_WRAPPED_ACCOUNTS_ADDRESS;
-  } else if(network === 'sepolia' && process.env.SEPOLIA_ARGENT_WRAPPED_ACCOUNTS_ADDRESS){
-    return process.env.SEPOLIA_ARGENT_WRAPPED_ACCOUNTS_ADDRESS;
-  } else if(network === 'mumbai' && process.env.MUMBAI_ARGENT_WRAPPED_ACCOUNTS_ADDRESS){
-    return process.env.MUMBAI_ARGENT_WRAPPED_ACCOUNTS_ADDRESS;
-  }  else {
-    throw new Error(`Argent wrapped accounts address not found for network ${network}`);
-  }
-}
+import {parseArgentModuleAddress, parseArgentWrappedAccountsAddress, parseNetworks} from "./argsParsers";
+import {BridgeActionType, BridgeCallType} from "./contracts/types";
+import {getProviderAndSigner} from "./ethersUtils";
+import {bridgeLogger} from "./logger";
+import {handleDEST} from "./contracts/handleDEST";
+import {handleBridgeETH} from "./handleBridgeETH";
+import {handleBridgeNFT} from "./handleBridgeNFT";
 
 
-
-function getProviderAndSigner(network: string): {provider: JsonRpcProvider | AlchemyProvider, signer: Wallet} {
-  let provider;
-  let signerKey;
-
-  if (network === 'local' && process.env.LOCALHOST_ADDRESS && process.env.LOCALHOST_SIGNER_PRIVATE_KEY) {
-    provider =  new JsonRpcProvider(`http://${process.env.LOCALHOST_ADDRESS}:8545`);
-    signerKey = process.env.LOCALHOST_SIGNER_PRIVATE_KEY;
-  } else if (network === 'sepolia' && process.env.SEPOLIA_API_KEY && process.env.SEPOLIA_SIGNER_PRIVATE_KEY) {
-    provider =   new AlchemyProvider('sepolia', process.env.SEPOLIA_API_KEY);
-    signerKey = process.env.SEPOLIA_SIGNER_PRIVATE_KEY;
-  } else if (network === 'mumbai' && process.env.MUMBAI_API_KEY && process.env.MUMBAI_SIGNER_PRIVATE_KEY) {
-    provider =   new AlchemyProvider('matic-mumbai', process.env.MUMBAI_API_KEY);
-    signerKey = process.env.MUMBAI_SIGNER_PRIVATE_KEY;
-  }  else {
-    throw new Error(`Provider not found for network ${network}`);
-  }
-
-  const signer = new Wallet(signerKey, provider);
-
-  return {
-    provider,
-    signer
-  }
-}
-
-
-type BridgeActionType = {
-  signer: ethers.Wallet,
-  argentWrappedAccountsAddress: string
-} & BridgeCallType
   /**
- * Effective call when an event is detected
+  * Delegate the call to the correct function based on the callType
  */
-async function bridgeAction({signer, argentWrappedAccountsAddress, id, wallet, to, value, data }: BridgeActionType) {
-  console.log("value", value)
-  console.log("to", to)
+async function bridgeAction({signer, argentWrappedAccountsAddress, callID, wallet, callType, to, value, data, signature, owner }: BridgeActionType) {
+  bridgeLogger({callID, wallet, callType, to, value, data, signature, owner});
+
+  switch (callType) {
+    case BridgeCallType.DEST:
+      await handleDEST()
+      break;
+    case BridgeCallType.BRIDGE_ETH:
+      await handleBridgeETH()
+      break;
+    case BridgeCallType.BRIDGE_NFT:
+      await handleBridgeNFT()
+      break;
+  }
+
   const argentWrappedAccounts = ArgentWrappedAccounts__factory.connect(argentWrappedAccountsAddress, signer);
   await argentWrappedAccounts.depositToAccountContract(to, value as ethers.BigNumberish)
 }
-
 
 /**
  * Main function. It listens to the BridgeCall event and calls bridgeAction when it is detected
@@ -105,8 +46,8 @@ async function main() {
   const argentWrappedAccountsAddress = parseArgentWrappedAccountsAddress(destinationChain);
 
   await argentModuleContract.addListener('BridgeCall',
-    (id: BigInt, wallet: string, to: string, value: BigInt, data: string) => {
-      bridgeAction({signer: destinationChainSigner, argentWrappedAccountsAddress, id, wallet, to, value, data});
+    (callID: BigInt, wallet: string, callType: BridgeCallType, to: string, value: BigInt, data: string, signature: string, owner: string) => {
+      bridgeAction({signer: destinationChainSigner, argentWrappedAccountsAddress, callID, wallet, callType, to, value, data, signature, owner});
     })
 }
 
