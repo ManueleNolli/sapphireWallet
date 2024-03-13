@@ -5,7 +5,13 @@
   "license": "MIT",
   "scripts": {
     "compile": "npx hardhat compile && npx hardhat run scripts/utils/copyTypechainTypes.ts",
-    "start:local": "npx hardhat node --hostname 0.0.0.0"
+    "start:local": "npx hardhat node --hostname 0.0.0.0",
+    "deployBaseChain:local": "npx hardhat run scripts/deployBaseChain.ts --network localhost",
+    "deployBaseChain:sepolia": "npx hardhat run scripts/deployBaseChain.ts --network sepolia",
+    "deployBaseChain:mumbai": "npx hardhat run scripts/deployBaseChain.ts --network mumbai",
+    "deployDestinationChain:local": "npx hardhat run scripts/deployDestinationChain.ts --network localhost",
+    "deployDestinationChain:sepolia": "npx hardhat run scripts/deployDestinationChain.ts --network sepolia",
+    "deployDestinationChain:mumbai": "npx hardhat run scripts/deployDestinationChain.ts --network mumbai"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",

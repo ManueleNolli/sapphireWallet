@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`SendETH Show QRCode Scanner 1`] = `
+<div
+  data-testid="QRCodeScanner"
+>
+  QRCodeScanner
+</div>
+`;
+
 exports[`SendETH renders correctly 1`] = `
 <View
   appearance="default"

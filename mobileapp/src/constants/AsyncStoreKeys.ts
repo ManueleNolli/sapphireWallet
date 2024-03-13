@@ -5,4 +5,6 @@ const EOAAddress = 'EOAAddress'
 
 const walletContractAddress = 'walletContractAddress'
 
-export { theme, firstAccess, EOAAddress, walletContractAddress }
+const currentNetwork = 'currentNetwork'
+
+export { theme, firstAccess, EOAAddress, walletContractAddress, currentNetwork }

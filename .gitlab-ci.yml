@@ -13,6 +13,10 @@ compile_contracts:
   artifacts:
     paths:
       - blockchain/typechain-types
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
 
 test_mobileapp:
   stage: 🤞 test
@@ -26,15 +30,23 @@ test_mobileapp:
     - yarn install
     - yarn test:ci
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
 
 test_api-gateway:
-    stage: 🤞 test
-    image: node:latest
-    script:
-        - cd backend/api-gateway
-        - yarn install
-        - yarn test:cov
-    coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  stage: 🤞 test
+  image: node:latest
+  script:
+      - cd backend/api-gateway
+      - yarn install
+      - yarn test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  only:
+      - main
+      - dev
+      - /sprint[0-9]+/
 
 test_wallet-factory:
   stage: 🤞 test
@@ -49,6 +61,10 @@ test_wallet-factory:
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   dependencies:
     - compile_contracts
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
 
 test_sapphire-relayer:
   stage: 🤞 test
@@ -63,3 +79,7 @@ test_sapphire-relayer:
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   dependencies:
     - compile_contracts
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/

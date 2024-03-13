@@ -11,7 +11,7 @@ import {
 import { ZeroAddress } from "ethers";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 
-describe("SendTransaction", function () {
+describe("Account Abstraction Relayer: SendTransaction ETH", function () {
   let deployer: HardhatEthersSigner;
   let account1: HardhatEthersSigner;
   let account2: HardhatEthersSigner;

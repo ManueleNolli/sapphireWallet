@@ -1,10 +1,10 @@
 import {
   prepareERC721TransferTransaction,
   prepareETHTransferTransaction,
-  signTransaction,
-  wrapInMultiCall,
   requestERC721TokenTransfer,
   requestETHTransfer,
+  signTransaction,
+  wrapInMultiCall,
 } from '../SapphireTransactions'
 import {
   ArgentModule,
@@ -12,8 +12,9 @@ import {
   ERC721,
   SapphireNFTs__factory,
 } from '../../../contracts'
-import { generateNonceForRelay, signOffchain } from '../TransactionUtils'
+import { generateNonceForRelay, signOffChain } from '../TransactionUtils'
 import { contactBackend } from '../../backend'
+import { NETWORKS } from '../../../constants/Networks'
 
 jest.mock('../TransactionUtils')
 jest.mock('../../backend')
@@ -89,7 +90,7 @@ describe('TransactionUtils', () => {
   describe('signTransaction', () => {
     it('should return a signed transaction', async () => {
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
-      ;(signOffchain as jest.Mock).mockResolvedValue('0x9876543210')
+      ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
       const unsignedTransaction = '0x1234567890'
       const mockSigner = {
@@ -102,7 +103,8 @@ describe('TransactionUtils', () => {
 
       const signedTransaction = await signTransaction(
         unsignedTransaction,
-        mockSigner as any
+        mockSigner as any,
+        '0x1234567890'
       )
 
       expect(signedTransaction).toEqual({
@@ -113,13 +115,13 @@ describe('TransactionUtils', () => {
 
     it('should throw if no provider', async () => {
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
-      ;(signOffchain as jest.Mock).mockResolvedValue('0x9876543210')
+      ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
       const unsignedTransaction = '0x1234567890'
       const mockSigner = {}
 
       await expect(
-        signTransaction(unsignedTransaction, mockSigner as any)
+        signTransaction(unsignedTransaction, mockSigner as any, '0x1234567890')
       ).rejects.toThrow('No provider, probably a connection error')
     })
   })
@@ -130,7 +132,7 @@ describe('TransactionUtils', () => {
         hash: 'backendResponse',
       })
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
-      ;(signOffchain as jest.Mock).mockResolvedValue('0x9876543210')
+      ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
       const argentModuleMock = {
         interface: {
@@ -170,7 +172,8 @@ describe('TransactionUtils', () => {
         'walletAddress',
         'to',
         0,
-        mockSigner as any
+        mockSigner as any,
+        NETWORKS.SEPOLIA
       )
 
       expect(result).toEqual({
@@ -218,7 +221,13 @@ describe('TransactionUtils', () => {
       }
 
       await expect(
-        requestERC721TokenTransfer('walletAddress', 'to', 0, mockSigner as any)
+        requestERC721TokenTransfer(
+          'walletAddress',
+          'to',
+          0,
+          mockSigner as any,
+          NETWORKS.SEPOLIA
+        )
       ).rejects.toThrow('Failed to relay transaction')
     })
   })
@@ -229,7 +238,7 @@ describe('TransactionUtils', () => {
         hash: 'backendResponse',
       })
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
-      ;(signOffchain as jest.Mock).mockResolvedValue('0x9876543210')
+      ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
       const argentModuleMock = {
         interface: {
@@ -255,7 +264,8 @@ describe('TransactionUtils', () => {
         'walletAddress',
         'to',
         0.5,
-        mockSigner as any
+        mockSigner as any,
+        NETWORKS.SEPOLIA
       )
 
       expect(result).toEqual({
@@ -289,7 +299,13 @@ describe('TransactionUtils', () => {
       }
 
       await expect(
-        requestETHTransfer('walletAddress', 'to', 0.5, mockSigner as any)
+        requestETHTransfer(
+          'walletAddress',
+          'to',
+          0.5,
+          mockSigner as any,
+          NETWORKS.SEPOLIA
+        )
       ).rejects.toThrow('Failed to relay transaction')
     })
   })

@@ -23,7 +23,6 @@ import "../../infrastructure/storage/IGuardianStorage.sol";
 import "../../infrastructure/storage/ITransferStorage.sol";
 import "./IModule.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
 /**
  * @title BaseModule
  * @notice Base Module contract that contains methods common to all Modules.
@@ -172,19 +171,23 @@ abstract contract BaseModule is IModule {
      * @param _value The value of the transaction.
      * @param _data The data of the transaction.
      */
-    function invokeWallet(address _wallet, address _to, uint256 _value, bytes memory _data) internal returns (bytes memory _res) {
+    function invokeWallet(address _wallet, address _to, uint256 _value, bytes memory _data) internal returns (bool _success, bytes memory _res) {
         bool success;
         (success, _res) = _wallet.call(abi.encodeWithSignature("invoke(address,uint256,bytes)", _to, _value, _data));
         if (success && _res.length > 0) { //_res is empty if _wallet is an "old" BaseWallet that can't return output values
             (_res) = abi.decode(_res, (bytes));
-        } else if (_res.length > 0) {
+        }
+        else if (_res.length > 0) {
             // solhint-disable-next-line no-inline-assembly
-            assembly {
-                returndatacopy(0, 0, returndatasize())
-                revert(0, returndatasize())
-            }
+            // Commented out because if
+//            assembly {
+//                returndatacopy(0, 0, returndatasize())
+//                revert(0, returndatasize())
+//            }
         } else if (!success) {
             revert("BM: wallet invoke reverted");
         }
+
+        return (success, _res);
     }
 }

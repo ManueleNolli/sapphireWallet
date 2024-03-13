@@ -36,16 +36,16 @@ exports[`Home renders correctly 1`] = `
       style={
         {
           "alignItems": "center",
+          "backgroundColor": "black",
           "borderBottomLeftRadius": 150,
           "borderBottomRightRadius": 150,
           "elevation": 15,
           "flex": 1,
           "justifyContent": "center",
           "overflow": "hidden",
-          "shadowColor": "black",
           "shadowOffset": {
-            "height": 0,
-            "width": 0,
+            "height": 10,
+            "width": 10,
           },
           "shadowOpacity": 0.5,
           "shadowRadius": 10,
@@ -204,10 +204,10 @@ exports[`Home renders correctly 1`] = `
           "position": "absolute",
           "shadowColor": "black",
           "shadowOffset": {
-            "height": 0,
+            "height": 5,
             "width": 0,
           },
-          "shadowOpacity": 0.5,
+          "shadowOpacity": 0.2,
           "shadowRadius": 10,
           "width": 300,
           "zIndex": 2,
@@ -283,6 +283,7 @@ exports[`Home renders correctly 1`] = `
   </View>
   <RCTScrollView
     onScroll={[Function]}
+    scrollEventThrottle={16}
     showsVerticalScrollIndicator={false}
   >
     <View>

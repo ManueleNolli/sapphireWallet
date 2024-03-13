@@ -19,15 +19,15 @@ pragma solidity ^0.8.3;
 import "./common/Utils.sol";
 import "./common/BaseModule.sol";
 import "./RelayerManager.sol";
-import "./SecurityManager.sol";
 import "./TransactionManager.sol";
+import "./InteroperabilityManager.sol";
 
 /**
  * @title ArgentModule
- * @notice Single module for the Argent wallet.
- * @author Julien Niset - <julien@argent.xyz>
+ * @notice Single module for the Argent wallet with interoperability features.
+ * @author Manuele Nolli - <manuele.nolli@supsi.ch>
  */
-contract ArgentModule is BaseModule, RelayerManager, SecurityManager, TransactionManager {
+contract ArgentModule is BaseModule, RelayerManager, TransactionManager, InteroperabilityManager {
 
     bytes32 constant public NAME = "ArgentModule";
 
@@ -37,13 +37,9 @@ contract ArgentModule is BaseModule, RelayerManager, SecurityManager, Transactio
         ITransferStorage _userWhitelist,
         IAuthoriser _authoriser,
         address _uniswapRouter,
-        uint256 _securityPeriod,
-        uint256 _securityWindow,
-        uint256 _recoveryPeriod,
-        uint256 _lockPeriod
+        uint256 _securityPeriod
     )
         BaseModule(_registry, _guardianStorage, _userWhitelist, _authoriser, NAME)
-        SecurityManager(_recoveryPeriod, _securityPeriod, _securityWindow, _lockPeriod)
         TransactionManager(_securityPeriod)
         RelayerManager(_uniswapRouter)
     {
@@ -77,10 +73,7 @@ contract ArgentModule is BaseModule, RelayerManager, SecurityManager, Transactio
             methodId == TransactionManager.enableERC1155TokenReceiver.selector ||
             methodId == TransactionManager.clearSession.selector ||
             methodId == ArgentModule.addModule.selector ||
-            methodId == SecurityManager.addGuardian.selector ||
-            methodId == SecurityManager.revokeGuardian.selector ||
-            methodId == SecurityManager.cancelGuardianAddition.selector ||
-            methodId == SecurityManager.cancelGuardianRevokation.selector
+            methodId == InteroperabilityManager.bridgeCall.selector
         )
         {
             // owner
@@ -89,36 +82,14 @@ contract ArgentModule is BaseModule, RelayerManager, SecurityManager, Transactio
         if (methodId == TransactionManager.multiCallWithSession.selector) {
             return (1, OwnerSignature.Session);
         }
-        if (methodId == SecurityManager.executeRecovery.selector) {
-            // majority of guardians
-            uint numberOfSignaturesRequired = _majorityOfGuardians(_wallet);
-            require(numberOfSignaturesRequired > 0, "AM: no guardians set on wallet");
-            return (numberOfSignaturesRequired, OwnerSignature.Disallowed);
-        }
-        if (methodId == SecurityManager.cancelRecovery.selector) {
-            // majority of (owner + guardians)
-            uint numberOfSignaturesRequired = Utils.ceil(recoveryConfigs[_wallet].guardianCount + 1, 2);
-            return (numberOfSignaturesRequired, OwnerSignature.Optional);
-        }
         if (methodId == TransactionManager.multiCallWithGuardians.selector ||
-            methodId == TransactionManager.multiCallWithGuardiansAndStartSession.selector ||
-            methodId == SecurityManager.transferOwnership.selector)
+            methodId == TransactionManager.multiCallWithGuardiansAndStartSession.selector
+            )
         {
             // owner + majority of guardians
             uint majorityGuardians = _majorityOfGuardians(_wallet);
             uint numberOfSignaturesRequired = majorityGuardians + 1;
             return (numberOfSignaturesRequired, OwnerSignature.Required);
-        }
-        if (methodId == SecurityManager.finalizeRecovery.selector ||
-            methodId == SecurityManager.confirmGuardianAddition.selector ||
-            methodId == SecurityManager.confirmGuardianRevokation.selector)
-        {
-            // anyone
-            return (0, OwnerSignature.Anyone);
-        }
-        if (methodId == SecurityManager.lock.selector || methodId == SecurityManager.unlock.selector) {
-            // any guardian
-            return (1, OwnerSignature.Disallowed);
         }
         revert("SM: unknown method");
     }

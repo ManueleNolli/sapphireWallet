@@ -11,7 +11,7 @@ import {
 import { ZeroAddress } from "ethers";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 
-describe("SendTransaction NFT", function () {
+describe("Account Abstraction Relayer: SendTransaction NFT", function () {
   let deployer: HardhatEthersSigner;
   let account1: HardhatEthersSigner;
   let account2: HardhatEthersSigner;
@@ -42,7 +42,7 @@ describe("SendTransaction NFT", function () {
     const sapphireNFT = await sapphireNFTDeployment.waitForDeployment();
     const sapphireNFTAddress = await sapphireNFT.getAddress();
 
-    await sapphireNFT.safeMint(walletAccount1Address);
+    await sapphireNFT.safeMint(walletAccount1Address, "https://sapphire/");
 
     // Check NFT balance of account1
     const balanceAccount1 = await sapphireNFT.balanceOf(walletAccount1Address);

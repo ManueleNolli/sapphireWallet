@@ -238,7 +238,7 @@ export default function Home() {
         <View style={styles.addressContainer}>
           <TouchableWithoutFeedback
             onPress={copyAddressToClipboard}
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor:'red' }}
           >
             <BlurView style={appStyles.center} intensity={100}>
               <Text category="label">
@@ -249,7 +249,9 @@ export default function Home() {
         </View>
       </Animated.View>
 
-      <ScrollView onScroll={onScroll} showsVerticalScrollIndicator={false}>
+      <ScrollView onScroll={onScroll} showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+      >
         <View style={{ height: 64 * vh }} />
 
         {buttonData.map((item) => (
@@ -279,10 +281,10 @@ const themedStyles = StyleService.create({
     borderBottomLeftRadius: 150,
     borderBottomRightRadius: 150,
     overflow: 'hidden',
-    shadowColor: 'black',
+    backgroundColor:'black',
     shadowOffset: {
-      width: 0,
-      height: 0,
+      width: 10,
+      height: 10,
     },
     shadowOpacity: 0.5,
     shadowRadius: 10,
@@ -316,9 +318,9 @@ const themedStyles = StyleService.create({
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
-      height: 0,
+      height: 5,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.2,
     shadowRadius: 10,
     elevation: 15,
   },

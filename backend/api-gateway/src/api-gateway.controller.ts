@@ -4,6 +4,7 @@ import { ApiResponse } from '@nestjs/swagger';
 import { CreateWalletRequest } from './dto/create-wallet-request.dto';
 import { AddAuthorised } from './dto/add-authorised.dto';
 import { ExecuteTransaction } from './dto/execute-transaction.dto';
+import { lastValueFrom } from 'rxjs'
 
 @Controller()
 export class ApiGatewayController {
@@ -32,8 +33,26 @@ export class ApiGatewayController {
       },
     },
   })
-  createWallet(@Body() createWalletRequest: CreateWalletRequest) {
-    return this.apiGatewayService.createWallet(createWalletRequest);
+  async createWallet(@Body() createWalletRequest: CreateWalletRequest) {
+    try {
+      const createWalletResponse = this.apiGatewayService.createWallet(createWalletRequest);
+
+      const data = await lastValueFrom(createWalletResponse)
+
+      const address = data.address
+      const network = data.network
+      console.log("address: ", address)
+      console.log("network: ", network)
+
+      await lastValueFrom(this.apiGatewayService.addAuthorised({ address, network }))
+
+      console.log('Wallet created successfully. It will return the wallet address: ', address)
+
+      return data
+    } catch (e) {
+      console.error(e)
+      throw e
+    }
   }
 
   @Post('/add-authorised')

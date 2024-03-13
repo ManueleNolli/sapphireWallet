@@ -68,6 +68,27 @@ export async function signOffchain(
   return joinedSignatures;
 }
 
+export async function signOffChainForBridge(
+  signer: HardhatEthersSigner,
+  walletContractAddress: string,
+  data: string,
+  chainId: bigint
+) {
+  const message = `0x${[
+    "0x19",
+    "0x00",
+    walletContractAddress,
+    data,
+    ethers.zeroPadValue(ethers.toBeHex(chainId), 32),
+  ]
+    .map((hex) => hex.slice(2))
+    .join("")}`;
+
+  const messageHash = ethers.keccak256(message);
+
+  return await signMessage(messageHash, signer);
+}
+
 /**
  * Generate a message hash
  * @param from

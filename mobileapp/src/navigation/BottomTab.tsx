@@ -14,8 +14,9 @@ import { logo, networkLogo } from '../assets/AssetsRegistry'
 import Home from '../pages/Home/Home'
 import NFTs from '../pages/NFTs/NFTs'
 import Settings from '../pages/Settings/Settings'
-import { ImageProps } from 'react-native'
+import { ImageProps, Platform } from 'react-native'
 import { BlockchainContext } from '../context/BlockchainContext'
+import { vh } from '../Styles'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -72,6 +73,7 @@ const BottomTabBar = ({ navigation, state }: any) => {
     <BottomNavigation
       selectedIndex={state.index}
       onSelect={(index) => navigation.navigate(state.routeNames[index])}
+      style={{paddingBottom: Platform.OS === 'ios' ? 2*vh : 0}}
     >
       <BottomNavigationTab title="Home" icon={HomeIcon} />
       <BottomNavigationTab title="NFTs" icon={NFTsIcon} />

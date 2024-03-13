@@ -13,6 +13,7 @@ import InputAddress from '../InputAddress/InputAddress'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { NETWORKS } from '../../constants/Networks'
 import { NFTCard } from '../NFTCard/NFTCard'
+import QRCodeScanner from '../QRCodeScanner/QRCodeScanner'
 
 type SendETHProps = {
   address: string
@@ -31,6 +32,9 @@ export default function SendNFT({ address, close }: SendETHProps) {
     nfts,
     selectedNFT,
     setSelectedNFT,
+    isQRCodeScanning,
+    setIsQRCodeScanning,
+    QRCodeFinishedScanning,
   } = useSendNFT({
     address,
     close,
@@ -45,6 +49,9 @@ export default function SendNFT({ address, close }: SendETHProps) {
       )
     )
   }
+
+  if (isQRCodeScanning)
+    return <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />
 
   return (
     <Layout style={styles.container}>
@@ -70,6 +77,7 @@ export default function SendNFT({ address, close }: SendETHProps) {
         setValue={setValueAddress}
         isValid={isAddressValid}
         setIsValid={setIsAddressValid}
+        setIsQRCodeScanning={setIsQRCodeScanning}
       />
       {isNFTLoading && (
         <View
@@ -138,7 +146,7 @@ export default function SendNFT({ address, close }: SendETHProps) {
         style={{ marginTop: 2 * vh, width: '100%' }}
         appearance="outline"
         status="info"
-        disabled={!isAddressValid}
+        disabled={!isAddressValid || nfts.length === 0}
         onPress={sendNFTTransaction}
       >
         Send NFT

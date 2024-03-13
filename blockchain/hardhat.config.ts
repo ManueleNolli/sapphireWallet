@@ -1,37 +1,42 @@
-require("dotenv").config();
+require('dotenv').config()
 
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
+import { HardhatUserConfig } from 'hardhat/config'
+import '@nomicfoundation/hardhat-toolbox'
 
-import "@typechain/hardhat";
-import "@nomicfoundation/hardhat-ethers";
-import "@nomicfoundation/hardhat-chai-matchers";
-const { SEPOLIA_API_KEY, SEPOLIA_PRIVATE_KEY } = process.env;
+import '@typechain/hardhat'
+import '@nomicfoundation/hardhat-ethers'
+import '@nomicfoundation/hardhat-chai-matchers'
+const { SEPOLIA_API_KEY, SEPOLIA_PRIVATE_KEY, MUMBAI_API_KEY, MUMBAI_PRIVATE_KEY } = process.env
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.20",
+    version: '0.8.20',
     settings: {
       optimizer: {
         enabled: true,
-        // runs: 200,
+        runs: 1000,
       },
     },
   },
-
   networks: {
     hardhat: {
       chainId: 1337,
+      allowUnlimitedContractSize: true,
     },
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/${SEPOLIA_API_KEY}`,
       accounts: [`0x${SEPOLIA_PRIVATE_KEY}`],
+      gasPrice: 20000000000,
+      gas: 8400000,
+    },
+    mumbai: {
+      url: `https://polygon-mumbai.g.alchemy.com/v2/${MUMBAI_API_KEY}`,
+      accounts: [`0x${MUMBAI_PRIVATE_KEY}`],
     },
   },
-
   typechain: {
-    target: "ethers-v6",
+    target: 'ethers-v6',
   },
-};
+}
 
-export default config;
+export default config

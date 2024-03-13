@@ -10,8 +10,10 @@ export default function useCreateWallet(
   navigation: CreateWalletProps['navigation']
 ) {
   const { setPrivateKey, setEOAAddress } = useContext(WalletContext)
-  const {currentNetwork, setEthersProvider} = useContext(BlockchainContext)
-  const [selectedNetwork, setSelectedNetwork] = useState(new IndexPath(Object.values(NETWORKS).indexOf(currentNetwork)))
+  const { currentNetwork, setEthersProvider } = useContext(BlockchainContext)
+  const [selectedNetwork, setSelectedNetwork] = useState(
+    new IndexPath(Object.values(NETWORKS).indexOf(currentNetwork))
+  )
 
   const createAndNavigate = async () => {
     const wallet = createWallet()
@@ -27,7 +29,8 @@ export default function useCreateWallet(
     }
   }
 
-  const onNetworkSelect = async (index: IndexPath) => {
+  const onNetworkSelect = async (index: IndexPath | IndexPath[]) => {
+    if (Array.isArray(index)) index = index[0]
     await setEthersProvider(Object.values(NETWORKS)[index.row])
     setSelectedNetwork(index)
   }
@@ -35,6 +38,6 @@ export default function useCreateWallet(
   return {
     createAndNavigate,
     selectedNetwork,
-    onNetworkSelect
+    onNetworkSelect,
   }
 }

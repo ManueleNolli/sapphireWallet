@@ -18,6 +18,7 @@ export default function useSendETH({ address, close }: useSendETHProps) {
   const [isAddressValid, setIsAddressValid] = useState<boolean>(false)
   const [valueAmount, setValueAmount] = useState<string>('')
   const [isAmountValid, setIsAmountValid] = useState<boolean>(false)
+  const [isQRCodeScanning, setIsQRCodeScanning] = useState<boolean>(false)
 
   const sendETHTransaction = async () => {
     setIsLoading(true)
@@ -52,6 +53,11 @@ export default function useSendETH({ address, close }: useSendETHProps) {
     }
   }
 
+  const QRCodeFinishedScanning = (data: string) => {
+    setValueAddress(data)
+    setIsQRCodeScanning(false)
+  }
+
   return {
     isLoading,
     sendETHTransaction,
@@ -63,5 +69,8 @@ export default function useSendETH({ address, close }: useSendETHProps) {
     setValueAmount,
     isAmountValid,
     setIsAmountValid,
+    isQRCodeScanning,
+    setIsQRCodeScanning,
+    QRCodeFinishedScanning,
   }
 }

@@ -297,7 +297,9 @@ exports[`BottomTabNavigator Renders correctly first page 1`] = `
           {
             "flexDirection": "row",
           },
-          undefined,
+          {
+            "paddingBottom": 26.68,
+          },
         ]
       }
     >

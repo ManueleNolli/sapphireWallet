@@ -32,6 +32,7 @@ export class ApiGatewayService {
   }
 
   addAuthorised(addAuthorisedRequest: AddAuthorised) {
+    console.log('addAuthorisedRequest: ', addAuthorisedRequest);
     return this.sapphireRelayer
       .send(
         'add_authorised',
