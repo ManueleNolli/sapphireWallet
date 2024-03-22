@@ -48,9 +48,14 @@ export class SapphireRelayerController {
 
   @EventPattern('execute_transaction', Transport.TCP)
   async handleExecuteTransaction(data: ExecuteTransactionEvent) {
-    const apiKey = this.environmentService.getUnhandled(
+    const apiKeyBaseChain = this.environmentService.getUnhandled(
       'API_KEY',
       data.network,
+    );
+
+    const apiKeyDestChain = this.environmentService.getUnhandled(
+      'API_KEY',
+      data.bridgeNetwork,
     );
 
     const backendAddress = this.environmentService.getUnhandled(
@@ -58,22 +63,42 @@ export class SapphireRelayerController {
       data.network,
     );
 
-    const signer = await this.blockchainService.getProviderAndSigner({
+    const signerBaseChain = await this.blockchainService.getProviderAndSigner({
       network: data.network,
       signerKey: this.environmentService.getWithNetwork(
         'SIGNER_PRIVATE_KEY',
         data.network,
       ),
       localHostAddress: backendAddress,
-      apiKey: apiKey,
+      apiKey: apiKeyBaseChain,
     });
 
+    const signerDestChain =
+      data.bridgeNetwork != null
+        ? await this.blockchainService.getProviderAndSigner({
+            network: data.bridgeNetwork,
+            signerKey: this.environmentService.getWithNetwork(
+              'SIGNER_PRIVATE_KEY',
+              data.bridgeNetwork,
+            ),
+            localHostAddress: backendAddress,
+            apiKey: apiKeyDestChain,
+          })
+        : null;
+
     return await this.sapphireService.executeTransaction(
-      signer,
+      signerBaseChain,
+      signerDestChain,
       this.environmentService.getWithNetwork(
         'ARGENT_MODULE_ADDRESS',
         data.network,
       ),
+      data.bridgeNetwork != null
+        ? this.environmentService.getWithNetwork(
+            'ARGENT_WRAPPED_ACCOUNTS_ADDRESS',
+            data.bridgeNetwork,
+          )
+        : null,
       data,
     );
   }

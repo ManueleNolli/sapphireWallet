@@ -49,6 +49,17 @@ export default async function deployDestinationChain() {
   await updateExternalEnv('../bridge/basicOffChainBridge/.env', bridgeEnv)
   console.log('Updated bridge env!')
 
+  // SapphireRelayer
+  console.log('Updating SapphireRelayer env...')
+  const sapphireRelayerEnv: EnvValue[] = [
+    {
+      key: networkName + '_' + Constants.envValues.argentWrappedAccounts,
+      value: await argentWrappedAccountsDeployment.getAddress(),
+    },
+  ]
+  await updateExternalEnv('../backend/sapphire-relayer/.env', sapphireRelayerEnv)
+  console.log('Updated SapphireRelayer env!')
+
   ////////////
   // DONE :)
   ////////////

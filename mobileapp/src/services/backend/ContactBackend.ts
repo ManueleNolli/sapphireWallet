@@ -4,6 +4,7 @@
 
 import { BACKEND_ADDRESS } from '@env'
 import { NETWORKS } from '../../constants/Networks'
+import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 
 /**
  * ENDPOINTS
@@ -34,6 +35,7 @@ interface executeTransactionBody extends backendBaseBody {
   nonce: string
   signedTransaction: string
   transactionData: string
+  bridgeNetwork: BRIDGE_NETWORKS | null
 }
 
 /**
@@ -93,10 +95,7 @@ export async function contactBackend(
       throw new Error(`${responseJson.error}: ${responseJson.message}`)
     }
 
-    if (
-      'statusCode' in responseJson &&
-      (responseJson.statusCode !== 200 || responseJson.statusCode !== 201)
-    ) {
+    if ('statusCode' in responseJson && (responseJson.statusCode !== 200 || responseJson.statusCode !== 201)) {
       throw new Error(`${responseJson.statusCode}: ${responseJson.message}`)
     }
 

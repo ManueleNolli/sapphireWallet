@@ -13,6 +13,7 @@ import {
   SEPOLIA_ARGENT_MODULE_ADDRESS,
   SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
 } from '@env'
+import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 
 export type TransactionArgent = {
   to: string
@@ -167,6 +168,7 @@ export async function requestERC721TokenTransfer(
     nonce,
     signedTransaction,
     transactionData,
+    bridgeNetwork: null,
   })) as executeTransactionResponse | backendErrorResponse
 
   if ('error' in result) {
@@ -208,6 +210,7 @@ export async function requestETHTransfer(
     nonce,
     signedTransaction,
     transactionData,
+    bridgeNetwork: null,
   })) as executeTransactionResponse | backendErrorResponse
   if ('error' in result) {
     throw new Error(result.error)
@@ -257,6 +260,7 @@ export async function requestETHBridgeCall(
     nonce,
     signedTransaction,
     transactionData,
+    bridgeNetwork: BRIDGE_NETWORKS.MUMBAI,
   })) as executeTransactionResponse | backendErrorResponse
   console.log('Bridge 5')
 

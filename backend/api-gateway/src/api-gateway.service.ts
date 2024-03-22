@@ -57,12 +57,14 @@ export class ApiGatewayService {
           executeTransactionRequest.signedTransaction,
           executeTransactionRequest.transactionData,
           executeTransactionRequest.network,
+          executeTransactionRequest.bridgeNetwork,
         ),
       )
       .pipe(
-        catchError((error) =>
-          throwError(() => new RpcException(error.response)),
-        ),
+        catchError((error) => {
+          console.log('Error: ', error);
+          return throwError(() => new RpcException(error.response));
+        }),
       );
   }
 }

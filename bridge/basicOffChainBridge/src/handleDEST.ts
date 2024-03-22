@@ -7,6 +7,11 @@ async function handleDEST(argentWrappedAccountsAddress: string, wallet: string, 
   const tx = await argentWrappedAccounts.execute(wallet, owner, data, signature)
   const receipt = await tx.wait()
 
+  if (receipt == null || receipt.blockNumber == null) {
+    console.error('Transaction failed')
+    return
+  }
+
   // CHECK Events
   const filter = argentWrappedAccounts.filters.TransactionExecuted(wallet)
   const events = await argentWrappedAccounts.queryFilter(filter, receipt.blockNumber, receipt.blockNumber)

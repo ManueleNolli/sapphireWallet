@@ -1,11 +1,12 @@
 import { NetworkSelector } from './network-selector.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator'
-import { IsAddress } from '../is-address-validation'
+import { IsIn, IsNotEmpty } from 'class-validator';
+import { IsAddress } from '../is-address-validation';
+import { NETWORKS } from '../constants/Networks';
 
 export class ExecuteTransaction extends NetworkSelector {
   @ApiProperty({ default: '0x1234567890123456789012345678901234567890' })
-  @IsAddress({message: 'walletAddress must be a valid Ethereum address'})
+  @IsAddress({ message: 'walletAddress must be a valid Ethereum address' })
   @IsNotEmpty()
   walletAddress: string;
 
@@ -25,4 +26,11 @@ export class ExecuteTransaction extends NetworkSelector {
   })
   @IsNotEmpty()
   transactionData: string;
+
+  @ApiProperty({
+    default: 'localhost',
+    description: `supported network: ${Object.values(NETWORKS)}`,
+  })
+  @IsIn([...Object.values(NETWORKS), null])
+  bridgeNetwork: string;
 }

@@ -7,6 +7,7 @@ export class ExecuteTransactionEvent extends NetworkSelectorEvent {
     public readonly signedTransaction: string,
     public readonly transactionData: string,
     public readonly network: string,
+    public readonly bridgeNetwork: string,
   ) {
     super(network);
   }

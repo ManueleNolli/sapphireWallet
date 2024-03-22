@@ -21,8 +21,14 @@ async function handleBridgeNFT(argentWrappedAccountsAddress: string, wallet: str
 
   const receipt = await tx.wait()
 
+  if (receipt == null || receipt.blockNumber == null) {
+    console.error('Transaction failed')
+    return
+  }
+
+
   // CHECK Events
-  const filter = argentWrappedAccounts.filters.NFTMinted(wallet, tokenURI, originalNFTAddress, tokenId)
+  const filter = argentWrappedAccounts.filters.NFTMinted(wallet)
   const events = await argentWrappedAccounts.queryFilter(filter, receipt.blockNumber, receipt.blockNumber)
 
   if (events.length === 0) {

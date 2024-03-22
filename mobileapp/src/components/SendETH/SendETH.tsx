@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Button,
-  Layout,
-  Spinner,
-  StyleService,
-  Text,
-  useStyleSheet,
-} from '@ui-kitten/components'
+import { Button, Layout, Spinner, StyleService, Text, useStyleSheet } from '@ui-kitten/components'
 import { vh, vw } from '../../Styles'
 import useSendETH from './useSendETH'
 import InputAddress from '../InputAddress/InputAddress'
@@ -50,15 +43,12 @@ export default function SendETH({ address, balance, close }: SendETHProps) {
     )
   }
 
-  if (isQRCodeScanning)
-    return <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />
+  if (isQRCodeScanning) return <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />
 
   return (
     <Layout style={styles.container}>
       <Text category={'h6'}>Send ETH</Text>
-      <Text style={{ marginBottom: 2 * vh }}>
-        Fill the form to send ETH to another wallet
-      </Text>
+      <Text style={{ marginBottom: 2 * vh }}>Fill the form to send ETH to another wallet</Text>
       <InputAddress
         value={valueAddress}
         setValue={setValueAddress}
@@ -80,7 +70,7 @@ export default function SendETH({ address, balance, close }: SendETHProps) {
         style={{ marginTop: 2 * vh, width: '100%' }}
         appearance="outline"
         status="info"
-        disabled={!isAddressValid && !isAmountValid}
+        disabled={!(isAddressValid && isAmountValid)}
         onPress={sendETHTransaction}
       >
         Send ETH

@@ -24,6 +24,12 @@ export class BlockchainService {
     return provider;
   }
 
+  async getMumbaiProvider(api_key: string) {
+    const provider = new AlchemyProvider('matic-mumbai', api_key);
+    await this.testConnection(provider);
+    return provider;
+  }
+
   async getSigner(
     private_key: string,
     provider: ethers.Provider,
@@ -48,6 +54,9 @@ export class BlockchainService {
       signer = await this.getSigner(details.signerKey, provider);
     } else if (details.network === 'sepolia' && details.apiKey) {
       const provider = await this.getSepoliaProvider(details.apiKey);
+      signer = await this.getSigner(details.signerKey, provider);
+    } else if (details.network === 'mumbai') {
+      const provider = await this.getMumbaiProvider(details.apiKey);
       signer = await this.getSigner(details.signerKey, provider);
     } else {
       throw new RpcException(
