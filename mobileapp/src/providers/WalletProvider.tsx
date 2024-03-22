@@ -14,9 +14,7 @@ type WalletProviderProps = {
 export function WalletProvider({ children }: WalletProviderProps) {
   const { isLoading, setIsLoading } = useLoading(true)
   const [EOAAddress, setEOAAddress] = React.useState<string | null>(null)
-  const [walletContractAddress, setWalletContractAddress] = React.useState<
-    string | null
-  >(null)
+  const [walletContractAddress, setWalletContractAddress] = React.useState<string | null>(null)
 
   // load in local state for performance
   useEffect(() => {
@@ -28,18 +26,14 @@ export function WalletProvider({ children }: WalletProviderProps) {
     }
 
     const initialiseWallet = async () => {
-      const walletContractAddress = await getData(
-        constants.asyncStoreKeys.walletContractAddress
-      )
+      const walletContractAddress = await getData(constants.asyncStoreKeys.walletContractAddress)
       if (walletContractAddress) {
         setWalletContractAddress(walletContractAddress)
       }
     }
 
     // When both EOAAddress and walletContractAddress are done, stop loading
-    Promise.all([initialiseEOAAddress(), initialiseWallet()]).then(() =>
-      setIsLoading(false)
-    )
+    Promise.all([initialiseEOAAddress(), initialiseWallet()]).then(() => setIsLoading(false))
   }, [])
 
   /**
@@ -48,17 +42,15 @@ export function WalletProvider({ children }: WalletProviderProps) {
    */
   const setPrivateKey = async (privateKey: string) => {
     try {
-
-    await SecureStore.setItemAsync(constants.secureStoreKeys.privateKey, privateKey, {
-      authenticationPrompt: 'Please authenticate to save your private key',
-      requireAuthentication: true,
-    })
+      await SecureStore.setItemAsync(constants.secureStoreKeys.privateKey, privateKey, {
+        authenticationPrompt: 'Please authenticate to save your private key',
+        requireAuthentication: true,
+      })
     } catch (error) {
       // handle error if it is: Calling the 'setValueWithKeyAsync' function has failed
       // This can happen in expo go with IOS (not supported yet: https://github.com/expo/expo/issues/21694)
-      console.log("ERROR", error, Platform.OS)
-      if (error.message.includes("`NSFaceIDUsageDescription`") && Platform.OS === 'ios') {
-        console.log("QUI", error.message)
+      console.log('ERROR', error, Platform.OS)
+      if (error.message.includes('`NSFaceIDUsageDescription`') && Platform.OS === 'ios') {
         // save the privateKey in asyncStorage
         await SecureStore.setItemAsync(constants.secureStoreKeys.privateKey, privateKey, {
           authenticationPrompt: 'Please authenticate to save your private key',
@@ -67,7 +59,6 @@ export function WalletProvider({ children }: WalletProviderProps) {
         throw new Error(error)
       }
     }
-
   }
 
   /**
@@ -103,13 +94,8 @@ export function WalletProvider({ children }: WalletProviderProps) {
     throw new Error('Wallet Contract Address not found')
   }
 
-  const setWalletContractAddressStorage = async (
-    walletContractAddress: string
-  ) => {
-    await storeData(
-      constants.asyncStoreKeys.walletContractAddress,
-      walletContractAddress
-    )
+  const setWalletContractAddressStorage = async (walletContractAddress: string) => {
+    await storeData(constants.asyncStoreKeys.walletContractAddress, walletContractAddress)
     setWalletContractAddress(walletContractAddress)
   }
 

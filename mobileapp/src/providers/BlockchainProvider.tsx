@@ -18,15 +18,12 @@ export function BlockchainProvider({ children }: BlockchainProviderProps) {
   const { isLoading, setIsLoading, isError, setIsError } = useLoading(true)
 
   const [provider, setProvider] = React.useState<Provider | null>(null)
-  const [currentNetworkLocal, setCurrentNetwork] =
-    React.useState<NETWORKS>(currentNetwork)
+  const [currentNetworkLocal, setCurrentNetwork] = React.useState<NETWORKS>(currentNetwork)
 
   // load in local state for performance
   useEffect(() => {
     const initialiseCurrentNetwork = async () => {
-      const currentNetwork = await getData(
-        constants.asyncStoreKeys.currentNetwork
-      )
+      const currentNetwork = await getData(constants.asyncStoreKeys.currentNetwork)
       // if not null check if NETWORKS enum
       if (Object.values(NETWORKS).includes(currentNetwork as NETWORKS)) {
         setCurrentNetwork(currentNetwork as NETWORKS)
@@ -50,7 +47,6 @@ export function BlockchainProvider({ children }: BlockchainProviderProps) {
   const setEthersProvider = async (network: NETWORKS) => {
     let connectedProvider
     try {
-      console.log('setEthersProvider', network)
       await saveCurrentNetwork(network)
       connectedProvider = await getProvider(network)
     } catch (e) {

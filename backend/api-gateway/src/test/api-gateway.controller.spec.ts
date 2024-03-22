@@ -31,23 +31,24 @@ describe('AppController', () => {
   });
 
   describe('WalletFactory', () => {
-    it('createWallet', () => {
+    it('createWallet', async () => {
       const mockResult = {
-        oeaAddress: '0x1234567890123456789012345678901234567890',
+        address: '0x1234567890123456789012345678901234567890',
         network: 'localhost',
       };
       jest
         .spyOn(apiGatewayService, 'createWallet')
         .mockReturnValue(of(mockResult));
+      jest
+        .spyOn(apiGatewayService, 'addAuthorised')
+        .mockReturnValue(of(mockResult));
 
-      apiGatewayController
-        .createWallet({
-          eoaAddress: '0x0',
-          network: 'localhost',
-        })
-        .subscribe((result) => {
-          expect(result).toEqual(mockResult);
-        });
+      const createWalletResponse = await apiGatewayController.createWallet({
+        eoaAddress: '0x0',
+        network: 'localhost',
+      });
+
+      expect(createWalletResponse).toEqual(mockResult);
     });
   });
 
