@@ -34,24 +34,19 @@ export class ApiGatewayController {
     },
   })
   async createWallet(@Body() createWalletRequest: CreateWalletRequest) {
-    try {
-      const createWalletResponse =
-        this.apiGatewayService.createWallet(createWalletRequest);
+    const createWalletResponse =
+      this.apiGatewayService.createWallet(createWalletRequest);
 
-      const data = await lastValueFrom(createWalletResponse);
+    const data = await lastValueFrom(createWalletResponse);
 
-      const address = data.address;
-      const network = data.network;
+    const address = data.address;
+    const network = data.network;
 
-      await lastValueFrom(
-        this.apiGatewayService.addAuthorised({ address, network }),
-      );
+    await lastValueFrom(
+      this.apiGatewayService.addAuthorised({ address, network }),
+    );
 
-      return data;
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+    return data;
   }
 
   @Post('/add-authorised')

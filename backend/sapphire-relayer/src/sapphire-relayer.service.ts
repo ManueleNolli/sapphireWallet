@@ -21,7 +21,6 @@ export class SapphireRelayerService {
       contractAddress,
       signer,
     );
-    console.log('sapphireAuthoriser: ', data.address, data.network);
     const tx = await sapphireAuthoriser.setAuthorised(data.address, true);
 
     const receipt = await tx.wait();
