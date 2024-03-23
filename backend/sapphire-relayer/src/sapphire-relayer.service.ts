@@ -53,6 +53,7 @@ export class SapphireRelayerService {
     argentWrappedAccountsAddress: string,
     data: ExecuteTransaction,
   ) {
+    console.log('executeTransaction 1');
     /*************
      * DEST CHAIN
      **************/
@@ -65,44 +66,49 @@ export class SapphireRelayerService {
         signerDestChain,
       );
 
-      // Create a listener for one of the events, from blockNumberDestChain to the first event
+      // Create listeners
 
-      eventDeposit = argentWrappedAccounts.once(
-        argentWrappedAccounts.filters.Deposit(data.walletAddress),
-        () => {
-          argentWrappedAccounts.removeAllListeners();
-          return {
-            hash: tx.hash,
-          };
-        },
-      );
+      eventDeposit = new Promise<void>((resolve) => {
+        argentWrappedAccounts.once(
+          argentWrappedAccounts.filters.Deposit,
+          () => {
+            console.log('eventDeposit');
+            resolve();
+          },
+        );
+      });
 
-      eventNFTMinted = argentWrappedAccounts.once(
-        argentWrappedAccounts.filters.NFTMinted(data.walletAddress),
-        () => {
-          argentWrappedAccounts.removeAllListeners();
-          return {
-            hash: tx.hash,
-          };
-        },
-      );
+      eventNFTMinted = new Promise<void>((resolve) => {
+        argentWrappedAccounts.once(
+          argentWrappedAccounts.filters.NFTMinted,
+          () => {
+            console.log('eventNFTMinted');
+            resolve();
+          },
+        );
+      });
 
-      eventTransactionExecuted = argentWrappedAccounts.once(
-        argentWrappedAccounts.filters.TransactionExecuted(data.walletAddress),
-        (_wallet: string, success: boolean) => {
-          argentWrappedAccounts.removeAllListeners();
-          if (!success) {
-            throw new RpcException(
-              new ServiceUnavailableException(
-                'Relayer executed the transaction, but it failed on destination chain',
-              ),
-            );
-          }
-          return {
-            hash: tx.hash,
-          };
-        },
-      );
+      eventTransactionExecuted = new Promise<void>((resolve, reject) => {
+        argentWrappedAccounts.once(
+          argentWrappedAccounts.filters.TransactionExecuted,
+          (_wallet: string, success: boolean) => {
+            console.log('eventTransactionExecuted', success);
+            if (!success) {
+              reject(
+                new RpcException(
+                  new ServiceUnavailableException(
+                    'Relayer executed the transaction, but it failed on destination chain',
+                  ),
+                ),
+              );
+            } else {
+              resolve();
+            }
+          },
+        );
+      });
+
+      console.log('executeTransaction 2');
     }
 
     /*************
@@ -123,6 +129,7 @@ export class SapphireRelayerService {
       ZeroAddress,
       ZeroAddress,
     );
+    console.log('executeTransaction 3');
 
     const receipt = await tx.wait();
 
@@ -149,6 +156,7 @@ export class SapphireRelayerService {
         ),
       );
     }
+    console.log('executeTransaction 4');
 
     if (signerDestChain == null) {
       return {
@@ -159,16 +167,48 @@ export class SapphireRelayerService {
     /*************
      * DEST CHAIN
      **************/
+    // get all listeners
 
-    // IF AFTER 30 SECONDS NO EVENT IS RECEIVED, THROW AN EXCEPTION
-    setTimeout(() => {
-      throw new RpcException(
-        new ServiceUnavailableException(
-          'Relayer executed the transaction, but no event was received on destination chain',
-        ),
-      );
-    }, 5000);
+    // IF AFTER 15 SECONDS NO EVENT IS RECEIVED, THROW AN EXCEPTION
+    let eventReceived = false;
+    const timeoutPromise = new Promise<void>((_resolve, reject) => {
+      setTimeout(() => {
+        if (!eventReceived) {
+          console.log("Timeout, didn't receive any event");
+          reject(
+            new RpcException(
+              new ServiceUnavailableException(
+                'Relayer executed the transaction, but no event detected on destination chain',
+              ),
+            ),
+          );
+        } else {
+          console.log('Timeout, but event received');
+        }
+      }, 30000);
+    });
 
-    await Promise.all([eventDeposit, eventNFTMinted, eventTransactionExecuted]);
+    console.log('executeTransaction 5');
+
+    // Return if one of the events is received
+    const _result = () => {
+      console.log('executeTransaction 5.1');
+      eventReceived = true;
+      return {
+        hash: tx.hash,
+      };
+    };
+
+    return await Promise.race([
+      eventDeposit.then(() => _result()),
+      eventNFTMinted.then(() => _result()),
+      eventTransactionExecuted
+        .then(() => _result())
+        .catch((e: any) => {
+          eventReceived = true;
+          throw e;
+        }),
+      timeoutPromise,
+    ]);
   }
 }

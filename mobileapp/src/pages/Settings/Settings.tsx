@@ -30,7 +30,7 @@ export default function Settings() {
       await requestETHBridgeCall(
         getWalletContractAddress(),
         getWalletContractAddress(),
-        0.01,
+        0.0001,
         await getSigner(await getPrivateKey('Sign transaction to send ETH'), currentNetwork),
         currentNetwork
       )
@@ -69,7 +69,7 @@ export default function Settings() {
         Reset local wallet
       </Button>
 
-      <Button status="danger" onPress={temp}>
+      <Button status="danger" onPress={temp} style={{ marginTop: 5 * vh }}>
         Temp
       </Button>
     </SafeAreaView>

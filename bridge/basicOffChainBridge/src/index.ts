@@ -7,6 +7,7 @@ import {bridgeLogger} from "./logger";
 import {handleDEST} from "./handleDEST";
 import {handleBridgeETH} from "./handleBridgeETH";
 import {handleBridgeNFT} from "./handleBridgeNFT";
+import { ethers } from "ethers";
 
 
   /**
@@ -45,10 +46,13 @@ async function main() {
   const { signer : baseChainSigner } = getProviderAndSigner(baseChain);
   const argentModuleAddress = parseArgentModuleAddress(baseChain);
 
-  const { signer : destinationChainSigner } = getProviderAndSigner(destinationChain);
+  const { provider: destionationChainProvider, signer : destinationChainSigner } = getProviderAndSigner(destinationChain);
 
   const argentModuleContract = ArgentModule__factory.connect(argentModuleAddress, baseChainSigner);
   const argentWrappedAccountsAddress = parseArgentWrappedAccountsAddress(destinationChain);
+  const argentWrappedAccountsBalance = await destionationChainProvider.getBalance(argentWrappedAccountsAddress);
+
+  console.log('ArgentWrappedAccounts balance:', ethers.formatEther(argentWrappedAccountsBalance), 'ETH');
 
   await argentModuleContract.addListener('BridgeCall',
     (callID: BigInt, wallet: string, callType: BridgeCallType, to: string, value: BigInt, data: string, signature: string, owner: string) => {

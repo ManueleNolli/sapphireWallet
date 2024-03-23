@@ -90,7 +90,7 @@ export async function contactBackend(
     })
 
     const responseJson = await response.json()
-
+    console.log('responseJson', responseJson)
     if ('error' in responseJson) {
       throw new Error(`${responseJson.error}: ${responseJson.message}`)
     }

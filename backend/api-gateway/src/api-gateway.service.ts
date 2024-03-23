@@ -1,8 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { CreateWalletRequest } from './dto/create-wallet-request.dto';
 import { CreateWalletRequestEvent } from './events/create-wallet-request.event';
-import { catchError, throwError } from 'rxjs';
+import { catchError, throwError, timeout } from 'rxjs';
 import { AddAuthorised } from './dto/add-authorised.dto';
 import { AddAuthorisedEvent } from './events/add-authorised.event';
 import { ExecuteTransaction } from './dto/execute-transaction.dto';
@@ -61,8 +64,17 @@ export class ApiGatewayService {
         ),
       )
       .pipe(
+        timeout(60000),
         catchError((error) => {
-          console.log('Error: ', error);
+          if (error.message === 'Timeout has occurred') {
+            // Probably not the best way to check for timeout.
+            const errorResponse = {
+              statusCode: 503,
+              message: 'Timeout between microservices has occurred',
+              name: 'ServiceUnavailableException',
+            };
+            return throwError(() => new RpcException(errorResponse));
+          }
           return throwError(() => new RpcException(error.response));
         }),
       );
