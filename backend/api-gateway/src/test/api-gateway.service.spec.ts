@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ApiGatewayService } from '../api-gateway.service';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { CreateWalletRequest } from '../../../wallet-factory/src/dto/create-wallet-request.dto';
-import { of, throwError } from 'rxjs';
+import { ObjectUnsubscribedError, of, throwError } from 'rxjs';
 
 describe('ApiGatewayService', () => {
   let apiGatewayService: ApiGatewayService;
@@ -114,13 +114,14 @@ describe('ApiGatewayService', () => {
   });
 
   describe('executeTransaction', () => {
-    it('should execute transaction successfully', async () => {
+    it('NO BRIDGE: should execute transaction successfully', async () => {
       const executeTransactionRequest = {
         network: 'localhost',
         walletAddress: '0x1234567890123456789012345678901234567890',
         nonce: '0',
         signedTransaction: '0x0',
         transactionData: '0x0',
+        bridgeNetwork: '',
       };
 
       const mockResponse = {
@@ -135,13 +136,14 @@ describe('ApiGatewayService', () => {
         });
     });
 
-    it('should handle errors and throw RpcException', async () => {
+    it('NO BRIDGE: should handle errors and throw RpcException', async () => {
       const executeTransactionRequest = {
         network: 'localhost',
         walletAddress: '0x1234567890123456789012345678901234567890',
         nonce: '0',
         signedTransaction: '0x0',
         transactionData: '0x0',
+        bridgeNetwork: '',
       };
 
       const rpcExceptionMock = new RpcException('Original RPC error');
@@ -155,6 +157,86 @@ describe('ApiGatewayService', () => {
         .subscribe({
           error: (error) => {
             expect(error).toBeInstanceOf(RpcException);
+          },
+        });
+    });
+
+    it('BRIDGE: should execute transaction successfully', async () => {
+      const executeTransactionRequest = {
+        network: 'localhost',
+        walletAddress: '0x1234567890123456789012345678901234567890',
+        nonce: '0',
+        signedTransaction: '0x0',
+        transactionData: '0x0',
+        bridgeNetwork: 'mumbai',
+      };
+
+      const mockResponse = {
+        hash: '0x82b9eea000ba798f1cae87bc89024a7cb55bc180db6e9545096e3eb2a7f38c9275d51018b41fc8779577b5f73c36ae5c5a1bd4a48a6a63bd880b1493bb20ad701c',
+      };
+      jest.spyOn(sapphireRelayerMock, 'send').mockReturnValue(of(mockResponse));
+
+      apiGatewayService
+        .executeTransaction(executeTransactionRequest)
+        .subscribe((result) => {
+          expect(result).toEqual(mockResponse);
+        });
+    });
+
+    it('BRIDGE: should handle errors and throw RpcException', async () => {
+      const executeTransactionRequest = {
+        network: 'localhost',
+        walletAddress: '0x1234567890123456789012345678901234567890',
+        nonce: '0',
+        signedTransaction: '0x0',
+        transactionData: '0x0',
+        bridgeNetwork: 'mumbai',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphireRelayerMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService
+        .executeTransaction(executeTransactionRequest)
+        .subscribe({
+          error: (error) => {
+            expect(error).toBeInstanceOf(RpcException);
+          },
+        });
+    });
+
+    it('should handle timeout', async () => {
+      const executeTransactionRequest = {
+        network: 'localhost',
+        walletAddress: '0x1234567890123456789012345678901234567890',
+        nonce: '0',
+        signedTransaction: '0x0',
+        transactionData: '0x0',
+        bridgeNetwork: 'mumbai',
+      };
+
+      const rpcExceptionMock = new RpcException('Timeout has occurred');
+
+      jest
+        .spyOn(sapphireRelayerMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService
+        .executeTransaction(executeTransactionRequest)
+        .subscribe({
+          error: (error) => {
+            expect(error).toBeInstanceOf(RpcException);
+            const errorObj: Object = (error as RpcException).getError();
+            const errorJson: string = JSON.stringify(errorObj);
+            const errorResponse = {
+              statusCode: 503,
+              message: 'Timeout between microservices has occurred',
+              name: 'ServiceUnavailableException',
+            };
+            expect(errorJson).toEqual(JSON.stringify(errorResponse));
           },
         });
     });

@@ -89,6 +89,7 @@ describe('AppController', () => {
           nonce: '0',
           signedTransaction: '0x0',
           transactionData: '0x0',
+          bridgeNetwork: '',
         })
         .subscribe((result) => {
           expect(result).toEqual(mockResult);
