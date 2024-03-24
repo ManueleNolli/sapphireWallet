@@ -63,6 +63,19 @@ describe('BlockchainService', () => {
     });
   });
 
+  describe('getMumbaiProvider', () => {
+    it('should return an AlchemyProvider with a successful connection', async () => {
+      jest
+        .spyOn(blockchainService, 'testConnection')
+        .mockResolvedValueOnce(undefined);
+
+      const api_key = 'test_api_key';
+      const provider = await blockchainService.getMumbaiProvider(api_key);
+
+      expect(provider).toBeInstanceOf(AlchemyProvider);
+    });
+  });
+
   describe('getSigner', () => {
     it('should return a Wallet with the provided private key and provider', async () => {
       const private_key =
@@ -114,6 +127,24 @@ describe('BlockchainService', () => {
       });
 
       expect(blockchainService.getSepoliaProvider).toHaveBeenCalled();
+      expect(blockchainService.getSigner).toHaveBeenCalled();
+    });
+
+    it('should return a signer for mumbai', async () => {
+      jest
+        .spyOn(blockchainService, 'getMumbaiProvider')
+        .mockResolvedValueOnce({} as AlchemyProvider);
+      jest
+        .spyOn(blockchainService, 'getSigner')
+        .mockResolvedValueOnce({} as Wallet);
+
+      await blockchainService.getProviderAndSigner({
+        network: 'mumbai',
+        signerKey: 'test_private_key',
+        apiKey: 'test_api_key',
+      });
+
+      expect(blockchainService.getMumbaiProvider).toHaveBeenCalled();
       expect(blockchainService.getSigner).toHaveBeenCalled();
     });
 

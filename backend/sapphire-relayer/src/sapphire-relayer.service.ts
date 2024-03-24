@@ -53,7 +53,6 @@ export class SapphireRelayerService {
     argentWrappedAccountsAddress: string,
     data: ExecuteTransaction,
   ) {
-    console.log('executeTransaction 1');
     /*************
      * DEST CHAIN
      **************/
@@ -72,7 +71,6 @@ export class SapphireRelayerService {
         argentWrappedAccounts.once(
           argentWrappedAccounts.filters.Deposit,
           () => {
-            console.log('eventDeposit');
             resolve();
           },
         );
@@ -82,7 +80,6 @@ export class SapphireRelayerService {
         argentWrappedAccounts.once(
           argentWrappedAccounts.filters.NFTMinted,
           () => {
-            console.log('eventNFTMinted');
             resolve();
           },
         );
@@ -92,7 +89,6 @@ export class SapphireRelayerService {
         argentWrappedAccounts.once(
           argentWrappedAccounts.filters.TransactionExecuted,
           (_wallet: string, success: boolean) => {
-            console.log('eventTransactionExecuted', success);
             if (!success) {
               reject(
                 new RpcException(
@@ -107,8 +103,6 @@ export class SapphireRelayerService {
           },
         );
       });
-
-      console.log('executeTransaction 2');
     }
 
     /*************
@@ -129,7 +123,6 @@ export class SapphireRelayerService {
       ZeroAddress,
       ZeroAddress,
     );
-    console.log('executeTransaction 3');
 
     const receipt = await tx.wait();
 
@@ -156,8 +149,6 @@ export class SapphireRelayerService {
         ),
       );
     }
-    console.log('executeTransaction 4');
-
     if (signerDestChain == null) {
       return {
         hash: tx.hash,
@@ -174,7 +165,6 @@ export class SapphireRelayerService {
     const timeoutPromise = new Promise<void>((_resolve, reject) => {
       setTimeout(() => {
         if (!eventReceived) {
-          console.log("Timeout, didn't receive any event");
           reject(
             new RpcException(
               new ServiceUnavailableException(
@@ -182,17 +172,12 @@ export class SapphireRelayerService {
               ),
             ),
           );
-        } else {
-          console.log('Timeout, but event received');
         }
       }, 30000);
     });
 
-    console.log('executeTransaction 5');
-
     // Return if one of the events is received
     const _result = () => {
-      console.log('executeTransaction 5.1');
       eventReceived = true;
       return {
         hash: tx.hash,

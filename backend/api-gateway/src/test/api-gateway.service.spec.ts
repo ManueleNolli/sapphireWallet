@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ApiGatewayService } from '../api-gateway.service';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { CreateWalletRequest } from '../../../wallet-factory/src/dto/create-wallet-request.dto';
-import { ObjectUnsubscribedError, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 describe('ApiGatewayService', () => {
   let apiGatewayService: ApiGatewayService;

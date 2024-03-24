@@ -66,7 +66,7 @@ describe('AppController', () => {
     });
   });
 
-  it('execute_transaction', async () => {
+  it('execute_transaction NO BRIDGE', async () => {
     jest.spyOn(environmentService, 'getUnhandled').mockReturnValue(undefined);
     jest.spyOn(environmentService, 'getWithNetwork').mockReturnValue(undefined);
     jest
@@ -82,6 +82,7 @@ describe('AppController', () => {
       'mockSignedTransaction',
       'mockTransactionData',
       'localhost',
+      '',
     );
 
     const result =
@@ -91,14 +92,22 @@ describe('AppController', () => {
       'API_KEY',
       'localhost',
     );
-    expect(environmentService.getWithNetwork).toHaveBeenCalledTimes(2);
+    expect(environmentService.getWithNetwork).toHaveBeenCalledTimes(4);
     expect(environmentService.getWithNetwork).toHaveBeenCalledWith(
       'SIGNER_PRIVATE_KEY',
       'localhost',
     );
     expect(environmentService.getWithNetwork).toHaveBeenCalledWith(
+      'SIGNER_PRIVATE_KEY',
+      '',
+    );
+    expect(environmentService.getWithNetwork).toHaveBeenCalledWith(
       'ARGENT_MODULE_ADDRESS',
       'localhost',
+    );
+    expect(environmentService.getWithNetwork).toHaveBeenCalledWith(
+      'ARGENT_WRAPPED_ACCOUNTS_ADDRESS',
+      '',
     );
     expect(blockchainService.getProviderAndSigner).toHaveBeenCalled();
     expect(sapphireService.executeTransaction).toHaveBeenCalled();
