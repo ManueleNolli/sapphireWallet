@@ -60,6 +60,13 @@ interface IWallet {
      */
     function authoriseModule(address _module, bool _value) external;
 
+        /**
+     * @notice Add a chain to the wallet
+     * @param _chainId The chain id to add
+     */
+    function addChain(uint _chainId) external;
+
+
     /**
     * @notice Enables a static method by specifying the target module to which the call must be delegated.
     * @param _module The target module.

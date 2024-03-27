@@ -78,6 +78,7 @@ describe('Bridge Integration', function () {
 
     const transactionToBeExecutedOnBaseChain = {
       callType: BridgeCallType.BRIDGE_ETH,
+      chainId: 0,
       to: walletAccount1Address,
       value: ethers.parseEther('10'),
       data: '0x',
@@ -130,7 +131,10 @@ describe('Bridge Integration', function () {
     /////////////////////////////////////////
 
     // check event emitted
-    const event = txResponse?.logs[1] as EventLog // 0 is the transfer of ETH from walletAddress to argentModule
+    const event = txResponse?.logs[2] as EventLog // 0 is the transfer of ETH from walletAddress to argentModule, 1 is the chain add
+
+    /* Check if the events was emitted */
+
     const eventName = event?.fragment.name
     expect(eventName).to.equal('BridgeCall')
     const eventArgs = event?.args
@@ -205,6 +209,7 @@ describe('Bridge Integration', function () {
 
     const transactionToBeExecutedOnBaseChain = {
       callType: BridgeCallType.BRIDGE_NFT,
+      chainId: 0,
       to: await baseChainNFT.getAddress(),
       value: 0,
       data: transactionData,
@@ -256,7 +261,7 @@ describe('Bridge Integration', function () {
     /////////////////////////////////////////
 
     // check event emitted
-    const event = txResponse?.logs[2] as EventLog
+    const event = txResponse?.logs[3] as EventLog
     const eventName = event?.fragment.name
     expect(eventName).to.equal('BridgeCall')
     const eventArgs = event?.args
@@ -367,6 +372,7 @@ describe('Bridge Integration', function () {
 
     const transactionToBeExecutedOnBaseChain = {
       callType: BridgeCallType.DEST,
+      chainId: 0,
       to: account2DestChain.address,
       value: 0,
       data: transactionWrappedForDestChain,
@@ -419,7 +425,7 @@ describe('Bridge Integration', function () {
     /////////////////////////////////////////
 
     // check event emitted
-    const event = txResponse?.logs[0] as EventLog
+    const event = txResponse?.logs[1] as EventLog
     const eventName = event?.fragment.name
     expect(eventName).to.equal('BridgeCall')
     const eventArgs = event?.args
@@ -514,6 +520,7 @@ describe('Bridge Integration', function () {
 
     const transactionToBeExecutedOnBaseChain = {
       callType: BridgeCallType.DEST,
+      chainId: 0,
       to: account2DestChain.address,
       value: 0,
       data: transactionWrappedForDestChain,
@@ -566,7 +573,7 @@ describe('Bridge Integration', function () {
     /////////////////////////////////////////
 
     // check event emitted
-    const event = txResponse?.logs[0] as EventLog
+    const event = txResponse?.logs[1] as EventLog
     const eventName = event?.fragment.name
     expect(eventName).to.equal('BridgeCall')
     const eventArgs = event?.args

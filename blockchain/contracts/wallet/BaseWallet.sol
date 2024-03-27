@@ -21,7 +21,7 @@ import "./IWallet.sol";
 
 /**
  * @title BaseWallet
- * @notice Simple modular wallet that authorises modules to call its invoke() method.
+ * @notice Simple modular wallet that authorises modules to call its invoke() method, maintain track of other chains used.
  * @author Julien Niset - <julien@argent.xyz>
  */
 contract BaseWallet is IWallet {
@@ -34,11 +34,14 @@ contract BaseWallet is IWallet {
     address public staticCallExecutor;
     // The number of modules
     uint public override modules;
+    // chain used
+    uint[] public chains;
 
     event AuthorisedModule(address indexed module, bool value);
     event Invoked(address indexed module, address indexed target, uint indexed value, bytes data);
     event Received(uint indexed value, address indexed sender, bytes data);
     event OwnerChanged(address owner);
+    event ChainAdded(uint indexed chainId);
 
     /**
      * @notice Throws if the sender is not an authorised module.
@@ -53,7 +56,7 @@ contract BaseWallet is IWallet {
      * @param _owner The owner.
      * @param _modules The modules to authorise.
      */
-    function init(address _owner, address[] calldata _modules) external {
+    function init(address _owner, address[] calldata _modules, uint _chainId) external {
         require(owner == address(0) && modules == 0, "BW: wallet already initialised");
         require(_modules.length > 0, "BW: empty modules");
         owner = _owner;
@@ -67,6 +70,9 @@ contract BaseWallet is IWallet {
         if (address(this).balance > 0) {
             emit Received(address(this).balance, address(0), "");
         }
+
+        chains.push(_chainId);
+        emit ChainAdded(_chainId);
     }
 
     /**
@@ -115,6 +121,22 @@ contract BaseWallet is IWallet {
         require(_newOwner != address(0), "BW: address cannot be null");
         owner = _newOwner;
         emit OwnerChanged(_newOwner);
+    }
+
+    function addChain(uint _chainId) external override moduleOnly {
+        // Check if the chain is already added
+        for (uint i = 0; i < chains.length; i++) {
+            if (chains[i] == _chainId) {
+                return;
+            }
+        }
+
+        chains.push(_chainId);
+        emit ChainAdded(_chainId);
+    }
+
+    function getChains() external view returns (uint[] memory) {
+        return chains;
     }
 
     /**

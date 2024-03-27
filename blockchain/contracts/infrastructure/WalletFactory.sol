@@ -172,7 +172,7 @@ contract WalletFactory is Managed {
         }
 
         // initialise the wallet with the owner and the extended modules
-        _wallet.init(_owner, extendedModules);
+        _wallet.init(_owner, extendedModules, block.chainid);
 
         // add the first guardian
         IGuardianStorage(guardianStorage).addGuardian(address(_wallet), _guardian);
