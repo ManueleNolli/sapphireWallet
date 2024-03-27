@@ -64,6 +64,10 @@ export default async function deployDestinationChain() {
   console.log('Updating SapphirePortfolio env...')
   const sapphirePortfolioEnv: EnvValue[] = [
     {
+      key: networkName + '_' + Constants.envValues.destChainNFTStorage,
+      value: await nftStorageDeployment.getAddress(),
+    },
+    {
       key: networkName + '_' + Constants.envValues.argentWrappedAccounts,
       value: await argentWrappedAccountsDeployment.getAddress(),
     },
