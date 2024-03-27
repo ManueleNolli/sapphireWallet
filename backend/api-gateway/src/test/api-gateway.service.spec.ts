@@ -8,6 +8,7 @@ describe('ApiGatewayService', () => {
   let apiGatewayService: ApiGatewayService;
   let walletFactoryMock: ClientProxy;
   let sapphireRelayerMock: ClientProxy;
+  let sapphirePortfolioMock: ClientProxy;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,12 +26,19 @@ describe('ApiGatewayService', () => {
             send: jest.fn(),
           },
         },
+        {
+          provide: 'SAPPHIRE_PORTFOLIO',
+          useValue: {
+            send: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     apiGatewayService = module.get<ApiGatewayService>(ApiGatewayService);
     walletFactoryMock = module.get<ClientProxy>('WALLET_FACTORY');
     sapphireRelayerMock = module.get<ClientProxy>('SAPPHIRE_RELAYER');
+    sapphirePortfolioMock = module.get<ClientProxy>('SAPPHIRE_PORTFOLIO');
   });
 
   describe('createWallet', () => {
@@ -239,6 +247,54 @@ describe('ApiGatewayService', () => {
             expect(errorJson).toEqual(JSON.stringify(errorResponse));
           },
         });
+    });
+  });
+
+  describe('getBalance', () => {
+    it('should get Balance successfully', async () => {
+      const getBalanceRequest = {
+        walletAddress: '0x00',
+        network: 'localhost',
+      };
+
+      const mockResponse = [
+        {
+          chainID: 1n,
+          balance: 1000000n,
+          crypto: 'ETH',
+        },
+        {
+          chainID: 2n,
+          balance: 2000000n,
+          crypto: 'MATIC',
+        },
+      ];
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(of(mockResponse));
+
+      apiGatewayService.getBalance(getBalanceRequest).subscribe((result) => {
+        expect(result).toEqual(mockResponse);
+      });
+    });
+
+    it('should handle errors and throw RpcException', async () => {
+      const getBalanceRequest = {
+        walletAddress: '0x00',
+        network: 'localhost',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService.getBalance(getBalanceRequest).subscribe({
+        error: (error) => {
+          expect(error).toBeInstanceOf(RpcException);
+        },
+      });
     });
   });
 });

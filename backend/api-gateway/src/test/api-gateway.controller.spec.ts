@@ -23,6 +23,11 @@ describe('AppController', () => {
             name: 'SAPPHIRE_RELAYER',
           },
         ]),
+        ClientsModule.register([
+          {
+            name: 'SAPPHIRE_PORTFOLIO',
+          },
+        ]),
       ],
     }).compile();
 
@@ -90,6 +95,36 @@ describe('AppController', () => {
           signedTransaction: '0x0',
           transactionData: '0x0',
           bridgeNetwork: '',
+        })
+        .subscribe((result) => {
+          expect(result).toEqual(mockResult);
+        });
+    });
+  });
+
+  describe('Sapphire Portfolio', () => {
+    it('getBalance', () => {
+      const mockResult = [
+        {
+          chainID: 1n,
+          balance: 1000000n,
+          crypto: 'ETH',
+        },
+        {
+          chainID: 2n,
+          balance: 2000000n,
+          crypto: 'MATIC',
+        },
+      ];
+
+      jest
+        .spyOn(apiGatewayService, 'getBalance')
+        .mockReturnValue(of(mockResult));
+
+      apiGatewayController
+        .getBalance({
+          walletAddress: '0x0',
+          network: 'localhost',
         })
         .subscribe((result) => {
           expect(result).toEqual(mockResult);

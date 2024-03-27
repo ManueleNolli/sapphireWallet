@@ -161,4 +161,18 @@ describe('BlockchainService', () => {
       );
     });
   });
+
+  describe('getChainId', () => {
+    it('should return chain Id', async () => {
+      const signerMock = {
+        provider: {
+          getNetwork: jest.fn().mockResolvedValueOnce({ chainId: 123 }),
+        },
+      } as unknown as Wallet;
+
+      const chainId = await blockchainService.getChainID(signerMock);
+
+      expect(chainId).toEqual(123);
+    });
+  });
 });

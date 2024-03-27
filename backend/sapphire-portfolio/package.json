@@ -57,15 +57,23 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/*.(t|j)s",
+      "src/**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "\\.prod\\.ts",
+      "src/main.ts",
+      "src/contracts/*",
+      "src/dto/*",
+      "sapphire-portfolio.module.ts"
+    ]
   }
 }

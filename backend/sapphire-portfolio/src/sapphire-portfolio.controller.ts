@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { SapphirePortfolioService } from './sapphire-portfolio.service';
 import { BlockchainService } from './blockchain/blockchain.service';
 import { EnvironmentService } from './environment/environment.service';
