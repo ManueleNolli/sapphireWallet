@@ -16,7 +16,7 @@ RUN rm -rf ./src/main.ts
 RUN mv ./src/main.prod.ts ./src/main.ts
 
 # Expose the port your app will run on
-EXPOSE 3002
+EXPOSE 3003
 
 # Define the command to run your application
 CMD ["yarn", "run", "start"]

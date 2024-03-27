@@ -22,6 +22,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           host: 'sapphire-relayer',
         },
       },
+      {
+        name: 'SAPPHIRE_PORTFOLIO',
+        transport: Transport.TCP,
+        options: {
+          port: 3003,
+          host: 'sapphire-portfolio',
+        },
+      },
     ]),
   ],
   controllers: [ApiGatewayController],

@@ -20,6 +20,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           port: 3002,
         },
       },
+      {
+        name: 'SAPPHIRE_PORTFOLIO',
+        transport: Transport.TCP,
+        options: {
+          port: 3003,
+        },
+      },
     ]),
   ],
   controllers: [ApiGatewayController],
