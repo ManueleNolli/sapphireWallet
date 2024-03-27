@@ -60,6 +60,17 @@ export default async function deployDestinationChain() {
   await updateExternalEnv('../backend/sapphire-relayer/.env', sapphireRelayerEnv)
   console.log('Updated SapphireRelayer env!')
 
+  // SapphirePortfolio
+  console.log('Updating SapphirePortfolio env...')
+  const sapphirePortfolioEnv: EnvValue[] = [
+    {
+      key: networkName + '_' + Constants.envValues.argentWrappedAccounts,
+      value: await argentWrappedAccountsDeployment.getAddress(),
+    },
+  ]
+  await updateExternalEnv('../backend/sapphire-portfolio/.env', sapphirePortfolioEnv)
+  console.log('Updated SapphirePortfolio env!')
+
   ////////////
   // DONE :)
   ////////////

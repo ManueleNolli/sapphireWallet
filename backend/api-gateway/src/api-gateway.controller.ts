@@ -5,6 +5,7 @@ import { CreateWalletRequest } from './dto/create-wallet-request.dto';
 import { AddAuthorised } from './dto/add-authorised.dto';
 import { ExecuteTransaction } from './dto/execute-transaction.dto';
 import { lastValueFrom } from 'rxjs';
+import { GetBalance } from './dto/get-balance.dto';
 
 @Controller()
 export class ApiGatewayController {
@@ -98,5 +99,34 @@ export class ApiGatewayController {
   })
   executeTransaction(@Body() executeTransactionRequest: ExecuteTransaction) {
     return this.apiGatewayService.executeTransaction(executeTransactionRequest);
+  }
+
+  @Post('/get-balance')
+  @ApiResponse({
+    status: 201,
+    description: 'Balance successfully retrieved. It will return the balance',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              network: {
+                type: 'string',
+                example: 'localhost',
+              },
+              balance: {
+                type: 'string',
+                example: '1000000000000000000',
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  getBalance(@Body() getBalanceRequest: GetBalance) {
+    return this.apiGatewayService.getBalance(getBalanceRequest);
   }
 }

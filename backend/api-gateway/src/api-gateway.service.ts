@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { CreateWalletRequest } from './dto/create-wallet-request.dto';
 import { CreateWalletRequestEvent } from './events/create-wallet-request.event';
@@ -10,12 +7,16 @@ import { AddAuthorised } from './dto/add-authorised.dto';
 import { AddAuthorisedEvent } from './events/add-authorised.event';
 import { ExecuteTransaction } from './dto/execute-transaction.dto';
 import { ExecuteTransactionEvent } from './events/execute-transaction.event';
+import { GetBalance } from './dto/get-balance.dto';
+import { GetBalanceEvent } from './events/get-balance-event';
 
 @Injectable()
 export class ApiGatewayService {
   constructor(
     @Inject('WALLET_FACTORY') private readonly walletFactory: ClientProxy,
     @Inject('SAPPHIRE_RELAYER') private readonly sapphireRelayer: ClientProxy,
+    @Inject('SAPPHIRE_PORTFOLIO')
+    private readonly sapphirePortofolio: ClientProxy,
   ) {}
 
   createWallet(createWalletRequest: CreateWalletRequest) {
@@ -77,6 +78,22 @@ export class ApiGatewayService {
           }
           return throwError(() => new RpcException(error.response));
         }),
+      );
+  }
+
+  getBalance(getBalanceRequest: GetBalance) {
+    return this.sapphirePortofolio
+      .send(
+        'get_balance',
+        new GetBalanceEvent(
+          getBalanceRequest.walletAddress,
+          getBalanceRequest.network,
+        ),
+      )
+      .pipe(
+        catchError((error) =>
+          throwError(() => new RpcException(error.response)),
+        ),
       );
   }
 }
