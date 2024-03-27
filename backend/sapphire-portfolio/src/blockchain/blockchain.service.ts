@@ -66,4 +66,8 @@ export class BlockchainService {
 
     return signer;
   }
+
+  async getChainID(signer: Wallet) {
+    return (await signer.provider.getNetwork()).chainId;
+  }
 }

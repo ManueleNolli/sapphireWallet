@@ -113,12 +113,16 @@ export class ApiGatewayController {
             type: 'object',
             properties: {
               network: {
-                type: 'string',
-                example: 'localhost',
+                type: 'bigint',
+                example: 1n.toString(),
               },
               balance: {
+                type: 'bigint',
+                example: 1000000000000000000n.toString(),
+              },
+              crypto: {
                 type: 'string',
-                example: '1000000000000000000',
+                example: 'ETH',
               },
             },
           },
