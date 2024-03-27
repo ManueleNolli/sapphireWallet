@@ -158,6 +158,33 @@ describe('ArgentWrappedAccounts', function () {
     })
   })
 
+  describe('getAccountBalance', async function () {
+    it('should revert if account does not exist', async function () {
+      await expect(ArgentWrappedAccounts.getAccountBalance(account1.address)).to.be.revertedWith('Account contract does not exist')
+    })
+
+    it('should get correct balance', async function () {
+      await account1.sendTransaction({
+        to: await ArgentWrappedAccounts.getAddress(),
+        value: ethers.parseEther('1'),
+      })
+
+      await ArgentWrappedAccounts.depositToAccountContract(account1.address, ethers.parseEther('0.5'))
+
+      const accountContractAddress = await ArgentWrappedAccounts.getAccountContract(account1.address)
+      expect(accountContractAddress).to.not.equal(ethers.ZeroAddress)
+      const balance = await ethers.provider.getBalance(accountContractAddress)
+      expect(balance).to.equal(ethers.parseEther('0.5'))
+
+      const balanceViaArgentWrappedAccounts = await ArgentWrappedAccounts.getAccountBalance(account1.address)
+      expect(balanceViaArgentWrappedAccounts).to.equal(balance)
+
+      // check if accountContractAddress is a AccountContract type
+      const accountContract = await ethers.getContractAt('AccountContract', accountContractAddress)
+      expect(await accountContract.getAddress()).to.equal(accountContractAddress)
+    })
+  })
+
   describe('safeMint', async function () {
     it('only owner can call the function', async function () {
       // should revert with revert OwnableUnauthorizedAccount error
@@ -270,8 +297,6 @@ describe('ArgentWrappedAccounts', function () {
       )
     })
   })
-
-  // ADD INTEGRATION TEST
 
   describe('Integration with Account Contract', async function () {
     it('execute', async function () {
