@@ -19,4 +19,4 @@ RUN mv ./src/api-gateway.module.prod.ts ./src/api-gateway.module.ts
 EXPOSE 3000
 
 # Define the command to run your application
-CMD ["yarn", "run", "start:dev"]
+CMD ["yarn", "run", "start"]

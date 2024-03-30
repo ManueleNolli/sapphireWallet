@@ -1,33 +1,29 @@
 import React, { useRef } from 'react'
-import {
-  Layout,
-  Text,
-  StyleService,
-  useStyleSheet,
-  Modal, useTheme,
-} from '@ui-kitten/components'
+import { Layout, Text, StyleService, useStyleSheet, Modal, useTheme, Spinner } from '@ui-kitten/components'
 import {
   Animated,
   ScrollView,
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View, RefreshControl,
+  View,
+  RefreshControl,
 } from 'react-native'
 import { ImageBackground } from 'expo-image'
 import { appStyles, vh, vw } from '../../Styles'
 import { BlurView } from 'expo-blur'
 import { formatBlockchainAddress } from '../../utils/formatBlockchainData'
 import useHome from './useHome'
-import { qrCode, sendETH, sendNFTs } from '../../assets/AssetsRegistry'
+import { bridgeETHtoMATIC, qrCode, sendETH, sendNFTs } from '../../assets/AssetsRegistry'
 import Receive from '../../components/Receive/Receive'
 import SendETH from '../../components/SendETH/SendETH'
 import SendNFT from '../../components/SendNFT/SendNFT'
+import BridgeETHtoMATIC from '../../components/BridgeETHtoMATIC/BridgeETHtoMATIC'
 
 export default function Home() {
   const {
     backgroundImage,
-    balance,
+    balances,
     getWalletContractAddress,
     copyAddressToClipboard,
     isReceiveModalVisible,
@@ -39,21 +35,25 @@ export default function Home() {
     modalSendBackdrop,
     isSendNFTModalVisible,
     setIsSendNFTModalVisible,
+    isBridgeETHtoMATICModalVisible,
+    setIsBridgeETHtoMATICModalVisible,
     modalSendNFTBackdrop,
     closeSendNFTModal,
     onRefresh,
-    isRefreshing
+    isRefreshing,
+    isBalanceLoading,
+    modalBridgeETHtoMATICBackdrop,
+    closeBridgeETHtoMATICModal,
   } = useHome()
   const styles = useStyleSheet(themedStyles)
-  const theme = useTheme();
+  const theme = useTheme()
 
   // DATA
   const buttonData = [
     {
       id: 1,
       title: 'Receive',
-      description:
-        'Receive ETH or NFT by showing a QR code of your wallet address',
+      description: 'Receive ETH or NFT by showing a QR code of your wallet address',
       image: qrCode,
       action: () => {
         setIsReceiveModalVisible(true)
@@ -70,6 +70,15 @@ export default function Home() {
     },
     {
       id: 3,
+      title: 'Bridge ETH to MATIC',
+      description: 'Bridge ETH to your wrapped wallet account in the Polygon network',
+      image: bridgeETHtoMATIC,
+      action: () => {
+        setIsBridgeETHtoMATICModalVisible(true)
+      },
+    },
+    {
+      id: 4,
       title: 'Send NFTs',
       description: 'Send NFTs to another wallet address',
       image: sendNFTs,
@@ -96,10 +105,7 @@ export default function Home() {
     extrapolate: 'clamp',
   })
 
-  const onScroll = Animated.event(
-    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-    { useNativeDriver: false }
-  )
+  const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: false })
 
   // BUTTON
 
@@ -170,7 +176,24 @@ export default function Home() {
         <SendETH
           close={closeSendETHModal}
           address={getWalletContractAddress()}
-          balance={Number.parseFloat(balance)}
+          balance={Number.parseFloat(balances[0].balance)} // 0 is the current network
+        />
+      </Modal>
+    )
+  }
+
+  const ModalBridgeETHtoMATIC = () => {
+    return (
+      <Modal
+        animationType={'fade'}
+        visible={isBridgeETHtoMATICModalVisible}
+        backdropStyle={styles.modalBackdrop}
+        onBackdropPress={modalBridgeETHtoMATICBackdrop}
+      >
+        <BridgeETHtoMATIC
+          close={closeBridgeETHtoMATICModal}
+          address={getWalletContractAddress()}
+          balance={Number.parseFloat(balances[0].balance)} // 0 is the current network
         />
       </Modal>
     )
@@ -184,10 +207,7 @@ export default function Home() {
         backdropStyle={styles.modalBackdrop}
         onBackdropPress={modalSendNFTBackdrop}
       >
-        <SendNFT
-          address={getWalletContractAddress()}
-          close={closeSendNFTModal}
-        />
+        <SendNFT address={getWalletContractAddress()} close={closeSendNFTModal} />
       </Modal>
     )
   }
@@ -196,7 +216,9 @@ export default function Home() {
     <Layout style={{ flex: 1 }}>
       <ModalReceive />
       <ModalSendETH />
+      <ModalBridgeETHtoMATIC />
       <ModalSendNFT />
+
       <Animated.View
         style={[
           styles.imageContainer,
@@ -205,53 +227,59 @@ export default function Home() {
           },
         ]}
       >
-        <ImageBackground
-          source={backgroundImage}
-          contentFit="cover"
-          style={styles.imageBackground}
-        >
-        <ScrollView contentContainerStyle={appStyles.center} style={{ width:'100%'}}
-                    refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} colors={[theme['color-primary-100'],theme['color-primary-500'],theme['color-primary-900']]}
-          progressBackgroundColor={'white'}
-                          progressViewOffset={8 * vh}
-          /> }>
-
-          <Animated.View
-            style={[
-              styles.balanceContainer,
-              {
-                transform: [{ translateY: balanceContainerTranslateY }],
-              },
-            ]}
+        <ImageBackground source={backgroundImage} contentFit="cover" style={styles.imageBackground}>
+          <ScrollView
+            contentContainerStyle={appStyles.center}
+            style={{ width: '100%' }}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={onRefresh}
+                colors={[theme['color-primary-100'], theme['color-primary-500'], theme['color-primary-900']]}
+                progressBackgroundColor={'white'}
+                progressViewOffset={8 * vh}
+              />
+            }
           >
-            <BlurView intensity={20} style={styles.balanceBlurContainer}>
-              <Text style={styles.balanceText} category="h4">
-                {balance} ETH
-              </Text>
-            </BlurView>
-          </Animated.View>
-      </ScrollView>
-
+            <Animated.View
+              style={[
+                styles.balanceContainer,
+                { height: 6 * vh * balances.length },
+                {
+                  transform: [{ translateY: balanceContainerTranslateY }],
+                },
+              ]}
+            >
+              <BlurView intensity={20} style={styles.balanceBlurContainer}>
+                {isBalanceLoading ? (
+                  <Spinner size="medium" />
+                ) : (
+                  <ScrollView
+                    contentContainerStyle={styles.balanceScrollContainer}
+                    showsVerticalScrollIndicator={false}
+                  >
+                    {balances.map((balance) => (
+                      <Text key={balance.chainID} style={styles.balanceText} category="h4">
+                        {balance.balance} {balance.crypto}
+                      </Text>
+                    ))}
+                  </ScrollView>
+                )}
+              </BlurView>
+            </Animated.View>
+          </ScrollView>
         </ImageBackground>
 
         <View style={styles.addressContainer}>
-          <TouchableWithoutFeedback
-            onPress={copyAddressToClipboard}
-            style={{ flex: 1, backgroundColor:'red' }}
-          >
+          <TouchableWithoutFeedback onPress={copyAddressToClipboard} style={{ flex: 1, backgroundColor: 'red' }}>
             <BlurView style={appStyles.center} intensity={100}>
-              <Text category="label">
-                {formatBlockchainAddress(getWalletContractAddress())}
-              </Text>
+              <Text category="label">{formatBlockchainAddress(getWalletContractAddress())}</Text>
             </BlurView>
           </TouchableWithoutFeedback>
         </View>
       </Animated.View>
 
-      <ScrollView onScroll={onScroll} showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-      >
+      <ScrollView onScroll={onScroll} showsVerticalScrollIndicator={false} scrollEventThrottle={16}>
         <View style={{ height: 64 * vh }} />
 
         {buttonData.map((item) => (
@@ -281,7 +309,7 @@ const themedStyles = StyleService.create({
     borderBottomLeftRadius: 150,
     borderBottomRightRadius: 150,
     overflow: 'hidden',
-    backgroundColor:'black',
+    backgroundColor: 'black',
     shadowOffset: {
       width: 10,
       height: 10,
@@ -290,19 +318,22 @@ const themedStyles = StyleService.create({
     shadowRadius: 10,
     elevation: 15,
   },
-
   balanceContainer: {
-    width: 50 * vw,
-    height: 10 * vh,
+    width: 60 * vw,
+    maxHeight: 15 * vh,
     borderRadius: 20,
     overflow: 'hidden',
   },
   balanceBlurContainer: {
     ...appStyles.center,
-    flexDirection: 'row',
+  },
+  balanceScrollContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   balanceText: {
     color: 'white',
+    marginVertical: 0.5 * vh,
   },
   addressContainer: {
     position: 'absolute',

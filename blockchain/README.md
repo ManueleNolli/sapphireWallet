@@ -80,22 +80,22 @@ The contracts are already deployed in the following networks:
 
 **Sepolia: Base Chain**
 
-| Contract         | Address                                      |
-|------------------|----------------------------------------------|
-| GUARDIAN STORAGE | "0x4620a3db5347291C81AA435a106Fa0666612A5ff" |
-| TRANSFER STORAGE | "0x842Aec2acF9d78527FaA726Fd8A67c55795f8374" |
-| BASE WALLET      | "0xDb374aB55769A96515B9e19e47e0c45296Ce9B1d" |
-| WALLET FACTORY   | "0xb7DC32b9dFD95FA265dd7222958a342804E3289a" |
-| MODULE REGISTRY  | "0x49023706BAAA0BA01Be256c259fF909173Fa865a" |
-| DAPP REGISTRY    | "0xA5E1D420eF14Ca4a5Ff48BE96E8Ad23F53bf6c86" |
-| UNISWAP FACTORY  | "0x3a337904cdf339D3A94eD9a021b28F47990DDB1f" |
-| UNISWAP ROUTER   | "0xB6fBcf77b57c2A46B3cC447fCFF8b3f6cf85738a" |
-| ARGENT MODULE    | "0xa81228d1A9a5a55e6256ae2d2397D70F78B5b7c9" |
-| SAPPHIRE NFTs    | "0xB9CA1dC04B2c4AadC007D5B2f3642756d24cd5dD  |
+| Contract         | Address                                    |
+|------------------|--------------------------------------------|
+| GUARDIAN STORAGE | 0x0778C832Bc79Ca95908Fd1f9fFECE7972d7647C2 |
+| TRANSFER STORAGE | 0x507e5558d2bDe8bDfa00CeA51F6A466Ef127e71B |
+| BASE WALLET      | 0x5a5734402d09ed2F7caf328591F037de4F68D57f |
+| WALLET FACTORY   | 0x598A67Cf31EB32b89bA8C0Ab959161236947409b |
+| MODULE REGISTRY  | 0xd7D3174E575E44045b78D3ddCf96fffF433C26D6 |
+| DAPP REGISTRY    | 0x80564DB647181B9281956462cEEC654ea30D1F1F |
+| UNISWAP FACTORY  | 0x764Af2277F767126CEEA3E4b30c1b8E8f04E1742 |
+| UNISWAP ROUTER   | 0x7F5482bc1074Fe6707Bc9859ED43ECD9976BC34A |
+| ARGENT MODULE    | 0x7ce41A92f938030ceb189DbdEF97ddc51407a134 |
+| SAPPHIRE NFTs    | 0xB9CA1dC04B2c4AadC007D5B2f3642756d24cd5dD |
 
 **Mumbai: Dest Chain**
 
-| Contract                | Address                                      |
-|-------------------------|----------------------------------------------|
-| NFT STORAGE             | "0x89F6a23acA6270791823e34906894E954BB62cA9" |
-| ARGENT WRAPPED ACCOUNTS | "0x15609e1d99473C9835d2C5bb7e7b696969532D99" |
+| Contract                | Address                                    |
+|-------------------------|--------------------------------------------|
+| NFT STORAGE             | 0xc9508f0E5F5Cb13Cc191C038041E65e914D333D3 |
+| ARGENT WRAPPED ACCOUNTS | 0x00BEfBa0fa0ba559269E7Be6295898DB48D0637a |

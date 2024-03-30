@@ -1,6 +1,6 @@
 export type Balance = {
-  chainID: bigint;
-  balance: bigint;
+  chainID: string;
+  balance: string;
   crypto: string;
 };
 

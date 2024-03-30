@@ -55,17 +55,6 @@ export default async function deployBaseChain() {
   await updateExternalEnv('../backend/sapphire-relayer/.env', sapphireRelayerBackendEnv)
   console.log('Updated sapphire-relayer backend env!')
 
-  // SapphirePortfolio
-  console.log('Updating sapphire-portfolio backend env...')
-  const sapphirePortofolioBackendEnv: EnvValue[] = [
-    {
-      key: networkName + '_' + Constants.envValues.baseWallet,
-      value: result.baseWalletAddress,
-    },
-  ]
-  await updateExternalEnv('../backend/sapphire-portfolio/.env', sapphirePortofolioBackendEnv)
-  console.log('Updated sapphire-portfolio backend env!')
-
   // MobileApp
   console.log('Updating mobileapp env...')
   const mobileappEnv: EnvValue[] = [

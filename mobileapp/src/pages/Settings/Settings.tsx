@@ -25,20 +25,6 @@ export default function Settings() {
 
   const networkUppercase = (network: string) => network.charAt(0).toUpperCase() + network.slice(1)
 
-  const temp = async () => {
-    try {
-      await requestETHBridgeCall(
-        getWalletContractAddress(),
-        getWalletContractAddress(),
-        0.0001,
-        await getSigner(await getPrivateKey('Sign transaction to send ETH'), currentNetwork),
-        currentNetwork
-      )
-    } catch (e: any) {
-      console.log('catched erorr', e)
-    }
-  }
-
   return (
     <SafeAreaView style={{ paddingTop: 5 * vh }}>
       <Text category="h6">Network</Text>
@@ -67,10 +53,6 @@ export default function Settings() {
       <Divider style={{ marginTop: 0.5 * vh, marginBottom: 2 * vh }} />
       <Button appearance="outline" status="danger" accessoryLeft={DeleteIcon} onPress={resetLocalWallet}>
         Reset local wallet
-      </Button>
-
-      <Button status="danger" onPress={temp} style={{ marginTop: 5 * vh }}>
-        Temp
       </Button>
     </SafeAreaView>
   )

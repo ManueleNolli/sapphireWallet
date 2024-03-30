@@ -30,6 +30,7 @@ enum BridgeCallType {
 export type BridgeTransactionArgent = {
   callType: BridgeCallType
   signature: string
+  chainId: bigint
 } & TransactionArgent
 
 /**
@@ -84,6 +85,7 @@ export async function prepareETHTransferTransaction(to: string, value: number): 
  */
 export async function prepareBridgeTransaction(
   callType: BridgeCallType,
+  chainId: bigint,
   to: string,
   value: bigint,
   data: string,
@@ -92,6 +94,7 @@ export async function prepareBridgeTransaction(
   // Argent transaction
   return {
     callType,
+    chainId,
     to,
     value,
     data,
@@ -235,6 +238,7 @@ export async function requestETHBridgeCall(
   console.log('Bridge 1')
   const ethTransferTransaction = await prepareBridgeTransaction(
     BridgeCallType.BRIDGE_ETH,
+    80001n,
     to,
     parseEther(value.toString()),
     '0x',

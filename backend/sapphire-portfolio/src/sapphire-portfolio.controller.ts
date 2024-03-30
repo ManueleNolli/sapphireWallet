@@ -40,11 +40,10 @@ export class SapphirePortfolioController {
 
     let chainsIDs = await this.sapphirePortfolioService.getChains(
       baseChainSigner,
-      this.environmentService.getWithNetwork(
-        'BASE_WALLET_ADDRESS',
-        data.network,
-      ),
+      data.walletAddress,
     );
+
+    console.log('chains', chainsIDs);
 
     const baseChainID =
       await this.blockchainService.getChainID(baseChainSigner);
@@ -54,12 +53,15 @@ export class SapphirePortfolioController {
 
     const balances: Balances = [];
 
-    balances.push({
-      chainID: baseChainID,
-      balance: await this.sapphirePortfolioService.getBaseChainBalance(
+    const balanceBigInt =
+      await this.sapphirePortfolioService.getBaseChainBalance(
         baseChainSigner,
         data.walletAddress,
-      ),
+      );
+
+    balances.push({
+      chainID: baseChainID.toString(),
+      balance: balanceBigInt.toString(),
       crypto: CHAIN_CRYPTOS[baseChainID.toString()],
     });
 
@@ -76,16 +78,19 @@ export class SapphirePortfolioController {
         apiKey: apiKey,
       });
 
-      balances.push({
-        chainID: chainID,
-        balance: await this.sapphirePortfolioService.getDestChainBalance(
+      const balanceBigInt =
+        await this.sapphirePortfolioService.getDestChainBalance(
           signer,
           this.environmentService.getWithNetwork(
             'ARGENT_WRAPPED_ACCOUNTS_ADDRESS',
             networkName,
           ),
           data.walletAddress,
-        ),
+        );
+
+      balances.push({
+        chainID: chainID.toString(),
+        balance: balanceBigInt.toString(),
         crypto: CHAIN_CRYPTOS[chainID.toString()],
       });
     }

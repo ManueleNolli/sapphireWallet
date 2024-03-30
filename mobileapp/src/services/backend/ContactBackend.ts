@@ -5,6 +5,7 @@
 import { BACKEND_ADDRESS } from '@env'
 import { NETWORKS } from '../../constants/Networks'
 import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
+import { BalanceDTO } from '../../types/Balance'
 
 /**
  * ENDPOINTS
@@ -13,6 +14,7 @@ export enum BACKEND_ENDPOINTS {
   CREATE_WALLET = 'create-wallet',
   ADD_AUTHORISED = 'add-authorised',
   EXECUTE_TRANSACTION = 'execute-transaction',
+  GET_BALANCE = 'get-balance',
 }
 
 /**
@@ -38,6 +40,10 @@ interface executeTransactionBody extends backendBaseBody {
   bridgeNetwork: BRIDGE_NETWORKS | null
 }
 
+interface getBalanceBody extends backendBaseBody {
+  walletAddress: string
+}
+
 /**
  * RESPONSES
  */
@@ -61,6 +67,8 @@ export interface executeTransactionResponse extends backendBaseResponse {
   hash: string
 }
 
+export type getBalanceResponse = BalanceDTO[]
+
 /**
  * CONTACT BACKEND
  */
@@ -68,12 +76,14 @@ interface backendBody {
   [BACKEND_ENDPOINTS.CREATE_WALLET]: createWalletBody
   [BACKEND_ENDPOINTS.ADD_AUTHORISED]: addAuthorisedBody
   [BACKEND_ENDPOINTS.EXECUTE_TRANSACTION]: executeTransactionBody
+  [BACKEND_ENDPOINTS.GET_BALANCE]: getBalanceBody
 }
 
 interface backendResponse {
   [BACKEND_ENDPOINTS.CREATE_WALLET]: createWalletResponse
   [BACKEND_ENDPOINTS.ADD_AUTHORISED]: addAuthorisedResponse
   [BACKEND_ENDPOINTS.EXECUTE_TRANSACTION]: executeTransactionResponse
+  [BACKEND_ENDPOINTS.GET_BALANCE]: getBalanceResponse
 }
 
 export async function contactBackend(

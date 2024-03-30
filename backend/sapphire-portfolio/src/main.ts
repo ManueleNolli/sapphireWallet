@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { SapphirePortfolioModule } from './sapphire-portfolio.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
