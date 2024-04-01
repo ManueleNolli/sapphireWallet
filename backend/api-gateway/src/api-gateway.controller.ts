@@ -108,21 +108,23 @@ export class ApiGatewayController {
     content: {
       'application/json': {
         schema: {
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              network: {
-                type: 'bigint',
-                example: 1n.toString(),
-              },
-              balance: {
-                type: 'bigint',
-                example: 1000000000000000000n.toString(),
-              },
-              crypto: {
-                type: 'string',
-                example: 'ETH',
+          type: 'object',
+          properties: {
+            network_name: {
+              type: 'object',
+              properties: {
+                network: {
+                  type: 'string',
+                  example: 1n.toString(),
+                },
+                balance: {
+                  type: 'string',
+                  example: 1000000000000000000n.toString(),
+                },
+                crypto: {
+                  type: 'string',
+                  example: 'ETH',
+                },
               },
             },
           },

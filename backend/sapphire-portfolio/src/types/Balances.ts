@@ -4,4 +4,6 @@ export type Balance = {
   crypto: string;
 };
 
-export type Balances = Balance[];
+export type Balances = {
+  [key: string]: Balance;
+};

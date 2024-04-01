@@ -67,7 +67,7 @@ describe('AppController', () => {
         'ADDRESS',
         'localhost',
       );
-      expect(environmentService.getWithNetwork).toHaveBeenCalledTimes(6);
+      expect(environmentService.getWithNetwork).toHaveBeenCalledTimes(5);
 
       expect(blockchainService.getProviderAndSigner).toHaveBeenCalled();
 
@@ -79,23 +79,23 @@ describe('AppController', () => {
 
       expect(sapphireService.getDestChainBalance).toHaveBeenCalledTimes(2);
 
-      expect(result).toEqual([
-        {
-          chainID: 1337n,
-          balance: 1000000000000000000n,
+      expect(result).toEqual({
+        localhost: {
+          chainID: '1337',
+          balance: '1000000000000000000',
           crypto: 'ETH',
         },
-        {
-          chainID: 11155111n,
-          balance: 2000000000000000000n,
+        sepolia: {
+          chainID: '11155111',
+          balance: '2000000000000000000',
           crypto: 'ETH',
         },
-        {
-          chainID: 80001n,
-          balance: 2000000000000000000n,
+        mumbai: {
+          chainID: '80001',
+          balance: '2000000000000000000',
           crypto: 'MATIC',
         },
-      ]);
+      });
     });
   });
 });

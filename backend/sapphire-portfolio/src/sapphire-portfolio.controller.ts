@@ -43,15 +43,14 @@ export class SapphirePortfolioController {
       data.walletAddress,
     );
 
-    console.log('chains', chainsIDs);
-
     const baseChainID =
       await this.blockchainService.getChainID(baseChainSigner);
+    const baseChainName = CHAIN_IDS[baseChainID.toString()];
 
     // Remove the base chain from the list of chains
     chainsIDs = chainsIDs.filter((chainID) => chainID !== baseChainID);
 
-    const balances: Balances = [];
+    const balances: Balances = {};
 
     const balanceBigInt =
       await this.sapphirePortfolioService.getBaseChainBalance(
@@ -59,11 +58,11 @@ export class SapphirePortfolioController {
         data.walletAddress,
       );
 
-    balances.push({
+    balances[baseChainName] = {
       chainID: baseChainID.toString(),
       balance: balanceBigInt.toString(),
       crypto: CHAIN_CRYPTOS[baseChainID.toString()],
-    });
+    };
 
     for (const chainID of chainsIDs) {
       const networkName = CHAIN_IDS[chainID.toString()];
@@ -88,11 +87,11 @@ export class SapphirePortfolioController {
           data.walletAddress,
         );
 
-      balances.push({
+      balances[networkName] = {
         chainID: chainID.toString(),
         balance: balanceBigInt.toString(),
         crypto: CHAIN_CRYPTOS[chainID.toString()],
-      });
+      };
     }
 
     return balances;
