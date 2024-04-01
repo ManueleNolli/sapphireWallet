@@ -5,7 +5,7 @@
 import { BACKEND_ADDRESS } from '@env'
 import { NETWORKS } from '../../constants/Networks'
 import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
-import { BalanceDTO } from '../../types/Balance'
+import { Balances } from '../../types/Balance'
 
 /**
  * ENDPOINTS
@@ -67,7 +67,7 @@ export interface executeTransactionResponse extends backendBaseResponse {
   hash: string
 }
 
-export type getBalanceResponse = BalanceDTO[]
+export type getBalanceResponse = Balances
 
 /**
  * CONTACT BACKEND

@@ -6,19 +6,14 @@ import { formatEther } from 'ethers'
 import * as Clipboard from 'expo-clipboard'
 import { homeBackground } from '../../assets/AssetsRegistry'
 import useLoading from '../../hooks/useLoading'
-import { Balance } from '../../types/Balance'
+import { Balance, Balances } from '../../types/Balance'
 import { CHAIN_CRYPTOS, NETWORK_TO_CHAIN_IDS } from '../../constants/NetworksMetadata'
+import { currentNetwork } from '../../constants/AsyncStoreKeys'
 
 export default function useHome() {
   const { ethersProvider, currentNetwork } = useContext(BlockchainContext)
   const { getWalletContractAddress } = useContext(WalletContext)
-  const [balances, setBalances] = useState<Balance[]>([
-    {
-      chainID: NETWORK_TO_CHAIN_IDS[currentNetwork],
-      balance: '0',
-      crypto: CHAIN_CRYPTOS[NETWORK_TO_CHAIN_IDS[currentNetwork]],
-    },
-  ])
+  const [balances, setBalances] = useState<Balances | null>(null)
   const [backgroundImage] = useState(homeBackground())
   const [isReceiveModalVisible, setIsReceiveModalVisible] = useState<boolean>(false)
   const [isSendETHModalVisible, setIsSendETHModalVisible] = useState<boolean>(false)
@@ -37,18 +32,8 @@ export default function useHome() {
 
   const getBalances = async () => {
     const balanceBackend = await getBalanceBackend(getWalletContractAddress(), currentNetwork)
-
-    const balances: Balance[] = []
-    for (let i = 0; i < balanceBackend.length; i++) {
-      const balance = balanceBackend[i]
-      balances.push({
-        chainID: balance.chainID,
-        balance: formatEther(BigInt(balance.balance)),
-        crypto: balance.crypto,
-      })
-    }
-
-    setBalances(balances)
+    console.log('aa,', Number.parseFloat(balanceBackend[currentNetwork].balance) > 0)
+    setBalances(balanceBackend)
   }
 
   const copyAddressToClipboard = async () => {
@@ -70,6 +55,7 @@ export default function useHome() {
   }, [ethersProvider])
 
   return {
+    currentNetwork,
     backgroundImage,
     balances,
     getWalletContractAddress,

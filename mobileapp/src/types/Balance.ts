@@ -3,3 +3,6 @@ export type Balance = {
   balance: string
   crypto: string
 }
+export type Balances = {
+  [key: string]: Balance
+}

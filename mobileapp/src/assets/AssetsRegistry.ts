@@ -38,6 +38,8 @@ const qrCodeSmall = require(assetsPath + 'QrCodeSmall.png')
 const sendETH = require(assetsPath + 'SendETH.png')
 const sendNFTs = require(assetsPath + 'SendNFTs.png')
 
+const sendMATIC = require(assetsPath + 'SendMATIC.png')
+
 const bridgeETHtoMATIC = require(assetsPath + 'BridgeETHtoMATIC.png')
 
 const NFTPlaceholder = require(assetsPath + 'NFTPlaceholder.png')
@@ -52,6 +54,7 @@ export {
   qrCode,
   qrCodeSmall,
   sendETH,
+  sendMATIC,
   sendNFTs,
   bridgeETHtoMATIC,
   NFTPlaceholder,
