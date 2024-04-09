@@ -3,7 +3,7 @@ import { NETWORKS } from '../../../constants/Networks'
 import { getSigner } from '../../../services/wallet'
 import { requestETHTransfer } from '../../../services/transactions'
 import { act, renderHook, waitFor } from '@testing-library/react-native'
-import useSendCrypto from '../useSendCrypto'
+import useSendDestCrypto from '../useSendDestCrypto'
 import Toast from 'react-native-toast-message'
 
 jest.mock('react', () => ({
@@ -39,7 +39,7 @@ describe('useSendETH hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendCrypto({ address: 'address', close }))
+      const { result } = renderHook(() => useSendDestCrypto({ address: 'address', close }))
       resultHook = result
     })
 
@@ -74,7 +74,7 @@ describe('useSendETH hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendCrypto({ address: 'address', close }))
+      const { result } = renderHook(() => useSendDestCrypto({ address: 'address', close }))
       resultHook = result
     })
 
@@ -104,7 +104,7 @@ describe('useSendETH hook', () => {
     const close = jest.fn((needRefresh: boolean) => needRefresh)
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendCrypto({ address: 'address', close }))
+      const { result } = renderHook(() => useSendDestCrypto({ address: 'address', close }))
       resultHook = result
     })
 

@@ -7,9 +7,10 @@ import Toast from 'react-native-toast-message'
 import useLoading from '../../hooks/useLoading'
 import { Signer } from 'ethers'
 import { NETWORKS } from '../../constants/Networks'
+import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 import { executeTransactionResponse } from '../../services/backend'
 
-type useSendCryptoProps = {
+type useSendDestCryptoProps = {
   address: string
   cryptoName: string
   action: (
@@ -17,11 +18,12 @@ type useSendCryptoProps = {
     to: string,
     value: number,
     signer: Signer,
-    network: NETWORKS
+    network: NETWORKS,
+    destinationNetwork: BRIDGE_NETWORKS
   ) => Promise<executeTransactionResponse>
   close: (needRefresh: boolean) => void
 }
-export default function useSendCrypto({ address, cryptoName, action, close }: useSendCryptoProps) {
+export default function useSendDestCrypto({ address, cryptoName, action, close }: useSendDestCryptoProps) {
   const { getPrivateKey } = useContext(WalletContext)
   const { currentNetwork } = useContext(BlockchainContext)
   const { isLoading, setIsLoading } = useLoading()
@@ -29,15 +31,16 @@ export default function useSendCrypto({ address, cryptoName, action, close }: us
   const [isAddressValid, setIsAddressValid] = useState<boolean>(false)
   const [valueAmount, setValueAmount] = useState<string>('')
   const [isAmountValid, setIsAmountValid] = useState<boolean>(false)
+  const [checkedIsSapphireInternalTX, setCheckedIsSapphireInternalTX] = useState<boolean>(true)
   const [isQRCodeScanning, setIsQRCodeScanning] = useState<boolean>(false)
 
-  const sendCryptoTransaction = async () => {
+  const sendDestCryptoTransaction = async () => {
     setIsLoading(true)
     const value = Number.parseFloat(valueAmount)
-    const signer = await getSigner(await getPrivateKey(`Sign transaction send ${cryptoName}`), currentNetwork)
+    const signer = await getSigner(await getPrivateKey(`Sign transaction to send ${cryptoName}.`), currentNetwork)
 
     try {
-      await action(address, valueAddress, value, signer, currentNetwork)
+      await action(address, valueAddress, value, signer, currentNetwork, BRIDGE_NETWORKS.MUMBAI)
       setIsLoading(false)
       close(true)
       Toast.show({
@@ -62,7 +65,7 @@ export default function useSendCrypto({ address, cryptoName, action, close }: us
 
   return {
     isLoading,
-    sendCryptoTransaction,
+    sendDestCryptoTransaction,
     valueAddress,
     setValueAddress,
     isAddressValid,
@@ -74,5 +77,7 @@ export default function useSendCrypto({ address, cryptoName, action, close }: us
     isQRCodeScanning,
     setIsQRCodeScanning,
     QRCodeFinishedScanning,
+    checkedIsSapphireInternalTX,
+    setCheckedIsSapphireInternalTX,
   }
 }

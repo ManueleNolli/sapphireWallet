@@ -1,10 +1,10 @@
-import useSendCrypto from '../useSendCrypto'
+import useSendDestCrypto from '../useSendDestCrypto'
 import renderWithTheme from '../../../TestHelper'
 import React from 'react'
 import SendETH from '../SendETH'
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
 
-jest.mock('../useSendCrypto', () => jest.fn())
+jest.mock('../useSendDestCrypto', () => jest.fn())
 jest.mock('../../InputAddress/InputAddress')
 jest.mock('../../InputNumeric/InputNumeric')
 jest.mock('../../QRCodeScanner/QRCodeScanner')
@@ -18,7 +18,7 @@ jest.mock('@ui-kitten/components', () => {
 
 describe('SendETH', () => {
   it('renders correctly', async () => {
-    ;(useSendCrypto as jest.Mock).mockReturnValue({
+    ;(useSendDestCrypto as jest.Mock).mockReturnValue({
       isLoading: false,
       sendETHTransaction: jest.fn(),
       valueAddress: '0x123456789',
@@ -34,14 +34,14 @@ describe('SendETH', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendETH address={'0x123456789'} balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(<SendETH address="0x123456789" balance={100} close={jest.fn()} />)
     })
 
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
   it('renders correctly when loading', async () => {
-    ;(useSendCrypto as jest.Mock).mockReturnValue({
+    ;(useSendDestCrypto as jest.Mock).mockReturnValue({
       isLoading: true,
       sendETHTransaction: jest.fn(),
       valueAddress: '0x123456789',
@@ -57,14 +57,14 @@ describe('SendETH', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendETH address={'0x123456789'} balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(<SendETH address="0x123456789" balance={100} close={jest.fn()} />)
     })
     expect(tree).toMatchSnapshot()
   })
 
   it('Send Button call sendETHTransaction', async () => {
     const sendETHMock = jest.fn()
-    ;(useSendCrypto as jest.Mock).mockReturnValue({
+    ;(useSendDestCrypto as jest.Mock).mockReturnValue({
       isLoading: true,
       sendETHTransaction: sendETHMock,
       valueAddress: '0x123456789',
@@ -80,7 +80,7 @@ describe('SendETH', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendETH address={'0x123456789'} balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(<SendETH address="0x123456789" balance={100} close={jest.fn()} />)
     })
 
     await act(async () => {
@@ -93,7 +93,7 @@ describe('SendETH', () => {
 
   it('Show QRCode Scanner', async () => {
     const sendETHMock = jest.fn()
-    ;(useSendCrypto as jest.Mock).mockReturnValue({
+    ;(useSendDestCrypto as jest.Mock).mockReturnValue({
       isLoading: true,
       sendETHTransaction: sendETHMock,
       valueAddress: '0x123456789',
@@ -110,7 +110,7 @@ describe('SendETH', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendETH address={'0x123456789'} balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(<SendETH address="0x123456789" balance={100} close={jest.fn()} />)
     })
 
     expect(tree).toMatchSnapshot()

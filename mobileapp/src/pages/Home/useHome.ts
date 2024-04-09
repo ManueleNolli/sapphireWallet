@@ -17,6 +17,7 @@ export default function useHome() {
   const [backgroundImage] = useState(homeBackground())
   const [isReceiveModalVisible, setIsReceiveModalVisible] = useState<boolean>(false)
   const [isSendETHModalVisible, setIsSendETHModalVisible] = useState<boolean>(false)
+  const [isSendMATICModalVisible, setIsSendMATICModalVisible] = useState<boolean>(false)
   const [isBridgeETHtoMATICModalVisible, setIsBridgeETHtoMATICModalVisible] = useState<boolean>(false)
   const [isSendNFTModalVisible, setIsSendNFTModalVisible] = useState<boolean>(false)
   const { isLoading: isRefreshing, setIsLoading: setRefreshing } = useLoading(false)
@@ -32,7 +33,10 @@ export default function useHome() {
 
   const getBalances = async () => {
     const balanceBackend = await getBalanceBackend(getWalletContractAddress(), currentNetwork)
-    console.log('aa,', Number.parseFloat(balanceBackend[currentNetwork].balance) > 0)
+    // convert balance to ETH
+    Object.keys(balanceBackend).forEach((key) => {
+      balanceBackend[key].balance = formatEther(balanceBackend[key].balance)
+    })
     setBalances(balanceBackend)
   }
 
@@ -40,15 +44,20 @@ export default function useHome() {
     await Clipboard.setStringAsync(getWalletContractAddress())
   }
 
-  const closeSendETHModal = (needRefresh: boolean) => {
-    setIsSendETHModalVisible(false)
+  const closeModal = (needRefresh: boolean, setIsModalVisible: (value: boolean) => void) => {
+    setIsModalVisible(false)
     if (needRefresh) getBalances()
   }
 
-  const closeBridgeETHtoMATICModal = (needRefresh: boolean) => {
-    setIsBridgeETHtoMATICModalVisible(false)
-    if (needRefresh) getBalances()
-  }
+  // const closeSendETHModal = (needRefresh: boolean) => {
+  //   setIsSendETHModalVisible(false)
+  //   if (needRefresh) getBalances()
+  // }
+  //
+  // const closeBridgeETHtoMATICModal = (needRefresh: boolean) => {
+  //   setIsBridgeETHtoMATICModalVisible(false)
+  //   if (needRefresh) getBalances()
+  // }
 
   useEffect(() => {
     getBalances().then(() => setBalanceLoading(false))
@@ -58,25 +67,29 @@ export default function useHome() {
     currentNetwork,
     backgroundImage,
     balances,
+    isBalanceLoading,
     getWalletContractAddress,
     copyAddressToClipboard,
     isReceiveModalVisible,
     setIsReceiveModalVisible,
     isSendETHModalVisible,
     setIsSendETHModalVisible,
-    closeSendETHModal,
-    closeBridgeETHtoMATICModal,
+    isSendMATICModalVisible,
+    setIsSendMATICModalVisible,
     isSendNFTModalVisible,
     setIsSendNFTModalVisible,
     isBridgeETHtoMATICModalVisible,
     setIsBridgeETHtoMATICModalVisible,
     onRefresh,
     isRefreshing,
-    isBalanceLoading,
     modalReceiveBackdrop: () => setIsReceiveModalVisible(false),
-    modalSendBackdrop: () => setIsSendETHModalVisible(false),
+    modalSendETHBackdrop: () => setIsSendETHModalVisible(false),
+    modalSendMATICBackdrop: () => setIsSendMATICModalVisible(false),
     modalSendNFTBackdrop: () => setIsSendNFTModalVisible(false),
-    closeSendNFTModal: () => setIsSendNFTModalVisible(false),
     modalBridgeETHtoMATICBackdrop: () => setIsBridgeETHtoMATICModalVisible(false),
+    closeSendETHModal: (needRefresh: boolean) => closeModal(needRefresh, setIsSendETHModalVisible),
+    closeBridgeETHtoMATICModal: (needRefresh: boolean) => closeModal(needRefresh, setIsBridgeETHtoMATICModalVisible),
+    closeSendMATICModal: (needRefresh: boolean) => closeModal(needRefresh, setIsSendMATICModalVisible),
+    closeSendNFTModal: () => closeModal(false, setIsSendNFTModalVisible),
   }
 }
