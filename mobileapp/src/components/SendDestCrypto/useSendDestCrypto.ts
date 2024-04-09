@@ -19,7 +19,8 @@ type useSendDestCryptoProps = {
     value: number,
     signer: Signer,
     network: NETWORKS,
-    destinationNetwork: BRIDGE_NETWORKS
+    destinationNetwork: BRIDGE_NETWORKS,
+    internalSapphireTX: boolean
   ) => Promise<executeTransactionResponse>
   close: (needRefresh: boolean) => void
 }
@@ -40,7 +41,15 @@ export default function useSendDestCrypto({ address, cryptoName, action, close }
     const signer = await getSigner(await getPrivateKey(`Sign transaction to send ${cryptoName}.`), currentNetwork)
 
     try {
-      await action(address, valueAddress, value, signer, currentNetwork, BRIDGE_NETWORKS.MUMBAI)
+      await action(
+        address,
+        valueAddress,
+        value,
+        signer,
+        currentNetwork,
+        BRIDGE_NETWORKS.MUMBAI,
+        checkedIsSapphireInternalTX
+      )
       setIsLoading(false)
       close(true)
       Toast.show({

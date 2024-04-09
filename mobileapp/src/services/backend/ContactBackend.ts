@@ -15,13 +15,14 @@ export enum BACKEND_ENDPOINTS {
   ADD_AUTHORISED = 'add-authorised',
   EXECUTE_TRANSACTION = 'execute-transaction',
   GET_BALANCE = 'get-balance',
+  GET_WRAPPED_ACCOUNT_ADDRESS = 'get-wrapped-account-address',
 }
 
 /**
  * REQUESTS BODY
  */
 interface backendBaseBody {
-  network: NETWORKS
+  network: NETWORKS | BRIDGE_NETWORKS
 }
 
 interface createWalletBody extends backendBaseBody {
@@ -44,6 +45,10 @@ interface getBalanceBody extends backendBaseBody {
   walletAddress: string
 }
 
+interface getWrappedAccountAddressBody extends backendBaseBody {
+  address: string
+}
+
 /**
  * RESPONSES
  */
@@ -52,7 +57,7 @@ export interface backendErrorResponse {
 }
 
 interface backendBaseResponse {
-  network: NETWORKS
+  network: NETWORKS | BRIDGE_NETWORKS
 }
 
 export interface createWalletResponse extends backendBaseResponse {
@@ -66,6 +71,9 @@ export interface addAuthorisedResponse extends backendBaseResponse {
 export interface executeTransactionResponse extends backendBaseResponse {
   hash: string
 }
+export interface getWrappedAccountAddressResponse extends backendBaseResponse {
+  address: string
+}
 
 export type getBalanceResponse = Balances
 
@@ -77,6 +85,7 @@ interface backendBody {
   [BACKEND_ENDPOINTS.ADD_AUTHORISED]: addAuthorisedBody
   [BACKEND_ENDPOINTS.EXECUTE_TRANSACTION]: executeTransactionBody
   [BACKEND_ENDPOINTS.GET_BALANCE]: getBalanceBody
+  [BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS]: getWrappedAccountAddressBody
 }
 
 interface backendResponse {
@@ -84,6 +93,7 @@ interface backendResponse {
   [BACKEND_ENDPOINTS.ADD_AUTHORISED]: addAuthorisedResponse
   [BACKEND_ENDPOINTS.EXECUTE_TRANSACTION]: executeTransactionResponse
   [BACKEND_ENDPOINTS.GET_BALANCE]: getBalanceResponse
+  [BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS]: getWrappedAccountAddressResponse
 }
 
 export async function contactBackend(

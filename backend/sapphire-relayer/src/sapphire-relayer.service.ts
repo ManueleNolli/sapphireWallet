@@ -9,6 +9,7 @@ import {
 import { AddAuthorised } from './dto/add-authorised.dto';
 import { ExecuteTransaction } from './dto/execute-transaction.dto';
 import { RpcException } from '@nestjs/microservices';
+import { GetWrappedAccountAddress } from './dto/get-wrapped-account-address.dto';
 
 @Injectable()
 export class SapphireRelayerService {
@@ -195,5 +196,24 @@ export class SapphireRelayerService {
         }),
       timeoutPromise,
     ]);
+  }
+
+  async getWrappedAccountAddress(
+    signer: Wallet,
+    argentWrappedAccountsAddress: string,
+    data: GetWrappedAccountAddress,
+  ) {
+    const argentWrappedAccounts = ArgentWrappedAccounts__factory.connect(
+      argentWrappedAccountsAddress,
+      signer,
+    );
+    const address = await argentWrappedAccounts.getAccountContract(
+      data.address,
+    );
+
+    return {
+      address: address,
+      network: data.network,
+    };
   }
 }

@@ -6,6 +6,7 @@ import { AddAuthorised } from './dto/add-authorised.dto';
 import { ExecuteTransaction } from './dto/execute-transaction.dto';
 import { lastValueFrom } from 'rxjs';
 import { GetBalance } from './dto/get-balance.dto';
+import { GetWrappedAccountAddress } from './dto/get-wrapped-account-address.dto';
 
 @Controller()
 export class ApiGatewayController {
@@ -134,5 +135,36 @@ export class ApiGatewayController {
   })
   getBalance(@Body() getBalanceRequest: GetBalance) {
     return this.apiGatewayService.getBalance(getBalanceRequest);
+  }
+
+  @Post('/get-wrapped-account-address')
+  @ApiResponse({
+    status: 201,
+    description:
+      'Wrapped account address retrieved successfully. It will return the wrapped account address',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            address: {
+              type: 'string',
+              example: '0x1234567890123456789012345678901234567890',
+            },
+            network: {
+              type: 'string',
+              example: 'localhost',
+            },
+          },
+        },
+      },
+    },
+  })
+  getWrappedAccountAddress(
+    @Body() getWrappedAccountRequest: GetWrappedAccountAddress,
+  ) {
+    return this.apiGatewayService.getWrappedAccountAddress(
+      getWrappedAccountRequest,
+    );
   }
 }

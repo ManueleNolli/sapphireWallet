@@ -11,7 +11,13 @@ import {
 } from '../../contracts'
 import { parseEther, Signer } from 'ethers'
 import { generateNonceForRelay, signOffChain, signOffChainForBridge } from './TransactionUtils'
-import { BACKEND_ENDPOINTS, backendErrorResponse, contactBackend, executeTransactionResponse } from '../backend/'
+import {
+  BACKEND_ENDPOINTS,
+  backendErrorResponse,
+  contactBackend,
+  executeTransactionResponse,
+  getWrappedAccountAddressResponse,
+} from '../backend/'
 import { NETWORKS } from '../../constants/Networks'
 import {
   LOCALHOST_ARGENT_MODULE_ADDRESS,
@@ -283,10 +289,26 @@ export async function requestMATICTransfer(
   value: number,
   signer: Signer,
   network: NETWORKS,
-  destinationNetwork: BRIDGE_NETWORKS
+  destinationNetwork: BRIDGE_NETWORKS,
+  internalSapphireTX: boolean
 ) {
+  let realTo = to
+
+  if (internalSapphireTX) {
+    const result = (await contactBackend(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+      address: to,
+      network: destinationNetwork,
+    })) as getWrappedAccountAddressResponse | backendErrorResponse
+
+    if ('error' in result) {
+      throw new Error(result.error)
+    }
+
+    realTo = result.address
+  }
+
   const wrappedTXForDestChain = AccountContract__factory.createInterface().encodeFunctionData('execute', [
-    to,
+    realTo,
     parseEther(value.toString()),
     '0x',
   ])
@@ -310,7 +332,7 @@ export async function requestMATICTransfer(
   const baseChainTX = await prepareBridgeTransaction(
     BridgeCallType.DEST,
     BigInt(destinationChainId),
-    to,
+    realTo,
     0n,
     wrappedTXForDestChain,
     signedTXForDestChain

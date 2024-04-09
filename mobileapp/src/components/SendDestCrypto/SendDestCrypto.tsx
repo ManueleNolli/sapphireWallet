@@ -21,7 +21,8 @@ type SendDestCryptoProps = {
     value: number,
     signer: Signer,
     network: NETWORKS,
-    destinationNetwork: BRIDGE_NETWORKS
+    destinationNetwork: BRIDGE_NETWORKS,
+    internalSapphireTX: boolean
   ) => Promise<executeTransactionResponse>
   close: (needRefresh: boolean) => void
 }

@@ -9,6 +9,8 @@ import { ExecuteTransaction } from './dto/execute-transaction.dto';
 import { ExecuteTransactionEvent } from './events/execute-transaction.event';
 import { GetBalance } from './dto/get-balance.dto';
 import { GetBalanceEvent } from './events/get-balance-event';
+import { GetWrappedAccountAddress } from './dto/get-wrapped-account-address.dto';
+import { GetWrappedAccountAddressEvent } from './events/get-wrapped-account-address.event';
 
 @Injectable()
 export class ApiGatewayService {
@@ -88,6 +90,22 @@ export class ApiGatewayService {
         new GetBalanceEvent(
           getBalanceRequest.walletAddress,
           getBalanceRequest.network,
+        ),
+      )
+      .pipe(
+        catchError((error) =>
+          throwError(() => new RpcException(error.response)),
+        ),
+      );
+  }
+
+  getWrappedAccountAddress(getWrappedAccountRequest: GetWrappedAccountAddress) {
+    return this.sapphireRelayer
+      .send(
+        'get_wrapped_account_address',
+        new GetWrappedAccountAddressEvent(
+          getWrappedAccountRequest.address,
+          getWrappedAccountRequest.network,
         ),
       )
       .pipe(
