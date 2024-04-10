@@ -100,6 +100,26 @@ describe('AppController', () => {
           expect(result).toEqual(mockResult);
         });
     });
+
+    it('getWrappedAccountAddress', () => {
+      const mockResult = {
+        address: '0x1234567890123456789012345678901234567890',
+        network: 'localhost',
+      };
+
+      jest
+        .spyOn(apiGatewayService, 'getWrappedAccountAddress')
+        .mockReturnValue(of(mockResult));
+
+      apiGatewayController
+        .getWrappedAccountAddress({
+          address: '0x0',
+          network: 'localhost',
+        })
+        .subscribe((result) => {
+          expect(result).toEqual(mockResult);
+        });
+    });
   });
 
   describe('Sapphire Portfolio', () => {

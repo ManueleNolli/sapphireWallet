@@ -519,4 +519,32 @@ describe('SapphireRelyerService', () => {
       );
     });
   });
+
+  describe('getWrappedAccountAddress', () => {
+    it('should get Wrapped Account Address address', async () => {
+      const getAccountContractMock = {
+        getAccountContract: jest.fn().mockResolvedValue('0x012345'),
+      };
+
+      jest
+        .spyOn(ArgentWrappedAccounts__factory, 'connect')
+        .mockReturnValue(getAccountContractMock as any);
+
+      const data: AddAuthorised = {
+        address: '0x1110000',
+        network: 'localhost',
+      };
+
+      const result = await sapphireRelayerService.getWrappedAccountAddress(
+        {} as Wallet,
+        '0x0000000',
+        data,
+      );
+
+      expect(result).toEqual({
+        address: '0x012345',
+        network: 'localhost',
+      });
+    });
+  });
 });

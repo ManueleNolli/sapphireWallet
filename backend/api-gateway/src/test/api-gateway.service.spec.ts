@@ -237,7 +237,7 @@ describe('ApiGatewayService', () => {
         .subscribe({
           error: (error) => {
             expect(error).toBeInstanceOf(RpcException);
-            const errorObj: Object = (error as RpcException).getError();
+            const errorObj = (error as RpcException).getError();
             const errorJson: string = JSON.stringify(errorObj);
             const errorResponse = {
               statusCode: 503,
@@ -295,6 +295,48 @@ describe('ApiGatewayService', () => {
           expect(error).toBeInstanceOf(RpcException);
         },
       });
+    });
+  });
+
+  describe('getWrappedAccountAddress', () => {
+    it('should getWrappedAccountAddress successfully', async () => {
+      const getWrappedAccountAddressRequest = {
+        address: '0x00',
+        network: 'localhost',
+      };
+
+      const mockResponse = {
+        address: '0x12',
+        network: 'localhost',
+      };
+      jest.spyOn(sapphireRelayerMock, 'send').mockReturnValue(of(mockResponse));
+
+      apiGatewayService
+        .getWrappedAccountAddress(getWrappedAccountAddressRequest)
+        .subscribe((result) => {
+          expect(result).toEqual(mockResponse);
+        });
+    });
+
+    it('should handle errors and throw RpcException', async () => {
+      const getWrappedAccountAddressRequest = {
+        address: '0x00',
+        network: 'localhost',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphireRelayerMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService
+        .getWrappedAccountAddress(getWrappedAccountAddressRequest)
+        .subscribe({
+          error: (error) => {
+            expect(error).toBeInstanceOf(RpcException);
+          },
+        });
     });
   });
 });

@@ -34,6 +34,11 @@ describe('AppController (e2e)', () => {
             return of({
               hash: '0x82b9eea000ba798f1cae87bc89024a7cb55bc180db6e9545096e3eb2a7f38c9275d51018b41fc8779577b5f73c36ae5c5a1bd4a48a6a63bd880b1493bb20ad701c',
             });
+          } else if (pattern === 'get_wrapped_account_address') {
+            return of({
+              address: '0x1234567890123456789012345678901234567890',
+              network: 'localhost',
+            });
           }
         }),
       })
@@ -84,6 +89,20 @@ describe('AppController (e2e)', () => {
       .expect(201)
       .expect({
         hash: '0x82b9eea000ba798f1cae87bc89024a7cb55bc180db6e9545096e3eb2a7f38c9275d51018b41fc8779577b5f73c36ae5c5a1bd4a48a6a63bd880b1493bb20ad701c',
+      });
+  });
+
+  it('/get-wrapped-account-address (POST)', () => {
+    return request(app.getHttpServer())
+      .post('/get-wrapped-account-address')
+      .send({
+        address: '0x00',
+        network: 'localhost',
+      })
+      .expect(201)
+      .expect({
+        address: '0x1234567890123456789012345678901234567890',
+        network: 'localhost',
       });
   });
 });
