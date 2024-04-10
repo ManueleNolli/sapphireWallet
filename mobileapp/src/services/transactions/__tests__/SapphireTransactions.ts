@@ -15,40 +15,52 @@ import {
   ArgentModule,
   ArgentModule__factory,
   ERC721,
+  ERC721__factory,
   SapphireNFTs__factory,
 } from '../../../contracts'
 import { generateNonceForRelay, signOffChain } from '../TransactionUtils'
-import { BACKEND_ENDPOINTS, contactBackend } from '../../backend'
+import { contactBackend } from '../../backend'
 import { NETWORKS } from '../../../constants/Networks'
 import { BRIDGE_NETWORKS } from '../../../constants/BridgeNetworks'
-import { ZeroAddress } from 'ethers'
 
 jest.mock('../TransactionUtils')
 jest.mock('../../backend')
 
 describe('TransactionUtils', () => {
+  let argentModuleMock: any
+  let sapphireNFTsMock: any
+  let accountContractMock: any
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+    argentModuleMock = {
+      encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
+    }
+    sapphireNFTsMock = {
+      encodeFunctionData: jest.fn().mockReturnValue('sapphireERC721MockedEncodeFunctionData'),
+    }
+    accountContractMock = {
+      encodeFunctionData: jest.fn().mockReturnValue('AccountContractMockedEncodeFunctionData'),
+    }
+
+    jest.spyOn(ArgentModule__factory, 'createInterface').mockReturnValue(argentModuleMock as any)
+    jest.spyOn(ERC721__factory, 'createInterface').mockReturnValue(sapphireNFTsMock as any)
+    jest.spyOn(AccountContract__factory, 'createInterface').mockReturnValue(accountContractMock as any)
+  })
+
   describe('prepareERC721transferTransaction', () => {
     it('should return a transactionArgent', async () => {
-      const mockERC721Contract = {
-        'safeTransferFrom(address,address,uint256)': {
-          populateTransaction: jest.fn().mockResolvedValue({
-            data: '0x1234567890123456789',
-          }),
-        },
-        getAddress: jest.fn().mockResolvedValue('0xAAAAAAAAAA'),
-      } as any as ERC721
-
       const transactionArgent = await prepareERC721TransferTransaction(
-        mockERC721Contract,
+        '0x1234567890123456789',
         '0x1234567890',
         '0x1234567890',
         1
       )
 
       expect(transactionArgent).toEqual({
-        to: '0xAAAAAAAAAA',
+        to: '0x1234567890123456789',
         value: 0n,
-        data: '0x1234567890123456789',
+        data: 'sapphireERC721MockedEncodeFunctionData',
       })
     })
   })
@@ -82,13 +94,7 @@ describe('TransactionUtils', () => {
 
   describe('wrapInMultiCall', () => {
     it('should return a transactionArgent', async () => {
-      const mockArgentModule = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('0x1234567890123456789'),
-        },
-      } as any as ArgentModule
-
-      const transactionArgent = wrapInMultiCall(mockArgentModule, '0x1234567890', [
+      const transactionArgent = wrapInMultiCall('0x1234567890', [
         {
           to: '0xAAAAAAAAAA',
           value: 0n,
@@ -96,25 +102,19 @@ describe('TransactionUtils', () => {
         },
       ])
 
-      expect(transactionArgent).toEqual('0x1234567890123456789')
+      expect(transactionArgent).toEqual('ArgentModuleMockedEncodeFunctionData')
     })
   })
 
   describe('wrapInBridgeCall', () => {
     it('should return a transactionArgent', async () => {
-      const mockArgentModule = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('0x1234567890123456789'),
-        },
-      } as any as ArgentModule
-
-      const transactionArgent = wrapInBridgeCall(mockArgentModule, '0x1234567890', {
+      const transactionArgent = wrapInBridgeCall('0x1234567890', {
         to: '0xAAAAAAAAAA',
         value: 0n,
         data: '0x1234567890123456789',
       })
 
-      expect(transactionArgent).toEqual('0x1234567890123456789')
+      expect(transactionArgent).toEqual('ArgentModuleMockedEncodeFunctionData')
     })
   })
 
@@ -160,26 +160,6 @@ describe('TransactionUtils', () => {
       })
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
       ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
-
-      const argentModuleMock = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
-        },
-      }
-
-      jest.spyOn(ArgentModule__factory, 'connect').mockReturnValue(argentModuleMock as any)
-
-      const mockSapphireNFTs = {
-        transferERC721: jest.fn().mockResolvedValue('0x1234567890'),
-        'safeTransferFrom(address,address,uint256)': {
-          populateTransaction: jest.fn().mockResolvedValue({
-            data: '0x1234567890123456789',
-          }),
-        },
-        getAddress: jest.fn().mockResolvedValue('0xAAAAAAAAAA'),
-      }
-
-      jest.spyOn(SapphireNFTs__factory, 'connect').mockReturnValue(mockSapphireNFTs as any)
 
       const mockSigner = {
         provider: {
@@ -243,14 +223,6 @@ describe('TransactionUtils', () => {
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
       ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
-      const argentModuleMock = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
-        },
-      }
-
-      jest.spyOn(ArgentModule__factory, 'connect').mockReturnValue(argentModuleMock as any)
-
       const mockSigner = {
         provider: {
           getNetwork: jest.fn().mockResolvedValue({
@@ -270,14 +242,6 @@ describe('TransactionUtils', () => {
       ;(contactBackend as jest.Mock).mockResolvedValue({
         error: 'Failed to relay transaction',
       })
-
-      const argentModuleMock = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
-        },
-      }
-
-      jest.spyOn(ArgentModule__factory, 'connect').mockReturnValue(argentModuleMock as any)
 
       const mockSigner = {
         provider: {
@@ -301,14 +265,6 @@ describe('TransactionUtils', () => {
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
       ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
 
-      const argentModuleMock = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
-        },
-      }
-
-      jest.spyOn(ArgentModule__factory, 'connect').mockReturnValue(argentModuleMock as any)
-
       const mockSigner = {
         provider: {
           getNetwork: jest.fn().mockResolvedValue({
@@ -328,14 +284,6 @@ describe('TransactionUtils', () => {
       ;(contactBackend as jest.Mock).mockResolvedValue({
         error: 'Failed to relay transaction',
       })
-
-      const argentModuleMock = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
-        },
-      }
-
-      jest.spyOn(ArgentModule__factory, 'connect').mockReturnValue(argentModuleMock as any)
 
       const mockSigner = {
         provider: {
@@ -358,18 +306,6 @@ describe('TransactionUtils', () => {
       })
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
       ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
-
-      const argentModuleMock = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
-        },
-      }
-      const accountContractMock = {
-        encodeFunctionData: jest.fn().mockReturnValue('AccountContractMockedEncodeFunctionData'),
-      }
-
-      jest.spyOn(ArgentModule__factory, 'connect').mockReturnValue(argentModuleMock as any)
-      jest.spyOn(AccountContract__factory, 'createInterface').mockReturnValue(accountContractMock as any)
 
       const mockSigner = {
         provider: {
@@ -396,18 +332,6 @@ describe('TransactionUtils', () => {
     it('should call backend, INTERNAL', async () => {
       ;(generateNonceForRelay as jest.Mock).mockReturnValue('0x1234567890')
       ;(signOffChain as jest.Mock).mockResolvedValue('0x9876543210')
-
-      const argentModuleMock = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
-        },
-      }
-      const accountContractMock = {
-        encodeFunctionData: jest.fn().mockReturnValue('AccountContractMockedEncodeFunctionData'),
-      }
-
-      jest.spyOn(ArgentModule__factory, 'connect').mockReturnValue(argentModuleMock as any)
-      jest.spyOn(AccountContract__factory, 'createInterface').mockReturnValue(accountContractMock as any)
 
       const mockSigner = {
         provider: {
@@ -450,19 +374,6 @@ describe('TransactionUtils', () => {
       ;(contactBackend as jest.Mock).mockResolvedValue({
         error: 'Failed to relay transaction',
       })
-
-      const argentModuleMock = {
-        interface: {
-          encodeFunctionData: jest.fn().mockReturnValue('ArgentModuleMockedEncodeFunctionData'),
-        },
-      }
-
-      const accountContractMock = {
-        encodeFunctionData: jest.fn().mockReturnValue('AccountContractMockedEncodeFunctionData'),
-      }
-
-      jest.spyOn(ArgentModule__factory, 'connect').mockReturnValue(argentModuleMock as any)
-      jest.spyOn(AccountContract__factory, 'createInterface').mockReturnValue(accountContractMock as any)
 
       const mockSigner = {
         provider: {
@@ -509,7 +420,6 @@ describe('TransactionUtils', () => {
         },
       }
 
-      const mockRealToAddressFromBackend = '0x91655e6B6f702fc25a1110Dbe46d1544E4EA6b26'
       ;(contactBackend as jest.Mock).mockResolvedValueOnce({
         error: 'Failed to contact Blockchain',
       })

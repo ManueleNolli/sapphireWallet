@@ -56,7 +56,7 @@ exports[`Receive should render correctly 1`] = `
       ]
     }
   >
-    Show this QR code to receive ETH or NFTs
+    Show this QR code to receive Crypto or NFTs
   </Text>
   <RNSVGSvgView
     align="xMidYMid"

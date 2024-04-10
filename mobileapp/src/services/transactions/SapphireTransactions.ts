@@ -2,13 +2,7 @@
  * @fileoverview This file contains all the functions that are used to interact with the Sapphire/Argent contracts with the aim of executing transactions by a relayer.
  */
 
-import {
-  AccountContract__factory,
-  ArgentModule,
-  ArgentModule__factory,
-  ERC721,
-  SapphireNFTs__factory,
-} from '../../contracts'
+import { AccountContract__factory, ArgentModule__factory, ERC721__factory } from '../../contracts'
 import { parseEther, Signer } from 'ethers'
 import { generateNonceForRelay, signOffChain, signOffChainForBridge } from './TransactionUtils'
 import {
@@ -48,29 +42,33 @@ export type BridgeTransactionArgent = {
 
 /**
  * This function prepares a transfer ERC721 to be executed by a relayer.
- * @param ERC721Contract
+ * @param ERC721ContractAddress
  * @param from
  * @param to
  * @param tokenId
  */
 export async function prepareERC721TransferTransaction(
-  ERC721Contract: ERC721,
+  ERC721ContractAddress: string,
   from: string,
   to: string,
   tokenId: number
 ): Promise<TransactionArgent> {
   // Real transaction
-  const transferTransaction = await ERC721Contract['safeTransferFrom(address,address,uint256)'].populateTransaction(
-    from,
-    to,
-    tokenId
+  // const transferTransaction = await ERC721Contract['safeTransferFrom(address,address,uint256)'].populateTransaction(
+  //   from,
+  //   to,
+  //   tokenId
+  // )
+  const transferTransaction = ERC721__factory.createInterface().encodeFunctionData(
+    'safeTransferFrom(address,address,uint256)',
+    [from, to, tokenId]
   )
 
   // Argent transaction
   return {
-    to: await ERC721Contract.getAddress(),
+    to: ERC721ContractAddress,
     value: 0n,
-    data: transferTransaction.data,
+    data: transferTransaction,
   }
 }
 
@@ -117,16 +115,15 @@ export async function prepareBridgeTransaction(
 
 /**
  * All the transactions that require external connection (contracts that are not Argent's) need to be wrapped in a multiCall.
- * @param ArgentModule
  * @param from
  * @param transactionArgent
  */
-export function wrapInMultiCall(ArgentModule: ArgentModule, from: string, transactionArgent: TransactionArgent[]) {
-  return ArgentModule.interface.encodeFunctionData('multiCall', [from, transactionArgent])
+export function wrapInMultiCall(from: string, transactionArgent: TransactionArgent[]) {
+  return ArgentModule__factory.createInterface().encodeFunctionData('multiCall', [from, transactionArgent])
 }
 
-export function wrapInBridgeCall(ArgentModule: ArgentModule, from: string, transactionArgent: TransactionArgent) {
-  return ArgentModule.interface.encodeFunctionData('bridgeCall', [from, transactionArgent])
+export function wrapInBridgeCall(from: string, transactionArgent: TransactionArgent) {
+  return ArgentModule__factory.createInterface().encodeFunctionData('bridgeCall', [from, transactionArgent])
 }
 
 export async function signTransaction(unsignedTransaction: string, signer: Signer, argentModuleAddress: string) {
@@ -152,23 +149,16 @@ export async function requestERC721TokenTransfer(
   signer: Signer,
   network: NETWORKS
 ) {
-  const ArgentModule = ArgentModule__factory.connect(
-    network === NETWORKS.LOCALHOST
-      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
-      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string),
-    signer
-  )
-
-  const SapphireNFTs = SapphireNFTs__factory.connect(
+  const erc721TransferTransaction = await prepareERC721TransferTransaction(
     network === NETWORKS.LOCALHOST
       ? (LOCALHOST_SAPPHIRE_NFTS_ADDRESS as string)
       : (SEPOLIA_SAPPHIRE_NFTS_ADDRESS as string),
-    signer
+    walletAddress,
+    to,
+    tokenId
   )
 
-  const erc721TransferTransaction = await prepareERC721TransferTransaction(SapphireNFTs, walletAddress, to, tokenId)
-
-  const transactionData = wrapInMultiCall(ArgentModule, walletAddress, [erc721TransferTransaction])
+  const transactionData = wrapInMultiCall(walletAddress, [erc721TransferTransaction])
 
   const { signedTransaction, nonce } = await signTransaction(
     transactionData,
@@ -201,16 +191,9 @@ export async function requestETHTransfer(
   signer: Signer,
   network: NETWORKS
 ) {
-  const ArgentModule = ArgentModule__factory.connect(
-    network === NETWORKS.LOCALHOST
-      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
-      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string),
-    signer
-  )
-
   const ethTransferTransaction = await prepareETHTransferTransaction(to, value)
 
-  const transactionData = wrapInMultiCall(ArgentModule, walletAddress, [ethTransferTransaction])
+  const transactionData = wrapInMultiCall(walletAddress, [ethTransferTransaction])
 
   const { signedTransaction, nonce } = await signTransaction(
     transactionData,
@@ -242,12 +225,6 @@ export async function requestETHBridgeCall(
   signer: Signer,
   network: NETWORKS
 ) {
-  const ArgentModule = ArgentModule__factory.connect(
-    network === NETWORKS.LOCALHOST
-      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
-      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string),
-    signer
-  )
   const ethTransferTransaction = await prepareBridgeTransaction(
     BridgeCallType.BRIDGE_ETH,
     80001n,
@@ -257,7 +234,7 @@ export async function requestETHBridgeCall(
     '0x'
   )
 
-  const transactionData = wrapInBridgeCall(ArgentModule, walletAddress, ethTransferTransaction)
+  const transactionData = wrapInBridgeCall(walletAddress, ethTransferTransaction)
 
   const { signedTransaction, nonce } = await signTransaction(
     transactionData,
@@ -322,13 +299,6 @@ export async function requestMATICTransfer(
     BigInt(destinationChainId)
   )
 
-  const ArgentModule = ArgentModule__factory.connect(
-    network === NETWORKS.LOCALHOST
-      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
-      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string),
-    signer
-  )
-
   const baseChainTX = await prepareBridgeTransaction(
     BridgeCallType.DEST,
     BigInt(destinationChainId),
@@ -338,7 +308,7 @@ export async function requestMATICTransfer(
     signedTXForDestChain
   )
 
-  const wrappedBaseChainTX = wrapInBridgeCall(ArgentModule, walletAddress, baseChainTX)
+  const wrappedBaseChainTX = wrapInBridgeCall(walletAddress, baseChainTX)
 
   const { signedTransaction, nonce } = await signTransaction(
     wrappedBaseChainTX,
