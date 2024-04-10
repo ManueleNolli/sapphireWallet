@@ -7,7 +7,7 @@ export async function getBalance(walletAddress: string, baseNetwork: NETWORKS) {
     walletAddress,
   })) as getBalanceResponse | backendErrorResponse
   if ('error' in result) {
-    throw new Error(result.error)
+    throw new Error((result as backendErrorResponse).error)
   }
 
   return result

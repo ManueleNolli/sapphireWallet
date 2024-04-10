@@ -16,15 +16,11 @@ jest.mock('@ui-kitten/components', () => {
   }
 })
 
-describe('SendETH', () => {
+describe('BridgeETHToMATICMock', () => {
   it('renders correctly', async () => {
     ;(useBridgeETHtoMATIC as jest.Mock).mockReturnValue({
       isLoading: false,
-      sendETHTransaction: jest.fn(),
-      valueAddress: '0x123456789',
-      setValueAddress: jest.fn(),
-      isAddressValid: true,
-      setIsAddressValid: jest.fn(),
+      sendBridgeTransaction: jest.fn(),
       valueAmount: '100',
       setValueAmount: jest.fn(),
       isAmountValid: true,
@@ -34,7 +30,7 @@ describe('SendETH', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<BridgeETHtoMATIC address={'0x123456789'} balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(<BridgeETHtoMATIC address="0x123456789" balance={100} close={jest.fn()} />)
     })
 
     expect(tree.toJSON()).toMatchSnapshot()
@@ -43,11 +39,7 @@ describe('SendETH', () => {
   it('renders correctly when loading', async () => {
     ;(useBridgeETHtoMATIC as jest.Mock).mockReturnValue({
       isLoading: true,
-      sendETHTransaction: jest.fn(),
-      valueAddress: '0x123456789',
-      setValueAddress: jest.fn(),
-      isAddressValid: true,
-      setIsAddressValid: jest.fn(),
+      sendBridgeTransaction: jest.fn(),
       valueAmount: '100',
       setValueAmount: jest.fn(),
       isAmountValid: true,
@@ -57,20 +49,16 @@ describe('SendETH', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<BridgeETHtoMATIC address={'0x123456789'} balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(<BridgeETHtoMATIC address="0x123456789" balance={100} close={jest.fn()} />)
     })
     expect(tree).toMatchSnapshot()
   })
 
-  it('Send Button call sendETHTransaction', async () => {
-    const sendETHMock = jest.fn()
+  it('Send Button call sendBridgeTransaction', async () => {
+    const bridgeMock = jest.fn()
     ;(useBridgeETHtoMATIC as jest.Mock).mockReturnValue({
       isLoading: true,
-      sendETHTransaction: sendETHMock,
-      valueAddress: '0x123456789',
-      setValueAddress: jest.fn(),
-      isAddressValid: true,
-      setIsAddressValid: jest.fn(),
+      sendBridgeTransaction: bridgeMock,
       valueAmount: '100',
       setValueAmount: jest.fn(),
       isAmountValid: true,
@@ -80,7 +68,7 @@ describe('SendETH', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<BridgeETHtoMATIC address={'0x123456789'} balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(<BridgeETHtoMATIC address="0x123456789" balance={100} close={jest.fn()} />)
     })
 
     await act(async () => {
@@ -88,31 +76,6 @@ describe('SendETH', () => {
       fireEvent.press(button)
     })
 
-    expect(sendETHMock).toHaveBeenCalled()
-  })
-
-  it('Show QRCode Scanner', async () => {
-    const sendETHMock = jest.fn()
-    ;(useBridgeETHtoMATIC as jest.Mock).mockReturnValue({
-      isLoading: true,
-      sendETHTransaction: sendETHMock,
-      valueAddress: '0x123456789',
-      setValueAddress: jest.fn(),
-      isAddressValid: true,
-      setIsAddressValid: jest.fn(),
-      valueAmount: '100',
-      setValueAmount: jest.fn(),
-      isAmountValid: true,
-      setIsAmountValid: jest.fn(),
-      isQRCodeScanning: true,
-    })
-
-    let tree: any
-
-    await waitFor(async () => {
-      tree = renderWithTheme(<BridgeETHtoMATIC address={'0x123456789'} balance={100} close={jest.fn()} />)
-    })
-
-    expect(tree).toMatchSnapshot()
+    expect(bridgeMock).toHaveBeenCalled()
   })
 })

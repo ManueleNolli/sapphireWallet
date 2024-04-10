@@ -316,7 +316,6 @@ export default function Home() {
         <View style={{ height: 64 * vh }} />
 
         {buttonData.map((item) => {
-          console.log('rendering button', item.title, item.visible)
           return (
             item.visible && (
               <View key={item.id}>

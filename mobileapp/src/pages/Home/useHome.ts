@@ -1,14 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import { WalletContext } from '../../context/WalletContext'
-import { getBalance as getBalanceBackend } from '../../services/balances/balanceCrypto'
+import { getBalance } from '../../services/balances'
 import { formatEther } from 'ethers'
 import * as Clipboard from 'expo-clipboard'
 import { homeBackground } from '../../assets/AssetsRegistry'
 import useLoading from '../../hooks/useLoading'
-import { Balance, Balances } from '../../types/Balance'
-import { CHAIN_CRYPTOS, NETWORK_TO_CHAIN_IDS } from '../../constants/NetworksMetadata'
-import { currentNetwork } from '../../constants/AsyncStoreKeys'
+import { Balances } from '../../types/Balance'
 
 export default function useHome() {
   const { ethersProvider, currentNetwork } = useContext(BlockchainContext)
@@ -32,7 +30,8 @@ export default function useHome() {
   }
 
   const getBalances = async () => {
-    const balanceBackend = await getBalanceBackend(getWalletContractAddress(), currentNetwork)
+    const balanceBackend = await getBalance(getWalletContractAddress(), currentNetwork)
+    console.log('balanceBackend', balanceBackend)
     // convert balance to ETH
     Object.keys(balanceBackend).forEach((key) => {
       balanceBackend[key].balance = formatEther(balanceBackend[key].balance)
@@ -48,16 +47,6 @@ export default function useHome() {
     setIsModalVisible(false)
     if (needRefresh) getBalances()
   }
-
-  // const closeSendETHModal = (needRefresh: boolean) => {
-  //   setIsSendETHModalVisible(false)
-  //   if (needRefresh) getBalances()
-  // }
-  //
-  // const closeBridgeETHtoMATICModal = (needRefresh: boolean) => {
-  //   setIsBridgeETHtoMATICModalVisible(false)
-  //   if (needRefresh) getBalances()
-  // }
 
   useEffect(() => {
     getBalances().then(() => setBalanceLoading(false))

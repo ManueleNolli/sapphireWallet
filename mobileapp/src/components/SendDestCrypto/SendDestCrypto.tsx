@@ -83,6 +83,7 @@ export default function SendDestCrypto({ address, cryptoName, balance, action, c
         style={{ marginTop: 1 * vh }}
       />
       <CheckBox
+        testID="checkbox-button"
         status="danger"
         checked={checkedIsSapphireInternalTX}
         onChange={(nextChecked) => setCheckedIsSapphireInternalTX(nextChecked)}

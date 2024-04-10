@@ -1,14 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendETH Show QRCode Scanner 1`] = `
-<div
-  data-testid="QRCodeScanner"
->
-  QRCodeScanner
-</div>
-`;
-
-exports[`SendETH renders correctly 1`] = `
+exports[`BridgeETHToMATICMock renders correctly 1`] = `
 <View
   appearance="default"
   level="1"
@@ -44,7 +36,7 @@ exports[`SendETH renders correctly 1`] = `
       ]
     }
   >
-    Send ETH
+    Bridge ETH to MATIC
   </Text>
   <Text
     appearance="default"
@@ -64,13 +56,8 @@ exports[`SendETH renders correctly 1`] = `
       ]
     }
   >
-    Fill the form to send ETH to another wallet
+    Fill the form to bridge ETH to MATIC
   </Text>
-  <div
-    data-testid="InputAddress"
-  >
-    InputAddress
-  </div>
   <div
     data-testid="InputNumeric"
   >
@@ -146,13 +133,13 @@ exports[`SendETH renders correctly 1`] = `
         ]
       }
     >
-      Send ETH
+      Bridge ETH
     </Text>
   </View>
 </View>
 `;
 
-exports[`SendETH renders correctly when loading 1`] = `
+exports[`BridgeETHToMATICMock renders correctly when loading 1`] = `
 <View
   appearance="default"
   level="1"
@@ -188,7 +175,7 @@ exports[`SendETH renders correctly when loading 1`] = `
       ]
     }
   >
-    Send ETH
+    Bridge ETH to MATIC
   </Text>
   <Text
     appearance="default"
@@ -208,13 +195,8 @@ exports[`SendETH renders correctly when loading 1`] = `
       ]
     }
   >
-    Fill the form to send ETH to another wallet
+    Fill the form to bridge ETH to MATIC
   </Text>
-  <div
-    data-testid="InputAddress"
-  >
-    InputAddress
-  </div>
   <div
     data-testid="InputNumeric"
   >
@@ -290,7 +272,7 @@ exports[`SendETH renders correctly when loading 1`] = `
         ]
       }
     >
-      Send ETH
+      Bridge ETH
     </Text>
     <View
       style={

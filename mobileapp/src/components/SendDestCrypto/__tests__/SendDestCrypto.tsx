@@ -1,8 +1,9 @@
 import useSendDestCrypto from '../useSendDestCrypto'
 import renderWithTheme from '../../../TestHelper'
 import React from 'react'
-import SendETH from '../SendETH'
+
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
+import SendDestCrypto from '../SendDestCrypto'
 
 jest.mock('../useSendDestCrypto', () => jest.fn())
 jest.mock('../../InputAddress/InputAddress')
@@ -16,11 +17,11 @@ jest.mock('@ui-kitten/components', () => {
   }
 })
 
-describe('SendETH', () => {
+describe('SendDestCrypto', () => {
   it('renders correctly', async () => {
     ;(useSendDestCrypto as jest.Mock).mockReturnValue({
       isLoading: false,
-      sendETHTransaction: jest.fn(),
+      sendDestCryptoTransaction: jest.fn(),
       valueAddress: '0x123456789',
       setValueAddress: jest.fn(),
       isAddressValid: true,
@@ -29,12 +30,22 @@ describe('SendETH', () => {
       setValueAmount: jest.fn(),
       isAmountValid: true,
       setIsAmountValid: jest.fn(),
+      checkedIsSapphireInternalTX: true,
+      setCheckedIsSapphireInternalTX: jest.fn(),
     })
 
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendETH address="0x123456789" balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(
+        <SendDestCrypto
+          address="0x123456789"
+          cryptoName="NameCrypto"
+          balance={100}
+          close={jest.fn()}
+          action={jest.fn()}
+        />
+      )
     })
 
     expect(tree.toJSON()).toMatchSnapshot()
@@ -43,7 +54,7 @@ describe('SendETH', () => {
   it('renders correctly when loading', async () => {
     ;(useSendDestCrypto as jest.Mock).mockReturnValue({
       isLoading: true,
-      sendETHTransaction: jest.fn(),
+      sendDestCryptoTransaction: jest.fn(),
       valueAddress: '0x123456789',
       setValueAddress: jest.fn(),
       isAddressValid: true,
@@ -52,21 +63,31 @@ describe('SendETH', () => {
       setValueAmount: jest.fn(),
       isAmountValid: true,
       setIsAmountValid: jest.fn(),
+      checkedIsSapphireInternalTX: true,
+      setCheckedIsSapphireInternalTX: jest.fn(),
     })
 
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendETH address="0x123456789" balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(
+        <SendDestCrypto
+          address="0x123456789"
+          cryptoName="NameCrypto"
+          balance={100}
+          close={jest.fn()}
+          action={jest.fn()}
+        />
+      )
     })
     expect(tree).toMatchSnapshot()
   })
 
   it('Send Button call sendETHTransaction', async () => {
-    const sendETHMock = jest.fn()
+    const sendMock = jest.fn()
     ;(useSendDestCrypto as jest.Mock).mockReturnValue({
       isLoading: true,
-      sendETHTransaction: sendETHMock,
+      sendDestCryptoTransaction: sendMock,
       valueAddress: '0x123456789',
       setValueAddress: jest.fn(),
       isAddressValid: true,
@@ -75,12 +96,21 @@ describe('SendETH', () => {
       setValueAmount: jest.fn(),
       isAmountValid: true,
       setIsAmountValid: jest.fn(),
+      checkedIsSapphireInternalTX: true,
+      setCheckedIsSapphireInternalTX: jest.fn(),
     })
 
     let tree: any
-
     await waitFor(async () => {
-      tree = renderWithTheme(<SendETH address="0x123456789" balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(
+        <SendDestCrypto
+          address="0x123456789"
+          cryptoName="NameCrypto"
+          balance={100}
+          close={jest.fn()}
+          action={jest.fn()}
+        />
+      )
     })
 
     await act(async () => {
@@ -88,14 +118,52 @@ describe('SendETH', () => {
       fireEvent.press(button)
     })
 
-    expect(sendETHMock).toHaveBeenCalled()
+    expect(sendMock).toHaveBeenCalled()
+  })
+
+  it('Change CheckBox status', async () => {
+    const checkedMock = jest.fn()
+
+    ;(useSendDestCrypto as jest.Mock).mockReturnValue({
+      isLoading: true,
+      sendDestCryptoTransaction: jest.fn(),
+      valueAddress: '0x123456789',
+      setValueAddress: jest.fn(),
+      isAddressValid: true,
+      setIsAddressValid: jest.fn(),
+      valueAmount: '100',
+      setValueAmount: jest.fn(),
+      isAmountValid: true,
+      setIsAmountValid: jest.fn(),
+      checkedIsSapphireInternalTX: true,
+      setCheckedIsSapphireInternalTX: checkedMock,
+    })
+
+    let tree: any
+    await waitFor(async () => {
+      tree = renderWithTheme(
+        <SendDestCrypto
+          address="0x123456789"
+          cryptoName="NameCrypto"
+          balance={100}
+          close={jest.fn()}
+          action={jest.fn()}
+        />
+      )
+    })
+
+    await act(async () => {
+      const button = tree.getByTestId('checkbox-button')
+      fireEvent.press(button)
+    })
+
+    expect(checkedMock).toHaveBeenCalled()
   })
 
   it('Show QRCode Scanner', async () => {
-    const sendETHMock = jest.fn()
     ;(useSendDestCrypto as jest.Mock).mockReturnValue({
       isLoading: true,
-      sendETHTransaction: sendETHMock,
+      sendDestCryptoTransaction: jest.fn(),
       valueAddress: '0x123456789',
       setValueAddress: jest.fn(),
       isAddressValid: true,
@@ -105,12 +173,22 @@ describe('SendETH', () => {
       isAmountValid: true,
       setIsAmountValid: jest.fn(),
       isQRCodeScanning: true,
+      checkedIsSapphireInternalTX: true,
+      setCheckedIsSapphireInternalTX: jest.fn(),
     })
 
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendETH address="0x123456789" balance={100} close={jest.fn()} />)
+      tree = renderWithTheme(
+        <SendDestCrypto
+          address="0x123456789"
+          cryptoName="NameCrypto"
+          balance={100}
+          close={jest.fn()}
+          action={jest.fn()}
+        />
+      )
     })
 
     expect(tree).toMatchSnapshot()

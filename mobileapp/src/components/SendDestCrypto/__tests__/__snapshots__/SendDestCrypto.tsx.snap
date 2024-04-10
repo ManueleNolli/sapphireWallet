@@ -1,0 +1,716 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SendDestCrypto Show QRCode Scanner 1`] = `
+<div
+  data-testid="QRCodeScanner"
+>
+  QRCodeScanner
+</div>
+`;
+
+exports[`SendDestCrypto renders correctly 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "alignItems": "center",
+        "borderRadius": 10,
+        "maxHeight": 1000.5,
+        "maxWidth": 675,
+        "paddingHorizontal": 30,
+        "paddingVertical": 53.36,
+      },
+    ]
+  }
+>
+  <Text
+    appearance="default"
+    category="h6"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 18,
+          "fontWeight": "800",
+        },
+        undefined,
+      ]
+    }
+  >
+    Send 
+    NameCrypto
+  </Text>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "marginBottom": 26.68,
+        },
+      ]
+    }
+  >
+    Fill the form to send 
+    NameCrypto
+     to another wallet
+  </Text>
+  <div
+    data-testid="InputAddress"
+  >
+    InputAddress
+  </div>
+  <div
+    data-testid="InputNumeric"
+  >
+    InputNumeric
+  </div>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "alignSelf": "flex-start",
+        "flexDirection": "row",
+        "marginTop": 26.68,
+        "opacity": 1,
+      }
+    }
+    testID="checkbox-button"
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderRadius": 6,
+              "height": 32,
+              "width": 32,
+            },
+            {
+              "position": "absolute",
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#FF3D71",
+              "borderColor": "#FF3D71",
+              "borderRadius": 3,
+              "borderWidth": 1,
+              "height": 20,
+              "width": 20,
+            },
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight="12"
+          bbWidth="12"
+          fill="#FFFFFF"
+          focusable={false}
+          height={12}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          stroke="#FFFFFF"
+          strokeWidth={3}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 12,
+                "width": 12,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={12}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
+              {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
+            strokeWidth="3"
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              >
+                <RNSVGRect
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  height="24"
+                  opacity={0}
+                  width="24"
+                  x="0"
+                  y="0"
+                />
+                <RNSVGPath
+                  d="M9.86 18a1 1 0 0 1-.73-.32l-4.86-5.17a1 1 0 1 1 1.46-1.37l4.12 4.39 8.41-9.2a1 1 0 1 1 1.48 1.34l-9.14 10a1 1 0 0 1-.73.33z"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <Text
+      appearance="default"
+      category="label"
+      status="danger"
+      style={
+        [
+          {
+            "color": "#FF3D71",
+            "fontFamily": "System",
+            "fontSize": 12,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+          },
+        ]
+      }
+    >
+      Receiver is a Sapphire wallet
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0, 149, 255, 0.08)",
+        "borderColor": "#0095FF",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginTop": 26.68,
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+        "width": "100%",
+      }
+    }
+    testID="send-button"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#0095FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Send NameCrypto
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`SendDestCrypto renders correctly when loading 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "alignItems": "center",
+        "borderRadius": 10,
+        "maxHeight": 1000.5,
+        "maxWidth": 675,
+        "paddingHorizontal": 30,
+        "paddingVertical": 53.36,
+      },
+    ]
+  }
+>
+  <Text
+    appearance="default"
+    category="h6"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 18,
+          "fontWeight": "800",
+        },
+        undefined,
+      ]
+    }
+  >
+    Send 
+    NameCrypto
+  </Text>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "marginBottom": 26.68,
+        },
+      ]
+    }
+  >
+    Fill the form to send 
+    NameCrypto
+     to another wallet
+  </Text>
+  <div
+    data-testid="InputAddress"
+  >
+    InputAddress
+  </div>
+  <div
+    data-testid="InputNumeric"
+  >
+    InputNumeric
+  </div>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "alignSelf": "flex-start",
+        "flexDirection": "row",
+        "marginTop": 26.68,
+        "opacity": 1,
+      }
+    }
+    testID="checkbox-button"
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderRadius": 6,
+              "height": 32,
+              "width": 32,
+            },
+            {
+              "position": "absolute",
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#FF3D71",
+              "borderColor": "#FF3D71",
+              "borderRadius": 3,
+              "borderWidth": 1,
+              "height": 20,
+              "width": 20,
+            },
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight="12"
+          bbWidth="12"
+          fill="#FFFFFF"
+          focusable={false}
+          height={12}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          stroke="#FFFFFF"
+          strokeWidth={3}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 12,
+                "width": 12,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={12}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
+              {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
+            strokeWidth="3"
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              >
+                <RNSVGRect
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  height="24"
+                  opacity={0}
+                  width="24"
+                  x="0"
+                  y="0"
+                />
+                <RNSVGPath
+                  d="M9.86 18a1 1 0 0 1-.73-.32l-4.86-5.17a1 1 0 1 1 1.46-1.37l4.12 4.39 8.41-9.2a1 1 0 1 1 1.48 1.34l-9.14 10a1 1 0 0 1-.73.33z"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <Text
+      appearance="default"
+      category="label"
+      status="danger"
+      style={
+        [
+          {
+            "color": "#FF3D71",
+            "fontFamily": "System",
+            "fontSize": 12,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+          },
+        ]
+      }
+    >
+      Receiver is a Sapphire wallet
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0, 149, 255, 0.08)",
+        "borderColor": "#0095FF",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginTop": 26.68,
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+        "width": "100%",
+      }
+    }
+    testID="send-button"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#0095FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Send NameCrypto
+    </Text>
+    <View
+      style={
+        [
+          {
+            "height": 20,
+            "marginHorizontal": 10,
+            "tintColor": "#0095FF",
+            "width": 20,
+          },
+          {
+            "alignItems": "center",
+            "position": "absolute",
+            "right": 5,
+          },
+        ]
+      }
+    >
+      <View
+        data-testid="spinner"
+      />
+    </View>
+  </View>
+</View>
+`;

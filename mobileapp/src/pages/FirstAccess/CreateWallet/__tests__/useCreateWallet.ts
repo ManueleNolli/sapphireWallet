@@ -37,18 +37,7 @@ describe('useCreateWallet hook', () => {
       },
       privateKey: '0x123',
     })
-    ;(getMnemonic as jest.Mock).mockReturnValue([
-      'a',
-      'b',
-      'c',
-      'd',
-      'e',
-      'f',
-      'g',
-      'h',
-      'i',
-      'j',
-    ])
+    ;(getMnemonic as jest.Mock).mockReturnValue(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
     ;(useContext as jest.Mock).mockReturnValue({
       setPrivateKey: setPrivateKeyMock,
       setEOAAddress: setEOAAddressMock,
@@ -58,9 +47,7 @@ describe('useCreateWallet hook', () => {
 
     const navigate = jest.fn()
     const navigation = { push: navigate }
-    const { result } = renderHook(() =>
-      useCreateWallet(navigation as unknown as CreateWalletProps['navigation'])
-    )
+    const { result } = renderHook(() => useCreateWallet(navigation as unknown as CreateWalletProps['navigation']))
 
     await act(() => {
       result.current.createAndNavigate()
@@ -93,9 +80,7 @@ describe('useCreateWallet hook', () => {
 
     const navigate = jest.fn()
     const navigation = { push: navigate }
-    const { result } = renderHook(() =>
-      useCreateWallet(navigation as unknown as CreateWalletProps['navigation'])
-    )
+    const { result } = renderHook(() => useCreateWallet(navigation as unknown as CreateWalletProps['navigation']))
 
     await act(() => {
       result.current.createAndNavigate()
@@ -114,15 +99,29 @@ describe('useCreateWallet hook', () => {
 
     const navigate = jest.fn()
     const navigation = { push: navigate }
-    const { result } = renderHook(() =>
-      useCreateWallet(navigation as unknown as CreateWalletProps['navigation'])
-    )
+    const { result } = renderHook(() => useCreateWallet(navigation as unknown as CreateWalletProps['navigation']))
 
     await act(() => {
       result.current.onNetworkSelect(new IndexPath(1))
     })
+  })
+  it('should select network with Array', async () => {
+    const setEthersProviderMock = jest.fn()
+
+    ;(useContext as jest.Mock).mockReturnValue({
+      setEthersProvider: setEthersProviderMock,
+    })
+
+    const navigate = jest.fn()
+    const navigation = { push: navigate }
+    const { result } = renderHook(() => useCreateWallet(navigation as unknown as CreateWalletProps['navigation']))
+
+    const IndexPathArray = [new IndexPath(1)]
+
+    await act(() => {
+      result.current.onNetworkSelect(IndexPathArray)
+    })
 
     expect(setEthersProviderMock).toHaveBeenCalledWith(NETWORKS.SEPOLIA)
-
   })
 })

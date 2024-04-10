@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import { WalletContext } from '../../context/WalletContext'
-import { requestETHBridgeCall, requestETHTransfer } from '../../services/transactions'
+import { requestETHBridgeCall } from '../../services/transactions'
 import { getSigner } from '../../services/wallet'
 import Toast from 'react-native-toast-message'
 import useLoading from '../../hooks/useLoading'

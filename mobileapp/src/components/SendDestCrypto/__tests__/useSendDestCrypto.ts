@@ -24,31 +24,33 @@ jest.mock('react-native-toast-message', () => ({
   hide: jest.fn(),
 }))
 
-describe('useSendETH hook', () => {
-  it('should send ETH transaction', async () => {
+describe('useSendDestCrypto hook', () => {
+  it('should send DestCrypto transaction', async () => {
     const getPrivateKeyMock = jest.fn().mockResolvedValue('getPrivateKeyMock')
     ;(useContext as jest.Mock).mockReturnValue({
       getPrivateKey: getPrivateKeyMock,
       currentNetwork: NETWORKS.LOCALHOST,
     })
     ;(getSigner as jest.Mock).mockReturnValueOnce('signer')
-    ;(requestETHTransfer as jest.Mock).mockReturnValueOnce('requestETHTransferMock')
     ;(Toast.show as jest.Mock).mockReturnValueOnce('Toast.showMock')
 
     const close = jest.fn((needRefresh: boolean) => needRefresh)
 
+    const actionMock = jest.fn().mockResolvedValue('actionMock')
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendDestCrypto({ address: 'address', close }))
+      const { result } = renderHook(() =>
+        useSendDestCrypto({ address: 'address', close, cryptoName: 'cryptoName', action: actionMock })
+      )
       resultHook = result
     })
 
     await act(async () => {
-      resultHook.current.sendETHTransaction()
+      resultHook.current.sendDestCryptoTransaction()
     })
 
     expect(getSigner).toHaveBeenCalledWith('getPrivateKeyMock', NETWORKS.LOCALHOST)
-    expect(requestETHTransfer).toHaveBeenCalledWith('address', '', NaN, 'signer', NETWORKS.LOCALHOST)
+    expect(actionMock).toHaveBeenCalledWith('address', '', NaN, 'signer', NETWORKS.LOCALHOST, 'mumbai', true)
 
     expect(Toast.show).toHaveBeenCalledWith({
       type: 'success',
@@ -58,37 +60,39 @@ describe('useSendETH hook', () => {
     expect(close).toHaveBeenCalledWith(true)
   })
 
-  it('should catch error in ETH transaction', async () => {
+  it('should catch error in transaction', async () => {
     const getPrivateKeyMock = jest.fn().mockResolvedValue('getPrivateKeyMock')
     ;(useContext as jest.Mock).mockReturnValue({
       getPrivateKey: getPrivateKeyMock,
       currentNetwork: NETWORKS.LOCALHOST,
     })
     ;(getSigner as jest.Mock).mockReturnValueOnce('signer')
-    ;(requestETHTransfer as jest.Mock).mockRejectedValue({
-      message: 'requestETHTransferMock',
-    })
     ;(Toast.show as jest.Mock).mockReturnValueOnce('Toast.showMock')
 
     const close = jest.fn((needRefresh: boolean) => needRefresh)
+    const actionMock = jest.fn().mockRejectedValue({
+      message: 'requesttransferMock',
+    })
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendDestCrypto({ address: 'address', close }))
+      const { result } = renderHook(() =>
+        useSendDestCrypto({ address: 'address', close, cryptoName: 'cryptoName', action: actionMock })
+      )
       resultHook = result
     })
 
     await act(async () => {
-      resultHook.current.sendETHTransaction()
+      resultHook.current.sendDestCryptoTransaction()
     })
 
     expect(getSigner).toHaveBeenCalledWith('getPrivateKeyMock', NETWORKS.LOCALHOST)
-    expect(requestETHTransfer).toHaveBeenCalledWith('address', '', NaN, 'signer', NETWORKS.LOCALHOST)
+    expect(actionMock).toHaveBeenCalledWith('address', '', NaN, 'signer', NETWORKS.LOCALHOST, 'mumbai', true)
 
     expect(Toast.show).toHaveBeenCalledWith({
       type: 'error',
       text1: 'Transaction failed! 😢',
-      text2: 'requestETHTransferMock',
+      text2: 'requesttransferMock',
     })
 
     expect(close).toHaveBeenCalledWith(false)
@@ -104,7 +108,9 @@ describe('useSendETH hook', () => {
     const close = jest.fn((needRefresh: boolean) => needRefresh)
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendDestCrypto({ address: 'address', close }))
+      const { result } = renderHook(() =>
+        useSendDestCrypto({ address: 'address', close, cryptoName: 'cryptoName', action: jest.fn() })
+      )
       resultHook = result
     })
 
