@@ -3,6 +3,7 @@ import { Wallet } from 'ethers';
 import {
   ArgentWrappedAccounts__factory,
   BaseWallet__factory,
+  ERC721__factory,
 } from './contracts';
 
 @Injectable()
@@ -35,5 +36,27 @@ export class SapphirePortfolioService {
     );
 
     return await argentWrappedAccounts.getAccountBalance(walletAddress);
+  }
+
+  async getNFTBalance(
+    signer: Wallet,
+    walletAddress: string,
+    nftStorageAddress: string,
+  ) {
+    const nftStorage = ERC721__factory.connect(nftStorageAddress, signer);
+
+    return Number(await nftStorage.balanceOf(walletAddress));
+  }
+
+  async getWrappedAccountAddress(
+    signer: Wallet,
+    argentWrappedAccountsAddress: string,
+    walletAddress: string,
+  ) {
+    const argentWrappedAccounts = ArgentWrappedAccounts__factory.connect(
+      argentWrappedAccountsAddress,
+      signer,
+    );
+    return await argentWrappedAccounts.getAccountContract(walletAddress);
   }
 }

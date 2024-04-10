@@ -7,6 +7,7 @@ import { ExecuteTransaction } from './dto/execute-transaction.dto';
 import { lastValueFrom } from 'rxjs';
 import { GetBalance } from './dto/get-balance.dto';
 import { GetWrappedAccountAddress } from './dto/get-wrapped-account-address.dto';
+import { GetNFTBalance } from './dto/get-nft-balance.dto';
 
 @Controller()
 export class ApiGatewayController {
@@ -135,6 +136,32 @@ export class ApiGatewayController {
   })
   getBalance(@Body() getBalanceRequest: GetBalance) {
     return this.apiGatewayService.getBalance(getBalanceRequest);
+  }
+
+  @Post('/get_nft_balance')
+  @ApiResponse({
+    status: 201,
+    description: 'Balance successfully retrieved. It will return the balance',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            network_name: {
+              type: 'number',
+              example: 1,
+            },
+            total: {
+              type: 'number',
+              example: 1,
+            },
+          },
+        },
+      },
+    },
+  })
+  getNFTBalance(@Body() getNFTBalanceRequest: GetNFTBalance) {
+    return this.apiGatewayService.getNFTBalance(getNFTBalanceRequest);
   }
 
   @Post('/get-wrapped-account-address')

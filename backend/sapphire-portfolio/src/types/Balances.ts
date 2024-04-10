@@ -7,3 +7,7 @@ export type Balance = {
 export type Balances = {
   [key: string]: Balance;
 };
+
+export type NFTBalances = {
+  [key: string]: number;
+};
