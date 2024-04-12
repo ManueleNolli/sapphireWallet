@@ -5,7 +5,7 @@ import { EnvironmentService } from './environment/environment.service';
 import { EventPattern, Transport } from '@nestjs/microservices';
 import { GetBalanceEvent } from './events/get-balance-event';
 import { Balances, NFTBalances } from './types/Balances';
-import { CHAIN_CRYPTOS, CHAIN_IDS } from './constants/Networks';
+import { CHAIN_CRYPTOS, CHAIN_IDS, NETWORKS } from './constants/Networks';
 import { GetNFTBalanceEvent } from './events/get-nft-balance-event';
 import { ZeroAddress } from 'ethers';
 
@@ -44,6 +44,7 @@ export class SapphirePortfolioController {
       baseChainSigner,
       data.walletAddress,
     );
+    console.log('chainsIDs', chainsIDs);
 
     const baseChainID =
       await this.blockchainService.getChainID(baseChainSigner);
@@ -68,6 +69,7 @@ export class SapphirePortfolioController {
 
     for (const chainID of chainsIDs) {
       const networkName = CHAIN_IDS[chainID.toString()];
+      console.log('networkName', networkName);
 
       const signer = await this.blockchainService.getProviderAndSigner({
         network: networkName,
@@ -135,7 +137,7 @@ export class SapphirePortfolioController {
 
     const nftBalances: NFTBalances = {};
 
-    nftBalances[data.network] = baseChainBalance;
+    nftBalances[data.network as NETWORKS] = baseChainBalance;
 
     for (const network of data.destinationChains) {
       const signer = await this.blockchainService.getProviderAndSigner({
@@ -179,11 +181,6 @@ export class SapphirePortfolioController {
 
       nftBalances[network] = balance;
     }
-
-    nftBalances['total'] = Object.values(nftBalances).reduce(
-      (acc, val) => acc + val,
-      0,
-    );
 
     return nftBalances;
   }

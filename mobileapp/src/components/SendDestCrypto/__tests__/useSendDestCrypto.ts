@@ -50,7 +50,7 @@ describe('useSendDestCrypto hook', () => {
     })
 
     expect(getSigner).toHaveBeenCalledWith('getPrivateKeyMock', NETWORKS.LOCALHOST)
-    expect(actionMock).toHaveBeenCalledWith('address', '', NaN, 'signer', NETWORKS.LOCALHOST, 'mumbai', true)
+    expect(actionMock).toHaveBeenCalledWith('address', '', NaN, 'signer', NETWORKS.LOCALHOST, 'amoy', true)
 
     expect(Toast.show).toHaveBeenCalledWith({
       type: 'success',
@@ -87,7 +87,7 @@ describe('useSendDestCrypto hook', () => {
     })
 
     expect(getSigner).toHaveBeenCalledWith('getPrivateKeyMock', NETWORKS.LOCALHOST)
-    expect(actionMock).toHaveBeenCalledWith('address', '', NaN, 'signer', NETWORKS.LOCALHOST, 'mumbai', true)
+    expect(actionMock).toHaveBeenCalledWith('address', '', NaN, 'signer', NETWORKS.LOCALHOST, 'amoy', true)
 
     expect(Toast.show).toHaveBeenCalledWith({
       type: 'error',

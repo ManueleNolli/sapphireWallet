@@ -321,7 +321,7 @@ describe('TransactionUtils', () => {
         0.5,
         mockSigner as any,
         NETWORKS.SEPOLIA,
-        BRIDGE_NETWORKS.MUMBAI,
+        BRIDGE_NETWORKS.AMOY,
         false
       )
 
@@ -355,7 +355,7 @@ describe('TransactionUtils', () => {
         0.5,
         mockSigner as any,
         NETWORKS.SEPOLIA,
-        BRIDGE_NETWORKS.MUMBAI,
+        BRIDGE_NETWORKS.AMOY,
         true
       )
 
@@ -390,7 +390,7 @@ describe('TransactionUtils', () => {
           0.5,
           mockSigner as any,
           NETWORKS.SEPOLIA,
-          BRIDGE_NETWORKS.MUMBAI,
+          BRIDGE_NETWORKS.AMOY,
           false
         )
       ).rejects.toThrow('Failed to relay transaction')
@@ -434,7 +434,7 @@ describe('TransactionUtils', () => {
           0.5,
           mockSigner as any,
           NETWORKS.SEPOLIA,
-          BRIDGE_NETWORKS.MUMBAI,
+          BRIDGE_NETWORKS.AMOY,
           true
         )
       ).rejects.toThrow('Failed to contact Blockchain')

@@ -151,10 +151,6 @@ export class ApiGatewayController {
               type: 'number',
               example: 1,
             },
-            total: {
-              type: 'number',
-              example: 1,
-            },
           },
         },
       },

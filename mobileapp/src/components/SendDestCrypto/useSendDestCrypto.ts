@@ -46,7 +46,7 @@ export default function useSendDestCrypto({ address, cryptoName, action, close }
         value,
         signer,
         currentNetwork,
-        BRIDGE_NETWORKS.MUMBAI,
+        BRIDGE_NETWORKS.AMOY,
         checkedIsSapphireInternalTX
       )
       setIsLoading(false)

@@ -14,7 +14,7 @@ describe('Home', () => {
       chainID: '1',
       crypto: 'ETH',
     },
-    mumbai: {
+    amoy: {
       balance: '1.0',
       chainID: '1',
       crypto: 'MATIC',
@@ -167,7 +167,7 @@ describe('Home', () => {
       currentNetwork: NETWORKS.SEPOLIA,
       backgroundImage: 'light',
       balances: {
-        mumbai: {
+        amoy: {
           balance: '1.0',
           chainID: '1',
           crypto: 'MATIC',

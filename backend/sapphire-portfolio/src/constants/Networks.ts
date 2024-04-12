@@ -3,7 +3,7 @@
 export enum NETWORKS {
   LOCALHOST = 'localhost',
   SEPOLIA = 'sepolia',
-  MUMBAI = 'mumbai',
+  AMOY = 'amoy',
 }
 
 type ChainIds = {
@@ -13,7 +13,7 @@ type ChainIds = {
 export const CHAIN_IDS: ChainIds = {
   '1337': NETWORKS.LOCALHOST,
   '11155111': NETWORKS.SEPOLIA,
-  '80001': NETWORKS.MUMBAI,
+  '80002': NETWORKS.AMOY,
 };
 
 type ChainCryptos = {
@@ -23,5 +23,5 @@ type ChainCryptos = {
 export const CHAIN_CRYPTOS: ChainCryptos = {
   '1337': 'ETH',
   '11155111': 'ETH',
-  '80001': 'MATIC',
+  '80002': 'MATIC',
 };

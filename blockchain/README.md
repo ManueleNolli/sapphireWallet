@@ -35,7 +35,7 @@ yarn start:local
 Because the project has the feature of a bridge, the contracts must be deployed in two different EVM networks. The possible networks are:
 * [Local](https://hardhat.org/hardhat-network/)
 * [Sepolia](https://sepolia.io/)
-* [Mumbai](https://mumbai.polygon.io/)
+* [Amoy](https://amoy.polygon.io/)
 
 <img src="https://gitlab-edu.supsi.ch/dti-isin/giuliano.gremlich/progetti_master/2023_2024/manuele-nolli/aa-interoperability/uploads/7247c41762af1229ee0f92b6e0d5573f/attention.png" alt="attention image" width="40" height="auto"> Do not forget to deploy both Base Chain and Destination Chain. Of course read the [Bridge](../bridge/README.md) documentation to understand the bridge architecture.
 
@@ -93,9 +93,9 @@ The contracts are already deployed in the following networks:
 | ARGENT MODULE    | 0x7ce41A92f938030ceb189DbdEF97ddc51407a134 |
 | SAPPHIRE NFTs    | 0xB9CA1dC04B2c4AadC007D5B2f3642756d24cd5dD |
 
-**Mumbai: Dest Chain**
+**Amoy: Dest Chain**
 
 | Contract                | Address                                    |
 |-------------------------|--------------------------------------------|
-| NFT STORAGE             | 0xc9508f0E5F5Cb13Cc191C038041E65e914D333D3 |
-| ARGENT WRAPPED ACCOUNTS | 0x00BEfBa0fa0ba559269E7Be6295898DB48D0637a |
+| NFT STORAGE             | 0x2Ccf4DAFAF0F7f5ABE2A74e40100E45824DAFB11 |
+| ARGENT WRAPPED ACCOUNTS | 0x57bB7c33fEC21EACE177092D6E3117F470FF0BFa |

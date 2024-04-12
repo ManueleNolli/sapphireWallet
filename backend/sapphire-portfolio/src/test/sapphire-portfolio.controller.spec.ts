@@ -43,7 +43,7 @@ describe('AppController', () => {
         .mockResolvedValue({} as Wallet);
       jest
         .spyOn(sapphireService, 'getChains')
-        .mockResolvedValue([1337n, 11155111n, 80001n]);
+        .mockResolvedValue([1337n, 11155111n, 80002n]);
 
       jest.spyOn(blockchainService, 'getChainID').mockResolvedValue(1337n);
 
@@ -90,8 +90,8 @@ describe('AppController', () => {
           balance: '2000000000000000000',
           crypto: 'ETH',
         },
-        mumbai: {
-          chainID: '80001',
+        amoy: {
+          chainID: '80002',
           balance: '2000000000000000000',
           crypto: 'MATIC',
         },

@@ -1,3 +1,5 @@
+import { NETWORKS } from '../constants/Networks';
+
 export type Balance = {
   chainID: string;
   balance: string;
@@ -5,9 +7,9 @@ export type Balance = {
 };
 
 export type Balances = {
-  [key: string]: Balance;
+  [key in NETWORKS]?: Balance;
 };
 
 export type NFTBalances = {
-  [key: string]: number;
+  [key in NETWORKS]?: number;
 };

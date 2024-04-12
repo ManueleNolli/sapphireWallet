@@ -10,7 +10,7 @@ type NetworkToChainIds = {
 export const NETWORK_TO_CHAIN_IDS: NetworkToChainIds = {
   [ALL_NETWORKS.LOCALHOST]: '1337',
   [ALL_NETWORKS.SEPOLIA]: '11155111',
-  [ALL_NETWORKS.MUMBAI]: '80001',
+  [ALL_NETWORKS.AMOY]: '80002',
 }
 
 type ChainCryptos = {
@@ -20,5 +20,5 @@ type ChainCryptos = {
 export const CHAIN_CRYPTOS: ChainCryptos = {
   '1337': 'ETH',
   '11155111': 'ETH',
-  '80001': 'MATIC',
+  '80002': 'MATIC',
 }

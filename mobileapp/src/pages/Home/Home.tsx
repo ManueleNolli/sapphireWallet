@@ -136,7 +136,7 @@ export default function Home() {
       action: () => {
         setIsSendMATICModalVisible(true)
       },
-      visible: balances?.[BRIDGE_NETWORKS.MUMBAI] && Number.parseFloat(balances[BRIDGE_NETWORKS.MUMBAI].balance) > 0,
+      visible: balances?.[BRIDGE_NETWORKS.AMOY] && Number.parseFloat(balances[BRIDGE_NETWORKS.AMOY].balance) > 0,
       modal: () =>
         balances && (
           <Modal
@@ -148,9 +148,9 @@ export default function Home() {
             <SendDestCrypto
               action={requestMATICTransfer}
               close={closeSendMATICModal}
-              cryptoName={balances[BRIDGE_NETWORKS.MUMBAI].crypto}
+              cryptoName={balances[BRIDGE_NETWORKS.AMOY].crypto}
               address={getWalletContractAddress()}
-              balance={Number.parseFloat(balances[BRIDGE_NETWORKS.MUMBAI].balance)}
+              balance={Number.parseFloat(balances[BRIDGE_NETWORKS.AMOY].balance)}
             />
           </Modal>
         ),

@@ -227,7 +227,7 @@ export async function requestETHBridgeCall(
 ) {
   const ethTransferTransaction = await prepareBridgeTransaction(
     BridgeCallType.BRIDGE_ETH,
-    80001n,
+    BigInt(NETWORK_TO_CHAIN_IDS[BRIDGE_NETWORKS.AMOY]),
     to,
     parseEther(value.toString()),
     '0x',
@@ -250,7 +250,7 @@ export async function requestETHBridgeCall(
     nonce,
     signedTransaction,
     transactionData,
-    bridgeNetwork: BRIDGE_NETWORKS.MUMBAI,
+    bridgeNetwork: BRIDGE_NETWORKS.AMOY,
   })) as executeTransactionResponse | backendErrorResponse
 
   if ('error' in result) {
@@ -324,7 +324,7 @@ export async function requestMATICTransfer(
     nonce,
     signedTransaction,
     transactionData: wrappedBaseChainTX,
-    bridgeNetwork: BRIDGE_NETWORKS.MUMBAI,
+    bridgeNetwork: BRIDGE_NETWORKS.AMOY,
   })) as executeTransactionResponse | backendErrorResponse
 
   if ('error' in result) {

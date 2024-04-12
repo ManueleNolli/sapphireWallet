@@ -128,7 +128,7 @@ describe('useHome', () => {
         chainID: '1',
         crypto: 'ETH',
       },
-      mumbai: {
+      amoy: {
         balance: '1000000000000000000',
         chainID: '1',
         crypto: 'MATIC',
@@ -182,7 +182,7 @@ describe('useHome', () => {
           chainID: '1',
           crypto: 'ETH',
         },
-        mumbai: {
+        amoy: {
           balance: '1000000000000000000',
           chainID: '1',
           crypto: 'MATIC',
@@ -194,7 +194,7 @@ describe('useHome', () => {
           chainID: '1',
           crypto: 'ETH',
         },
-        mumbai: {
+        amoy: {
           balance: '2000000000000000000',
           chainID: '1',
           crypto: 'MATIC',
@@ -221,7 +221,7 @@ describe('useHome', () => {
           chainID: '1',
           crypto: 'ETH',
         },
-        mumbai: {
+        amoy: {
           balance: '2.0',
           chainID: '1',
           crypto: 'MATIC',
@@ -248,7 +248,7 @@ describe('useHome', () => {
           chainID: '1',
           crypto: 'ETH',
         },
-        mumbai: {
+        amoy: {
           balance: '2.0',
           chainID: '1',
           crypto: 'MATIC',
@@ -275,7 +275,7 @@ describe('useHome', () => {
           chainID: '1',
           crypto: 'ETH',
         },
-        mumbai: {
+        amoy: {
           balance: '2.0',
           chainID: '1',
           crypto: 'MATIC',
@@ -302,7 +302,7 @@ describe('useHome', () => {
           chainID: '1',
           crypto: 'ETH',
         },
-        mumbai: {
+        amoy: {
           balance: '1.0',
           chainID: '1',
           crypto: 'MATIC',
