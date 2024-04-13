@@ -13,6 +13,8 @@ import { GetWrappedAccountAddress } from './dto/get-wrapped-account-address.dto'
 import { GetWrappedAccountAddressEvent } from './events/get-wrapped-account-address.event';
 import { GetNFTBalance } from './dto/get-nft-balance.dto';
 import { GetNFTBalanceEvent } from './events/get-nft-balance-event';
+import { GetNFTMetadata } from './dto/get-nft-metadata.dto';
+import { GetNFTMetadataEvent } from './events/get-nft-metadata-event';
 
 @Injectable()
 export class ApiGatewayService {
@@ -108,7 +110,22 @@ export class ApiGatewayService {
         new GetNFTBalanceEvent(
           getNFTBalanceRequest.walletAddress,
           getNFTBalanceRequest.network,
-          getNFTBalanceRequest.destinationChains,
+        ),
+      )
+      .pipe(
+        catchError((error) =>
+          throwError(() => new RpcException(error.response)),
+        ),
+      );
+  }
+
+  getNFTMetadata(getNFTMetadataRequest: GetNFTMetadata) {
+    return this.sapphirePortofolio
+      .send(
+        'get_nft_metadata',
+        new GetNFTMetadataEvent(
+          getNFTMetadataRequest.address,
+          getNFTMetadataRequest.network,
         ),
       )
       .pipe(

@@ -8,6 +8,7 @@ import { lastValueFrom } from 'rxjs';
 import { GetBalance } from './dto/get-balance.dto';
 import { GetWrappedAccountAddress } from './dto/get-wrapped-account-address.dto';
 import { GetNFTBalance } from './dto/get-nft-balance.dto';
+import { GetNFTMetadata } from './dto/get-nft-metadata.dto';
 
 @Controller()
 export class ApiGatewayController {
@@ -138,7 +139,7 @@ export class ApiGatewayController {
     return this.apiGatewayService.getBalance(getBalanceRequest);
   }
 
-  @Post('/get_nft_balance')
+  @Post('/get-nft-balance')
   @ApiResponse({
     status: 201,
     description: 'Balance successfully retrieved. It will return the balance',
@@ -158,6 +159,57 @@ export class ApiGatewayController {
   })
   getNFTBalance(@Body() getNFTBalanceRequest: GetNFTBalance) {
     return this.apiGatewayService.getNFTBalance(getNFTBalanceRequest);
+  }
+
+  @Post('/get-nft-metadata')
+  @ApiResponse({
+    status: 201,
+    description: 'Metadata successfully retrieved. It will return the metadata',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+              example: "NFT's name",
+            },
+            description: {
+              type: 'string',
+              example: "NFT's description",
+            },
+            image: {
+              type: 'string',
+              example:
+                'https://gateway.pinata.cloud/ipfs/bafybeib3pgyhzx7j7yfeigqtjqxnvjz7c4ic32dxu6lp4iqhjnq2sd2tum/0.png',
+            },
+            tokenId: {
+              type: 'number',
+              example: 0,
+            },
+            collectionName: {
+              type: 'string',
+              example: "Collection's name",
+            },
+            collectionDescription: {
+              type: 'string',
+              example: "Collection's description",
+            },
+            collectionAddress: {
+              type: 'string',
+              example: '0xB9CA1dC04B2c4AadC007D5B2f3642756d24cd5dD',
+            },
+            network: {
+              type: 'string',
+              example: 'sepolia',
+            },
+          },
+        },
+      },
+    },
+  })
+  getNFTMetadata(@Body() getNFTMetadataRequest: GetNFTMetadata) {
+    return this.apiGatewayService.getNFTMetadata(getNFTMetadataRequest);
   }
 
   @Post('/get-wrapped-account-address')

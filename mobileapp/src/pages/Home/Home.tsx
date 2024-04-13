@@ -14,7 +14,15 @@ import { appStyles, vh, vw } from '../../Styles'
 import { BlurView } from 'expo-blur'
 import { formatBlockchainAddress } from '../../utils/formatBlockchainData'
 import useHome from './useHome'
-import { bridgeETHtoMATIC, qrCode, sendETH, sendMATIC, sendNFTs } from '../../assets/AssetsRegistry'
+import {
+  bridgeETHtoMATIC,
+  bridgeNFT,
+  qrCode,
+  sendETH,
+  sendMATIC,
+  sendNFTsAmoy,
+  sendNFTsBaseChain,
+} from '../../assets/AssetsRegistry'
 import Receive from '../../components/Receive/Receive'
 import SendETH from '../../components/SendETH/SendETH'
 import SendNFT from '../../components/SendNFT/SendNFT'
@@ -28,6 +36,7 @@ export default function Home() {
     currentNetwork,
     backgroundImage,
     balances,
+    balancesNFT,
     isBalanceLoading,
     getWalletContractAddress,
     copyAddressToClipboard,
@@ -37,27 +46,43 @@ export default function Home() {
     setIsSendETHModalVisible,
     isSendMATICModalVisible,
     setIsSendMATICModalVisible,
-    isSendNFTModalVisible,
-    setIsSendNFTModalVisible,
+    isSendEthereumNFTModalVisible,
+    setIsSendEthereumNFTModalVisible,
+    isSendPolygonNFTModalVisible,
+    setIsSendPolygonNFTModalVisible,
     isBridgeETHtoMATICModalVisible,
     setIsBridgeETHtoMATICModalVisible,
+    isBridgeNFTModalVisible,
+    setIsBridgeNFTModalVisible,
     onRefresh,
     isRefreshing,
     modalReceiveBackdrop,
     modalSendETHBackdrop,
     modalSendMATICBackdrop,
-    modalSendNFTBackdrop,
+    modalSendEthereumNFTBackdrop,
+    modalSendPolygonNFTBackdrop,
     modalBridgeETHtoMATICBackdrop,
+    modalBridgeNFTBackdrop,
     closeSendETHModal,
     closeBridgeETHtoMATICModal,
+    closeBridgeNFTModal,
     closeSendMATICModal,
-    closeSendNFTModal,
+    closeSendEthereumNFTModal,
+    closeSendPolygonNFTModal,
   } = useHome()
   const styles = useStyleSheet(themedStyles)
   const theme = useTheme()
 
   // DATA
-  const buttonData = [
+  const buttonData: {
+    id: number
+    title: string
+    description: string
+    image: any
+    action: () => void
+    visible: boolean
+    modal: any
+  }[] = [
     {
       id: 1,
       title: 'Receive',
@@ -86,7 +111,7 @@ export default function Home() {
       action: () => {
         setIsSendETHModalVisible(true)
       },
-      visible: balances?.[currentNetwork] && Number.parseFloat(balances[currentNetwork].balance) > 0,
+      visible: !!(balances?.[currentNetwork] && Number.parseFloat(balances[currentNetwork].balance) > 0),
       modal: () =>
         balances && (
           <Modal
@@ -111,7 +136,7 @@ export default function Home() {
       action: () => {
         setIsBridgeETHtoMATICModalVisible(true)
       },
-      visible: balances?.[currentNetwork] && Number.parseFloat(balances[currentNetwork].balance) > 0,
+      visible: !!(balances?.[currentNetwork] && Number.parseFloat(balances[currentNetwork].balance) > 0),
       modal: () =>
         balances && (
           <Modal
@@ -136,7 +161,7 @@ export default function Home() {
       action: () => {
         setIsSendMATICModalVisible(true)
       },
-      visible: balances?.[BRIDGE_NETWORKS.AMOY] && Number.parseFloat(balances[BRIDGE_NETWORKS.AMOY].balance) > 0,
+      visible: !!(balances?.[BRIDGE_NETWORKS.AMOY] && Number.parseFloat(balances[BRIDGE_NETWORKS.AMOY].balance) > 0),
       modal: () =>
         balances && (
           <Modal
@@ -158,20 +183,60 @@ export default function Home() {
     {
       id: 5,
       title: 'Send NFTs',
-      description: 'Send NFTs to another wallet address',
-      image: sendNFTs,
+      description: `Send Ethereum NFTs to another wallet address`,
+      image: sendNFTsBaseChain,
       action: () => {
-        setIsSendNFTModalVisible(true)
+        setIsSendEthereumNFTModalVisible(true)
       },
-      visible: true,
+      visible: !!(balancesNFT?.[currentNetwork] && balancesNFT[currentNetwork] > 0),
       modal: () => (
         <Modal
           animationType="fade"
-          visible={isSendNFTModalVisible}
+          visible={isSendEthereumNFTModalVisible}
           backdropStyle={styles.modalBackdrop}
-          onBackdropPress={modalSendNFTBackdrop}
+          onBackdropPress={modalSendEthereumNFTBackdrop}
         >
-          <SendNFT address={getWalletContractAddress()} close={closeSendNFTModal} />
+          <SendNFT address={getWalletContractAddress()} close={closeSendEthereumNFTModal} />
+        </Modal>
+      ),
+    },
+    {
+      id: 6,
+      title: 'Bridge NFTs',
+      description: `Bridge NFT to your wrapped wallet account in the Polygon network`,
+      image: bridgeNFT,
+      action: () => {
+        setIsBridgeNFTModalVisible(true)
+      },
+      visible: !!(balancesNFT?.[currentNetwork] && balancesNFT[currentNetwork] > 0),
+      modal: () => (
+        <Modal
+          animationType="fade"
+          visible={false}
+          backdropStyle={styles.modalBackdrop}
+          onBackdropPress={modalBridgeNFTBackdrop}
+        >
+          <Text>Bridge NFT</Text>
+        </Modal>
+      ),
+    },
+    {
+      id: 7,
+      title: 'Send NFTs',
+      description: `Send Polygon NFTs to another wallet address`,
+      image: sendNFTsAmoy,
+      action: () => {
+        setIsSendPolygonNFTModalVisible(true)
+      },
+      visible: !!(balancesNFT?.[BRIDGE_NETWORKS.AMOY] && balancesNFT[BRIDGE_NETWORKS.AMOY] > 0),
+      modal: () => (
+        <Modal
+          animationType="fade"
+          visible={false}
+          backdropStyle={styles.modalBackdrop}
+          onBackdropPress={modalSendPolygonNFTBackdrop}
+        >
+          <Text>Send NFT Polygon</Text>
         </Modal>
       ),
     },

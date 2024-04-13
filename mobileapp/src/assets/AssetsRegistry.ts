@@ -1,4 +1,5 @@
 import { NETWORKS } from '../constants/Networks'
+import { BRIDGE_NETWORKS } from '../constants/BridgeNetworks'
 
 const assetsPath = '../../assets/'
 
@@ -20,13 +21,16 @@ const homeBackground = () => {
 const hardhatNetworkLogo = require(assetsPath + 'NetworkLogoHardhat.png')
 const sepoliaNetworkLogo = require(assetsPath + 'NetworkLogoSepolia.png')
 const ethereumNetworkLogo = require(assetsPath + 'NetworkLogoEthereum.png')
+const polygonNetworkLogo = require(assetsPath + 'NetworkLogoPolygon.png')
 
-const networkLogo = (network: NETWORKS) => {
+const networkLogo = (network: NETWORKS | BRIDGE_NETWORKS) => {
   switch (network) {
     case NETWORKS.LOCALHOST:
       return hardhatNetworkLogo
     case NETWORKS.SEPOLIA:
       return sepoliaNetworkLogo
+    case BRIDGE_NETWORKS.AMOY:
+      return polygonNetworkLogo
     default:
       return ethereumNetworkLogo
   }
@@ -36,11 +40,13 @@ const qrCode = require(assetsPath + 'QrCode.png')
 const qrCodeSmall = require(assetsPath + 'QrCodeSmall.png')
 
 const sendETH = require(assetsPath + 'SendETH.png')
-const sendNFTs = require(assetsPath + 'SendNFTs.png')
+const sendNFTsBaseChain = require(assetsPath + 'SendNFTsBaseChain.png')
+const sendNFTsAmoy = require(assetsPath + 'SendNFTsAmoy.png')
 
 const sendMATIC = require(assetsPath + 'SendMATIC.png')
 
 const bridgeETHtoMATIC = require(assetsPath + 'BridgeETHtoMATIC.png')
+const bridgeNFT = require(assetsPath + 'BridgeNFTtoMATIC.png')
 
 const NFTPlaceholder = require(assetsPath + 'NFTPlaceholder.png')
 
@@ -55,7 +61,9 @@ export {
   qrCodeSmall,
   sendETH,
   sendMATIC,
-  sendNFTs,
+  sendNFTsBaseChain,
+  sendNFTsAmoy,
   bridgeETHtoMATIC,
+  bridgeNFT,
   NFTPlaceholder,
 }

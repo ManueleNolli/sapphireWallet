@@ -1,8 +1,8 @@
 import { NetworkSelectorEvent } from './network-selector.event';
 
-export class GetNFTBalanceEvent extends NetworkSelectorEvent {
+export class GetNFTMetadataEvent extends NetworkSelectorEvent {
   constructor(
-    public readonly walletAddress: string,
+    public readonly address: string,
     public readonly network: string,
   ) {
     super(network);

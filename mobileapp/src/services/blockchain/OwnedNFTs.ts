@@ -1,61 +1,47 @@
-import { Provider } from 'ethers'
-import { SapphireNFTs__factory } from '../../contracts'
 import { NETWORKS } from '../../constants/Networks'
+import {
+  BACKEND_ENDPOINTS,
+  backendErrorResponse,
+  contactBackend,
+  getNFTMetadataResponse,
+  getWrappedAccountAddressResponse,
+} from '../backend'
+import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 
 export type OwnedNFT = {
   name: string
   description: string
   image: string
-  tokenId: string
-  network: NETWORKS
+  tokenId: number
+  network: NETWORKS | BRIDGE_NETWORKS
   collectionAddress: string
   collectionName: string
   collectionDescription: string
 }
 
-export async function ownedNFTs(
-  accountAddress: string,
-  contractERC721Address: string,
-  provider: Provider,
-  network: NETWORKS
-): Promise<OwnedNFT[]> {
-  const contract = SapphireNFTs__factory.connect(
-    contractERC721Address,
-    provider
-  )
-  const balance = await contract.balanceOf(accountAddress)
-  const balanceInt = parseInt(balance.toString())
+export async function ownedNFTs(address: string, network: NETWORKS | BRIDGE_NETWORKS): Promise<OwnedNFT[]> {
+  let realAddress = address
 
-  const tokens: OwnedNFT[] = []
-
-  for (let i = 0; i < balanceInt; i++) {
-    const token = await contract.tokenOfOwnerByIndex(accountAddress, i)
-    const tokenURI = await contract.tokenURI(token)
-    const metadata = await getNFTMetadata(tokenURI)
-
-    tokens.push({
-      name: metadata.name,
-      description: metadata.description,
-      image: metadata.image,
-      tokenId: token.toString(),
+  if (network in BRIDGE_NETWORKS) {
+    const result = (await contactBackend(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+      address,
       network,
-      collectionAddress: contractERC721Address,
-      collectionName: metadata.collectionName
-        ? metadata.collectionName
-        : 'collectionName',
-      collectionDescription: metadata.collectionDescription
-        ? metadata.collectionDescription
-        : 'collectionDescription',
-    })
-  }
-  return tokens
-}
+    })) as getWrappedAccountAddressResponse | backendErrorResponse
 
-export async function getNFTMetadata(tokenURI: string) {
-  const tokenURIGateway = 'https://gateway.pinata.cloud/ipfs/'
-  tokenURI = tokenURI.replace('ipfs://', tokenURIGateway)
-  const response = await fetch(tokenURI)
-  const metadata = await response.json()
-  metadata.image = metadata.image.replace('ipfs://', tokenURIGateway)
-  return metadata
+    if ('error' in result) {
+      throw new Error(result.error)
+    }
+
+    realAddress = result.address
+  }
+
+  const result = (await contactBackend(BACKEND_ENDPOINTS.GET_NFT_METADATA, {
+    network,
+    address: realAddress,
+  })) as getNFTMetadataResponse | backendErrorResponse
+  if ('error' in result) {
+    throw new Error((result as backendErrorResponse).error)
+  }
+
+  return result
 }

@@ -5,9 +5,11 @@ import { EnvironmentService } from './environment/environment.service';
 import { EventPattern, Transport } from '@nestjs/microservices';
 import { GetBalanceEvent } from './events/get-balance-event';
 import { Balances, NFTBalances } from './types/Balances';
-import { CHAIN_CRYPTOS, CHAIN_IDS, NETWORKS } from './constants/Networks';
-import { GetNFTBalanceEvent } from './events/get-nft-balance-event';
+import { CHAIN_CRYPTOS, CHAIN_IDS } from './constants/Networks';
 import { ZeroAddress } from 'ethers';
+import { GetNFTBalanceEvent } from './events/get-nft-balance-event';
+import { GetNFTMetadataEvent } from './events/get-nft-metadata-event';
+import { NFT } from './types/NftMetadata';
 
 @Controller()
 export class SapphirePortfolioController {
@@ -44,7 +46,6 @@ export class SapphirePortfolioController {
       baseChainSigner,
       data.walletAddress,
     );
-    console.log('chainsIDs', chainsIDs);
 
     const baseChainID =
       await this.blockchainService.getChainID(baseChainSigner);
@@ -69,7 +70,6 @@ export class SapphirePortfolioController {
 
     for (const chainID of chainsIDs) {
       const networkName = CHAIN_IDS[chainID.toString()];
-      console.log('networkName', networkName);
 
       const signer = await this.blockchainService.getProviderAndSigner({
         network: networkName,
@@ -124,27 +124,40 @@ export class SapphirePortfolioController {
       apiKey: apiKey,
     });
 
+    let chainsIDs = await this.sapphirePortfolioService.getChains(
+      baseChainSigner,
+      data.walletAddress,
+    );
+
+    const baseChainID =
+      await this.blockchainService.getChainID(baseChainSigner);
+    const baseChainName = CHAIN_IDS[baseChainID.toString()];
+
+    // Remove the base chain from the list of chains
+    chainsIDs = chainsIDs.filter((chainID) => chainID !== baseChainID);
+
+    const nftBalances: NFTBalances = {};
+
     const baseChainNFTStorage = this.environmentService.getWithNetwork(
       'SAPPHIRE_NFTS_ADDRESS',
       data.network,
     );
 
-    const baseChainBalance = await this.sapphirePortfolioService.getNFTBalance(
-      baseChainSigner,
-      data.walletAddress,
-      baseChainNFTStorage,
-    );
+    nftBalances[baseChainName] =
+      await this.sapphirePortfolioService.getNFTBalance(
+        baseChainSigner,
+        data.walletAddress,
+        baseChainNFTStorage,
+      );
 
-    const nftBalances: NFTBalances = {};
+    for (const chainID of chainsIDs) {
+      const networkName = CHAIN_IDS[chainID.toString()];
 
-    nftBalances[data.network as NETWORKS] = baseChainBalance;
-
-    for (const network of data.destinationChains) {
       const signer = await this.blockchainService.getProviderAndSigner({
-        network: network,
+        network: networkName,
         signerKey: this.environmentService.getWithNetwork(
           'SIGNER_PRIVATE_KEY',
-          network,
+          networkName,
         ),
         localHostAddress: backendAddress,
         apiKey: apiKey,
@@ -153,7 +166,7 @@ export class SapphirePortfolioController {
       const argentWrappedAccountsAddress =
         this.environmentService.getWithNetwork(
           'ARGENT_WRAPPED_ACCOUNTS_ADDRESS',
-          network,
+          networkName,
         );
 
       const wrappedAccountAddress =
@@ -164,24 +177,62 @@ export class SapphirePortfolioController {
         );
 
       if (wrappedAccountAddress === ZeroAddress) {
-        nftBalances[network] = 0;
+        nftBalances[networkName] = 0;
         continue;
       }
 
       const nftStorage = this.environmentService.getWithNetwork(
         'DEST_CHAIN_NFT_STORAGE_ADDRESS',
-        network,
+        networkName,
       );
 
-      const balance = await this.sapphirePortfolioService.getNFTBalance(
-        signer,
-        wrappedAccountAddress,
-        nftStorage,
-      );
-
-      nftBalances[network] = balance;
+      nftBalances[networkName] =
+        await this.sapphirePortfolioService.getNFTBalance(
+          signer,
+          wrappedAccountAddress,
+          nftStorage,
+        );
     }
 
     return nftBalances;
+  }
+
+  @EventPattern('get_nft_metadata', Transport.TCP)
+  async getNFTMetadata(data: GetNFTMetadataEvent) {
+    const ipfsGateway = this.environmentService.getUnhandled('IPFS_GATEWAY');
+
+    const apiKey = this.environmentService.getUnhandled(
+      'API_KEY',
+      data.network,
+    );
+
+    // In case of local chain
+    const backendAddress = this.environmentService.getUnhandled(
+      'ADDRESS',
+      data.network,
+    );
+
+    const signer = await this.blockchainService.getProviderAndSigner({
+      network: data.network,
+      signerKey: this.environmentService.getWithNetwork(
+        'SIGNER_PRIVATE_KEY',
+        data.network,
+      ),
+      localHostAddress: backendAddress,
+      apiKey: apiKey,
+    });
+
+    const NFTStorage = this.environmentService.getWithNetwork(
+      'SAPPHIRE_NFTS_ADDRESS',
+      data.network,
+    );
+
+    return this.sapphirePortfolioService.getNFTMetadata(
+      signer,
+      data.address,
+      NFTStorage,
+      data.network,
+      ipfsGateway,
+    );
   }
 }

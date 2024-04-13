@@ -4,10 +4,10 @@ async function mintSapphireNFTs() {
   const sapphireNFTsAddress = '0xB9CA1dC04B2c4AadC007D5B2f3642756d24cd5dD'
   const sapphireNFTs = await ethers.getContractAt('SapphireNFTs', sapphireNFTsAddress)
 
-  const to = '0x6214C0081c4C5e1FA3E43A35Eb46b760436f3CaB'
+  const to = '0x5F3b162685d46ba5B89F77f673e0fc7cF7A3C780'
 
   // mint
-  const mintTx0 = await sapphireNFTs.safeMint(to, '/0')
+  const mintTx0 = await sapphireNFTs.safeMint(to, '/2')
   await mintTx0.wait()
 
   // const mintTx1 = await sapphireNFTs.safeMint(to, "/1");

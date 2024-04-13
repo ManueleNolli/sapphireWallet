@@ -5,7 +5,8 @@
 import { BACKEND_ADDRESS } from '@env'
 import { NETWORKS } from '../../constants/Networks'
 import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
-import { Balances } from '../../types/Balance'
+import { Balances, BalancesNFT } from '../../types/Balance'
+import { OwnedNFT } from '../blockchain'
 
 /**
  * ENDPOINTS
@@ -15,6 +16,8 @@ export enum BACKEND_ENDPOINTS {
   ADD_AUTHORISED = 'add-authorised',
   EXECUTE_TRANSACTION = 'execute-transaction',
   GET_BALANCE = 'get-balance',
+  GET_NFT_BALANCE = 'get-nft-balance',
+  GET_NFT_METADATA = 'get-nft-metadata',
   GET_WRAPPED_ACCOUNT_ADDRESS = 'get-wrapped-account-address',
 }
 
@@ -43,6 +46,14 @@ interface executeTransactionBody extends backendBaseBody {
 
 interface getBalanceBody extends backendBaseBody {
   walletAddress: string
+}
+
+interface getBalanceNFTBody extends backendBaseBody {
+  walletAddress: string
+}
+
+interface getNFTMetadataBody extends backendBaseBody {
+  address: string
 }
 
 interface getWrappedAccountAddressBody extends backendBaseBody {
@@ -77,6 +88,9 @@ export interface getWrappedAccountAddressResponse extends backendBaseResponse {
 
 export type getBalanceResponse = Balances
 
+export type getBalancesNFTResponse = BalancesNFT
+
+export type getNFTMetadataResponse = OwnedNFT[]
 /**
  * CONTACT BACKEND
  */
@@ -85,6 +99,8 @@ interface backendBody {
   [BACKEND_ENDPOINTS.ADD_AUTHORISED]: addAuthorisedBody
   [BACKEND_ENDPOINTS.EXECUTE_TRANSACTION]: executeTransactionBody
   [BACKEND_ENDPOINTS.GET_BALANCE]: getBalanceBody
+  [BACKEND_ENDPOINTS.GET_NFT_BALANCE]: getBalanceNFTBody
+  [BACKEND_ENDPOINTS.GET_NFT_METADATA]: getNFTMetadataBody
   [BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS]: getWrappedAccountAddressBody
 }
 
@@ -93,6 +109,8 @@ interface backendResponse {
   [BACKEND_ENDPOINTS.ADD_AUTHORISED]: addAuthorisedResponse
   [BACKEND_ENDPOINTS.EXECUTE_TRANSACTION]: executeTransactionResponse
   [BACKEND_ENDPOINTS.GET_BALANCE]: getBalanceResponse
+  [BACKEND_ENDPOINTS.GET_NFT_BALANCE]: getBalanceResponse
+  [BACKEND_ENDPOINTS.GET_NFT_METADATA]: getNFTMetadataResponse
   [BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS]: getWrappedAccountAddressResponse
 }
 

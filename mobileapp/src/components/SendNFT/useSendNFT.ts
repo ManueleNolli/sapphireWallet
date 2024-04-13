@@ -7,10 +7,7 @@ import Toast from 'react-native-toast-message'
 import useLoading from '../../hooks/useLoading'
 import { OwnedNFT, ownedNFTs } from '../../services/blockchain'
 import { NETWORKS } from '../../constants/Networks'
-import {
-  LOCALHOST_SAPPHIRE_NFTS_ADDRESS,
-  SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
-} from '@env'
+import { LOCALHOST_SAPPHIRE_NFTS_ADDRESS, SEPOLIA_SAPPHIRE_NFTS_ADDRESS } from '@env'
 
 type useSendNFTProps = {
   address: string
@@ -19,10 +16,8 @@ type useSendNFTProps = {
 export default function useSendNFT({ address, close }: useSendNFTProps) {
   const { getPrivateKey, getWalletContractAddress } = useContext(WalletContext)
   const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
-  const { isLoading: isSendLoading, setIsLoading: setIsSendLoading } =
-    useLoading()
-  const { isLoading: isNFTLoading, setIsLoading: setIsNFTLoading } =
-    useLoading()
+  const { isLoading: isSendLoading, setIsLoading: setIsSendLoading } = useLoading()
+  const { isLoading: isNFTLoading, setIsLoading: setIsNFTLoading } = useLoading()
   const [valueAddress, setValueAddress] = useState<string>('')
   const [isAddressValid, setIsAddressValid] = useState<boolean>(false)
   const [nfts, setNFTs] = useState<OwnedNFT[]>([])
@@ -31,14 +26,7 @@ export default function useSendNFT({ address, close }: useSendNFTProps) {
 
   useEffect(() => {
     const getNFTs = async () => {
-      let nfts = await ownedNFTs(
-        getWalletContractAddress(),
-        currentNetwork === NETWORKS.LOCALHOST
-          ? LOCALHOST_SAPPHIRE_NFTS_ADDRESS
-          : SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
-        ethersProvider,
-        currentNetwork
-      )
+      let nfts = await ownedNFTs(address, currentNetwork)
 
       return nfts
     }
@@ -53,21 +41,12 @@ export default function useSendNFT({ address, close }: useSendNFTProps) {
 
   const sendNFTTransaction = async () => {
     setIsSendLoading(true)
-    const signer = await getSigner(
-      await getPrivateKey('Sign transaction to send ETH'),
-      currentNetwork
-    )
+    const signer = await getSigner(await getPrivateKey('Sign transaction to send ETH'), currentNetwork)
 
     const selectedNFTObj = nfts[selectedNFT]
 
     try {
-      await requestERC721TokenTransfer(
-        address,
-        valueAddress,
-        Number.parseFloat(selectedNFTObj.tokenId),
-        signer,
-        currentNetwork
-      )
+      await requestERC721TokenTransfer(address, valueAddress, selectedNFTObj.tokenId, signer, currentNetwork)
       setIsSendLoading(false)
       close()
       Toast.show({

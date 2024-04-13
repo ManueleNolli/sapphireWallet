@@ -4,7 +4,14 @@ import {
   ArgentWrappedAccounts__factory,
   BaseWallet__factory,
   ERC721__factory,
+  ERC721Enumerable__factory,
 } from './contracts';
+import { NFT } from './types/NftMetadata';
+import { NETWORKS } from './constants/Networks';
+import {
+  isStandardERC721Metadata,
+  standardERC721Metadata,
+} from './constants/NFTMetadata';
 
 @Injectable()
 export class SapphirePortfolioService {
@@ -58,5 +65,60 @@ export class SapphirePortfolioService {
       signer,
     );
     return await argentWrappedAccounts.getAccountContract(walletAddress);
+  }
+
+  async getNFTMetadata(
+    signer: Wallet,
+    walletAddress: string,
+    nftStorageAddress: string,
+    network: string,
+    ipfsGateway: string,
+  ) {
+    const nftStorage = ERC721Enumerable__factory.connect(
+      nftStorageAddress,
+      signer,
+    );
+
+    const balance = await nftStorage.balanceOf(walletAddress);
+    const balanceInt = parseInt(balance.toString());
+
+    const tokens: NFT[] = [];
+
+    for (let i = 0; i < balanceInt; i++) {
+      const tokenId = await nftStorage.tokenOfOwnerByIndex(walletAddress, i);
+      let tokenURI = await nftStorage.tokenURI(tokenId);
+
+      if (!tokenURI || !tokenURI.includes('ipfs://')) {
+        continue;
+      }
+
+      tokenURI = tokenURI.replace('ipfs://', ipfsGateway);
+      const response = await fetch(tokenURI);
+      const metadata = await response.json();
+
+      // check the metadata is a type of StandardMetadata
+      isStandardERC721Metadata(metadata);
+
+      if (metadata.image.includes('ipfs://')) {
+        metadata.image = metadata.image.replace('ipfs://', ipfsGateway);
+      }
+
+      const nft: NFT = {
+        name: metadata.name,
+        description: metadata.description,
+        image: metadata.image,
+        tokenId: parseInt(tokenId.toString()),
+        collectionName: metadata.collectionName ? metadata.collectionName : '',
+        collectionDescription: metadata.collectionDescription
+          ? metadata.collectionDescription
+          : '',
+        collectionAddress: nftStorageAddress,
+        network: network,
+      };
+
+      tokens.push(nft);
+    }
+
+    return tokens;
   }
 }
