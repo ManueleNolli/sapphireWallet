@@ -1,35 +1,19 @@
 import React from 'react'
 import { Button, Layout, Spinner, StyleService, Text, useStyleSheet } from '@ui-kitten/components'
 import { vh, vw } from '../../Styles'
-import useSendNFT from './useSendNFT'
+import useBridgeNFT from './useBridgeNFT'
 import InputAddress from '../InputAddress/InputAddress'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
-import { NETWORKS } from '../../constants/Networks'
 import { NFTCard } from '../NFTCard/NFTCard'
-import QRCodeScanner from '../QRCodeScanner/QRCodeScanner'
 import { OwnedNFT } from '../../services/blockchain'
 
 type SendETHProps = {
   address: string
   close: () => void
 }
-export default function SendNFT({ address, close }: SendETHProps) {
+export default function BridgeNFT({ address, close }: SendETHProps) {
   const styles = useStyleSheet(themedStyles)
-  const {
-    isSendLoading,
-    isNFTLoading,
-    sendNFTTransaction,
-    valueAddress,
-    setValueAddress,
-    isAddressValid,
-    setIsAddressValid,
-    nfts,
-    selectedNFT,
-    setSelectedNFT,
-    isQRCodeScanning,
-    setIsQRCodeScanning,
-    QRCodeFinishedScanning,
-  } = useSendNFT({
+  const { isSendLoading, isNFTLoading, sendBridgeTransaction, nfts, selectedNFT, setSelectedNFT } = useBridgeNFT({
     address,
     close,
   })
@@ -44,8 +28,6 @@ export default function SendNFT({ address, close }: SendETHProps) {
     )
   }
 
-  if (isQRCodeScanning) return <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />
-
   return (
     <Layout style={styles.container}>
       <Text
@@ -55,7 +37,7 @@ export default function SendNFT({ address, close }: SendETHProps) {
           paddingHorizontal: 2 * vw,
         }}
       >
-        Send NFT
+        Bridge NFT
       </Text>
       <Text
         style={{
@@ -63,15 +45,8 @@ export default function SendNFT({ address, close }: SendETHProps) {
           paddingHorizontal: 2 * vw,
         }}
       >
-        Select an NFT and input the address
+        Select an NFT to bridge
       </Text>
-      <InputAddress
-        value={valueAddress}
-        setValue={setValueAddress}
-        isValid={isAddressValid}
-        setIsValid={setIsAddressValid}
-        setIsQRCodeScanning={setIsQRCodeScanning}
-      />
       {isNFTLoading && (
         <View
           style={{
@@ -121,10 +96,10 @@ export default function SendNFT({ address, close }: SendETHProps) {
         style={{ marginTop: 2 * vh, width: '100%' }}
         appearance="outline"
         status="info"
-        disabled={!isAddressValid || nfts.length === 0}
-        onPress={sendNFTTransaction}
+        disabled={nfts.length === 0}
+        onPress={sendBridgeTransaction}
       >
-        Send NFT
+        Bridge NFT
       </Button>
     </Layout>
   )
@@ -137,7 +112,7 @@ const themedStyles = StyleService.create({
     alignItems: 'center',
     borderRadius: 10,
     maxHeight: 90 * vh,
-    maxWidth: 90 * vw,
+    width: 90 * vw,
   },
   indicator: {
     position: 'absolute',
@@ -145,16 +120,16 @@ const themedStyles = StyleService.create({
     alignItems: 'center',
   },
   nftContainer: {
-    height: 42 * vh,
-    width: 42 * vh,
+    height: 80 * vw,
+    width: 80 * vw,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
   },
   nftSelected: {
     backgroundColor: 'color-primary-400',
-    height: 38 * vh,
-    width: 38 * vh,
-    marginLeft: 2 * vh,
+    height: 76 * vw,
+    width: 76 * vw,
+    marginLeft: 2 * vw,
   },
 })

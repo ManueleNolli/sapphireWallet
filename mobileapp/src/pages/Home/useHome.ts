@@ -55,7 +55,7 @@ export default function useHome() {
 
   const closeModal = (needRefresh: boolean, setIsModalVisible: (value: boolean) => void) => {
     setIsModalVisible(false)
-    if (needRefresh) getBalances()
+    if (needRefresh) onRefresh()
   }
 
   useEffect(() => {

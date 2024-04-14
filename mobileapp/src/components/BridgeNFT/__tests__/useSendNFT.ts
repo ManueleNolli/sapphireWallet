@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { act, renderHook, waitFor } from '@testing-library/react-native'
 import { OwnedNFT, ownedNFTs } from '../../../services/blockchain'
 import { NETWORKS } from '../../../constants/Networks'
-import useSendNFT from '../useSendNFT'
+import useBridgeNFT from '../useBridgeNFT'
 import { getSigner } from '../../../services/wallet'
 import { requestERC721TokenTransfer } from '../../../services/transactions'
 import Toast from 'react-native-toast-message'
@@ -51,7 +51,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendNFT({ address: '', close: jest.fn() }))
+      const { result } = renderHook(() => useBridgeNFT({ address: '', close: jest.fn() }))
       resultHook = result
     })
 
@@ -81,7 +81,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendNFT({ address: '', close: jest.fn() }))
+      const { result } = renderHook(() => useBridgeNFT({ address: '', close: jest.fn() }))
       resultHook = result
     })
 
@@ -118,7 +118,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendNFT({ address: 'address', close: close }))
+      const { result } = renderHook(() => useBridgeNFT({ address: 'address', close: close }))
       resultHook = result
     })
 
@@ -168,7 +168,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendNFT({ address: 'address', close: close }))
+      const { result } = renderHook(() => useBridgeNFT({ address: 'address', close: close }))
       resultHook = result
     })
 
@@ -198,7 +198,7 @@ describe('useSendNFTs Hook', () => {
     const close = jest.fn()
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendNFT({ address: 'address', close: close }))
+      const { result } = renderHook(() => useBridgeNFT({ address: 'address', close: close }))
       resultHook = result
     })
 

@@ -18,6 +18,7 @@ export type BridgeCallEvent = {
 }
 
 export type BridgeActionType = {
-  signer: Wallet,
+  baseChainSigner: Wallet,
+  destChainSigner: Wallet,
   argentWrappedAccountsAddress: string,
 } & BridgeCallEvent

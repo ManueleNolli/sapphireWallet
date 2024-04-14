@@ -1,12 +1,12 @@
 import { NETWORKS } from '../../../constants/Networks'
 import { NFTPlaceholder } from '../../../assets/AssetsRegistry'
 import renderWithTheme from '../../../TestHelper'
-import useSendNFT from '../useSendNFT'
-import SendNFT from '../SendNFT'
+import useBridgeNFT from '../useBridgeNFT'
+import BridgeNFT from '../useBridgeNFT'
 import { fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-jest.mock('../useSendNFT', () => jest.fn())
+jest.mock('../useBridgeNFT', () => jest.fn())
 jest.mock('../../InputAddress/InputAddress')
 jest.mock('../../InputNumeric/InputNumeric')
 jest.mock('../../QRCodeScanner/QRCodeScanner')
@@ -24,7 +24,7 @@ describe('SendNFT', () => {
     jest.clearAllMocks()
   })
   it('render correctly', () => {
-    ;(useSendNFT as jest.Mock).mockReturnValue({
+    ;(useBridgeNFT as jest.Mock).mockReturnValue({
       isSendLoading: false,
       isNFTLoading: false,
       nfts: [
@@ -51,51 +51,43 @@ describe('SendNFT', () => {
       ],
     })
 
-    const tree = renderWithTheme(
-      <SendNFT address={'address'} close={() => {}} />
-    )
+    const tree = renderWithTheme(<useBridgeNFT address={'address'} close={() => {}} />)
 
     expect(tree).toMatchSnapshot()
   })
 
   it('render correctly without nfts', () => {
-    ;(useSendNFT as jest.Mock).mockReturnValue({
+    ;(useBridgeNFT as jest.Mock).mockReturnValue({
       isLoading: false,
       isNFTLoading: false,
       nfts: [],
     })
 
-    const tree = renderWithTheme(
-      <SendNFT address={'address'} close={() => {}} />
-    )
+    const tree = renderWithTheme(<useBridgeNFT address={'address'} close={() => {}} />)
 
     expect(tree.getAllByText('No NFTs found')).toBeTruthy()
     expect(tree).toMatchSnapshot()
   })
 
   it('render correctly loading', () => {
-    ;(useSendNFT as jest.Mock).mockReturnValue({
+    ;(useBridgeNFT as jest.Mock).mockReturnValue({
       isLoading: false,
       isNFTLoading: true,
       nfts: [],
     })
 
-    const tree = renderWithTheme(
-      <SendNFT address={'address'} close={() => {}} />
-    )
+    const tree = renderWithTheme(<useBridgeNFT address={'address'} close={() => {}} />)
     expect(tree).toMatchSnapshot()
   })
 
   it('render correctly without nfts', () => {
-    ;(useSendNFT as jest.Mock).mockReturnValue({
+    ;(useBridgeNFT as jest.Mock).mockReturnValue({
       isLoading: false,
       isNFTLoading: false,
       nfts: [],
     })
 
-    const tree = renderWithTheme(
-      <SendNFT address={'address'} close={() => {}} />
-    )
+    const tree = renderWithTheme(<useBridgeNFT address={'address'} close={() => {}} />)
 
     expect(tree.getAllByText('No NFTs found')).toBeTruthy()
     expect(tree).toMatchSnapshot()
@@ -103,7 +95,7 @@ describe('SendNFT', () => {
 
   it('Select NFT will change', () => {
     const setSelectedNFT = jest.fn((number: number) => {})
-    ;(useSendNFT as jest.Mock).mockReturnValue({
+    ;(useBridgeNFT as jest.Mock).mockReturnValue({
       isLoading: false,
       isNFTLoading: true,
       setSelectedNFT: setSelectedNFT,
@@ -131,9 +123,7 @@ describe('SendNFT', () => {
       ],
     })
 
-    const tree = renderWithTheme(
-      <SendNFT address={'address'} close={() => {}} />
-    )
+    const tree = renderWithTheme(<useBridgeNFT address={'address'} close={() => {}} />)
 
     const NFTCard = tree.getByTestId('NFTCard-1')
 
@@ -144,7 +134,7 @@ describe('SendNFT', () => {
 
   it('Show QRCode Scanner', async () => {
     const sendETHMock = jest.fn()
-    ;(useSendNFT as jest.Mock).mockReturnValue({
+    ;(useBridgeNFT as jest.Mock).mockReturnValue({
       isLoading: true,
       sendETHTransaction: sendETHMock,
       valueAddress: '0x123456789',
@@ -161,7 +151,7 @@ describe('SendNFT', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendNFT address={'address'} close={() => {}} />)
+      tree = renderWithTheme(<useBridgeNFT address={'address'} close={() => {}} />)
     })
 
     expect(tree).toMatchSnapshot()

@@ -5,7 +5,7 @@ import { EnvironmentService } from './environment/environment.service';
 import { EventPattern, Transport } from '@nestjs/microservices';
 import { GetBalanceEvent } from './events/get-balance-event';
 import { Balances, NFTBalances } from './types/Balances';
-import { CHAIN_CRYPTOS, CHAIN_IDS } from './constants/Networks';
+import { CHAIN_CRYPTOS, CHAIN_IDS, NETWORKS } from './constants/Networks';
 import { ZeroAddress } from 'ethers';
 import { GetNFTBalanceEvent } from './events/get-nft-balance-event';
 import { GetNFTMetadataEvent } from './events/get-nft-metadata-event';
@@ -222,10 +222,21 @@ export class SapphirePortfolioController {
       apiKey: apiKey,
     });
 
-    const NFTStorage = this.environmentService.getWithNetwork(
-      'SAPPHIRE_NFTS_ADDRESS',
-      data.network,
-    );
+    let NFTStorage;
+    if (
+      data.network === NETWORKS.LOCALHOST ||
+      data.network === NETWORKS.SEPOLIA
+    ) {
+      NFTStorage = this.environmentService.getWithNetwork(
+        'SAPPHIRE_NFTS_ADDRESS',
+        data.network,
+      );
+    } else {
+      NFTStorage = this.environmentService.getWithNetwork(
+        'DEST_CHAIN_NFT_STORAGE_ADDRESS',
+        data.network,
+      );
+    }
 
     return this.sapphirePortfolioService.getNFTMetadata(
       signer,

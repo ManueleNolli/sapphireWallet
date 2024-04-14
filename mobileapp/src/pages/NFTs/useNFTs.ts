@@ -3,6 +3,7 @@ import { BlockchainContext } from '../../context/BlockchainContext'
 import { WalletContext } from '../../context/WalletContext'
 import useLoading from '../../hooks/useLoading'
 import { OwnedNFT, ownedNFTs } from '../../services/blockchain'
+import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 
 export default function useNFTs() {
   const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
@@ -13,7 +14,9 @@ export default function useNFTs() {
   const [nfts, setNFTs] = useState<OwnedNFT[]>([])
 
   const getNFTs = async () => {
-    return await ownedNFTs(getWalletContractAddress(), currentNetwork)
+    const currentNetworkNFTs = await ownedNFTs(getWalletContractAddress(), currentNetwork)
+    const amoyNFTs = await ownedNFTs(getWalletContractAddress(), BRIDGE_NETWORKS.AMOY)
+    return currentNetworkNFTs.concat(amoyNFTs)
   }
 
   const refreshNFTs = async () => {

@@ -260,6 +260,55 @@ export async function requestETHBridgeCall(
   return result
 }
 
+export async function requestNFTBridgeCall(walletAddress: string, tokenId: number, signer: Signer, network: NETWORKS) {
+  const transactionData = ERC721__factory.createInterface().encodeFunctionData(
+    'safeTransferFrom(address,address,uint256)',
+    [
+      walletAddress,
+      network === NETWORKS.LOCALHOST
+        ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+        : (SEPOLIA_ARGENT_MODULE_ADDRESS as string),
+      tokenId,
+    ]
+  )
+
+  const transactionToBeExecutedOnBaseChain = await prepareBridgeTransaction(
+    BridgeCallType.BRIDGE_NFT,
+    BigInt(NETWORK_TO_CHAIN_IDS[BRIDGE_NETWORKS.AMOY]),
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_SAPPHIRE_NFTS_ADDRESS as string)
+      : (SEPOLIA_SAPPHIRE_NFTS_ADDRESS as string),
+    0n,
+    transactionData,
+    '0x'
+  )
+
+  const transactionWrappedForBaseChain = wrapInBridgeCall(walletAddress, transactionToBeExecutedOnBaseChain)
+
+  const { signedTransaction, nonce } = await signTransaction(
+    transactionWrappedForBaseChain,
+    signer,
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string)
+  )
+
+  const result = (await contactBackend(BACKEND_ENDPOINTS.EXECUTE_TRANSACTION, {
+    network,
+    walletAddress,
+    nonce,
+    signedTransaction,
+    transactionData: transactionWrappedForBaseChain,
+    bridgeNetwork: BRIDGE_NETWORKS.AMOY,
+  })) as executeTransactionResponse | backendErrorResponse
+
+  if ('error' in result) {
+    throw new Error(result.error)
+  }
+
+  return result
+}
+
 export async function requestMATICTransfer(
   walletAddress: string,
   to: string,

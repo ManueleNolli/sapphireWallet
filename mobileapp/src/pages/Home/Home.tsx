@@ -25,11 +25,12 @@ import {
 } from '../../assets/AssetsRegistry'
 import Receive from '../../components/Receive/Receive'
 import SendETH from '../../components/SendETH/SendETH'
-import SendNFT from '../../components/SendNFT/SendNFT'
+import SendEthereumNFT from '../../components/SendEthereumNFT/SendEthereumNFT'
 import BridgeETHtoMATIC from '../../components/BridgeETHtoMATIC/BridgeETHtoMATIC'
 import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 import SendDestCrypto from '../../components/SendDestCrypto/SendDestCrypto'
 import { requestMATICTransfer } from '../../services/transactions'
+import BridgeNFT from '../../components/BridgeNFT/BridgeNFT'
 
 export default function Home() {
   const {
@@ -196,7 +197,7 @@ export default function Home() {
           backdropStyle={styles.modalBackdrop}
           onBackdropPress={modalSendEthereumNFTBackdrop}
         >
-          <SendNFT address={getWalletContractAddress()} close={closeSendEthereumNFTModal} />
+          <SendEthereumNFT address={getWalletContractAddress()} close={closeSendEthereumNFTModal} />
         </Modal>
       ),
     },
@@ -212,11 +213,11 @@ export default function Home() {
       modal: () => (
         <Modal
           animationType="fade"
-          visible={false}
+          visible={isBridgeNFTModalVisible}
           backdropStyle={styles.modalBackdrop}
           onBackdropPress={modalBridgeNFTBackdrop}
         >
-          <Text>Bridge NFT</Text>
+          <BridgeNFT address={getWalletContractAddress()} close={closeBridgeNFTModal} />
         </Modal>
       ),
     },
