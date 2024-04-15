@@ -31,6 +31,7 @@ import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 import SendDestCrypto from '../../components/SendDestCrypto/SendDestCrypto'
 import { requestMATICTransfer } from '../../services/transactions'
 import BridgeNFT from '../../components/BridgeNFT/BridgeNFT'
+import SendDestNFT from '../../components/SendDestNFT/SendDestNFT'
 
 export default function Home() {
   const {
@@ -233,11 +234,11 @@ export default function Home() {
       modal: () => (
         <Modal
           animationType="fade"
-          visible={false}
+          visible={isSendPolygonNFTModalVisible}
           backdropStyle={styles.modalBackdrop}
           onBackdropPress={modalSendPolygonNFTBackdrop}
         >
-          <Text>Send NFT Polygon</Text>
+          <SendDestNFT address={getWalletContractAddress()} close={closeSendPolygonNFTModal} />
         </Modal>
       ),
     },
@@ -345,7 +346,7 @@ export default function Home() {
                 style={[
                   styles.balanceBlurContainer,
                   {
-                    paddingVertical: 1 * vh * Object.keys(balances ? balances : [1, 2]).length,
+                    paddingVertical: Object.keys(balances ? balances : [1]).length == 1 ? 1 * vh : 2 * vh,
                   },
                 ]}
               >
@@ -358,9 +359,11 @@ export default function Home() {
                   >
                     {balances &&
                       Object.entries(balances).map(([key, value]) => (
-                        <Text key={key} style={styles.balanceText} category="h4">
-                          {value.balance} {value.crypto}
-                        </Text>
+                        <View style={styles.balanceViewText} key={key}>
+                          <Text style={styles.balanceText} category="h4">
+                            {value.balance} {value.crypto}
+                          </Text>
+                        </View>
                       ))}
                   </ScrollView>
                 )}
@@ -425,7 +428,7 @@ const themedStyles = StyleService.create({
   },
   balanceContainer: {
     width: 60 * vw,
-    maxHeight: 15 * vh,
+    maxHeight: 16 * vh,
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -436,9 +439,12 @@ const themedStyles = StyleService.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  balanceViewText: {
+    height: 6 * vh,
+    justifyContent: 'center',
+  },
   balanceText: {
     color: 'white',
-    marginVertical: 0.5 * vh,
   },
   addressContainer: {
     position: 'absolute',

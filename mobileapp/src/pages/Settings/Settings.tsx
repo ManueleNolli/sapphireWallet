@@ -14,9 +14,6 @@ export default function Settings() {
   const { theme, resetLocalWallet, toggleThemeWithAnimation, themeIconRef, selectedIndex, onNetworkSelect } =
     useSettings()
 
-  const { getWalletContractAddress, getPrivateKey } = useContext(WalletContext)
-  const { currentNetwork } = useContext(BlockchainContext)
-
   const ThemeIcon = (props: any): IconElement => (
     <Icon {...props} name={theme === 'light' ? 'moon' : 'sun'} animation="zoom" ref={themeIconRef} />
   )

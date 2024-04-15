@@ -4,20 +4,20 @@
 
 import { AccountContract__factory, ArgentModule__factory, ERC721__factory } from '../../contracts'
 import { parseEther, Signer } from 'ethers'
-import { generateNonceForRelay, signOffChain, signOffChainForBridge } from './TransactionUtils'
 import {
-  BACKEND_ENDPOINTS,
-  backendErrorResponse,
-  contactBackend,
-  executeTransactionResponse,
-  getWrappedAccountAddressResponse,
-} from '../backend/'
+  generateNonceForRelay,
+  getWrappedAccountAddress,
+  signOffChain,
+  signOffChainForBridge,
+} from './TransactionUtils'
+import { BACKEND_ENDPOINTS, backendErrorResponse, contactBackend, executeTransactionResponse } from '../backend/'
 import { NETWORKS } from '../../constants/Networks'
 import {
   LOCALHOST_ARGENT_MODULE_ADDRESS,
   LOCALHOST_SAPPHIRE_NFTS_ADDRESS,
   SEPOLIA_ARGENT_MODULE_ADDRESS,
   SEPOLIA_SAPPHIRE_NFTS_ADDRESS,
+  AMOY_DEST_CHAIN_NFT_STORAGE_ADDRESS,
 } from '@env'
 import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 import { NETWORK_TO_CHAIN_IDS } from '../../constants/NetworksMetadata'
@@ -54,11 +54,7 @@ export async function prepareERC721TransferTransaction(
   tokenId: number
 ): Promise<TransactionArgent> {
   // Real transaction
-  // const transferTransaction = await ERC721Contract['safeTransferFrom(address,address,uint256)'].populateTransaction(
-  //   from,
-  //   to,
-  //   tokenId
-  // )
+
   const transferTransaction = ERC721__factory.createInterface().encodeFunctionData(
     'safeTransferFrom(address,address,uint256)',
     [from, to, tokenId]
@@ -321,16 +317,7 @@ export async function requestMATICTransfer(
   let realTo = to
 
   if (internalSapphireTX) {
-    const result = (await contactBackend(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
-      address: to,
-      network: destinationNetwork,
-    })) as getWrappedAccountAddressResponse | backendErrorResponse
-
-    if ('error' in result) {
-      throw new Error(result.error)
-    }
-
-    realTo = result.address
+    realTo = await getWrappedAccountAddress(to, destinationNetwork)
   }
 
   const wrappedTXForDestChain = AccountContract__factory.createInterface().encodeFunctionData('execute', [
@@ -380,5 +367,89 @@ export async function requestMATICTransfer(
     throw new Error(result.error)
   }
 
+  return result
+}
+
+export async function requestPolygonNFTTransfer(
+  walletAddress: string,
+  to: string,
+  tokenId: number,
+  signer: Signer,
+  network: NETWORKS,
+  destinationNetwork: BRIDGE_NETWORKS,
+  internalSapphireTX: boolean
+) {
+  let realTo = to
+
+  if (internalSapphireTX) {
+    realTo = await getWrappedAccountAddress(to, destinationNetwork)
+  }
+
+  const senderWrappedAccount = await getWrappedAccountAddress(walletAddress, destinationNetwork)
+
+  console.log('senderWrappedAccount: ', senderWrappedAccount)
+  console.log('receiverWrappedAccount: ', realTo)
+  console.log('tokenId: ', tokenId)
+  console.log('network: ', network)
+  console.log('destinationNetwork: ', destinationNetwork)
+
+  const transactionToBeExecutedOnDestChain = await prepareERC721TransferTransaction(
+    AMOY_DEST_CHAIN_NFT_STORAGE_ADDRESS,
+    senderWrappedAccount,
+    realTo,
+    tokenId
+  )
+
+  const transactionWrappedForDestChain = AccountContract__factory.createInterface().encodeFunctionData('execute', [
+    transactionToBeExecutedOnDestChain.to,
+    transactionToBeExecutedOnDestChain.value,
+    transactionToBeExecutedOnDestChain.data,
+  ])
+
+  const destinationChainId = NETWORK_TO_CHAIN_IDS[destinationNetwork]
+
+  const signedTXForDestChain = await signOffChainForBridge(
+    signer,
+    walletAddress,
+    transactionWrappedForDestChain,
+    BigInt(destinationChainId)
+  )
+
+  const transactionToBeExecutedOnBaseChain = {
+    callType: BridgeCallType.DEST,
+    chainId: BigInt(destinationChainId),
+    to: realTo,
+    value: 0,
+    data: transactionWrappedForDestChain,
+    signature: signedTXForDestChain,
+  }
+
+  const transactionWrappedForBaseChain = ArgentModule__factory.createInterface().encodeFunctionData('bridgeCall', [
+    walletAddress,
+    transactionToBeExecutedOnBaseChain,
+  ])
+
+  const { signedTransaction, nonce } = await signTransaction(
+    transactionWrappedForBaseChain,
+    signer,
+    network === NETWORKS.LOCALHOST
+      ? (LOCALHOST_ARGENT_MODULE_ADDRESS as string)
+      : (SEPOLIA_ARGENT_MODULE_ADDRESS as string)
+  )
+
+  const result = (await contactBackend(BACKEND_ENDPOINTS.EXECUTE_TRANSACTION, {
+    network,
+    walletAddress,
+    nonce,
+    signedTransaction,
+    transactionData: transactionWrappedForBaseChain,
+    bridgeNetwork: BRIDGE_NETWORKS.AMOY,
+  })) as executeTransactionResponse | backendErrorResponse
+
+  if ('error' in result) {
+    throw new Error(result.error)
+  }
+
+  console.log('result: ', result)
   return result
 }

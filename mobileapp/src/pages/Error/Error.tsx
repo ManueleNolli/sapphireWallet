@@ -7,12 +7,14 @@ import { StyleSheet } from 'react-native'
 
 type ErrorProps = {
   text?: string
+  children?: React.ReactNode
 }
-export default function Error({ text }: ErrorProps) {
+export default function Error({ text, children }: ErrorProps) {
   return (
     <Layout style={appStyles.center}>
       <Image style={styles.image} source={attention} />
       {text && <Text category="h6">{text}</Text>}
+      {children}
     </Layout>
   )
 }

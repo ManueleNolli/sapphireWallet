@@ -15,9 +15,7 @@ import { ethers } from "ethers";
  */
 async function bridgeAction({baseChainSigner,destChainSigner, argentWrappedAccountsAddress, callID, wallet, callType, to, value, data, signature, owner }: BridgeActionType) {
   bridgeLogger({callID, wallet, callType, to, value, data, signature, owner});
-  console.log("CallType: ", callType, BridgeCallType.DEST, BridgeCallType.BRIDGE_ETH, BridgeCallType.BRIDGE_NFT)
   const callTypeInt = parseInt(callType.toString())
-  console.log("CallType: ", callTypeInt, BridgeCallType.DEST, BridgeCallType.BRIDGE_ETH, BridgeCallType.BRIDGE_NFT)
   switch (callTypeInt) {
     case BridgeCallType.DEST:
       console.log("Handling DEST...")

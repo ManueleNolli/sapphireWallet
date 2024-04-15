@@ -26,14 +26,6 @@ export async function ownedNFTs(address: string, network: NETWORKS | BRIDGE_NETW
       address,
       network,
     })) as getWrappedAccountAddressResponse | backendErrorResponse
-    console.log(
-      'getting wrapped account address with address: ',
-      address,
-      ' and network: ',
-      network,
-      ' result: ',
-      result
-    )
 
     if ('error' in result) {
       throw new Error(result.error)
