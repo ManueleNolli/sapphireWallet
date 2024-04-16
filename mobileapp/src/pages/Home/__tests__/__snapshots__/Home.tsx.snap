@@ -127,7 +127,7 @@ exports[`Home renders correctly 1`] = `
               {
                 "borderRadius": 10,
                 "height": 213.44,
-                "maxHeight": 200.1,
+                "maxHeight": 213.44,
                 "overflow": "hidden",
                 "transform": [
                   {
@@ -181,52 +181,68 @@ exports[`Home renders correctly 1`] = `
                 showsVerticalScrollIndicator={false}
               >
                 <View>
-                  <Text
-                    appearance="default"
-                    category="h4"
-                    status="basic"
+                  <View
                     style={
-                      [
-                        {
-                          "color": "#222B45",
-                          "fontFamily": "System",
-                          "fontSize": 26,
-                          "fontWeight": "800",
-                        },
-                        {
-                          "color": "white",
-                          "marginVertical": 6.67,
-                        },
-                      ]
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
                     }
                   >
-                    1.0
-                     
-                    ETH
-                  </Text>
-                  <Text
-                    appearance="default"
-                    category="h4"
-                    status="basic"
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      1.0
+                       
+                      ETH
+                    </Text>
+                  </View>
+                  <View
                     style={
-                      [
-                        {
-                          "color": "#222B45",
-                          "fontFamily": "System",
-                          "fontSize": 26,
-                          "fontWeight": "800",
-                        },
-                        {
-                          "color": "white",
-                          "marginVertical": 6.67,
-                        },
-                      ]
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
                     }
                   >
-                    1.0
-                     
-                    MATIC
-                  </Text>
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      1.0
+                       
+                      MATIC
+                    </Text>
+                  </View>
                 </View>
               </RCTScrollView>
             </View>
@@ -888,7 +904,229 @@ exports[`Home renders correctly 1`] = `
                 ]
               }
             >
-              Send NFTs to another wallet address
+              Send Ethereum NFTs to another wallet address
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Bridge NFTs
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Bridge NFT to your wrapped wallet account in the Polygon network
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send NFTs
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send Polygon NFTs to another wallet address
             </Text>
           </View>
         </View>
@@ -1025,7 +1263,7 @@ exports[`Home renders correctly only ETH 1`] = `
               {
                 "borderRadius": 10,
                 "height": 106.72,
-                "maxHeight": 200.1,
+                "maxHeight": 213.44,
                 "overflow": "hidden",
                 "transform": [
                   {
@@ -1079,29 +1317,37 @@ exports[`Home renders correctly only ETH 1`] = `
                 showsVerticalScrollIndicator={false}
               >
                 <View>
-                  <Text
-                    appearance="default"
-                    category="h4"
-                    status="basic"
+                  <View
                     style={
-                      [
-                        {
-                          "color": "#222B45",
-                          "fontFamily": "System",
-                          "fontSize": 26,
-                          "fontWeight": "800",
-                        },
-                        {
-                          "color": "white",
-                          "marginVertical": 6.67,
-                        },
-                      ]
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
                     }
                   >
-                    1.0
-                     
-                    ETH
-                  </Text>
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      1.0
+                       
+                      ETH
+                    </Text>
+                  </View>
                 </View>
               </RCTScrollView>
             </View>
@@ -1546,117 +1792,6 @@ exports[`Home renders correctly only ETH 1`] = `
           </View>
         </View>
       </View>
-      <View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "borderColor": "#598BFF",
-              "borderRadius": 5,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "margin": 37.5,
-              "opacity": 1,
-              "overflow": "hidden",
-              "paddingHorizontal": 15,
-              "paddingVertical": 7.5,
-              "width": 675,
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "paddingHorizontal": 15,
-                "paddingVertical": 13.34,
-              }
-            }
-          >
-            <Image
-              source={1}
-              style={
-                {
-                  "height": 133.4,
-                  "width": 133.4,
-                }
-              }
-            />
-          </View>
-          <View
-            style={
-              {
-                "flex": 1,
-                "marginLeft": 15,
-                "paddingHorizontal": 15,
-                "paddingVertical": 13.34,
-              }
-            }
-          >
-            <Text
-              appearance="default"
-              category="h6"
-              status="basic"
-              style={
-                [
-                  {
-                    "color": "#222B45",
-                    "fontFamily": "System",
-                    "fontSize": 18,
-                    "fontWeight": "800",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              Send NFTs
-            </Text>
-            <Text
-              appearance="default"
-              category="label"
-              status="basic"
-              style={
-                [
-                  {
-                    "color": "#222B45",
-                    "fontFamily": "System",
-                    "fontSize": 12,
-                    "fontWeight": "800",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              Send NFTs to another wallet address
-            </Text>
-          </View>
-        </View>
-      </View>
     </View>
   </RCTScrollView>
 </View>
@@ -1789,7 +1924,7 @@ exports[`Home renders correctly only ETH balance = 0 1`] = `
               {
                 "borderRadius": 10,
                 "height": 106.72,
-                "maxHeight": 200.1,
+                "maxHeight": 213.44,
                 "overflow": "hidden",
                 "transform": [
                   {
@@ -1843,29 +1978,37 @@ exports[`Home renders correctly only ETH balance = 0 1`] = `
                 showsVerticalScrollIndicator={false}
               >
                 <View>
-                  <Text
-                    appearance="default"
-                    category="h4"
-                    status="basic"
+                  <View
                     style={
-                      [
-                        {
-                          "color": "#222B45",
-                          "fontFamily": "System",
-                          "fontSize": 26,
-                          "fontWeight": "800",
-                        },
-                        {
-                          "color": "white",
-                          "marginVertical": 6.67,
-                        },
-                      ]
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
                     }
                   >
-                    0
-                     
-                    ETH
-                  </Text>
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      0
+                       
+                      ETH
+                    </Text>
+                  </View>
                 </View>
               </RCTScrollView>
             </View>
@@ -2088,117 +2231,6 @@ exports[`Home renders correctly only ETH balance = 0 1`] = `
           </View>
         </View>
       </View>
-      <View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "borderColor": "#598BFF",
-              "borderRadius": 5,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "margin": 37.5,
-              "opacity": 1,
-              "overflow": "hidden",
-              "paddingHorizontal": 15,
-              "paddingVertical": 7.5,
-              "width": 675,
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "paddingHorizontal": 15,
-                "paddingVertical": 13.34,
-              }
-            }
-          >
-            <Image
-              source={1}
-              style={
-                {
-                  "height": 133.4,
-                  "width": 133.4,
-                }
-              }
-            />
-          </View>
-          <View
-            style={
-              {
-                "flex": 1,
-                "marginLeft": 15,
-                "paddingHorizontal": 15,
-                "paddingVertical": 13.34,
-              }
-            }
-          >
-            <Text
-              appearance="default"
-              category="h6"
-              status="basic"
-              style={
-                [
-                  {
-                    "color": "#222B45",
-                    "fontFamily": "System",
-                    "fontSize": 18,
-                    "fontWeight": "800",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              Send NFTs
-            </Text>
-            <Text
-              appearance="default"
-              category="label"
-              status="basic"
-              style={
-                [
-                  {
-                    "color": "#222B45",
-                    "fontFamily": "System",
-                    "fontSize": 12,
-                    "fontWeight": "800",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              Send NFTs to another wallet address
-            </Text>
-          </View>
-        </View>
-      </View>
     </View>
   </RCTScrollView>
 </View>
@@ -2331,7 +2363,7 @@ exports[`Home renders correctly only MATIC 1`] = `
               {
                 "borderRadius": 10,
                 "height": 106.72,
-                "maxHeight": 200.1,
+                "maxHeight": 213.44,
                 "overflow": "hidden",
                 "transform": [
                   {
@@ -2385,29 +2417,37 @@ exports[`Home renders correctly only MATIC 1`] = `
                 showsVerticalScrollIndicator={false}
               >
                 <View>
-                  <Text
-                    appearance="default"
-                    category="h4"
-                    status="basic"
+                  <View
                     style={
-                      [
-                        {
-                          "color": "#222B45",
-                          "fontFamily": "System",
-                          "fontSize": 26,
-                          "fontWeight": "800",
-                        },
-                        {
-                          "color": "white",
-                          "marginVertical": 6.67,
-                        },
-                      ]
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
                     }
                   >
-                    1.0
-                     
-                    MATIC
-                  </Text>
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      1.0
+                       
+                      MATIC
+                    </Text>
+                  </View>
                 </View>
               </RCTScrollView>
             </View>
@@ -2737,117 +2777,6 @@ exports[`Home renders correctly only MATIC 1`] = `
               }
             >
               Send MATIC to another wallet address
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "borderColor": "#598BFF",
-              "borderRadius": 5,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "margin": 37.5,
-              "opacity": 1,
-              "overflow": "hidden",
-              "paddingHorizontal": 15,
-              "paddingVertical": 7.5,
-              "width": 675,
-            }
-          }
-        >
-          <View
-            style={
-              {
-                "paddingHorizontal": 15,
-                "paddingVertical": 13.34,
-              }
-            }
-          >
-            <Image
-              source={1}
-              style={
-                {
-                  "height": 133.4,
-                  "width": 133.4,
-                }
-              }
-            />
-          </View>
-          <View
-            style={
-              {
-                "flex": 1,
-                "marginLeft": 15,
-                "paddingHorizontal": 15,
-                "paddingVertical": 13.34,
-              }
-            }
-          >
-            <Text
-              appearance="default"
-              category="h6"
-              status="basic"
-              style={
-                [
-                  {
-                    "color": "#222B45",
-                    "fontFamily": "System",
-                    "fontSize": 18,
-                    "fontWeight": "800",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              Send NFTs
-            </Text>
-            <Text
-              appearance="default"
-              category="label"
-              status="basic"
-              style={
-                [
-                  {
-                    "color": "#222B45",
-                    "fontFamily": "System",
-                    "fontSize": 12,
-                    "fontWeight": "800",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              Send NFTs to another wallet address
             </Text>
           </View>
         </View>

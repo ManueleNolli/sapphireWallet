@@ -387,12 +387,6 @@ export async function requestPolygonNFTTransfer(
 
   const senderWrappedAccount = await getWrappedAccountAddress(walletAddress, destinationNetwork)
 
-  console.log('senderWrappedAccount: ', senderWrappedAccount)
-  console.log('receiverWrappedAccount: ', realTo)
-  console.log('tokenId: ', tokenId)
-  console.log('network: ', network)
-  console.log('destinationNetwork: ', destinationNetwork)
-
   const transactionToBeExecutedOnDestChain = await prepareERC721TransferTransaction(
     AMOY_DEST_CHAIN_NFT_STORAGE_ADDRESS,
     senderWrappedAccount,
@@ -450,6 +444,5 @@ export async function requestPolygonNFTTransfer(
     throw new Error(result.error)
   }
 
-  console.log('result: ', result)
   return result
 }

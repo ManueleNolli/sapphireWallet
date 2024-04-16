@@ -2,10 +2,11 @@ import { useContext } from 'react'
 import { act, renderHook, waitFor } from '@testing-library/react-native'
 import { OwnedNFT, ownedNFTs } from '../../../services/blockchain'
 import { NETWORKS } from '../../../constants/Networks'
-import useSendEthereumNFT from '../useSendEthereumNFT'
+import useSendDestNFT from '../useSendDestNFT'
 import { getSigner } from '../../../services/wallet'
-import { requestERC721TokenTransfer } from '../../../services/transactions'
+import { requestERC721TokenTransfer, requestPolygonNFTTransfer } from '../../../services/transactions'
 import Toast from 'react-native-toast-message'
+import { BRIDGE_NETWORKS } from '../../../constants/BridgeNetworks'
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -23,17 +24,17 @@ jest.mock('../../../services/wallet', () => ({
 }))
 
 jest.mock('../../../services/transactions', () => ({
-  requestERC721TokenTransfer: jest.fn(),
+  requestPolygonNFTTransfer: jest.fn(),
 }))
 
-describe('useSendNFTs Hook', () => {
+describe('useSendDestNFTs Hook', () => {
   it('fetches and sets NFTs on initialization', async () => {
     const mockNFTs: OwnedNFT[] = [
       {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -51,17 +52,16 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendEthereumNFT({ address: '', close: jest.fn() }))
+      const { result } = renderHook(() => useSendDestNFT({ address: '', close: jest.fn() }))
       resultHook = result
     })
 
-    // expect(resultHook.current.isNFTLoading).toBe(false)
     expect(resultHook.current.nfts).toEqual([
       {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -81,7 +81,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendEthereumNFT({ address: '', close: jest.fn() }))
+      const { result } = renderHook(() => useSendDestNFT({ address: '', close: jest.fn() }))
       resultHook = result
     })
 
@@ -95,7 +95,7 @@ describe('useSendNFTs Hook', () => {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -111,23 +111,31 @@ describe('useSendNFTs Hook', () => {
       ethersProvider: 'ethersProvider',
     })
     ;(getSigner as jest.Mock).mockReturnValueOnce('signer')
-    ;(requestERC721TokenTransfer as jest.Mock).mockReturnValueOnce('requestETHTransferMock')
+    ;(requestPolygonNFTTransfer as jest.Mock).mockReturnValueOnce('requestPolygonNFTTransferMock')
     ;(Toast.show as jest.Mock).mockReturnValueOnce('Toast.showMock')
 
     const close = jest.fn()
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendEthereumNFT({ address: 'address', close: close }))
+      const { result } = renderHook(() => useSendDestNFT({ address: 'address', close }))
       resultHook = result
     })
 
     await act(async () => {
-      await resultHook.current.sendNFTTransaction()
+      await resultHook.current.sendBridgeTransaction()
     })
 
     expect(getSigner).toHaveBeenCalledWith('getPrivateKeyMock', NETWORKS.LOCALHOST)
-    expect(requestERC721TokenTransfer).toHaveBeenCalledWith('address', '', 1, 'signer', NETWORKS.LOCALHOST)
+    expect(requestPolygonNFTTransfer).toHaveBeenCalledWith(
+      'address',
+      '',
+      1,
+      'signer',
+      NETWORKS.LOCALHOST,
+      BRIDGE_NETWORKS.AMOY,
+      true
+    )
 
     expect(Toast.show).toHaveBeenCalledWith({
       type: 'success',
@@ -143,7 +151,7 @@ describe('useSendNFTs Hook', () => {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -159,8 +167,8 @@ describe('useSendNFTs Hook', () => {
       ethersProvider: 'ethersProvider',
     })
     ;(getSigner as jest.Mock).mockReturnValueOnce('signer')
-    ;(requestERC721TokenTransfer as jest.Mock).mockRejectedValue({
-      message: 'requestETHTransferMock',
+    ;(requestPolygonNFTTransfer as jest.Mock).mockRejectedValue({
+      message: 'requestPolygonNFTTransferMock',
     })
     ;(Toast.show as jest.Mock).mockReturnValueOnce('Toast.showMock')
 
@@ -168,21 +176,29 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendEthereumNFT({ address: 'address', close: close }))
+      const { result } = renderHook(() => useSendDestNFT({ address: 'address', close }))
       resultHook = result
     })
 
     await act(async () => {
-      await resultHook.current.sendNFTTransaction()
+      await resultHook.current.sendBridgeTransaction()
     })
 
     expect(getSigner).toHaveBeenCalledWith('getPrivateKeyMock', NETWORKS.LOCALHOST)
-    expect(requestERC721TokenTransfer).toHaveBeenCalledWith('address', '', 1, 'signer', NETWORKS.LOCALHOST)
+    expect(requestPolygonNFTTransfer).toHaveBeenCalledWith(
+      'address',
+      '',
+      1,
+      'signer',
+      NETWORKS.LOCALHOST,
+      BRIDGE_NETWORKS.AMOY,
+      true
+    )
 
     expect(Toast.show).toHaveBeenCalledWith({
       type: 'error',
       text1: 'Transaction failed! 😢',
-      text2: 'requestETHTransferMock',
+      text2: 'requestPolygonNFTTransferMock',
     })
 
     expect(close).toHaveBeenCalled()
@@ -198,7 +214,7 @@ describe('useSendNFTs Hook', () => {
     const close = jest.fn()
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendEthereumNFT({ address: 'address', close: close }))
+      const { result } = renderHook(() => useSendDestNFT({ address: 'address', close }))
       resultHook = result
     })
 

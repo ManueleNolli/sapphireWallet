@@ -119,7 +119,6 @@ export async function contactBackend(
   body: backendBody[typeof endpoint]
 ): Promise<backendResponse[typeof endpoint] | backendErrorResponse> {
   try {
-    console.log('Sent request to backend: ', body)
     const response = await fetch(`http://${BACKEND_ADDRESS}:3000/${endpoint}`, {
       method: 'POST',
       headers: {

@@ -73,11 +73,20 @@ exports[`NFTs render correctly 1`] = `
             style={
               [
                 {
+                  "backgroundColor": "red",
                   "borderColor": "#598BFF",
                   "borderRadius": 10,
                   "borderWidth": 1,
+                  "elevation": 5,
                   "height": 667,
                   "overflow": "hidden",
+                  "shadowColor": "black",
+                  "shadowOffset": {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 1,
+                  "shadowRadius": 10,
                   "width": "100%",
                 },
                 {
@@ -90,17 +99,12 @@ exports[`NFTs render correctly 1`] = `
             <View
               style={
                 {
-                  "elevation": 15,
-                  "flex": 1,
-                  "flexDirection": "column-reverse",
+                  "backgroundColor": "red",
+                  "height": "102%",
+                  "justifyContent": "space-between",
                   "overflow": "hidden",
-                  "shadowColor": "black",
-                  "shadowOffset": {
-                    "height": 0,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.5,
-                  "shadowRadius": 10,
+                  "top": -2,
+                  "width": "100%",
                 }
               }
             >
@@ -135,6 +139,40 @@ exports[`NFTs render correctly 1`] = `
                 transition={null}
               />
               <View
+                style={
+                  {
+                    "alignItems": "flex-end",
+                    "marginHorizontal": 15,
+                    "marginVertical": 26.68,
+                  }
+                }
+              >
+                <ViewManagerAdapter_ExpoImage
+                  contentFit="contain"
+                  contentPosition={
+                    {
+                      "left": "50%",
+                      "top": "50%",
+                    }
+                  }
+                  height={36}
+                  onError={[Function]}
+                  onLoad={[Function]}
+                  onLoadStart={[Function]}
+                  onProgress={[Function]}
+                  placeholder={[]}
+                  source={[]}
+                  style={
+                    {
+                      "height": 36,
+                      "width": 36,
+                    }
+                  }
+                  transition={null}
+                  width={36}
+                />
+              </View>
+              <View
                 accessibilityState={
                   {
                     "busy": undefined,
@@ -164,9 +202,9 @@ exports[`NFTs render correctly 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   {
-                    "borderRadius": 5,
+                    "borderRadius": 8,
                     "marginHorizontal": 15,
-                    "marginVertical": 13.34,
+                    "marginVertical": 26.68,
                     "opacity": 1,
                     "overflow": "hidden",
                   }
@@ -211,24 +249,54 @@ exports[`NFTs render correctly 1`] = `
                       }
                     }
                   >
-                    <Text
-                      appearance="default"
-                      category="h4"
-                      status="basic"
+                    <View
                       style={
-                        [
-                          {
-                            "color": "#222B45",
-                            "fontFamily": "System",
-                            "fontSize": 26,
-                            "fontWeight": "800",
-                          },
-                          undefined,
-                        ]
+                        {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                        }
                       }
                     >
-                      name0
-                    </Text>
+                      <Text
+                        appearance="default"
+                        category="h4"
+                        status="basic"
+                        style={
+                          [
+                            {
+                              "color": "#222B45",
+                              "fontFamily": "System",
+                              "fontSize": 26,
+                              "fontWeight": "800",
+                            },
+                            undefined,
+                          ]
+                        }
+                      >
+                        name0
+                      </Text>
+                      <Text
+                        appearance="default"
+                        category="label"
+                        status="basic"
+                        style={
+                          [
+                            {
+                              "color": "#222B45",
+                              "fontFamily": "System",
+                              "fontSize": 12,
+                              "fontWeight": "800",
+                            },
+                            {
+                              "marginRight": 7.5,
+                            },
+                          ]
+                        }
+                      >
+                        #0
+                      </Text>
+                    </View>
                     <View
                       collapsable={false}
                       pointerEvents="none"
@@ -245,60 +313,6 @@ exports[`NFTs render correctly 1`] = `
                         style={{}}
                       >
                         <View>
-                          <View
-                            style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "marginVertical": 26.68,
-                              }
-                            }
-                          >
-                            <ViewManagerAdapter_ExpoImage
-                              contentFit="contain"
-                              contentPosition={
-                                {
-                                  "left": "50%",
-                                  "top": "50%",
-                                }
-                              }
-                              height={24}
-                              marginRight={8}
-                              onError={[Function]}
-                              onLoad={[Function]}
-                              onLoadStart={[Function]}
-                              onProgress={[Function]}
-                              placeholder={[]}
-                              source={[]}
-                              style={
-                                {
-                                  "height": 24,
-                                  "marginRight": 8,
-                                  "width": 24,
-                                }
-                              }
-                              transition={null}
-                              width={24}
-                            />
-                            <Text
-                              appearance="default"
-                              category="label"
-                              status="basic"
-                              style={
-                                [
-                                  {
-                                    "color": "#222B45",
-                                    "fontFamily": "System",
-                                    "fontSize": 12,
-                                    "fontWeight": "800",
-                                  },
-                                  undefined,
-                                ]
-                              }
-                            >
-                              localhost
-                            </Text>
-                          </View>
                           <Text
                             appearance="default"
                             category="h6"
@@ -463,11 +477,20 @@ exports[`NFTs render correctly 1`] = `
             style={
               [
                 {
+                  "backgroundColor": "red",
                   "borderColor": "#598BFF",
                   "borderRadius": 10,
                   "borderWidth": 1,
+                  "elevation": 5,
                   "height": 667,
                   "overflow": "hidden",
+                  "shadowColor": "black",
+                  "shadowOffset": {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 1,
+                  "shadowRadius": 10,
                   "width": "100%",
                 },
                 {
@@ -480,17 +503,12 @@ exports[`NFTs render correctly 1`] = `
             <View
               style={
                 {
-                  "elevation": 15,
-                  "flex": 1,
-                  "flexDirection": "column-reverse",
+                  "backgroundColor": "red",
+                  "height": "102%",
+                  "justifyContent": "space-between",
                   "overflow": "hidden",
-                  "shadowColor": "black",
-                  "shadowOffset": {
-                    "height": 0,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.5,
-                  "shadowRadius": 10,
+                  "top": -2,
+                  "width": "100%",
                 }
               }
             >
@@ -525,6 +543,40 @@ exports[`NFTs render correctly 1`] = `
                 transition={null}
               />
               <View
+                style={
+                  {
+                    "alignItems": "flex-end",
+                    "marginHorizontal": 15,
+                    "marginVertical": 26.68,
+                  }
+                }
+              >
+                <ViewManagerAdapter_ExpoImage
+                  contentFit="contain"
+                  contentPosition={
+                    {
+                      "left": "50%",
+                      "top": "50%",
+                    }
+                  }
+                  height={36}
+                  onError={[Function]}
+                  onLoad={[Function]}
+                  onLoadStart={[Function]}
+                  onProgress={[Function]}
+                  placeholder={[]}
+                  source={[]}
+                  style={
+                    {
+                      "height": 36,
+                      "width": 36,
+                    }
+                  }
+                  transition={null}
+                  width={36}
+                />
+              </View>
+              <View
                 accessibilityState={
                   {
                     "busy": undefined,
@@ -554,9 +606,9 @@ exports[`NFTs render correctly 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   {
-                    "borderRadius": 5,
+                    "borderRadius": 8,
                     "marginHorizontal": 15,
-                    "marginVertical": 13.34,
+                    "marginVertical": 26.68,
                     "opacity": 1,
                     "overflow": "hidden",
                   }
@@ -601,24 +653,54 @@ exports[`NFTs render correctly 1`] = `
                       }
                     }
                   >
-                    <Text
-                      appearance="default"
-                      category="h4"
-                      status="basic"
+                    <View
                       style={
-                        [
-                          {
-                            "color": "#222B45",
-                            "fontFamily": "System",
-                            "fontSize": 26,
-                            "fontWeight": "800",
-                          },
-                          undefined,
-                        ]
+                        {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                        }
                       }
                     >
-                      name1
-                    </Text>
+                      <Text
+                        appearance="default"
+                        category="h4"
+                        status="basic"
+                        style={
+                          [
+                            {
+                              "color": "#222B45",
+                              "fontFamily": "System",
+                              "fontSize": 26,
+                              "fontWeight": "800",
+                            },
+                            undefined,
+                          ]
+                        }
+                      >
+                        name1
+                      </Text>
+                      <Text
+                        appearance="default"
+                        category="label"
+                        status="basic"
+                        style={
+                          [
+                            {
+                              "color": "#222B45",
+                              "fontFamily": "System",
+                              "fontSize": 12,
+                              "fontWeight": "800",
+                            },
+                            {
+                              "marginRight": 7.5,
+                            },
+                          ]
+                        }
+                      >
+                        #1
+                      </Text>
+                    </View>
                     <View
                       collapsable={false}
                       pointerEvents="none"
@@ -635,60 +717,6 @@ exports[`NFTs render correctly 1`] = `
                         style={{}}
                       >
                         <View>
-                          <View
-                            style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "marginVertical": 26.68,
-                              }
-                            }
-                          >
-                            <ViewManagerAdapter_ExpoImage
-                              contentFit="contain"
-                              contentPosition={
-                                {
-                                  "left": "50%",
-                                  "top": "50%",
-                                }
-                              }
-                              height={24}
-                              marginRight={8}
-                              onError={[Function]}
-                              onLoad={[Function]}
-                              onLoadStart={[Function]}
-                              onProgress={[Function]}
-                              placeholder={[]}
-                              source={[]}
-                              style={
-                                {
-                                  "height": 24,
-                                  "marginRight": 8,
-                                  "width": 24,
-                                }
-                              }
-                              transition={null}
-                              width={24}
-                            />
-                            <Text
-                              appearance="default"
-                              category="label"
-                              status="basic"
-                              style={
-                                [
-                                  {
-                                    "color": "#222B45",
-                                    "fontFamily": "System",
-                                    "fontSize": 12,
-                                    "fontWeight": "800",
-                                  },
-                                  undefined,
-                                ]
-                              }
-                            >
-                              localhost
-                            </Text>
-                          </View>
                           <Text
                             appearance="default"
                             category="h6"

@@ -7,11 +7,7 @@ import {
   ERC721Enumerable__factory,
 } from './contracts';
 import { NFT } from './types/NftMetadata';
-import { NETWORKS } from './constants/Networks';
-import {
-  isStandardERC721Metadata,
-  standardERC721Metadata,
-} from './constants/NFTMetadata';
+import { isStandardERC721Metadata } from './constants/NFTMetadata';
 
 @Injectable()
 export class SapphirePortfolioService {

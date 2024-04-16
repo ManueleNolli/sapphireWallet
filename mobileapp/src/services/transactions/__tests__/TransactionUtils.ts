@@ -1,11 +1,15 @@
 import {
   generateMessageHash,
   generateNonceForRelay,
+  getWrappedAccountAddress,
   signMessage,
   signOffChain,
   signOffChainForBridge,
 } from '../TransactionUtils'
 import { ethers, ZeroAddress } from 'ethers'
+import { BACKEND_ENDPOINTS, contactBackend, getWrappedAccountAddressResponse } from '../../backend'
+import { NETWORKS } from '../../../constants/Networks'
+jest.mock('../../backend')
 
 // Mocking the Provider
 const mockProvider: ethers.JsonRpcProvider = {
@@ -170,6 +174,35 @@ describe('TransactionUtils', () => {
       expect(mockSigner.signMessage).toHaveBeenCalledTimes(1)
 
       jest.restoreAllMocks()
+    })
+  })
+
+  describe('getWrappedAccountAddress', () => {
+    it('returns address when backend response is successful', async () => {
+      const mockResponse: getWrappedAccountAddressResponse = {
+        address: 'wrappedAddress',
+        network: NETWORKS.SEPOLIA,
+      }
+      ;(contactBackend as jest.Mock).mockResolvedValue(mockResponse)
+
+      const result = await getWrappedAccountAddress('testAddress', NETWORKS.SEPOLIA)
+
+      expect(result).toEqual('wrappedAddress')
+      expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+        network: NETWORKS.SEPOLIA,
+        address: 'testAddress',
+      })
+    })
+
+    it('throws error when backend response contains error', async () => {
+      ;(contactBackend as jest.Mock).mockResolvedValue({ error: 'error Balance' })
+
+      await expect(getWrappedAccountAddress('testAddress', NETWORKS.SEPOLIA)).rejects.toThrow('error Balance')
+
+      expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+        network: NETWORKS.SEPOLIA,
+        address: 'testAddress',
+      })
     })
   })
 })

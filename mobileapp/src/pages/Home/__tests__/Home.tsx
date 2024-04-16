@@ -20,6 +20,10 @@ describe('Home', () => {
       crypto: 'MATIC',
     },
   }
+  const balancesNFTMock = {
+    sepolia: 1,
+    amoy: 1,
+  }
   const getWalletContractAddressMock = jest.fn().mockReturnValue('0x123456789')
   const isBalanceLoadingMock = false
   const copyAddressToClipboardMock = jest.fn()
@@ -30,9 +34,11 @@ describe('Home', () => {
   const isSendMATICModalVisibleMock = false
   const setIsSendMATICModalVisibleMock = jest.fn()
   const isSendNFTModalVisibleMock = false
-  const setIsSendNFTModalVisibleMock = jest.fn()
+  const setIsSendEthereumNFTModalVisibleMock = jest.fn()
   const isBridgeETHtoMATICModalVisibleMock = false
   const setIsBridgeETHtoMATICModalVisibleMock = jest.fn()
+  const setIsSendPolygonNFTModalVisibleMock = jest.fn()
+  const setBridgeNFTModalVisibleMock = jest.fn()
   const onRefreshMock = jest.fn()
   const isRefreshingMock = false
   const modalReceiverBackdropMock = jest.fn()
@@ -43,13 +49,14 @@ describe('Home', () => {
   const closeSendETHModalMock = jest.fn()
   const closeBridgeETHtoMATICModalMock = jest.fn()
   const closeSendMATICModalMock = jest.fn()
-  const closeSendNFTModalMock = jest.fn()
+  const closeSendEthereumNFTModalMock = jest.fn()
 
   beforeEach(() => {
     ;(useHome as jest.Mock).mockReturnValue({
       currentNetwork: NETWORKS.SEPOLIA,
       backgroundImage: 'light',
       balances: balancesMock,
+      balancesNFT: balancesNFTMock,
       isBalanceLoading: isBalanceLoadingMock,
       getWalletContractAddress: getWalletContractAddressMock,
       copyAddressToClipboard: copyAddressToClipboardMock,
@@ -60,9 +67,11 @@ describe('Home', () => {
       isSendMATICModalVisible: isSendMATICModalVisibleMock,
       setIsSendMATICModalVisible: setIsSendMATICModalVisibleMock,
       isSendNFTModalVisible: isSendNFTModalVisibleMock,
-      setIsSendNFTModalVisible: setIsSendNFTModalVisibleMock,
+      setIsSendEthereumNFTModalVisible: setIsSendEthereumNFTModalVisibleMock,
       isBridgeETHtoMATICModalVisible: isBridgeETHtoMATICModalVisibleMock,
       setIsBridgeETHtoMATICModalVisible: setIsBridgeETHtoMATICModalVisibleMock,
+      setIsSendPolygonNFTModalVisible: setIsSendPolygonNFTModalVisibleMock,
+      setIsBridgeNFTModalVisible: setBridgeNFTModalVisibleMock,
       onRefresh: onRefreshMock,
       isRefreshing: isRefreshingMock,
       modalReceiveBackdrop: modalReceiverBackdropMock,
@@ -73,7 +82,7 @@ describe('Home', () => {
       closeSendETHModal: closeSendETHModalMock,
       closeBridgeETHtoMATICModal: closeBridgeETHtoMATICModalMock,
       closeSendMATICModal: closeSendMATICModalMock,
-      closeSendNFTModal: closeSendNFTModalMock,
+      closeSendEthereumNFTModal: closeSendEthereumNFTModalMock,
     })
   })
 
@@ -103,7 +112,7 @@ describe('Home', () => {
       isSendMATICModalVisible: isSendMATICModalVisibleMock,
       setIsSendMATICModalVisible: setIsSendMATICModalVisibleMock,
       isSendNFTModalVisible: isSendNFTModalVisibleMock,
-      setIsSendNFTModalVisible: setIsSendNFTModalVisibleMock,
+      setIsSendNFTModalVisible: setIsSendEthereumNFTModalVisibleMock,
       isBridgeETHtoMATICModalVisible: isBridgeETHtoMATICModalVisibleMock,
       setIsBridgeETHtoMATICModalVisible: setIsBridgeETHtoMATICModalVisibleMock,
       onRefresh: onRefreshMock,
@@ -116,7 +125,7 @@ describe('Home', () => {
       closeSendETHModal: closeSendETHModalMock,
       closeBridgeETHtoMATICModal: closeBridgeETHtoMATICModalMock,
       closeSendMATICModal: closeSendMATICModalMock,
-      closeSendNFTModal: closeSendNFTModalMock,
+      closeSendEthereumNFTModal: closeSendEthereumNFTModalMock,
     })
     const { toJSON } = renderWithTheme(<Home />)
     expect(toJSON()).toMatchSnapshot()
@@ -143,7 +152,7 @@ describe('Home', () => {
       isSendMATICModalVisible: isSendMATICModalVisibleMock,
       setIsSendMATICModalVisible: setIsSendMATICModalVisibleMock,
       isSendNFTModalVisible: isSendNFTModalVisibleMock,
-      setIsSendNFTModalVisible: setIsSendNFTModalVisibleMock,
+      setIsSendNFTModalVisible: setIsSendEthereumNFTModalVisibleMock,
       isBridgeETHtoMATICModalVisible: isBridgeETHtoMATICModalVisibleMock,
       setIsBridgeETHtoMATICModalVisible: setIsBridgeETHtoMATICModalVisibleMock,
       onRefresh: onRefreshMock,
@@ -156,7 +165,7 @@ describe('Home', () => {
       closeSendETHModal: closeSendETHModalMock,
       closeBridgeETHtoMATICModal: closeBridgeETHtoMATICModalMock,
       closeSendMATICModal: closeSendMATICModalMock,
-      closeSendNFTModal: closeSendNFTModalMock,
+      closeSendEthereumNFTModal: closeSendEthereumNFTModalMock,
     })
     const { toJSON } = renderWithTheme(<Home />)
     expect(toJSON()).toMatchSnapshot()
@@ -183,7 +192,7 @@ describe('Home', () => {
       isSendMATICModalVisible: isSendMATICModalVisibleMock,
       setIsSendMATICModalVisible: setIsSendMATICModalVisibleMock,
       isSendNFTModalVisible: isSendNFTModalVisibleMock,
-      setIsSendNFTModalVisible: setIsSendNFTModalVisibleMock,
+      setIsSendNFTModalVisible: setIsSendEthereumNFTModalVisibleMock,
       isBridgeETHtoMATICModalVisible: isBridgeETHtoMATICModalVisibleMock,
       setIsBridgeETHtoMATICModalVisible: setIsBridgeETHtoMATICModalVisibleMock,
       onRefresh: onRefreshMock,
@@ -196,7 +205,7 @@ describe('Home', () => {
       closeSendETHModal: closeSendETHModalMock,
       closeBridgeETHtoMATICModal: closeBridgeETHtoMATICModalMock,
       closeSendMATICModal: closeSendMATICModalMock,
-      closeSendNFTModal: closeSendNFTModalMock,
+      closeSendEthereumNFTModal: closeSendEthereumNFTModalMock,
     })
     const { toJSON } = renderWithTheme(<Home />)
     expect(toJSON()).toMatchSnapshot()
@@ -226,12 +235,12 @@ describe('Home', () => {
     expect(setIsSendMATICModalVisibleMock).toHaveBeenCalled()
   })
 
-  it('press Send NFT', () => {
+  it('press Send Ethereum NFT', () => {
     const tree = renderWithTheme(<Home />)
     const button = tree.getAllByText('Send NFTs')[0]
     fireEvent.press(button)
 
-    expect(setIsSendNFTModalVisibleMock).toHaveBeenCalled()
+    expect(setIsSendEthereumNFTModalVisibleMock).toHaveBeenCalled()
   })
 
   it('press Bridge ETH to MATIC', () => {
@@ -240,5 +249,21 @@ describe('Home', () => {
     fireEvent.press(button)
 
     expect(setIsBridgeETHtoMATICModalVisibleMock).toHaveBeenCalled()
+  })
+
+  it('press Bridge NFT', () => {
+    const tree = renderWithTheme(<Home />)
+    const button = tree.getAllByText('Bridge NFTs')[0]
+    fireEvent.press(button)
+
+    expect(setBridgeNFTModalVisibleMock).toHaveBeenCalled()
+  })
+
+  it('press Send Polygon NFT', () => {
+    const tree = renderWithTheme(<Home />)
+    const button = tree.getAllByText('Send NFTs')[1]
+    fireEvent.press(button)
+
+    expect(setIsSendEthereumNFTModalVisibleMock).toHaveBeenCalled()
   })
 })

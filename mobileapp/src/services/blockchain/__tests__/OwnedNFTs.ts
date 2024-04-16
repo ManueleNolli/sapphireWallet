@@ -1,70 +1,92 @@
-import { ethers, JsonRpcProvider } from 'ethers'
-import { SapphireNFTs__factory } from '../../../contracts'
 import { NETWORKS } from '../../../constants/Networks'
-import { ownedNFTs, getNFTMetadata } from '../OwnedNFTs'
+import { ownedNFTs } from '../OwnedNFTs'
+import {
+  BACKEND_ENDPOINTS,
+  contactBackend,
+  getNFTMetadataResponse,
+  getWrappedAccountAddressResponse,
+} from '../../backend'
+import { BRIDGE_NETWORKS } from '../../../constants/BridgeNetworks'
+
+jest.mock('../../backend')
 
 describe('ownedNFTs Function', () => {
-  it('returns an array of OwnedNFT objects', async () => {
-    const accountAddress = '0x123456789abcdef'
-    const contractERC721Address = '0x987654321fedcba'
-    const provider = new JsonRpcProvider()
-    const network = NETWORKS.LOCALHOST
+  it('returns nft when backend response is successful - No Bridge Network', async () => {
+    const mockResponse: getNFTMetadataResponse = [
+      {
+        name: 'Mock NFT',
+        description: 'Mock NFT Description',
+        image: 'mockImageURL',
+        tokenId: 1,
+        network: NETWORKS.LOCALHOST,
+        collectionAddress: 'mockCollectionAddress',
+        collectionName: 'Mock Collection',
+        collectionDescription: 'Mock Collection Description',
+      },
+    ]
+    ;(contactBackend as jest.Mock).mockResolvedValue(mockResponse)
 
-    // Mocking balanceOf and tokenOfOwnerByIndex
-    const mockBalanceOf = jest.fn().mockResolvedValue(2)
-    const mockTokenOfOwnerByIndex = jest.fn().mockResolvedValue(0)
+    const result = await ownedNFTs('testAddress', NETWORKS.SEPOLIA)
 
-    // Mock contract
-    const mockContract = {
-      balanceOf: mockBalanceOf,
-      tokenOfOwnerByIndex: mockTokenOfOwnerByIndex,
-      tokenURI: jest.fn().mockResolvedValue('ipfs://metadataHash'),
+    expect(result).toEqual(mockResponse)
+    expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_NFT_METADATA, {
+      network: NETWORKS.SEPOLIA,
+      address: 'testAddress',
+    })
+  })
+
+  it('throws error when backend response contains error - No Bridge Network', async () => {
+    ;(contactBackend as jest.Mock).mockResolvedValue({ error: 'error Balance' })
+
+    await expect(ownedNFTs('testAddress', NETWORKS.SEPOLIA)).rejects.toThrow('error Balance')
+
+    expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_NFT_METADATA, {
+      network: NETWORKS.SEPOLIA,
+      address: 'testAddress',
+    })
+  })
+
+  it('returns nft when backend response is successful - Bridge Network', async () => {
+    const wrappedAccountResponse: getWrappedAccountAddressResponse = {
+      address: 'mockWrappedAccountAddress',
+      network: BRIDGE_NETWORKS.AMOY,
     }
+    const mockResponse: getNFTMetadataResponse = [
+      {
+        name: 'Mock NFT',
+        description: 'Mock NFT Description',
+        image: 'mockImageURL',
+        tokenId: 1,
+        network: NETWORKS.LOCALHOST,
+        collectionAddress: 'mockCollectionAddress',
+        collectionName: 'Mock Collection',
+        collectionDescription: 'Mock Collection Description',
+      },
+    ]
+    ;(contactBackend as jest.Mock).mockResolvedValueOnce(wrappedAccountResponse)
+    ;(contactBackend as jest.Mock).mockResolvedValueOnce(mockResponse)
 
-    jest
-      .spyOn(SapphireNFTs__factory, 'connect')
-      .mockReturnValue(mockContract as any)
+    const result = await ownedNFTs('testAddress', BRIDGE_NETWORKS.AMOY)
 
-    // mock fetch
-    const jsonMock = jest.fn().mockResolvedValue({
-      name: 'name',
-      description: 'description',
-      image: 'ipfs://imageHash',
-      token: 0n,
-      collectionName: 'collectionName',
-      collectionDescription: 'collectionDescription',
+    expect(result).toEqual(mockResponse)
+    expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+      network: BRIDGE_NETWORKS.AMOY,
+      address: 'testAddress',
     })
-    const fetchMock = jest.fn().mockResolvedValue({
-      json: jsonMock,
+    expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_NFT_METADATA, {
+      network: BRIDGE_NETWORKS.AMOY,
+      address: 'mockWrappedAccountAddress',
     })
-    jest.spyOn(global, 'fetch').mockImplementation(fetchMock)
+  })
 
-    const result = await ownedNFTs(
-      accountAddress,
-      contractERC721Address,
-      provider,
-      network
-    )
+  it('throws error when backend response contains error - Bridge Network', async () => {
+    ;(contactBackend as jest.Mock).mockResolvedValue({ error: 'error Wrapped Account' })
 
-    expect(result).toHaveLength(2)
-    expect(result[0]).toEqual({
-      name: 'name',
-      description: 'description',
-      image: 'https://gateway.pinata.cloud/ipfs/imageHash',
-      tokenId: '0',
-      network: NETWORKS.LOCALHOST,
-      collectionAddress: '0x987654321fedcba',
-      collectionName: 'collectionName',
-      collectionDescription: 'collectionDescription',
+    await expect(ownedNFTs('testAddress', BRIDGE_NETWORKS.AMOY)).rejects.toThrow('error Wrapped Account')
+
+    expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+      network: BRIDGE_NETWORKS.AMOY,
+      address: 'testAddress',
     })
-
-    // Ensure that necessary functions were called with the correct arguments
-    expect(SapphireNFTs__factory.connect).toHaveBeenCalledWith(
-      '0x987654321fedcba',
-      provider
-    )
-    expect(mockBalanceOf).toHaveBeenCalledWith(accountAddress)
-    expect(mockTokenOfOwnerByIndex).toHaveBeenCalledWith(accountAddress, 0)
-    expect(mockTokenOfOwnerByIndex).toHaveBeenCalledWith(accountAddress, 1)
   })
 })

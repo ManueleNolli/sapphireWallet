@@ -9,7 +9,6 @@ import { CHAIN_CRYPTOS, CHAIN_IDS, NETWORKS } from './constants/Networks';
 import { ZeroAddress } from 'ethers';
 import { GetNFTBalanceEvent } from './events/get-nft-balance-event';
 import { GetNFTMetadataEvent } from './events/get-nft-metadata-event';
-import { NFT } from './types/NftMetadata';
 
 @Controller()
 export class SapphirePortfolioController {

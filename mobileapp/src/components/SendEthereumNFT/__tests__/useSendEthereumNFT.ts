@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { act, renderHook, waitFor } from '@testing-library/react-native'
 import { OwnedNFT, ownedNFTs } from '../../../services/blockchain'
 import { NETWORKS } from '../../../constants/Networks'
-import useSendDestNFT from '../useSendDestNFT'
+import useSendEthereumNFT from '../useSendEthereumNFT'
 import { getSigner } from '../../../services/wallet'
 import { requestERC721TokenTransfer } from '../../../services/transactions'
 import Toast from 'react-native-toast-message'
@@ -26,14 +26,14 @@ jest.mock('../../../services/transactions', () => ({
   requestERC721TokenTransfer: jest.fn(),
 }))
 
-describe('useSendNFTs Hook', () => {
+describe('useSendEthereumNFTs Hook', () => {
   it('fetches and sets NFTs on initialization', async () => {
     const mockNFTs: OwnedNFT[] = [
       {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -51,7 +51,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendDestNFT({ address: '', close: jest.fn() }))
+      const { result } = renderHook(() => useSendEthereumNFT({ address: '', close: jest.fn() }))
       resultHook = result
     })
 
@@ -61,7 +61,7 @@ describe('useSendNFTs Hook', () => {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -81,7 +81,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendDestNFT({ address: '', close: jest.fn() }))
+      const { result } = renderHook(() => useSendEthereumNFT({ address: '', close: jest.fn() }))
       resultHook = result
     })
 
@@ -95,7 +95,7 @@ describe('useSendNFTs Hook', () => {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -118,7 +118,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendDestNFT({ address: 'address', close }))
+      const { result } = renderHook(() => useSendEthereumNFT({ address: 'address', close }))
       resultHook = result
     })
 
@@ -143,7 +143,7 @@ describe('useSendNFTs Hook', () => {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -168,7 +168,7 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendDestNFT({ address: 'address', close }))
+      const { result } = renderHook(() => useSendEthereumNFT({ address: 'address', close }))
       resultHook = result
     })
 
@@ -198,7 +198,7 @@ describe('useSendNFTs Hook', () => {
     const close = jest.fn()
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useSendDestNFT({ address: 'address', close }))
+      const { result } = renderHook(() => useSendEthereumNFT({ address: 'address', close }))
       resultHook = result
     })
 

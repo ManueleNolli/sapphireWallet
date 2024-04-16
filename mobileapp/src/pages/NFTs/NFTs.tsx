@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import SafeAreaView from '../../utils/SafeAreaView'
 import { NFTCard } from '../../components/NFTCard/NFTCard'
-import { NETWORKS } from '../../constants/Networks'
 import { RefreshControl, ScrollView, View } from 'react-native'
 import { appStyles, vh } from '../../Styles'
 import { Layout, Spinner, Text, useTheme } from '@ui-kitten/components'
@@ -19,7 +18,7 @@ export default function NFTs() {
             refreshing={isRefreshing}
             onRefresh={refreshNFTs}
             colors={[theme['color-primary-100'], theme['color-primary-500'], theme['color-primary-900']]}
-            progressBackgroundColor={'white'}
+            progressBackgroundColor="white"
             progressViewOffset={15 * vh}
           />
         }
@@ -43,7 +42,7 @@ export default function NFTs() {
           )}
           {nfts.length === 0 && !isLoading && (
             <View style={appStyles.center}>
-              <Text category={'label'}>No NFTs found</Text>
+              <Text category="label">No NFTs found</Text>
             </View>
           )}
           {nfts.map((nft, index: number) => (

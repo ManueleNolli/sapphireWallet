@@ -298,6 +298,99 @@ describe('ApiGatewayService', () => {
     });
   });
 
+  describe('getNFTBalance', () => {
+    it('should get NFT Balance successfully', async () => {
+      const getBalanceRequest = {
+        walletAddress: '0x00',
+        network: 'localhost',
+      };
+
+      const mockResponse = {
+        sepolia: 2,
+        amoy: 1,
+      };
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(of(mockResponse));
+
+      apiGatewayService.getNFTBalance(getBalanceRequest).subscribe((result) => {
+        expect(result).toEqual(mockResponse);
+      });
+    });
+
+    it('should handle errors and throw RpcException', async () => {
+      const getBalanceRequest = {
+        walletAddress: '0x00',
+        network: 'localhost',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService.getNFTBalance(getBalanceRequest).subscribe({
+        error: (error) => {
+          expect(error).toBeInstanceOf(RpcException);
+        },
+      });
+    });
+  });
+
+  describe('getNFTMetadata', () => {
+    it('should get NFT Metadata successfully', async () => {
+      const getBalanceRequest = {
+        address: '0x00',
+        network: 'localhost',
+      };
+
+      const mockResponse = [
+        {
+          collectionAddress: '0x2Ccf4DAFAF0F7f5ABE2A74e40100E45824DAFB11',
+          collectionDescription: '',
+          collectionName: '',
+          description: 'Sapphire is a precious gemstone',
+          image:
+            'https://gateway.pinata.cloud/ipfs/bafybeib3pgyhzx7j7yfeigqtjqxnvjz7c4ic32dxu6lp4iqhjnq2sd2tum/0.png',
+          name: 'Sapphire #0',
+          network: 'amoy',
+          tokenId: 0,
+        },
+      ];
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(of(mockResponse));
+
+      apiGatewayService
+        .getNFTMetadata(getBalanceRequest)
+        .subscribe((result) => {
+          expect(result).toEqual(mockResponse);
+        });
+    });
+
+    it('should handle errors and throw RpcException', async () => {
+      const getBalanceRequest = {
+        address: '0x00',
+        network: 'localhost',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService.getNFTMetadata(getBalanceRequest).subscribe({
+        error: (error) => {
+          expect(error).toBeInstanceOf(RpcException);
+        },
+      });
+    });
+  });
+
   describe('getWrappedAccountAddress', () => {
     it('should getWrappedAccountAddress successfully', async () => {
       const getWrappedAccountAddressRequest = {

@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { act, renderHook, waitFor } from '@testing-library/react-native'
 import useHome from '../useHome'
-import { getBalance } from '../../../services/balances'
+import { getBalance, getNFTBalance } from '../../../services/balances'
 import { setStringAsync } from 'expo-clipboard'
 
 jest.mock('react', () => ({
@@ -30,6 +30,9 @@ describe('useHome', () => {
         crypto: 'ETH',
       },
     })
+    ;(getNFTBalance as jest.Mock).mockResolvedValue({
+      sepolia: 0,
+    })
 
     let resultHook: any
     await waitFor(async () => {
@@ -55,6 +58,9 @@ describe('useHome', () => {
         chainID: '1',
         crypto: 'ETH',
       },
+    })
+    ;(getNFTBalance as jest.Mock).mockResolvedValue({
+      sepolia: 0,
     })
     ;(setStringAsync as jest.Mock).mockResolvedValueOnce(undefined)
     ;(useContext as jest.Mock).mockReturnValue({
@@ -93,6 +99,12 @@ describe('useHome', () => {
         crypto: 'ETH',
       },
     })
+    ;(getNFTBalance as jest.Mock).mockResolvedValueOnce({
+      sepolia: 0,
+    })
+    ;(getNFTBalance as jest.Mock).mockResolvedValueOnce({
+      sepolia: 1,
+    })
 
     let resultHook: any
     await waitFor(async () => {
@@ -101,12 +113,14 @@ describe('useHome', () => {
     })
 
     expect(getBalance).toHaveBeenCalledTimes(1)
+    expect(getNFTBalance).toHaveBeenCalledTimes(1)
 
     await act(async () => {
       await resultHook.current.onRefresh()
     })
 
     expect(getBalance).toHaveBeenCalledTimes(2)
+    expect(getNFTBalance).toHaveBeenCalledTimes(2)
 
     expect(resultHook.current.balances).toEqual({
       sepolia: {
@@ -114,6 +128,10 @@ describe('useHome', () => {
         chainID: '1',
         crypto: 'ETH',
       },
+    })
+
+    expect(resultHook.current.balancesNFT).toEqual({
+      sepolia: 1,
     })
   })
 
@@ -133,6 +151,9 @@ describe('useHome', () => {
         chainID: '1',
         crypto: 'MATIC',
       },
+    })
+    ;(getNFTBalance as jest.Mock).mockResolvedValueOnce({
+      sepolia: 1,
     })
 
     let resultHook: any
@@ -154,18 +175,28 @@ describe('useHome', () => {
     })
 
     await act(async () => {
-      await resultHook.current.modalSendNFTBackdrop()
+      await resultHook.current.modalBridgeETHtoMATICBackdrop()
     })
 
     await act(async () => {
-      await resultHook.current.modalBridgeETHtoMATICBackdrop()
+      await resultHook.current.modalSendEthereumNFTBackdrop()
+    })
+
+    await act(async () => {
+      await resultHook.current.modalSendPolygonNFTBackdrop()
+    })
+
+    await act(async () => {
+      await resultHook.current.modalBridgeNFTBackdrop()
     })
 
     expect(resultHook.current.isReceiveModalVisible).toBe(false)
     expect(resultHook.current.isSendETHModalVisible).toBe(false)
     expect(resultHook.current.isSendMATICModalVisible).toBe(false)
     expect(resultHook.current.isBridgeETHtoMATICModalVisible).toBe(false)
-    expect(resultHook.current.isSendNFTModalVisible).toBe(false)
+    expect(resultHook.current.isSendEthereumNFTModalVisible).toBe(false)
+    expect(resultHook.current.isSendPolygonNFTModalVisible).toBe(false)
+    expect(resultHook.current.isBridgeNFTModalVisible).toBe(false)
   })
 
   describe('closeModal', () => {
@@ -199,6 +230,12 @@ describe('useHome', () => {
           chainID: '1',
           crypto: 'MATIC',
         },
+      })
+      ;(getNFTBalance as jest.Mock).mockResolvedValueOnce({
+        sepolia: 0,
+      })
+      ;(getNFTBalance as jest.Mock).mockResolvedValueOnce({
+        sepolia: 1,
       })
     })
 
@@ -283,7 +320,7 @@ describe('useHome', () => {
       })
     })
 
-    it('call closeSendNFTModal', async () => {
+    it('call closeSendEthereumNFTModal', async () => {
       let resultHook: any
       await waitFor(async () => {
         const { result } = renderHook(() => useHome())
@@ -291,7 +328,61 @@ describe('useHome', () => {
       })
 
       await act(async () => {
-        await resultHook.current.closeSendNFTModal()
+        await resultHook.current.closeSendEthereumNFTModal()
+      })
+
+      expect(getBalance).toHaveBeenCalledTimes(1)
+
+      expect(resultHook.current.balances).toEqual({
+        sepolia: {
+          balance: '1.0',
+          chainID: '1',
+          crypto: 'ETH',
+        },
+        amoy: {
+          balance: '1.0',
+          chainID: '1',
+          crypto: 'MATIC',
+        },
+      })
+    })
+
+    it('call closeSendPolygonNFTModal', async () => {
+      let resultHook: any
+      await waitFor(async () => {
+        const { result } = renderHook(() => useHome())
+        resultHook = result
+      })
+
+      await act(async () => {
+        await resultHook.current.closeSendPolygonNFTModal()
+      })
+
+      expect(getBalance).toHaveBeenCalledTimes(1)
+
+      expect(resultHook.current.balances).toEqual({
+        sepolia: {
+          balance: '2.0',
+          chainID: '1',
+          crypto: 'ETH',
+        },
+        amoy: {
+          balance: '2.0',
+          chainID: '1',
+          crypto: 'MATIC',
+        },
+      })
+    })
+
+    it('call closeBridgeNFTModal', async () => {
+      let resultHook: any
+      await waitFor(async () => {
+        const { result } = renderHook(() => useHome())
+        resultHook = result
+      })
+
+      await act(async () => {
+        await resultHook.current.closeBridgeNFTModal()
       })
 
       expect(getBalance).toHaveBeenCalledTimes(1)

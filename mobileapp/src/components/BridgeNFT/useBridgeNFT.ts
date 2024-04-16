@@ -7,11 +7,11 @@ import Toast from 'react-native-toast-message'
 import useLoading from '../../hooks/useLoading'
 import { OwnedNFT, ownedNFTs } from '../../services/blockchain'
 
-type useSendNFTProps = {
+type useBridgeNFTProps = {
   address: string
   close: () => void
 }
-export default function useBridgeNFT({ address, close }: useSendNFTProps) {
+export default function useBridgeNFT({ address, close }: useBridgeNFTProps) {
   const { getPrivateKey } = useContext(WalletContext)
   const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
   const { isLoading: isSendLoading, setIsLoading: setIsSendLoading } = useLoading()

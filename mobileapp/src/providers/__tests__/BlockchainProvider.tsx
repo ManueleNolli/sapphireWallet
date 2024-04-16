@@ -1,5 +1,5 @@
 import React from 'react'
-import { waitFor } from '@testing-library/react-native'
+import { act, fireEvent, waitFor } from '@testing-library/react-native'
 import renderWithTheme from '../../TestHelper'
 import { BlockchainProvider } from '../BlockchainProvider'
 import { getProvider } from '../../services/blockchain'
@@ -56,7 +56,7 @@ describe('BlockchainProvider', () => {
 
   it('render loading', async () => {
     ;(getProvider as jest.Mock).mockReturnValue(Promise.resolve())
-    let tree = renderWithTheme(
+    const tree = renderWithTheme(
       <BlockchainProvider>
         <MockComponent />
       </BlockchainProvider>

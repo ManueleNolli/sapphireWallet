@@ -19,7 +19,7 @@ jest.mock('@ui-kitten/components', () => {
   }
 })
 
-describe('SendNFT', () => {
+describe('SendEthereumNFT', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -51,7 +51,7 @@ describe('SendNFT', () => {
       ],
     })
 
-    const tree = renderWithTheme(<SendEthereumNFT address={'address'} close={() => {}} />)
+    const tree = renderWithTheme(<SendEthereumNFT address="address" close={() => {}} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -63,7 +63,7 @@ describe('SendNFT', () => {
       nfts: [],
     })
 
-    const tree = renderWithTheme(<SendEthereumNFT address={'address'} close={() => {}} />)
+    const tree = renderWithTheme(<SendEthereumNFT address="address" close={() => {}} />)
 
     expect(tree.getAllByText('No NFTs found')).toBeTruthy()
     expect(tree).toMatchSnapshot()
@@ -76,7 +76,7 @@ describe('SendNFT', () => {
       nfts: [],
     })
 
-    const tree = renderWithTheme(<SendEthereumNFT address={'address'} close={() => {}} />)
+    const tree = renderWithTheme(<SendEthereumNFT address="address" close={() => {}} />)
     expect(tree).toMatchSnapshot()
   })
 
@@ -87,7 +87,7 @@ describe('SendNFT', () => {
       nfts: [],
     })
 
-    const tree = renderWithTheme(<SendEthereumNFT address={'address'} close={() => {}} />)
+    const tree = renderWithTheme(<SendEthereumNFT address="address" close={() => {}} />)
 
     expect(tree.getAllByText('No NFTs found')).toBeTruthy()
     expect(tree).toMatchSnapshot()
@@ -98,7 +98,7 @@ describe('SendNFT', () => {
     ;(useSendEthereumNFT as jest.Mock).mockReturnValue({
       isLoading: false,
       isNFTLoading: true,
-      setSelectedNFT: setSelectedNFT,
+      setSelectedNFT,
       nfts: [
         {
           name: 'name0',
@@ -123,7 +123,7 @@ describe('SendNFT', () => {
       ],
     })
 
-    const tree = renderWithTheme(<SendEthereumNFT address={'address'} close={() => {}} />)
+    const tree = renderWithTheme(<SendEthereumNFT address="address" close={() => {}} />)
 
     const NFTCard = tree.getByTestId('NFTCard-1')
 
@@ -151,7 +151,7 @@ describe('SendNFT', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<SendEthereumNFT address={'address'} close={() => {}} />)
+      tree = renderWithTheme(<SendEthereumNFT address="address" close={() => {}} />)
     })
 
     expect(tree).toMatchSnapshot()

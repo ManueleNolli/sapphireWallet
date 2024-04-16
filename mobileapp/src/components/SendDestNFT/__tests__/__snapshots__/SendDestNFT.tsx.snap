@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendNFT Show QRCode Scanner 1`] = `
+exports[`SendDestNFT Show QRCode Scanner 1`] = `
 <div
   data-testid="QRCodeScanner"
 >
@@ -8,7 +8,7 @@ exports[`SendNFT Show QRCode Scanner 1`] = `
 </div>
 `;
 
-exports[`SendNFT render correctly 1`] = `
+exports[`SendDestNFT render correctly 1`] = `
 <View
   appearance="default"
   level="1"
@@ -21,9 +21,9 @@ exports[`SendNFT render correctly 1`] = `
         "alignItems": "center",
         "borderRadius": 10,
         "maxHeight": 1200.6,
-        "maxWidth": 675,
         "paddingHorizontal": 15,
         "paddingVertical": 26.68,
+        "width": 675,
       },
     ]
   }
@@ -47,7 +47,7 @@ exports[`SendNFT render correctly 1`] = `
       ]
     }
   >
-    Send NFT
+    Send Polygon NFT
   </Text>
   <Text
     appearance="default"
@@ -68,7 +68,7 @@ exports[`SendNFT render correctly 1`] = `
       ]
     }
   >
-    Select an NFT and input the address
+    Select an NFT to send
   </Text>
   <div
     data-testid="InputAddress"
@@ -116,10 +116,10 @@ exports[`SendNFT render correctly 1`] = `
           {
             "alignItems": "center",
             "borderRadius": 10,
-            "height": 560.28,
+            "height": 600,
             "justifyContent": "center",
             "opacity": 1,
-            "width": 560.28,
+            "width": 600,
           }
         }
       >
@@ -127,16 +127,25 @@ exports[`SendNFT render correctly 1`] = `
           style={
             [
               {
+                "backgroundColor": "red",
                 "borderColor": "#598BFF",
                 "borderRadius": 10,
                 "borderWidth": 1,
+                "elevation": 5,
                 "height": 667,
                 "overflow": "hidden",
+                "shadowColor": "black",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 10,
                 "width": "100%",
               },
               {
-                "height": 533.6,
-                "width": 533.6,
+                "height": 466.9,
+                "width": 466.9,
               },
             ]
           }
@@ -145,17 +154,12 @@ exports[`SendNFT render correctly 1`] = `
           <View
             style={
               {
-                "elevation": 15,
-                "flex": 1,
-                "flexDirection": "column-reverse",
+                "backgroundColor": "red",
+                "height": "102%",
+                "justifyContent": "space-between",
                 "overflow": "hidden",
-                "shadowColor": "black",
-                "shadowOffset": {
-                  "height": 0,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.5,
-                "shadowRadius": 10,
+                "top": -2,
+                "width": "100%",
               }
             }
           >
@@ -190,6 +194,40 @@ exports[`SendNFT render correctly 1`] = `
               transition={null}
             />
             <View
+              style={
+                {
+                  "alignItems": "flex-end",
+                  "marginHorizontal": 15,
+                  "marginVertical": 26.68,
+                }
+              }
+            >
+              <ViewManagerAdapter_ExpoImage
+                contentFit="contain"
+                contentPosition={
+                  {
+                    "left": "50%",
+                    "top": "50%",
+                  }
+                }
+                height={36}
+                onError={[Function]}
+                onLoad={[Function]}
+                onLoadStart={[Function]}
+                onProgress={[Function]}
+                placeholder={[]}
+                source={[]}
+                style={
+                  {
+                    "height": 36,
+                    "width": 36,
+                  }
+                }
+                transition={null}
+                width={36}
+              />
+            </View>
+            <View
               accessibilityState={
                 {
                   "busy": undefined,
@@ -219,9 +257,9 @@ exports[`SendNFT render correctly 1`] = `
               onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "borderRadius": 5,
+                  "borderRadius": 8,
                   "marginHorizontal": 15,
-                  "marginVertical": 13.34,
+                  "marginVertical": 26.68,
                   "opacity": 1,
                   "overflow": "hidden",
                 }
@@ -266,24 +304,54 @@ exports[`SendNFT render correctly 1`] = `
                     }
                   }
                 >
-                  <Text
-                    appearance="default"
-                    category="h4"
-                    status="basic"
+                  <View
                     style={
-                      [
-                        {
-                          "color": "#222B45",
-                          "fontFamily": "System",
-                          "fontSize": 26,
-                          "fontWeight": "800",
-                        },
-                        undefined,
-                      ]
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "space-between",
+                      }
                     }
                   >
-                    name0
-                  </Text>
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      name0
+                    </Text>
+                    <Text
+                      appearance="default"
+                      category="label"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 12,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "marginRight": 7.5,
+                          },
+                        ]
+                      }
+                    >
+                      #0
+                    </Text>
+                  </View>
                   <View
                     collapsable={false}
                     pointerEvents="none"
@@ -300,60 +368,6 @@ exports[`SendNFT render correctly 1`] = `
                       style={{}}
                     >
                       <View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "flexDirection": "row",
-                              "marginVertical": 26.68,
-                            }
-                          }
-                        >
-                          <ViewManagerAdapter_ExpoImage
-                            contentFit="contain"
-                            contentPosition={
-                              {
-                                "left": "50%",
-                                "top": "50%",
-                              }
-                            }
-                            height={24}
-                            marginRight={8}
-                            onError={[Function]}
-                            onLoad={[Function]}
-                            onLoadStart={[Function]}
-                            onProgress={[Function]}
-                            placeholder={[]}
-                            source={[]}
-                            style={
-                              {
-                                "height": 24,
-                                "marginRight": 8,
-                                "width": 24,
-                              }
-                            }
-                            transition={null}
-                            width={24}
-                          />
-                          <Text
-                            appearance="default"
-                            category="label"
-                            status="basic"
-                            style={
-                              [
-                                {
-                                  "color": "#222B45",
-                                  "fontFamily": "System",
-                                  "fontSize": 12,
-                                  "fontWeight": "800",
-                                },
-                                undefined,
-                              ]
-                            }
-                          >
-                            localhost
-                          </Text>
-                        </View>
                         <Text
                           appearance="default"
                           category="h6"
@@ -547,10 +561,10 @@ exports[`SendNFT render correctly 1`] = `
           {
             "alignItems": "center",
             "borderRadius": 10,
-            "height": 560.28,
+            "height": 600,
             "justifyContent": "center",
             "opacity": 1,
-            "width": 560.28,
+            "width": 600,
           }
         }
       >
@@ -558,16 +572,25 @@ exports[`SendNFT render correctly 1`] = `
           style={
             [
               {
+                "backgroundColor": "red",
                 "borderColor": "#598BFF",
                 "borderRadius": 10,
                 "borderWidth": 1,
+                "elevation": 5,
                 "height": 667,
                 "overflow": "hidden",
+                "shadowColor": "black",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 10,
                 "width": "100%",
               },
               {
-                "height": 533.6,
-                "width": 533.6,
+                "height": 466.9,
+                "width": 466.9,
               },
             ]
           }
@@ -576,17 +599,12 @@ exports[`SendNFT render correctly 1`] = `
           <View
             style={
               {
-                "elevation": 15,
-                "flex": 1,
-                "flexDirection": "column-reverse",
+                "backgroundColor": "red",
+                "height": "102%",
+                "justifyContent": "space-between",
                 "overflow": "hidden",
-                "shadowColor": "black",
-                "shadowOffset": {
-                  "height": 0,
-                  "width": 0,
-                },
-                "shadowOpacity": 0.5,
-                "shadowRadius": 10,
+                "top": -2,
+                "width": "100%",
               }
             }
           >
@@ -621,6 +639,40 @@ exports[`SendNFT render correctly 1`] = `
               transition={null}
             />
             <View
+              style={
+                {
+                  "alignItems": "flex-end",
+                  "marginHorizontal": 15,
+                  "marginVertical": 26.68,
+                }
+              }
+            >
+              <ViewManagerAdapter_ExpoImage
+                contentFit="contain"
+                contentPosition={
+                  {
+                    "left": "50%",
+                    "top": "50%",
+                  }
+                }
+                height={36}
+                onError={[Function]}
+                onLoad={[Function]}
+                onLoadStart={[Function]}
+                onProgress={[Function]}
+                placeholder={[]}
+                source={[]}
+                style={
+                  {
+                    "height": 36,
+                    "width": 36,
+                  }
+                }
+                transition={null}
+                width={36}
+              />
+            </View>
+            <View
               accessibilityState={
                 {
                   "busy": undefined,
@@ -650,9 +702,9 @@ exports[`SendNFT render correctly 1`] = `
               onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "borderRadius": 5,
+                  "borderRadius": 8,
                   "marginHorizontal": 15,
-                  "marginVertical": 13.34,
+                  "marginVertical": 26.68,
                   "opacity": 1,
                   "overflow": "hidden",
                 }
@@ -697,24 +749,54 @@ exports[`SendNFT render correctly 1`] = `
                     }
                   }
                 >
-                  <Text
-                    appearance="default"
-                    category="h4"
-                    status="basic"
+                  <View
                     style={
-                      [
-                        {
-                          "color": "#222B45",
-                          "fontFamily": "System",
-                          "fontSize": 26,
-                          "fontWeight": "800",
-                        },
-                        undefined,
-                      ]
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "space-between",
+                      }
                     }
                   >
-                    name1
-                  </Text>
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      name1
+                    </Text>
+                    <Text
+                      appearance="default"
+                      category="label"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 12,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "marginRight": 7.5,
+                          },
+                        ]
+                      }
+                    >
+                      #1
+                    </Text>
+                  </View>
                   <View
                     collapsable={false}
                     pointerEvents="none"
@@ -731,60 +813,6 @@ exports[`SendNFT render correctly 1`] = `
                       style={{}}
                     >
                       <View>
-                        <View
-                          style={
-                            {
-                              "alignItems": "center",
-                              "flexDirection": "row",
-                              "marginVertical": 26.68,
-                            }
-                          }
-                        >
-                          <ViewManagerAdapter_ExpoImage
-                            contentFit="contain"
-                            contentPosition={
-                              {
-                                "left": "50%",
-                                "top": "50%",
-                              }
-                            }
-                            height={24}
-                            marginRight={8}
-                            onError={[Function]}
-                            onLoad={[Function]}
-                            onLoadStart={[Function]}
-                            onProgress={[Function]}
-                            placeholder={[]}
-                            source={[]}
-                            style={
-                              {
-                                "height": 24,
-                                "marginRight": 8,
-                                "width": 24,
-                              }
-                            }
-                            transition={null}
-                            width={24}
-                          />
-                          <Text
-                            appearance="default"
-                            category="label"
-                            status="basic"
-                            style={
-                              [
-                                {
-                                  "color": "#222B45",
-                                  "fontFamily": "System",
-                                  "fontSize": 12,
-                                  "fontWeight": "800",
-                                },
-                                undefined,
-                              ]
-                            }
-                          >
-                            localhost
-                          </Text>
-                        </View>
                         <Text
                           appearance="default"
                           category="h6"
@@ -953,6 +981,202 @@ exports[`SendNFT render correctly 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "alignSelf": "flex-start",
+        "flexDirection": "row",
+        "marginTop": 26.68,
+        "opacity": 1,
+      }
+    }
+    testID="checkbox-button"
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderRadius": 6,
+              "height": 32,
+              "width": 32,
+            },
+            {
+              "position": "absolute",
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "rgba(255, 61, 113, 0.08)",
+              "borderColor": "#FF3D71",
+              "borderRadius": 3,
+              "borderWidth": 1,
+              "height": 20,
+              "width": 20,
+            },
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight="12"
+          bbWidth="12"
+          fill="transparent"
+          focusable={false}
+          height={12}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          stroke="transparent"
+          strokeWidth={3}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 12,
+                "width": 12,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={12}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
+              {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            strokeWidth="3"
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              >
+                <RNSVGRect
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  height="24"
+                  opacity={0}
+                  width="24"
+                  x="0"
+                  y="0"
+                />
+                <RNSVGPath
+                  d="M9.86 18a1 1 0 0 1-.73-.32l-4.86-5.17a1 1 0 1 1 1.46-1.37l4.12 4.39 8.41-9.2a1 1 0 1 1 1.48 1.34l-9.14 10a1 1 0 0 1-.73.33z"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <Text
+      appearance="default"
+      category="label"
+      status="danger"
+      style={
+        [
+          {
+            "color": "#FF3D71",
+            "fontFamily": "System",
+            "fontSize": 12,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+          },
+        ]
+      }
+    >
+      Receiver is a Sapphire wallet
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
         "disabled": true,
         "expanded": undefined,
         "selected": undefined,
@@ -1018,13 +1242,13 @@ exports[`SendNFT render correctly 1`] = `
         ]
       }
     >
-      Send NFT
+      Send Polygon NFT
     </Text>
   </View>
 </View>
 `;
 
-exports[`SendNFT render correctly loading 1`] = `
+exports[`SendDestNFT render correctly loading 1`] = `
 <View
   appearance="default"
   level="1"
@@ -1037,9 +1261,9 @@ exports[`SendNFT render correctly loading 1`] = `
         "alignItems": "center",
         "borderRadius": 10,
         "maxHeight": 1200.6,
-        "maxWidth": 675,
         "paddingHorizontal": 15,
         "paddingVertical": 26.68,
+        "width": 675,
       },
     ]
   }
@@ -1063,7 +1287,7 @@ exports[`SendNFT render correctly loading 1`] = `
       ]
     }
   >
-    Send NFT
+    Send Polygon NFT
   </Text>
   <Text
     appearance="default"
@@ -1084,7 +1308,7 @@ exports[`SendNFT render correctly loading 1`] = `
       ]
     }
   >
-    Select an NFT and input the address
+    Select an NFT to send
   </Text>
   <div
     data-testid="InputAddress"
@@ -1117,7 +1341,7 @@ exports[`SendNFT render correctly loading 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": true,
+        "disabled": undefined,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -1132,7 +1356,7 @@ exports[`SendNFT render correctly loading 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1143,154 +1367,171 @@ exports[`SendNFT render correctly loading 1`] = `
     style={
       {
         "alignItems": "center",
-        "backgroundColor": "rgba(143, 155, 179, 0.16)",
-        "borderColor": "rgba(143, 155, 179, 0.24)",
-        "borderRadius": 4,
-        "borderWidth": 1,
+        "alignSelf": "flex-start",
         "flexDirection": "row",
-        "justifyContent": "center",
         "marginTop": 26.68,
-        "minHeight": 40,
-        "minWidth": 40,
         "opacity": 1,
-        "paddingHorizontal": 10,
-        "paddingVertical": 12,
-        "width": "100%",
       }
     }
-    testID="send-button"
+    testID="checkbox-button"
   >
-    <Text
-      appearance="default"
-      category="p1"
-      status="basic"
+    <View
       style={
-        [
-          {
-            "color": "#222B45",
-            "fontFamily": "System",
-            "fontSize": 15,
-            "fontWeight": "400",
-          },
-          {
-            "color": "rgba(143, 155, 179, 0.48)",
-            "fontFamily": "System",
-            "fontSize": 14,
-            "fontWeight": "bold",
-            "marginHorizontal": 10,
-          },
-        ]
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
       }
     >
-      Send NFT
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`SendNFT render correctly without nfts 1`] = `
-<View
-  appearance="default"
-  level="1"
-  style={
-    [
-      {
-        "backgroundColor": "#FFFFFF",
-      },
-      {
-        "alignItems": "center",
-        "borderRadius": 10,
-        "maxHeight": 1200.6,
-        "maxWidth": 675,
-        "paddingHorizontal": 15,
-        "paddingVertical": 26.68,
-      },
-    ]
-  }
->
-  <Text
-    appearance="default"
-    category="h6"
-    status="basic"
-    style={
-      [
-        {
-          "color": "#222B45",
-          "fontFamily": "System",
-          "fontSize": 18,
-          "fontWeight": "800",
-        },
-        {
-          "paddingHorizontal": 15,
-          "paddingTop": 26.68,
-        },
-      ]
-    }
-  >
-    Send NFT
-  </Text>
-  <Text
-    appearance="default"
-    category="p1"
-    status="basic"
-    style={
-      [
-        {
-          "color": "#222B45",
-          "fontFamily": "System",
-          "fontSize": 15,
-          "fontWeight": "400",
-        },
-        {
-          "marginBottom": 26.68,
-          "paddingHorizontal": 15,
-        },
-      ]
-    }
-  >
-    Select an NFT and input the address
-  </Text>
-  <div
-    data-testid="InputAddress"
-  >
-    InputAddress
-  </div>
-  <View
-    style={
-      {
-        "marginTop": 26.68,
-      }
-    }
-  >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderRadius": 6,
+              "height": 32,
+              "width": 32,
+            },
+            {
+              "position": "absolute",
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "rgba(255, 61, 113, 0.08)",
+              "borderColor": "#FF3D71",
+              "borderRadius": 3,
+              "borderWidth": 1,
+              "height": 20,
+              "width": 20,
+            },
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight="12"
+          bbWidth="12"
+          fill="transparent"
+          focusable={false}
+          height={12}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          stroke="transparent"
+          strokeWidth={3}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 12,
+                "width": 12,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={12}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
+              {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            strokeWidth="3"
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              >
+                <RNSVGRect
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  height="24"
+                  opacity={0}
+                  width="24"
+                  x="0"
+                  y="0"
+                />
+                <RNSVGPath
+                  d="M9.86 18a1 1 0 0 1-.73-.32l-4.86-5.17a1 1 0 1 1 1.46-1.37l4.12 4.39 8.41-9.2a1 1 0 1 1 1.48 1.34l-9.14 10a1 1 0 0 1-.73.33z"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
     <Text
       appearance="default"
       category="label"
-      status="basic"
+      status="danger"
       style={
         [
           {
-            "color": "#222B45",
+            "color": "#FF3D71",
             "fontFamily": "System",
             "fontSize": 12,
             "fontWeight": "800",
           },
-          undefined,
+          {
+            "marginLeft": 15,
+          },
         ]
       }
     >
-      No NFTs found
+      Receiver is a Sapphire wallet
     </Text>
   </View>
-  <RCTScrollView
-    showsVerticalScrollIndicator={false}
-    style={
-      {
-        "marginTop": 26.68,
-      }
-    }
-  >
-    <View />
-  </RCTScrollView>
   <View
     accessibilityState={
       {
@@ -1361,13 +1602,13 @@ exports[`SendNFT render correctly without nfts 1`] = `
         ]
       }
     >
-      Send NFT
+      Send Polygon NFT
     </Text>
   </View>
 </View>
 `;
 
-exports[`SendNFT render correctly without nfts 2`] = `
+exports[`SendDestNFT render correctly without nfts 1`] = `
 <View
   appearance="default"
   level="1"
@@ -1380,9 +1621,9 @@ exports[`SendNFT render correctly without nfts 2`] = `
         "alignItems": "center",
         "borderRadius": 10,
         "maxHeight": 1200.6,
-        "maxWidth": 675,
         "paddingHorizontal": 15,
         "paddingVertical": 26.68,
+        "width": 675,
       },
     ]
   }
@@ -1406,7 +1647,7 @@ exports[`SendNFT render correctly without nfts 2`] = `
       ]
     }
   >
-    Send NFT
+    Send Polygon NFT
   </Text>
   <Text
     appearance="default"
@@ -1427,7 +1668,7 @@ exports[`SendNFT render correctly without nfts 2`] = `
       ]
     }
   >
-    Select an NFT and input the address
+    Select an NFT to send
   </Text>
   <div
     data-testid="InputAddress"
@@ -1470,6 +1711,202 @@ exports[`SendNFT render correctly without nfts 2`] = `
   >
     <View />
   </RCTScrollView>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "alignSelf": "flex-start",
+        "flexDirection": "row",
+        "marginTop": 26.68,
+        "opacity": 1,
+      }
+    }
+    testID="checkbox-button"
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderRadius": 6,
+              "height": 32,
+              "width": 32,
+            },
+            {
+              "position": "absolute",
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "rgba(255, 61, 113, 0.08)",
+              "borderColor": "#FF3D71",
+              "borderRadius": 3,
+              "borderWidth": 1,
+              "height": 20,
+              "width": 20,
+            },
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight="12"
+          bbWidth="12"
+          fill="transparent"
+          focusable={false}
+          height={12}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          stroke="transparent"
+          strokeWidth={3}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 12,
+                "width": 12,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={12}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
+              {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            strokeWidth="3"
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              >
+                <RNSVGRect
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  height="24"
+                  opacity={0}
+                  width="24"
+                  x="0"
+                  y="0"
+                />
+                <RNSVGPath
+                  d="M9.86 18a1 1 0 0 1-.73-.32l-4.86-5.17a1 1 0 1 1 1.46-1.37l4.12 4.39 8.41-9.2a1 1 0 1 1 1.48 1.34l-9.14 10a1 1 0 0 1-.73.33z"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <Text
+      appearance="default"
+      category="label"
+      status="danger"
+      style={
+        [
+          {
+            "color": "#FF3D71",
+            "fontFamily": "System",
+            "fontSize": 12,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+          },
+        ]
+      }
+    >
+      Receiver is a Sapphire wallet
+    </Text>
+  </View>
   <View
     accessibilityState={
       {
@@ -1540,7 +1977,382 @@ exports[`SendNFT render correctly without nfts 2`] = `
         ]
       }
     >
-      Send NFT
+      Send Polygon NFT
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`SendDestNFT render correctly without nfts 2`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "alignItems": "center",
+        "borderRadius": 10,
+        "maxHeight": 1200.6,
+        "paddingHorizontal": 15,
+        "paddingVertical": 26.68,
+        "width": 675,
+      },
+    ]
+  }
+>
+  <Text
+    appearance="default"
+    category="h6"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 18,
+          "fontWeight": "800",
+        },
+        {
+          "paddingHorizontal": 15,
+          "paddingTop": 26.68,
+        },
+      ]
+    }
+  >
+    Send Polygon NFT
+  </Text>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "marginBottom": 26.68,
+          "paddingHorizontal": 15,
+        },
+      ]
+    }
+  >
+    Select an NFT to send
+  </Text>
+  <div
+    data-testid="InputAddress"
+  >
+    InputAddress
+  </div>
+  <View
+    style={
+      {
+        "marginTop": 26.68,
+      }
+    }
+  >
+    <Text
+      appearance="default"
+      category="label"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 12,
+            "fontWeight": "800",
+          },
+          undefined,
+        ]
+      }
+    >
+      No NFTs found
+    </Text>
+  </View>
+  <RCTScrollView
+    showsVerticalScrollIndicator={false}
+    style={
+      {
+        "marginTop": 26.68,
+      }
+    }
+  >
+    <View />
+  </RCTScrollView>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "alignSelf": "flex-start",
+        "flexDirection": "row",
+        "marginTop": 26.68,
+        "opacity": 1,
+      }
+    }
+    testID="checkbox-button"
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderRadius": 6,
+              "height": 32,
+              "width": 32,
+            },
+            {
+              "position": "absolute",
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "rgba(255, 61, 113, 0.08)",
+              "borderColor": "#FF3D71",
+              "borderRadius": 3,
+              "borderWidth": 1,
+              "height": 20,
+              "width": 20,
+            },
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight="12"
+          bbWidth="12"
+          fill="transparent"
+          focusable={false}
+          height={12}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          stroke="transparent"
+          strokeWidth={3}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 12,
+                "width": 12,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={12}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
+              {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            strokeWidth="3"
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              >
+                <RNSVGRect
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  height="24"
+                  opacity={0}
+                  width="24"
+                  x="0"
+                  y="0"
+                />
+                <RNSVGPath
+                  d="M9.86 18a1 1 0 0 1-.73-.32l-4.86-5.17a1 1 0 1 1 1.46-1.37l4.12 4.39 8.41-9.2a1 1 0 1 1 1.48 1.34l-9.14 10a1 1 0 0 1-.73.33z"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <Text
+      appearance="default"
+      category="label"
+      status="danger"
+      style={
+        [
+          {
+            "color": "#FF3D71",
+            "fontFamily": "System",
+            "fontSize": 12,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+          },
+        ]
+      }
+    >
+      Receiver is a Sapphire wallet
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": true,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(143, 155, 179, 0.16)",
+        "borderColor": "rgba(143, 155, 179, 0.24)",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginTop": 26.68,
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+        "width": "100%",
+      }
+    }
+    testID="send-button"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "rgba(143, 155, 179, 0.48)",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Send Polygon NFT
     </Text>
   </View>
 </View>

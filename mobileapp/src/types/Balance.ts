@@ -11,5 +11,5 @@ export type Balances = {
 }
 
 export type BalancesNFT = {
-  [key in NETWORKS | BRIDGE_NETWORKS]: number
+  [key in NETWORKS | BRIDGE_NETWORKS]?: number
 }

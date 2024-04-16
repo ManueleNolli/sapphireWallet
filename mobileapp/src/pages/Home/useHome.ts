@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import { WalletContext } from '../../context/WalletContext'
-import { getBalance } from '../../services/balances'
+import { getBalance, getNFTBalance } from '../../services/balances'
 import { formatEther } from 'ethers'
 import * as Clipboard from 'expo-clipboard'
 import { homeBackground } from '../../assets/AssetsRegistry'
 import useLoading from '../../hooks/useLoading'
 import { Balances, BalancesNFT } from '../../types/Balance'
-import { getNFTBalance } from '../../services/balances/balanceNFTs'
 
 export default function useHome() {
   const { ethersProvider, currentNetwork } = useContext(BlockchainContext)

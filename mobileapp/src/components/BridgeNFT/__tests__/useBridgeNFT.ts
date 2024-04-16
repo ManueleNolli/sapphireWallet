@@ -4,7 +4,7 @@ import { OwnedNFT, ownedNFTs } from '../../../services/blockchain'
 import { NETWORKS } from '../../../constants/Networks'
 import useBridgeNFT from '../useBridgeNFT'
 import { getSigner } from '../../../services/wallet'
-import { requestERC721TokenTransfer } from '../../../services/transactions'
+import { requestERC721TokenTransfer, requestNFTBridgeCall } from '../../../services/transactions'
 import Toast from 'react-native-toast-message'
 
 jest.mock('react', () => ({
@@ -23,17 +23,17 @@ jest.mock('../../../services/wallet', () => ({
 }))
 
 jest.mock('../../../services/transactions', () => ({
-  requestERC721TokenTransfer: jest.fn(),
+  requestNFTBridgeCall: jest.fn(),
 }))
 
-describe('useSendNFTs Hook', () => {
+describe('useBridgeNFT Hook', () => {
   it('fetches and sets NFTs on initialization', async () => {
     const mockNFTs: OwnedNFT[] = [
       {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -55,13 +55,12 @@ describe('useSendNFTs Hook', () => {
       resultHook = result
     })
 
-    // expect(resultHook.current.isNFTLoading).toBe(false)
     expect(resultHook.current.nfts).toEqual([
       {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -89,13 +88,13 @@ describe('useSendNFTs Hook', () => {
     expect(resultHook.current.nfts).toEqual([])
   })
 
-  it('should send NFT transaction', async () => {
+  it('should send bridge transaction', async () => {
     const mockNFTs: OwnedNFT[] = [
       {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -111,23 +110,23 @@ describe('useSendNFTs Hook', () => {
       ethersProvider: 'ethersProvider',
     })
     ;(getSigner as jest.Mock).mockReturnValueOnce('signer')
-    ;(requestERC721TokenTransfer as jest.Mock).mockReturnValueOnce('requestETHTransferMock')
+    ;(requestNFTBridgeCall as jest.Mock).mockReturnValueOnce('requestNFTBridgeCall')
     ;(Toast.show as jest.Mock).mockReturnValueOnce('Toast.showMock')
 
     const close = jest.fn()
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useBridgeNFT({ address: 'address', close: close }))
+      const { result } = renderHook(() => useBridgeNFT({ address: 'address', close }))
       resultHook = result
     })
 
     await act(async () => {
-      await resultHook.current.sendNFTTransaction()
+      await resultHook.current.sendBridgeTransaction()
     })
 
     expect(getSigner).toHaveBeenCalledWith('getPrivateKeyMock', NETWORKS.LOCALHOST)
-    expect(requestERC721TokenTransfer).toHaveBeenCalledWith('address', '', 1, 'signer', NETWORKS.LOCALHOST)
+    expect(requestNFTBridgeCall).toHaveBeenCalledWith('address', 1, 'signer', NETWORKS.LOCALHOST)
 
     expect(Toast.show).toHaveBeenCalledWith({
       type: 'success',
@@ -143,7 +142,7 @@ describe('useSendNFTs Hook', () => {
         name: 'Mock NFT',
         description: 'Mock NFT Description',
         image: 'mockImageURL',
-        tokenId: '1',
+        tokenId: 1,
         network: NETWORKS.LOCALHOST,
         collectionAddress: 'mockCollectionAddress',
         collectionName: 'Mock Collection',
@@ -159,8 +158,8 @@ describe('useSendNFTs Hook', () => {
       ethersProvider: 'ethersProvider',
     })
     ;(getSigner as jest.Mock).mockReturnValueOnce('signer')
-    ;(requestERC721TokenTransfer as jest.Mock).mockRejectedValue({
-      message: 'requestETHTransferMock',
+    ;(requestNFTBridgeCall as jest.Mock).mockRejectedValue({
+      message: 'requestNFTBridgeCallMock',
     })
     ;(Toast.show as jest.Mock).mockReturnValueOnce('Toast.showMock')
 
@@ -168,45 +167,23 @@ describe('useSendNFTs Hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useBridgeNFT({ address: 'address', close: close }))
+      const { result } = renderHook(() => useBridgeNFT({ address: 'address', close }))
       resultHook = result
     })
 
     await act(async () => {
-      await resultHook.current.sendNFTTransaction()
+      await resultHook.current.sendBridgeTransaction()
     })
 
     expect(getSigner).toHaveBeenCalledWith('getPrivateKeyMock', NETWORKS.LOCALHOST)
-    expect(requestERC721TokenTransfer).toHaveBeenCalledWith('address', '', 1, 'signer', NETWORKS.LOCALHOST)
+    expect(requestNFTBridgeCall).toHaveBeenCalledWith('address', 1, 'signer', NETWORKS.LOCALHOST)
 
     expect(Toast.show).toHaveBeenCalledWith({
       type: 'error',
       text1: 'Transaction failed! 😢',
-      text2: 'requestETHTransferMock',
+      text2: 'requestNFTBridgeCallMock',
     })
 
     expect(close).toHaveBeenCalled()
-  })
-
-  it('should set value address when qrcode finished', async () => {
-    const getPrivateKeyMock = jest.fn().mockResolvedValue('getPrivateKeyMock')
-    ;(useContext as jest.Mock).mockReturnValue({
-      getPrivateKey: getPrivateKeyMock,
-      currentNetwork: NETWORKS.LOCALHOST,
-    })
-
-    const close = jest.fn()
-    let resultHook: any
-    await waitFor(async () => {
-      const { result } = renderHook(() => useBridgeNFT({ address: 'address', close: close }))
-      resultHook = result
-    })
-
-    await act(async () => {
-      resultHook.current.QRCodeFinishedScanning('dataexample')
-    })
-
-    expect(resultHook.current.valueAddress).toBe('dataexample')
-    expect(resultHook.current.isQRCodeScanning).toBe(false)
   })
 })

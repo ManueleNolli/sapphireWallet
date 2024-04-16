@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, Layout, Spinner, StyleService, Text, useStyleSheet } from '@ui-kitten/components'
 import { vh, vw } from '../../Styles'
 import useBridgeNFT from './useBridgeNFT'
-import InputAddress from '../InputAddress/InputAddress'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { NFTCard } from '../NFTCard/NFTCard'
 import { OwnedNFT } from '../../services/blockchain'
@@ -31,7 +30,7 @@ export default function BridgeNFT({ address, close }: SendETHProps) {
   return (
     <Layout style={styles.container}>
       <Text
-        category={'h6'}
+        category="h6"
         style={{
           paddingTop: 2 * vh,
           paddingHorizontal: 2 * vw,
@@ -64,13 +63,13 @@ export default function BridgeNFT({ address, close }: SendETHProps) {
       )}
       {nfts.length === 0 && !isNFTLoading && (
         <View style={{ marginTop: 2 * vh }}>
-          <Text category={'label'}>No NFTs found</Text>
+          <Text category="label">No NFTs found</Text>
         </View>
       )}
       <ScrollView style={{ marginTop: 2 * vh }} showsVerticalScrollIndicator={false}>
         {nfts.map((nft: OwnedNFT, index: number) => (
           <TouchableOpacity
-            role={'button'}
+            role="button"
             key={index}
             style={[styles.nftContainer, index == selectedNFT ? styles.nftSelected : null]}
             onPress={() => setSelectedNFT(index)}

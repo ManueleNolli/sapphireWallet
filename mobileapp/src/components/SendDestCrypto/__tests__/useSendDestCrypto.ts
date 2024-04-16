@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import { NETWORKS } from '../../../constants/Networks'
 import { getSigner } from '../../../services/wallet'
-import { requestETHTransfer } from '../../../services/transactions'
 import { act, renderHook, waitFor } from '@testing-library/react-native'
 import useSendDestCrypto from '../useSendDestCrypto'
 import Toast from 'react-native-toast-message'
@@ -13,10 +12,6 @@ jest.mock('react', () => ({
 
 jest.mock('../../../services/wallet', () => ({
   getSigner: jest.fn(),
-}))
-
-jest.mock('../../../services/transactions', () => ({
-  requestETHTransfer: jest.fn(),
 }))
 
 jest.mock('react-native-toast-message', () => ({

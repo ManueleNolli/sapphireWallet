@@ -6,7 +6,6 @@ import { getSigner } from '../../services/wallet'
 import Toast from 'react-native-toast-message'
 import useLoading from '../../hooks/useLoading'
 import { OwnedNFT, ownedNFTs } from '../../services/blockchain'
-import { Animated } from 'react-native'
 import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 
 type useSendDestNFTProps = {
@@ -45,16 +44,6 @@ export default function useSendDestNFT({ address, close }: useSendDestNFTProps) 
     const selectedNFTObj = nfts[selectedNFT]
 
     try {
-      console.log(
-        'Sending bridge transaction',
-        address,
-        valueAddress,
-        selectedNFTObj.tokenId,
-        signer,
-        currentNetwork,
-        BRIDGE_NETWORKS.AMOY,
-        checkedIsSapphireInternalTX
-      )
       await requestPolygonNFTTransfer(
         address,
         valueAddress,
