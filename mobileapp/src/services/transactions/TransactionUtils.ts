@@ -1,13 +1,14 @@
 import { ethers, Provider, Signer, ZeroAddress } from 'ethers'
+import { BACKEND_ENDPOINTS, backendErrorResponse, contactBackend, getWrappedAccountAddressResponse } from '../backend'
+import { NETWORKS } from '../../constants/Networks'
+import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 
 export const gasLimit = 1000000
 
 /**
  * Generate a random salt for relay
  */
-export async function generateNonceForRelay(
-  provider: Provider
-): Promise<string> {
+export async function generateNonceForRelay(provider: Provider): Promise<string> {
   const block = await provider.getBlockNumber()
   const timestamp = new Date().getTime()
   return `0x${ethers.zeroPadValue(ethers.toBeHex(block), 16).slice(2)}${ethers
@@ -63,13 +64,10 @@ export function generateMessageHash(
  * @param message
  * @param signer
  */
-export async function signMessage(
-  message: string,
-  signer: Signer
-): Promise<string> {
+export async function signMessage(message: string, signer: Signer): Promise<string> {
   const sig = await signer.signMessage(ethers.getBytes(message))
 
-  let v = parseInt(sig.substring(130, 132), 16)
+  const v = parseInt(sig.substring(130, 132), 16)
   if (v !== 27 && v !== 28) {
     throw new Error("Invalid 'v' value in signature. Expected 27 or 28.")
   }
@@ -112,17 +110,24 @@ export async function signOffChainForBridge(
   data: string,
   chainId: bigint
 ) {
-  const message = `0x${[
-    '0x19',
-    '0x00',
-    walletContractAddress,
-    data,
-    ethers.zeroPadValue(ethers.toBeHex(chainId), 32),
-  ]
+  const message = `0x${['0x19', '0x00', walletContractAddress, data, ethers.zeroPadValue(ethers.toBeHex(chainId), 32)]
     .map((hex) => hex.slice(2))
     .join('')}`
 
   const messageHash = ethers.keccak256(message)
 
   return await signMessage(messageHash, signer)
+}
+
+export async function getWrappedAccountAddress(address: string, network: NETWORKS | BRIDGE_NETWORKS) {
+  const result = (await contactBackend(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+    address,
+    network,
+  })) as getWrappedAccountAddressResponse | backendErrorResponse
+
+  if ('error' in result) {
+    throw new Error(result.error)
+  }
+
+  return result.address
 }

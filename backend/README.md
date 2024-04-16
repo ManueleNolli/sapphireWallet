@@ -20,11 +20,11 @@ http://localhost:3000/api
 <img src="https://gitlab-edu.supsi.ch/dti-isin/giuliano.gremlich/progetti_master/2023_2024/manuele-nolli/aa-interoperability/uploads/7247c41762af1229ee0f92b6e0d5573f/attention.png" alt="attention image" width="40" height="auto"> fill your personal information inside `.env` files (project sapphire-relayer and wallet-factory)
 
 ```bash
-docker-compose up 
+docker compose up 
 ```
 or 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
  ## Install apps locally
 

@@ -107,8 +107,10 @@ exports[`Home renders correctly 1`] = `
                 "#091C7A",
               ]
             }
+            onRefresh={[MockFunction]}
             progressBackgroundColor="white"
             progressViewOffset={106.72}
+            refreshing={false}
           />
         }
         style={
@@ -123,15 +125,16 @@ exports[`Home renders correctly 1`] = `
             collapsable={false}
             style={
               {
-                "borderRadius": 20,
-                "height": 133.4,
+                "borderRadius": 10,
+                "height": 213.44,
+                "maxHeight": 213.44,
                 "overflow": "hidden",
                 "transform": [
                   {
                     "translateY": 0,
                   },
                 ],
-                "width": 375,
+                "width": 450,
               }
             }
           >
@@ -141,12 +144,16 @@ exports[`Home renders correctly 1`] = `
                   {
                     "backgroundColor": "transparent",
                   },
-                  {
-                    "alignItems": "center",
-                    "flex": 1,
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  },
+                  [
+                    {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "justifyContent": "center",
+                    },
+                    {
+                      "paddingVertical": 26.68,
+                    },
+                  ],
                 ]
               }
             >
@@ -164,27 +171,80 @@ exports[`Home renders correctly 1`] = `
                 }
                 tint="default"
               />
-              <Text
-                appearance="default"
-                category="h4"
-                status="basic"
-                style={
-                  [
-                    {
-                      "color": "#222B45",
-                      "fontFamily": "System",
-                      "fontSize": 26,
-                      "fontWeight": "800",
-                    },
-                    {
-                      "color": "white",
-                    },
-                  ]
+              <RCTScrollView
+                contentContainerStyle={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "column",
+                  }
                 }
+                showsVerticalScrollIndicator={false}
               >
-                100
-                 ETH
-              </Text>
+                <View>
+                  <View
+                    style={
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      1.0
+                       
+                      ETH
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      1.0
+                       
+                      MATIC
+                    </Text>
+                  </View>
+                </View>
+              </RCTScrollView>
             </View>
           </View>
         </View>
@@ -294,224 +354,1031 @@ exports[`Home renders correctly 1`] = `
           }
         }
       />
-      <View
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          {
-            "borderColor": "#598BFF",
-            "borderRadius": 5,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "margin": 37.5,
-            "opacity": 1,
-            "overflow": "hidden",
-            "paddingHorizontal": 15,
-            "paddingVertical": 7.5,
-            "width": 675,
-          }
-        }
-      >
+      <View>
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
               "paddingHorizontal": 15,
-              "paddingVertical": 13.34,
+              "paddingVertical": 7.5,
+              "width": 675,
             }
           }
         >
-          <Image
-            source={1}
+          <View
             style={
               {
-                "height": 133.4,
-                "width": 133.4,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
               }
             }
-          />
-        </View>
-        <View
-          style={
-            {
-              "flex": 1,
-              "marginLeft": 15,
-              "paddingHorizontal": 15,
-              "paddingVertical": 13.34,
-            }
-          }
-        >
-          <Text
-            appearance="default"
-            category="h6"
-            status="basic"
-            style={
-              [
+          >
+            <Image
+              source={1}
+              style={
                 {
-                  "color": "#222B45",
-                  "fontFamily": "System",
-                  "fontSize": 18,
-                  "fontWeight": "800",
-                },
-                undefined,
-              ]
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
             }
           >
-            Receive
-          </Text>
-          <Text
-            appearance="default"
-            category="label"
-            status="basic"
-            style={
-              [
-                {
-                  "color": "#222B45",
-                  "fontFamily": "System",
-                  "fontSize": 12,
-                  "fontWeight": "800",
-                },
-                undefined,
-              ]
-            }
-          >
-            Receive ETH or NFT by showing a QR code of your wallet address
-          </Text>
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Receive
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Receive ETH or NFT by showing a QR code of your wallet address
+            </Text>
+          </View>
         </View>
       </View>
-      <View
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          {
-            "borderColor": "#598BFF",
-            "borderRadius": 5,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "margin": 37.5,
-            "opacity": 1,
-            "overflow": "hidden",
-            "paddingHorizontal": 15,
-            "paddingVertical": 7.5,
-            "width": 675,
-          }
-        }
-      >
+      <View>
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
               "paddingHorizontal": 15,
-              "paddingVertical": 13.34,
+              "paddingVertical": 7.5,
+              "width": 675,
             }
           }
         >
-          <Image
-            source={1}
+          <View
             style={
               {
-                "height": 133.4,
-                "width": 133.4,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
               }
             }
-          />
-        </View>
-        <View
-          style={
-            {
-              "flex": 1,
-              "marginLeft": 15,
-              "paddingHorizontal": 15,
-              "paddingVertical": 13.34,
-            }
-          }
-        >
-          <Text
-            appearance="default"
-            category="h6"
-            status="basic"
-            style={
-              [
+          >
+            <Image
+              source={1}
+              style={
                 {
-                  "color": "#222B45",
-                  "fontFamily": "System",
-                  "fontSize": 18,
-                  "fontWeight": "800",
-                },
-                undefined,
-              ]
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
             }
           >
-            Send ETH
-          </Text>
-          <Text
-            appearance="default"
-            category="label"
-            status="basic"
-            style={
-              [
-                {
-                  "color": "#222B45",
-                  "fontFamily": "System",
-                  "fontSize": 12,
-                  "fontWeight": "800",
-                },
-                undefined,
-              ]
-            }
-          >
-            Send ETH to another wallet address
-          </Text>
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send ETH
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send ETH to another wallet address
+            </Text>
+          </View>
         </View>
       </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Bridge ETH to MATIC
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Bridge ETH to your wrapped wallet account in the Polygon network
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send MATIC
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send MATIC to another wallet address
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send NFTs
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send Ethereum NFTs to another wallet address
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Bridge NFTs
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Bridge NFT to your wrapped wallet account in the Polygon network
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send NFTs
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send Polygon NFTs to another wallet address
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`Home renders correctly only ETH 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    style={
+      {
+        "height": 800.4,
+        "left": -150,
+        "position": "absolute",
+        "transform": [
+          {
+            "translateY": 0,
+          },
+        ],
+        "width": 1050,
+        "zIndex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "black",
+          "borderBottomLeftRadius": 150,
+          "borderBottomRightRadius": 150,
+          "elevation": 15,
+          "flex": 1,
+          "justifyContent": "center",
+          "overflow": "hidden",
+          "shadowOffset": {
+            "height": 10,
+            "width": 10,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 10,
+        }
+      }
+    >
+      <ViewManagerAdapter_ExpoImage
+        bottom={0}
+        contentFit="cover"
+        contentPosition={
+          {
+            "left": "50%",
+            "top": "50%",
+          }
+        }
+        left={0}
+        onError={[Function]}
+        onLoad={[Function]}
+        onLoadStart={[Function]}
+        onProgress={[Function]}
+        placeholder={[]}
+        position="absolute"
+        right={0}
+        source={
+          [
+            {
+              "height": 16,
+              "uri": "blurhash:/light",
+              "width": 16,
+            },
+          ]
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        top={0}
+        transition={null}
+      />
+      <RCTScrollView
+        contentContainerStyle={
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        refreshControl={
+          <RefreshControlMock
+            colors={
+              [
+                "#F2F6FF",
+                "#3366FF",
+                "#091C7A",
+              ]
+            }
+            onRefresh={[MockFunction]}
+            progressBackgroundColor="white"
+            progressViewOffset={106.72}
+            refreshing={false}
+          />
+        }
+        style={
+          {
+            "width": "100%",
+          }
+        }
+      >
+        <RCTRefreshControl />
+        <View>
+          <View
+            collapsable={false}
+            style={
+              {
+                "borderRadius": 10,
+                "height": 106.72,
+                "maxHeight": 213.44,
+                "overflow": "hidden",
+                "transform": [
+                  {
+                    "translateY": 0,
+                  },
+                ],
+                "width": 450,
+              }
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                  },
+                  [
+                    {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "justifyContent": "center",
+                    },
+                    {
+                      "paddingVertical": 13.34,
+                    },
+                  ],
+                ]
+              }
+            >
+              <ViewManagerAdapter_ExpoBlurView
+                blurReductionFactor={4}
+                intensity={20}
+                style={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                tint="default"
+              />
+              <RCTScrollView
+                contentContainerStyle={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "column",
+                  }
+                }
+                showsVerticalScrollIndicator={false}
+              >
+                <View>
+                  <View
+                    style={
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      1.0
+                       
+                      ETH
+                    </Text>
+                  </View>
+                </View>
+              </RCTScrollView>
+            </View>
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+    <View
+      style={
+        {
+          "borderColor": "#598BFF",
+          "borderRadius": 10,
+          "borderWidth": 1,
+          "bottom": -53.36,
+          "elevation": 15,
+          "height": 106.72,
+          "left": 375,
+          "overflow": "hidden",
+          "position": "absolute",
+          "shadowColor": "black",
+          "shadowOffset": {
+            "height": 5,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 10,
+          "width": 300,
+          "zIndex": 2,
+        }
+      }
+    >
       <View
         accessibilityState={
           {
@@ -522,16 +1389,7 @@ exports[`Home renders correctly 1`] = `
             "selected": undefined,
           }
         }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
         accessible={true}
-        collapsable={false}
         focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
@@ -541,84 +1399,1386 @@ exports[`Home renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
+          [
+            {
+              "backgroundColor": "transparent",
+            },
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <ViewManagerAdapter_ExpoBlurView
+          blurReductionFactor={4}
+          intensity={100}
+          style={
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+          tint="default"
+        />
+        <Text
+          appearance="default"
+          category="label"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#222B45",
+                "fontFamily": "System",
+                "fontSize": 12,
+                "fontWeight": "800",
+              },
+              undefined,
+            ]
+          }
+        >
+          0x1234...6789
+        </Text>
+      </View>
+    </View>
+  </View>
+  <RCTScrollView
+    onScroll={[Function]}
+    scrollEventThrottle={16}
+    showsVerticalScrollIndicator={false}
+  >
+    <View>
+      <View
+        style={
           {
-            "borderColor": "#598BFF",
-            "borderRadius": 5,
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "margin": 37.5,
-            "opacity": 1,
-            "overflow": "hidden",
-            "paddingHorizontal": 15,
-            "paddingVertical": 7.5,
-            "width": 675,
+            "height": 853.76,
+          }
+        }
+      />
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Receive
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Receive ETH or NFT by showing a QR code of your wallet address
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send ETH
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send ETH to another wallet address
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Bridge ETH to MATIC
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Bridge ETH to your wrapped wallet account in the Polygon network
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`Home renders correctly only ETH balance = 0 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    style={
+      {
+        "height": 800.4,
+        "left": -150,
+        "position": "absolute",
+        "transform": [
+          {
+            "translateY": 0,
+          },
+        ],
+        "width": 1050,
+        "zIndex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "black",
+          "borderBottomLeftRadius": 150,
+          "borderBottomRightRadius": 150,
+          "elevation": 15,
+          "flex": 1,
+          "justifyContent": "center",
+          "overflow": "hidden",
+          "shadowOffset": {
+            "height": 10,
+            "width": 10,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 10,
+        }
+      }
+    >
+      <ViewManagerAdapter_ExpoImage
+        bottom={0}
+        contentFit="cover"
+        contentPosition={
+          {
+            "left": "50%",
+            "top": "50%",
+          }
+        }
+        left={0}
+        onError={[Function]}
+        onLoad={[Function]}
+        onLoadStart={[Function]}
+        onProgress={[Function]}
+        placeholder={[]}
+        position="absolute"
+        right={0}
+        source={
+          [
+            {
+              "height": 16,
+              "uri": "blurhash:/light",
+              "width": 16,
+            },
+          ]
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        top={0}
+        transition={null}
+      />
+      <RCTScrollView
+        contentContainerStyle={
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        refreshControl={
+          <RefreshControlMock
+            colors={
+              [
+                "#F2F6FF",
+                "#3366FF",
+                "#091C7A",
+              ]
+            }
+            onRefresh={[MockFunction]}
+            progressBackgroundColor="white"
+            progressViewOffset={106.72}
+            refreshing={false}
+          />
+        }
+        style={
+          {
+            "width": "100%",
           }
         }
       >
-        <View
-          style={
-            {
-              "paddingHorizontal": 15,
-              "paddingVertical": 13.34,
-            }
-          }
-        >
-          <Image
-            source={1}
+        <RCTRefreshControl />
+        <View>
+          <View
+            collapsable={false}
             style={
               {
-                "height": 133.4,
-                "width": 133.4,
+                "borderRadius": 10,
+                "height": 106.72,
+                "maxHeight": 213.44,
+                "overflow": "hidden",
+                "transform": [
+                  {
+                    "translateY": 0,
+                  },
+                ],
+                "width": 450,
               }
             }
-          />
+          >
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                  },
+                  [
+                    {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "justifyContent": "center",
+                    },
+                    {
+                      "paddingVertical": 13.34,
+                    },
+                  ],
+                ]
+              }
+            >
+              <ViewManagerAdapter_ExpoBlurView
+                blurReductionFactor={4}
+                intensity={20}
+                style={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                tint="default"
+              />
+              <RCTScrollView
+                contentContainerStyle={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "column",
+                  }
+                }
+                showsVerticalScrollIndicator={false}
+              >
+                <View>
+                  <View
+                    style={
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      0
+                       
+                      ETH
+                    </Text>
+                  </View>
+                </View>
+              </RCTScrollView>
+            </View>
+          </View>
         </View>
-        <View
+      </RCTScrollView>
+    </View>
+    <View
+      style={
+        {
+          "borderColor": "#598BFF",
+          "borderRadius": 10,
+          "borderWidth": 1,
+          "bottom": -53.36,
+          "elevation": 15,
+          "height": 106.72,
+          "left": 375,
+          "overflow": "hidden",
+          "position": "absolute",
+          "shadowColor": "black",
+          "shadowOffset": {
+            "height": 5,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 10,
+          "width": 300,
+          "zIndex": 2,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+            },
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <ViewManagerAdapter_ExpoBlurView
+          blurReductionFactor={4}
+          intensity={100}
           style={
             {
-              "flex": 1,
-              "marginLeft": 15,
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+          tint="default"
+        />
+        <Text
+          appearance="default"
+          category="label"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#222B45",
+                "fontFamily": "System",
+                "fontSize": 12,
+                "fontWeight": "800",
+              },
+              undefined,
+            ]
+          }
+        >
+          0x1234...6789
+        </Text>
+      </View>
+    </View>
+  </View>
+  <RCTScrollView
+    onScroll={[Function]}
+    scrollEventThrottle={16}
+    showsVerticalScrollIndicator={false}
+  >
+    <View>
+      <View
+        style={
+          {
+            "height": 853.76,
+          }
+        }
+      />
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
               "paddingHorizontal": 15,
-              "paddingVertical": 13.34,
+              "paddingVertical": 7.5,
+              "width": 675,
             }
           }
         >
-          <Text
-            appearance="default"
-            category="h6"
-            status="basic"
+          <View
             style={
-              [
-                {
-                  "color": "#222B45",
-                  "fontFamily": "System",
-                  "fontSize": 18,
-                  "fontWeight": "800",
-                },
-                undefined,
-              ]
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
             }
           >
-            Send NFTs
-          </Text>
-          <Text
-            appearance="default"
-            category="label"
-            status="basic"
-            style={
-              [
+            <Image
+              source={1}
+              style={
                 {
-                  "color": "#222B45",
-                  "fontFamily": "System",
-                  "fontSize": 12,
-                  "fontWeight": "800",
-                },
-                undefined,
-              ]
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
             }
           >
-            Send NFTs to another wallet address
-          </Text>
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Receive
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Receive ETH or NFT by showing a QR code of your wallet address
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`Home renders correctly only MATIC 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    style={
+      {
+        "height": 800.4,
+        "left": -150,
+        "position": "absolute",
+        "transform": [
+          {
+            "translateY": 0,
+          },
+        ],
+        "width": 1050,
+        "zIndex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "black",
+          "borderBottomLeftRadius": 150,
+          "borderBottomRightRadius": 150,
+          "elevation": 15,
+          "flex": 1,
+          "justifyContent": "center",
+          "overflow": "hidden",
+          "shadowOffset": {
+            "height": 10,
+            "width": 10,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 10,
+        }
+      }
+    >
+      <ViewManagerAdapter_ExpoImage
+        bottom={0}
+        contentFit="cover"
+        contentPosition={
+          {
+            "left": "50%",
+            "top": "50%",
+          }
+        }
+        left={0}
+        onError={[Function]}
+        onLoad={[Function]}
+        onLoadStart={[Function]}
+        onProgress={[Function]}
+        placeholder={[]}
+        position="absolute"
+        right={0}
+        source={
+          [
+            {
+              "height": 16,
+              "uri": "blurhash:/light",
+              "width": 16,
+            },
+          ]
+        }
+        style={
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        top={0}
+        transition={null}
+      />
+      <RCTScrollView
+        contentContainerStyle={
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        refreshControl={
+          <RefreshControlMock
+            colors={
+              [
+                "#F2F6FF",
+                "#3366FF",
+                "#091C7A",
+              ]
+            }
+            onRefresh={[MockFunction]}
+            progressBackgroundColor="white"
+            progressViewOffset={106.72}
+            refreshing={false}
+          />
+        }
+        style={
+          {
+            "width": "100%",
+          }
+        }
+      >
+        <RCTRefreshControl />
+        <View>
+          <View
+            collapsable={false}
+            style={
+              {
+                "borderRadius": 10,
+                "height": 106.72,
+                "maxHeight": 213.44,
+                "overflow": "hidden",
+                "transform": [
+                  {
+                    "translateY": 0,
+                  },
+                ],
+                "width": 450,
+              }
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                  },
+                  [
+                    {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "justifyContent": "center",
+                    },
+                    {
+                      "paddingVertical": 13.34,
+                    },
+                  ],
+                ]
+              }
+            >
+              <ViewManagerAdapter_ExpoBlurView
+                blurReductionFactor={4}
+                intensity={20}
+                style={
+                  {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+                tint="default"
+              />
+              <RCTScrollView
+                contentContainerStyle={
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "column",
+                  }
+                }
+                showsVerticalScrollIndicator={false}
+              >
+                <View>
+                  <View
+                    style={
+                      {
+                        "height": 80.03999999999999,
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <Text
+                      appearance="default"
+                      category="h4"
+                      status="basic"
+                      style={
+                        [
+                          {
+                            "color": "#222B45",
+                            "fontFamily": "System",
+                            "fontSize": 26,
+                            "fontWeight": "800",
+                          },
+                          {
+                            "color": "white",
+                          },
+                        ]
+                      }
+                    >
+                      1.0
+                       
+                      MATIC
+                    </Text>
+                  </View>
+                </View>
+              </RCTScrollView>
+            </View>
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+    <View
+      style={
+        {
+          "borderColor": "#598BFF",
+          "borderRadius": 10,
+          "borderWidth": 1,
+          "bottom": -53.36,
+          "elevation": 15,
+          "height": 106.72,
+          "left": 375,
+          "overflow": "hidden",
+          "position": "absolute",
+          "shadowColor": "black",
+          "shadowOffset": {
+            "height": 5,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 10,
+          "width": 300,
+          "zIndex": 2,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+            },
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <ViewManagerAdapter_ExpoBlurView
+          blurReductionFactor={4}
+          intensity={100}
+          style={
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+          tint="default"
+        />
+        <Text
+          appearance="default"
+          category="label"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#222B45",
+                "fontFamily": "System",
+                "fontSize": 12,
+                "fontWeight": "800",
+              },
+              undefined,
+            ]
+          }
+        >
+          0x1234...6789
+        </Text>
+      </View>
+    </View>
+  </View>
+  <RCTScrollView
+    onScroll={[Function]}
+    scrollEventThrottle={16}
+    showsVerticalScrollIndicator={false}
+  >
+    <View>
+      <View
+        style={
+          {
+            "height": 853.76,
+          }
+        }
+      />
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Receive
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Receive ETH or NFT by showing a QR code of your wallet address
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "borderColor": "#598BFF",
+              "borderRadius": 5,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "margin": 37.5,
+              "opacity": 1,
+              "overflow": "hidden",
+              "paddingHorizontal": 15,
+              "paddingVertical": 7.5,
+              "width": 675,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Image
+              source={1}
+              style={
+                {
+                  "height": 133.4,
+                  "width": 133.4,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+                "marginLeft": 15,
+                "paddingHorizontal": 15,
+                "paddingVertical": 13.34,
+              }
+            }
+          >
+            <Text
+              appearance="default"
+              category="h6"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 18,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send MATIC
+            </Text>
+            <Text
+              appearance="default"
+              category="label"
+              status="basic"
+              style={
+                [
+                  {
+                    "color": "#222B45",
+                    "fontFamily": "System",
+                    "fontSize": 12,
+                    "fontWeight": "800",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Send MATIC to another wallet address
+            </Text>
+          </View>
         </View>
       </View>
     </View>

@@ -6,7 +6,7 @@ import '@nomicfoundation/hardhat-toolbox'
 import '@typechain/hardhat'
 import '@nomicfoundation/hardhat-ethers'
 import '@nomicfoundation/hardhat-chai-matchers'
-const { SEPOLIA_API_KEY, SEPOLIA_PRIVATE_KEY, MUMBAI_API_KEY, MUMBAI_PRIVATE_KEY } = process.env
+const { SEPOLIA_API_KEY, SEPOLIA_PRIVATE_KEY, AMOY_API_KEY, AMOY_PRIVATE_KEY } = process.env
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -26,12 +26,14 @@ const config: HardhatUserConfig = {
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/${SEPOLIA_API_KEY}`,
       accounts: [`0x${SEPOLIA_PRIVATE_KEY}`],
+      // gasPrice: 200000000000,
+      // gas: 84000000,
+    },
+    amoy: {
+      url: `https://polygon-amoy.g.alchemy.com/v2/${AMOY_API_KEY}`,
+      accounts: [`0x${AMOY_PRIVATE_KEY}`],
       gasPrice: 20000000000,
       gas: 8400000,
-    },
-    mumbai: {
-      url: `https://polygon-mumbai.g.alchemy.com/v2/${MUMBAI_API_KEY}`,
-      accounts: [`0x${MUMBAI_PRIVATE_KEY}`],
     },
   },
   typechain: {

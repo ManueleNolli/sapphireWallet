@@ -35,7 +35,7 @@ yarn start:local
 Because the project has the feature of a bridge, the contracts must be deployed in two different EVM networks. The possible networks are:
 * [Local](https://hardhat.org/hardhat-network/)
 * [Sepolia](https://sepolia.io/)
-* [Mumbai](https://mumbai.polygon.io/)
+* [Amoy](https://amoy.polygon.io/)
 
 <img src="https://gitlab-edu.supsi.ch/dti-isin/giuliano.gremlich/progetti_master/2023_2024/manuele-nolli/aa-interoperability/uploads/7247c41762af1229ee0f92b6e0d5573f/attention.png" alt="attention image" width="40" height="auto"> Do not forget to deploy both Base Chain and Destination Chain. Of course read the [Bridge](../bridge/README.md) documentation to understand the bridge architecture.
 
@@ -80,21 +80,22 @@ The contracts are already deployed in the following networks:
 
 **Sepolia: Base Chain**
 
-| Contract         | Address                                      |
-|------------------|----------------------------------------------|
-| GUARDIAN STORAGE | "0x8612A9Fd1069629e1d96BceaD47417E7604117e7" |
-| TRANSFER STORAGE | "0x88c760BE337857a4456c59e0f8d2C768cAf65F3F" |
-| BASE WALLET      | "0x34C3Bf2c140feb3204571b45EE55918e8c42f444" |
-| WALLET FACTORY   | "0x73d71480152aAd8E92260b1Ef786291B240a867F" |
-| MODULE REGISTRY  | "0xae3154e32B4514510c51637b3ccabdc46927A528" |
-| DAPP REGISTRY    | "0xb32BeeFe6B8FBB6571C3f738b00bbA3F7bf09b91" |
-| UNISWAP FACTORY  | "0x96aEC6fa064EA35Efe123E8BdBEbA49791931A3b" |
-| UNISWAP ROUTER   | "0x40476fFe334df7C7395390F8B169dF801841E0E4" |
-| ARGENT MODULE    | "0xf71a8C4A38540A81D4B8A7066B8127dC27d2e8bf" |
+| Contract         | Address                                    |
+|------------------|--------------------------------------------|
+| GUARDIAN STORAGE | 0x0778C832Bc79Ca95908Fd1f9fFECE7972d7647C2 |
+| TRANSFER STORAGE | 0x507e5558d2bDe8bDfa00CeA51F6A466Ef127e71B |
+| BASE WALLET      | 0x5a5734402d09ed2F7caf328591F037de4F68D57f |
+| WALLET FACTORY   | 0x598A67Cf31EB32b89bA8C0Ab959161236947409b |
+| MODULE REGISTRY  | 0xd7D3174E575E44045b78D3ddCf96fffF433C26D6 |
+| DAPP REGISTRY    | 0x80564DB647181B9281956462cEEC654ea30D1F1F |
+| UNISWAP FACTORY  | 0x764Af2277F767126CEEA3E4b30c1b8E8f04E1742 |
+| UNISWAP ROUTER   | 0x7F5482bc1074Fe6707Bc9859ED43ECD9976BC34A |
+| ARGENT MODULE    | 0x7ce41A92f938030ceb189DbdEF97ddc51407a134 |
+| SAPPHIRE NFTs    | 0xB9CA1dC04B2c4AadC007D5B2f3642756d24cd5dD |
 
-**Mumbai: Dest Chain**
+**Amoy: Dest Chain**
 
-| Contract                | Address                                      |
-|-------------------------|----------------------------------------------|
-| NFT STORAGE             | "0x566318a8d399a4500b4964C6Fe926966fad0cF05" |
-| ARGENT WRAPPED ACCOUNTS | "0x22aEaA81882DeE54Af24679eC44A890450443464" |
+| Contract                | Address                                    |
+|-------------------------|--------------------------------------------|
+| NFT STORAGE             | 0x2Ccf4DAFAF0F7f5ABE2A74e40100E45824DAFB11 |
+| ARGENT WRAPPED ACCOUNTS | 0x57bB7c33fEC21EACE177092D6E3117F470FF0BFa |

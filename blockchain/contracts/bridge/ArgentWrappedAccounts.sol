@@ -56,6 +56,12 @@ contract ArgentWrappedAccounts is Ownable {
         emit Deposit(address(this),_wallet, _value);
     }
 
+    function getAccountBalance(address _wallet) public view returns (uint256) {
+        address accountContract = accountContracts[_wallet];
+        require(accountContract != address(0), "Account contract does not exist");
+        return address(accountContract).balance;
+    }
+
     /**
     * @notice Mint NFT to account contract
     * @param _wallet The address of base chain wallet

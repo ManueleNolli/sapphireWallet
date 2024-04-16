@@ -3,7 +3,6 @@ import { NETWORKS } from '../../../constants/Networks'
 import { NFTPlaceholder } from '../../../assets/AssetsRegistry'
 import renderWithTheme from '../../../TestHelper'
 import NFTs from '../NFTs'
-import { View } from 'react-native'
 import React from 'react'
 
 jest.mock('../useNFTs', () => jest.fn())
@@ -26,7 +25,7 @@ describe('NFTs', () => {
           name: 'name0',
           description: 'description0',
           image: NFTPlaceholder,
-          tokenId: '0',
+          tokenId: 0,
           network: NETWORKS.LOCALHOST,
           collectionAddress: 'collectionAddress0',
           collectionName: 'collectionName0',
@@ -36,7 +35,7 @@ describe('NFTs', () => {
           name: 'name1',
           description: 'description1',
           image: NFTPlaceholder,
-          tokenId: '1',
+          tokenId: 1,
           network: NETWORKS.LOCALHOST,
           collectionAddress: 'collectionAddress1',
           collectionName: 'collectionName1',

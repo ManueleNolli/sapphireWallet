@@ -1,9 +1,10 @@
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  ValidationOptions, registerDecorator,
-} from 'class-validator'
-import { ethers } from 'ethers'
+  ValidationOptions,
+  registerDecorator,
+} from 'class-validator';
+import { ethers } from 'ethers';
 
 @ValidatorConstraint({ name: 'isAddress', async: false })
 export class IsAddressConstraint implements ValidatorConstraintInterface {

@@ -1,12 +1,7 @@
 import { NETWORKS } from '../../constants/Networks'
+import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
 import { TouchableOpacity, View } from 'react-native'
-import {
-  Icon,
-  IconElement,
-  StyleService,
-  Text,
-  useStyleSheet,
-} from '@ui-kitten/components'
+import { Icon, IconElement, StyleService, Text, useStyleSheet } from '@ui-kitten/components'
 import { vh, vw } from '../../Styles'
 import { Image, ImageBackground } from 'expo-image'
 import { networkLogo } from '../../assets/AssetsRegistry'
@@ -16,56 +11,38 @@ import Collapsible from 'react-native-collapsible'
 
 type NFTCardProps = {
   name: string
-  tokenId: string
+  tokenId: number
   collectionName: string
   collectionDescription: string
   image: any
-  network: NETWORKS
+  network: NETWORKS | BRIDGE_NETWORKS
   style?: any
 }
 
-export function NFTCard({
-  name,
-  tokenId,
-  collectionName,
-  collectionDescription,
-  image,
-  network,
-  style,
-}: NFTCardProps) {
+export function NFTCard({ name, tokenId, collectionName, collectionDescription, image, network, style }: NFTCardProps) {
   const styles = useStyleSheet(themedStyles)
   const [collapsed, setCollapsed] = useState(true)
 
   const ArrowIcon = (props: any): IconElement => (
-    <Icon
-      {...props}
-      name={
-        collapsed ? 'arrow-ios-upward-outline' : 'arrow-ios-downward-outline'
-      }
-    />
+    <Icon {...props} name={collapsed ? 'arrow-ios-upward-outline' : 'arrow-ios-downward-outline'} />
   )
   const NetworkIcon = () => (
     <Image
       contentFit={'contain'}
       style={{
-        width: 24,
-        height: 24,
-        marginRight: 8,
+        width: 36,
+        height: 36,
       }}
       source={networkLogo(network)}
     />
   )
 
   return (
-    <View
-      style={[styles.container, { ...style }]}
-      testID={`NFTCard-${tokenId}`}
-    >
-      <ImageBackground
-        source={image}
-        contentFit="cover"
-        style={styles.imageBackground}
-      >
+    <View style={[styles.container, { ...style }]} testID={`NFTCard-${tokenId}`}>
+      <ImageBackground source={image} style={styles.imageBackground} contentFit={'cover'}>
+        <View style={styles.networkContainer}>
+          <NetworkIcon />
+        </View>
         <TouchableOpacity
           style={styles.blurContainerWrapper}
           testID={'CollapsibleButton'}
@@ -75,13 +52,13 @@ export function NFTCard({
         >
           <BlurView intensity={50} style={styles.blurContainer}>
             <View style={{ width: '90%' }}>
-              <Text category="h4">{name}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text category="h4">{name}</Text>
+                <Text category={'label'} style={{ marginRight: 1 * vw }}>{`#${tokenId}`}</Text>
+              </View>
+
               <Collapsible collapsed={collapsed}>
                 <View>
-                  <View style={styles.networkContainer}>
-                    <NetworkIcon />
-                    <Text category="label">{network}</Text>
-                  </View>
                   <Text category="h6">{collectionName}</Text>
                   <Text>{collectionDescription}</Text>
                 </View>
@@ -104,30 +81,34 @@ export function NFTCard({
 
 const themedStyles = StyleService.create({
   container: {
-    width: '100%',
-    height: 50 * vh,
-    borderRadius: 10,
+    overflow: 'hidden',
     borderColor: 'color-primary-400',
     borderWidth: 1,
-    overflow: 'hidden',
-  },
-  imageBackground: {
-    flex: 1,
-    overflow: 'hidden',
+    borderRadius: 10,
+    width: '100%',
+    height: 50 * vh,
+    backgroundColor: 'red',
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 1,
     shadowRadius: 10,
-    elevation: 15,
-    flexDirection: 'column-reverse',
+    elevation: 5,
+  },
+  imageBackground: {
+    backgroundColor: 'red',
+    width: '100%',
+    height: '102%',
+    top: -2,
+    overflow: 'hidden',
+    justifyContent: 'space-between',
   },
   blurContainerWrapper: {
-    borderRadius: 5,
+    borderRadius: 8,
     overflow: 'hidden',
-    marginVertical: 1 * vh,
+    marginVertical: 2 * vh,
     marginHorizontal: 2 * vw,
   },
   blurContainer: {
@@ -144,8 +125,8 @@ const themedStyles = StyleService.create({
     tintColor: 'text-basic-color',
   },
   networkContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginVertical: 2 * vh,
+    alignItems: 'flex-end',
+    marginHorizontal: 2 * vw,
   },
 })

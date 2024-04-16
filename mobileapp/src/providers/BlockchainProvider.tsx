@@ -8,6 +8,9 @@ import Loading from '../pages/Loading/Loading'
 import Error from '../pages/Error/Error'
 import { getData, storeData } from '../services/storage'
 import constants from '../constants/Constants'
+import NetworkSelector from '../components/NetworkSelector/NetworkSelector'
+import { View } from 'react-native'
+import { vh } from '../Styles'
 
 type BlockchainProviderProps = {
   children: React.ReactNode
@@ -20,23 +23,27 @@ export function BlockchainProvider({ children }: BlockchainProviderProps) {
   const [provider, setProvider] = React.useState<Provider | null>(null)
   const [currentNetworkLocal, setCurrentNetwork] = React.useState<NETWORKS>(currentNetwork)
 
-  // load in local state for performance
-  useEffect(() => {
-    const initialiseCurrentNetwork = async () => {
-      const currentNetwork = await getData(constants.asyncStoreKeys.currentNetwork)
-      // if not null check if NETWORKS enum
-      if (Object.values(NETWORKS).includes(currentNetwork as NETWORKS)) {
-        setCurrentNetwork(currentNetwork as NETWORKS)
-        return currentNetwork as NETWORKS
-      } else {
-        await saveCurrentNetwork(currentNetworkLocal)
-        return currentNetworkLocal
-      }
+  const initialiseCurrentNetwork = async () => {
+    const currentNetwork = await getData(constants.asyncStoreKeys.currentNetwork)
+    // if not null check if NETWORKS enum
+    if (Object.values(NETWORKS).includes(currentNetwork as NETWORKS)) {
+      setCurrentNetwork(currentNetwork as NETWORKS)
+      return currentNetwork as NETWORKS
+    } else {
+      await saveCurrentNetwork(currentNetworkLocal)
+      return currentNetworkLocal
     }
+  }
 
+  const initProvider = async () => {
     initialiseCurrentNetwork()
       .then(setEthersProvider)
       .then(() => setIsLoading(false))
+  }
+
+  // load in local state for performance
+  useEffect(() => {
+    initProvider()
   }, [])
 
   const saveCurrentNetwork = async (network: NETWORKS) => {
@@ -60,11 +67,31 @@ export function BlockchainProvider({ children }: BlockchainProviderProps) {
   }
 
   if (isLoading) {
-    return <Loading text={'Connecting to blockchain...'} />
+    return <Loading text="Connecting to blockchain..." />
   }
 
   if (isError) {
-    return <Error text={'Error connecting to blockchain'} />
+    return (
+      <BlockchainContext.Provider
+        value={{
+          currentNetwork: currentNetworkLocal,
+          ethersProvider: provider,
+          setEthersProvider,
+        }}
+      >
+        <Error text="Error connecting to blockchain">
+          <View style={{ width: '90%', marginTop: 4 * vh }}>
+            <NetworkSelector
+              onChainChange={() => {
+                setIsError(false)
+                setIsLoading(true)
+                initProvider()
+              }}
+            />
+          </View>
+        </Error>
+      </BlockchainContext.Provider>
+    )
   }
 
   return (

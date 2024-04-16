@@ -83,3 +83,21 @@ test_sapphire-relayer:
     - main
     - dev
     - /sprint[0-9]+/
+
+test_sapphire-portfolio:
+  stage: 🤞 test
+  image: node:latest
+  before_script:
+    - mkdir -p backend/sapphire-portfolio/src/contracts
+    - cp -r blockchain/typechain-types/* backend/sapphire-portfolio/src/contracts/
+  script:
+    - cd backend/sapphire-portfolio
+    - yarn install
+    - yarn test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  dependencies:
+    - compile_contracts
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/

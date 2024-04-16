@@ -1,66 +1,103 @@
 import { useContext, useEffect, useState } from 'react'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import { WalletContext } from '../../context/WalletContext'
-import { getBalance } from '../../services/transactions/Balance'
+import { getBalance, getNFTBalance } from '../../services/balances'
 import { formatEther } from 'ethers'
 import * as Clipboard from 'expo-clipboard'
 import { homeBackground } from '../../assets/AssetsRegistry'
 import useLoading from '../../hooks/useLoading'
+import { Balances, BalancesNFT } from '../../types/Balance'
 
 export default function useHome() {
-  const { ethersProvider } = useContext(BlockchainContext)
+  const { ethersProvider, currentNetwork } = useContext(BlockchainContext)
   const { getWalletContractAddress } = useContext(WalletContext)
-  const [balance, setBalance] = useState<string>('')
+  const [balances, setBalances] = useState<Balances | null>(null)
+  const [balancesNFT, setBalancesNFT] = useState<BalancesNFT | null>(null)
   const [backgroundImage] = useState(homeBackground())
-  const [isReceiveModalVisible, setIsReceiveModalVisible] =
-    useState<boolean>(false)
-  const [isSendETHModalVisible, setIsSendETHModalVisible] =
-    useState<boolean>(false)
-  const [isSendNFTModalVisible, setIsSendNFTModalVisible] =
-    useState<boolean>(false)
-  const {isLoading: isRefreshing, setIsLoading : setRefreshing} = useLoading(false)
+  const [isReceiveModalVisible, setIsReceiveModalVisible] = useState<boolean>(false)
+  const [isSendETHModalVisible, setIsSendETHModalVisible] = useState<boolean>(false)
+  const [isSendMATICModalVisible, setIsSendMATICModalVisible] = useState<boolean>(false)
+  const [isBridgeETHtoMATICModalVisible, setIsBridgeETHtoMATICModalVisible] = useState<boolean>(false)
+  const [isSendEthereumNFTModalVisible, setIsSendEthereumNFTModalVisible] = useState<boolean>(false)
+  const [isSendPolygonNFTModalVisible, setIsSendPolygonNFTModalVisible] = useState<boolean>(false)
+  const [isBridgeNFTModalVisible, setIsBridgeNFTModalVisible] = useState<boolean>(false)
+  const { isLoading: isRefreshing, setIsLoading: setRefreshing } = useLoading(false)
+  const { isLoading: isBalanceLoading, setIsLoading: setBalanceLoading } = useLoading(true)
 
   const onRefresh = async () => {
     setRefreshing(true)
+    setBalanceLoading(true)
     await getBalances()
+    await getBalancesNFT()
+    setBalanceLoading(false)
     setRefreshing(false)
   }
 
   const getBalances = async () => {
-    const balance = await getBalance(ethersProvider, getWalletContractAddress())
-    setBalance(formatEther(balance))
+    const balanceBackend = await getBalance(getWalletContractAddress(), currentNetwork)
+    // convert balance to ETH
+    Object.keys(balanceBackend).forEach((key) => {
+      balanceBackend[key].balance = formatEther(balanceBackend[key].balance)
+    })
+    setBalances(balanceBackend)
+  }
+
+  const getBalancesNFT = async () => {
+    getNFTBalance(getWalletContractAddress(), currentNetwork).then((result) => {
+      setBalancesNFT(result)
+    })
   }
 
   const copyAddressToClipboard = async () => {
     await Clipboard.setStringAsync(getWalletContractAddress())
   }
 
-  const closeSendETHModal = (needRefresh: boolean) => {
-    setIsSendETHModalVisible(false)
-    if (needRefresh) getBalances()
+  const closeModal = (needRefresh: boolean, setIsModalVisible: (value: boolean) => void) => {
+    setIsModalVisible(false)
+    if (needRefresh) onRefresh()
   }
 
   useEffect(() => {
-    getBalances()
+    getBalances().then(() => setBalanceLoading(false))
+    getBalancesNFT()
   }, [ethersProvider])
 
   return {
+    currentNetwork,
     backgroundImage,
-    balance,
+    balances,
+    balancesNFT,
+    isBalanceLoading,
     getWalletContractAddress,
     copyAddressToClipboard,
     isReceiveModalVisible,
     setIsReceiveModalVisible,
     isSendETHModalVisible,
     setIsSendETHModalVisible,
-    closeSendETHModal,
-    isSendNFTModalVisible,
-    setIsSendNFTModalVisible,
+    isSendMATICModalVisible,
+    setIsSendMATICModalVisible,
+    isSendEthereumNFTModalVisible,
+    setIsSendEthereumNFTModalVisible,
+    isSendPolygonNFTModalVisible,
+    setIsSendPolygonNFTModalVisible,
+    isBridgeETHtoMATICModalVisible,
+    setIsBridgeETHtoMATICModalVisible,
+    isBridgeNFTModalVisible,
+    setIsBridgeNFTModalVisible,
     onRefresh,
     isRefreshing,
     modalReceiveBackdrop: () => setIsReceiveModalVisible(false),
-    modalSendBackdrop: () => setIsSendETHModalVisible(false),
-    modalSendNFTBackdrop: () => setIsSendNFTModalVisible(false),
-    closeSendNFTModal: () => setIsSendNFTModalVisible(false)
+    modalSendETHBackdrop: () => setIsSendETHModalVisible(false),
+    modalSendMATICBackdrop: () => setIsSendMATICModalVisible(false),
+    modalSendEthereumNFTBackdrop: () => setIsSendEthereumNFTModalVisible(false),
+    modalSendPolygonNFTBackdrop: () => setIsSendPolygonNFTModalVisible(false),
+    modalBridgeETHtoMATICBackdrop: () => setIsBridgeETHtoMATICModalVisible(false),
+    modalBridgeNFTBackdrop: () => setIsBridgeNFTModalVisible(false),
+    closeSendETHModal: (needRefresh: boolean) => closeModal(needRefresh, setIsSendETHModalVisible),
+    closeBridgeETHtoMATICModal: (needRefresh: boolean) => closeModal(needRefresh, setIsBridgeETHtoMATICModalVisible),
+    closeBridgeNFTModal: () => closeModal(false, setIsBridgeNFTModalVisible),
+    closeSendMATICModal: (needRefresh: boolean) => closeModal(needRefresh, setIsSendMATICModalVisible),
+    closeSendEthereumNFTModal: () => closeModal(false, setIsSendEthereumNFTModalVisible),
+    closeSendPolygonNFTModal: () => closeModal(false, setIsSendPolygonNFTModalVisible),
   }
 }

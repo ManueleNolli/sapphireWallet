@@ -22,4 +22,4 @@ yarn start <baseChain> <destinationChain>
 All combinations of the following chains are supported:
 * `local` for a local hardhat network
 * `sepolia` for the Sepolia testnet
-* `mumbai` for the Mumbai testnet
+* `amoy` for the Amoy testnet

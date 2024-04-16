@@ -1,10 +1,15 @@
 import {
   generateMessageHash,
   generateNonceForRelay,
+  getWrappedAccountAddress,
   signMessage,
   signOffChain,
+  signOffChainForBridge,
 } from '../TransactionUtils'
 import { ethers, ZeroAddress } from 'ethers'
+import { BACKEND_ENDPOINTS, contactBackend, getWrappedAccountAddressResponse } from '../../backend'
+import { NETWORKS } from '../../../constants/Networks'
+jest.mock('../../backend')
 
 // Mocking the Provider
 const mockProvider: ethers.JsonRpcProvider = {
@@ -15,9 +20,7 @@ describe('TransactionUtils', () => {
   describe('generateNonceForRelay', () => {
     it('should generate a valid nonce', async () => {
       const mockedBlockNumber = 123
-      ;(mockProvider.getBlockNumber as jest.Mock).mockResolvedValue(
-        mockedBlockNumber
-      )
+      ;(mockProvider.getBlockNumber as jest.Mock).mockResolvedValue(mockedBlockNumber)
 
       const mockDate = new Date()
       jest.spyOn(global, 'Date').mockImplementation(() => mockDate)
@@ -89,8 +92,7 @@ describe('TransactionUtils', () => {
 
   describe('signMessage', () => {
     it('should sign a message', async () => {
-      const message =
-        '0x7f4fd3a182c7f389bf1067b73e095dd53f0abde1d2afc5d5baba2eb46bc13759'
+      const message = '0x7f4fd3a182c7f389bf1067b73e095dd53f0abde1d2afc5d5baba2eb46bc13759'
       const mockedSignature =
         '0x123456789012345678' + //20
         '90123456789012345678' + //40
@@ -110,8 +112,7 @@ describe('TransactionUtils', () => {
     })
 
     it('should throw if signature is not valid', async () => {
-      const message =
-        '0x7f4fd3a182c7f389bf1067b73e095dd53f0abde1d2afc5d5baba2eb46bc13759'
+      const message = '0x7f4fd3a182c7f389bf1067b73e095dd53f0abde1d2afc5d5baba2eb46bc13759'
       const mockedSignature = 'not valid'
       const mockSigner = {
         signMessage: jest.fn().mockResolvedValue(mockedSignature),
@@ -147,6 +148,61 @@ describe('TransactionUtils', () => {
       expect(mockSigner.signMessage).toHaveBeenCalledTimes(1)
 
       jest.restoreAllMocks()
+    })
+  })
+
+  describe('signOffChainForBridge', () => {
+    it('should sign a transaction offchain for bridge', async () => {
+      // Mock input parameters
+      const data = '0x456789'
+      const chainId = 123n
+      const mockedSignature =
+        '0x123456789012345678' + //20
+        '90123456789012345678' + //40
+        '90123456789012345678' + //60
+        '90123456789012345678' + //80
+        '90123456789012345678' + //100
+        '90123456789012345678' + //120
+        '00000000001b' //140, 1B_hex = 27_dec
+
+      const mockSigner = {
+        signMessage: jest.fn().mockResolvedValue(mockedSignature),
+      } as any
+
+      await signOffChainForBridge(mockSigner, ZeroAddress, data, chainId)
+
+      expect(mockSigner.signMessage).toHaveBeenCalledTimes(1)
+
+      jest.restoreAllMocks()
+    })
+  })
+
+  describe('getWrappedAccountAddress', () => {
+    it('returns address when backend response is successful', async () => {
+      const mockResponse: getWrappedAccountAddressResponse = {
+        address: 'wrappedAddress',
+        network: NETWORKS.SEPOLIA,
+      }
+      ;(contactBackend as jest.Mock).mockResolvedValue(mockResponse)
+
+      const result = await getWrappedAccountAddress('testAddress', NETWORKS.SEPOLIA)
+
+      expect(result).toEqual('wrappedAddress')
+      expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+        network: NETWORKS.SEPOLIA,
+        address: 'testAddress',
+      })
+    })
+
+    it('throws error when backend response contains error', async () => {
+      ;(contactBackend as jest.Mock).mockResolvedValue({ error: 'error Balance' })
+
+      await expect(getWrappedAccountAddress('testAddress', NETWORKS.SEPOLIA)).rejects.toThrow('error Balance')
+
+      expect(contactBackend).toHaveBeenCalledWith(BACKEND_ENDPOINTS.GET_WRAPPED_ACCOUNT_ADDRESS, {
+        network: NETWORKS.SEPOLIA,
+        address: 'testAddress',
+      })
     })
   })
 })

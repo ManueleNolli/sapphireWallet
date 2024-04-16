@@ -49,6 +49,43 @@ export default async function deployDestinationChain() {
   await updateExternalEnv('../bridge/basicOffChainBridge/.env', bridgeEnv)
   console.log('Updated bridge env!')
 
+  // SapphireRelayer
+  console.log('Updating SapphireRelayer env...')
+  const sapphireRelayerEnv: EnvValue[] = [
+    {
+      key: networkName + '_' + Constants.envValues.argentWrappedAccounts,
+      value: await argentWrappedAccountsDeployment.getAddress(),
+    },
+  ]
+  await updateExternalEnv('../backend/sapphire-relayer/.env', sapphireRelayerEnv)
+  console.log('Updated SapphireRelayer env!')
+
+  // MobileApp
+  console.log('Updating MobileApp env...')
+  const mobileappEnv: EnvValue[] = [
+    {
+      key: networkName + '_' + Constants.envValues.destChainNFTStorage,
+      value: await nftStorageDeployment.getAddress(),
+    },
+  ]
+  await updateExternalEnv('../mobileapp/.env', mobileappEnv)
+  console.log('Updated MobileApp env!')
+
+  // SapphirePortfolio
+  console.log('Updating SapphirePortfolio env...')
+  const sapphirePortfolioEnv: EnvValue[] = [
+    {
+      key: networkName + '_' + Constants.envValues.destChainNFTStorage,
+      value: await nftStorageDeployment.getAddress(),
+    },
+    {
+      key: networkName + '_' + Constants.envValues.argentWrappedAccounts,
+      value: await argentWrappedAccountsDeployment.getAddress(),
+    },
+  ]
+  await updateExternalEnv('../backend/sapphire-portfolio/.env', sapphirePortfolioEnv)
+  console.log('Updated SapphirePortfolio env!')
+
   ////////////
   // DONE :)
   ////////////

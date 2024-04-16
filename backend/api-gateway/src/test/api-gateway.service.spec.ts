@@ -8,6 +8,7 @@ describe('ApiGatewayService', () => {
   let apiGatewayService: ApiGatewayService;
   let walletFactoryMock: ClientProxy;
   let sapphireRelayerMock: ClientProxy;
+  let sapphirePortfolioMock: ClientProxy;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,12 +26,19 @@ describe('ApiGatewayService', () => {
             send: jest.fn(),
           },
         },
+        {
+          provide: 'SAPPHIRE_PORTFOLIO',
+          useValue: {
+            send: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     apiGatewayService = module.get<ApiGatewayService>(ApiGatewayService);
     walletFactoryMock = module.get<ClientProxy>('WALLET_FACTORY');
     sapphireRelayerMock = module.get<ClientProxy>('SAPPHIRE_RELAYER');
+    sapphirePortfolioMock = module.get<ClientProxy>('SAPPHIRE_PORTFOLIO');
   });
 
   describe('createWallet', () => {
@@ -114,13 +122,14 @@ describe('ApiGatewayService', () => {
   });
 
   describe('executeTransaction', () => {
-    it('should execute transaction successfully', async () => {
+    it('NO BRIDGE: should execute transaction successfully', async () => {
       const executeTransactionRequest = {
         network: 'localhost',
         walletAddress: '0x1234567890123456789012345678901234567890',
         nonce: '0',
         signedTransaction: '0x0',
         transactionData: '0x0',
+        bridgeNetwork: '',
       };
 
       const mockResponse = {
@@ -135,13 +144,14 @@ describe('ApiGatewayService', () => {
         });
     });
 
-    it('should handle errors and throw RpcException', async () => {
+    it('NO BRIDGE: should handle errors and throw RpcException', async () => {
       const executeTransactionRequest = {
         network: 'localhost',
         walletAddress: '0x1234567890123456789012345678901234567890',
         nonce: '0',
         signedTransaction: '0x0',
         transactionData: '0x0',
+        bridgeNetwork: '',
       };
 
       const rpcExceptionMock = new RpcException('Original RPC error');
@@ -152,6 +162,269 @@ describe('ApiGatewayService', () => {
 
       apiGatewayService
         .executeTransaction(executeTransactionRequest)
+        .subscribe({
+          error: (error) => {
+            expect(error).toBeInstanceOf(RpcException);
+          },
+        });
+    });
+
+    it('BRIDGE: should execute transaction successfully', async () => {
+      const executeTransactionRequest = {
+        network: 'localhost',
+        walletAddress: '0x1234567890123456789012345678901234567890',
+        nonce: '0',
+        signedTransaction: '0x0',
+        transactionData: '0x0',
+        bridgeNetwork: 'mumbai',
+      };
+
+      const mockResponse = {
+        hash: '0x82b9eea000ba798f1cae87bc89024a7cb55bc180db6e9545096e3eb2a7f38c9275d51018b41fc8779577b5f73c36ae5c5a1bd4a48a6a63bd880b1493bb20ad701c',
+      };
+      jest.spyOn(sapphireRelayerMock, 'send').mockReturnValue(of(mockResponse));
+
+      apiGatewayService
+        .executeTransaction(executeTransactionRequest)
+        .subscribe((result) => {
+          expect(result).toEqual(mockResponse);
+        });
+    });
+
+    it('BRIDGE: should handle errors and throw RpcException', async () => {
+      const executeTransactionRequest = {
+        network: 'localhost',
+        walletAddress: '0x1234567890123456789012345678901234567890',
+        nonce: '0',
+        signedTransaction: '0x0',
+        transactionData: '0x0',
+        bridgeNetwork: 'mumbai',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphireRelayerMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService
+        .executeTransaction(executeTransactionRequest)
+        .subscribe({
+          error: (error) => {
+            expect(error).toBeInstanceOf(RpcException);
+          },
+        });
+    });
+
+    it('should handle timeout', async () => {
+      const executeTransactionRequest = {
+        network: 'localhost',
+        walletAddress: '0x1234567890123456789012345678901234567890',
+        nonce: '0',
+        signedTransaction: '0x0',
+        transactionData: '0x0',
+        bridgeNetwork: 'mumbai',
+      };
+
+      const rpcExceptionMock = new RpcException('Timeout has occurred');
+
+      jest
+        .spyOn(sapphireRelayerMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService
+        .executeTransaction(executeTransactionRequest)
+        .subscribe({
+          error: (error) => {
+            expect(error).toBeInstanceOf(RpcException);
+            const errorObj = (error as RpcException).getError();
+            const errorJson: string = JSON.stringify(errorObj);
+            const errorResponse = {
+              statusCode: 503,
+              message: 'Timeout between microservices has occurred',
+              name: 'ServiceUnavailableException',
+            };
+            expect(errorJson).toEqual(JSON.stringify(errorResponse));
+          },
+        });
+    });
+  });
+
+  describe('getBalance', () => {
+    it('should get Balance successfully', async () => {
+      const getBalanceRequest = {
+        walletAddress: '0x00',
+        network: 'localhost',
+      };
+
+      const mockResponse = [
+        {
+          chainID: 1n,
+          balance: 1000000n,
+          crypto: 'ETH',
+        },
+        {
+          chainID: 2n,
+          balance: 2000000n,
+          crypto: 'MATIC',
+        },
+      ];
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(of(mockResponse));
+
+      apiGatewayService.getBalance(getBalanceRequest).subscribe((result) => {
+        expect(result).toEqual(mockResponse);
+      });
+    });
+
+    it('should handle errors and throw RpcException', async () => {
+      const getBalanceRequest = {
+        walletAddress: '0x00',
+        network: 'localhost',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService.getBalance(getBalanceRequest).subscribe({
+        error: (error) => {
+          expect(error).toBeInstanceOf(RpcException);
+        },
+      });
+    });
+  });
+
+  describe('getNFTBalance', () => {
+    it('should get NFT Balance successfully', async () => {
+      const getBalanceRequest = {
+        walletAddress: '0x00',
+        network: 'localhost',
+      };
+
+      const mockResponse = {
+        sepolia: 2,
+        amoy: 1,
+      };
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(of(mockResponse));
+
+      apiGatewayService.getNFTBalance(getBalanceRequest).subscribe((result) => {
+        expect(result).toEqual(mockResponse);
+      });
+    });
+
+    it('should handle errors and throw RpcException', async () => {
+      const getBalanceRequest = {
+        walletAddress: '0x00',
+        network: 'localhost',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService.getNFTBalance(getBalanceRequest).subscribe({
+        error: (error) => {
+          expect(error).toBeInstanceOf(RpcException);
+        },
+      });
+    });
+  });
+
+  describe('getNFTMetadata', () => {
+    it('should get NFT Metadata successfully', async () => {
+      const getBalanceRequest = {
+        address: '0x00',
+        network: 'localhost',
+      };
+
+      const mockResponse = [
+        {
+          collectionAddress: '0x2Ccf4DAFAF0F7f5ABE2A74e40100E45824DAFB11',
+          collectionDescription: '',
+          collectionName: '',
+          description: 'Sapphire is a precious gemstone',
+          image:
+            'https://gateway.pinata.cloud/ipfs/bafybeib3pgyhzx7j7yfeigqtjqxnvjz7c4ic32dxu6lp4iqhjnq2sd2tum/0.png',
+          name: 'Sapphire #0',
+          network: 'amoy',
+          tokenId: 0,
+        },
+      ];
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(of(mockResponse));
+
+      apiGatewayService
+        .getNFTMetadata(getBalanceRequest)
+        .subscribe((result) => {
+          expect(result).toEqual(mockResponse);
+        });
+    });
+
+    it('should handle errors and throw RpcException', async () => {
+      const getBalanceRequest = {
+        address: '0x00',
+        network: 'localhost',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphirePortfolioMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService.getNFTMetadata(getBalanceRequest).subscribe({
+        error: (error) => {
+          expect(error).toBeInstanceOf(RpcException);
+        },
+      });
+    });
+  });
+
+  describe('getWrappedAccountAddress', () => {
+    it('should getWrappedAccountAddress successfully', async () => {
+      const getWrappedAccountAddressRequest = {
+        address: '0x00',
+        network: 'localhost',
+      };
+
+      const mockResponse = {
+        address: '0x12',
+        network: 'localhost',
+      };
+      jest.spyOn(sapphireRelayerMock, 'send').mockReturnValue(of(mockResponse));
+
+      apiGatewayService
+        .getWrappedAccountAddress(getWrappedAccountAddressRequest)
+        .subscribe((result) => {
+          expect(result).toEqual(mockResponse);
+        });
+    });
+
+    it('should handle errors and throw RpcException', async () => {
+      const getWrappedAccountAddressRequest = {
+        address: '0x00',
+        network: 'localhost',
+      };
+
+      const rpcExceptionMock = new RpcException('Original RPC error');
+
+      jest
+        .spyOn(sapphireRelayerMock, 'send')
+        .mockReturnValue(throwError(() => rpcExceptionMock));
+
+      apiGatewayService
+        .getWrappedAccountAddress(getWrappedAccountAddressRequest)
         .subscribe({
           error: (error) => {
             expect(error).toBeInstanceOf(RpcException);

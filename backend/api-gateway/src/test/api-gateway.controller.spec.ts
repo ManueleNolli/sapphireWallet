@@ -23,6 +23,11 @@ describe('AppController', () => {
             name: 'SAPPHIRE_RELAYER',
           },
         ]),
+        ClientsModule.register([
+          {
+            name: 'SAPPHIRE_PORTFOLIO',
+          },
+        ]),
       ],
     }).compile();
 
@@ -89,6 +94,106 @@ describe('AppController', () => {
           nonce: '0',
           signedTransaction: '0x0',
           transactionData: '0x0',
+          bridgeNetwork: '',
+        })
+        .subscribe((result) => {
+          expect(result).toEqual(mockResult);
+        });
+    });
+
+    it('getWrappedAccountAddress', () => {
+      const mockResult = {
+        address: '0x1234567890123456789012345678901234567890',
+        network: 'localhost',
+      };
+
+      jest
+        .spyOn(apiGatewayService, 'getWrappedAccountAddress')
+        .mockReturnValue(of(mockResult));
+
+      apiGatewayController
+        .getWrappedAccountAddress({
+          address: '0x0',
+          network: 'localhost',
+        })
+        .subscribe((result) => {
+          expect(result).toEqual(mockResult);
+        });
+    });
+  });
+
+  describe('Sapphire Portfolio', () => {
+    it('getBalance', () => {
+      const mockResult = [
+        {
+          chainID: 1n,
+          balance: 1000000n,
+          crypto: 'ETH',
+        },
+        {
+          chainID: 2n,
+          balance: 2000000n,
+          crypto: 'MATIC',
+        },
+      ];
+
+      jest
+        .spyOn(apiGatewayService, 'getBalance')
+        .mockReturnValue(of(mockResult));
+
+      apiGatewayController
+        .getBalance({
+          walletAddress: '0x0',
+          network: 'localhost',
+        })
+        .subscribe((result) => {
+          expect(result).toEqual(mockResult);
+        });
+    });
+
+    it('getNFTBalance', () => {
+      const mockResult = {
+        sepolia: 2,
+        amoy: 1,
+      };
+
+      jest
+        .spyOn(apiGatewayService, 'getNFTBalance')
+        .mockReturnValue(of(mockResult));
+
+      apiGatewayController
+        .getNFTBalance({
+          walletAddress: '0x0',
+          network: 'localhost',
+        })
+        .subscribe((result) => {
+          expect(result).toEqual(mockResult);
+        });
+    });
+
+    it('getNFTMetadata', () => {
+      const mockResult = [
+        {
+          collectionAddress: '0x2Ccf4DAFAF0F7f5ABE2A74e40100E45824DAFB11',
+          collectionDescription: '',
+          collectionName: '',
+          description: 'Sapphire is a precious gemstone',
+          image:
+            'https://gateway.pinata.cloud/ipfs/bafybeib3pgyhzx7j7yfeigqtjqxnvjz7c4ic32dxu6lp4iqhjnq2sd2tum/0.png',
+          name: 'Sapphire #0',
+          network: 'amoy',
+          tokenId: 0,
+        },
+      ];
+
+      jest
+        .spyOn(apiGatewayService, 'getNFTMetadata')
+        .mockReturnValue(of(mockResult));
+
+      apiGatewayController
+        .getNFTMetadata({
+          address: '0x0',
+          network: 'localhost',
         })
         .subscribe((result) => {
           expect(result).toEqual(mockResult);

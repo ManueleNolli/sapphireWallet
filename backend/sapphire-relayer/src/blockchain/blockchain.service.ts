@@ -24,6 +24,14 @@ export class BlockchainService {
     return provider;
   }
 
+  async getAmoyProvider(api_key: string) {
+    const provider = new ethers.JsonRpcProvider(
+      `https://polygon-amoy.g.alchemy.com/v2/${api_key}`,
+    );
+    await this.testConnection(provider);
+    return provider;
+  }
+
   async getSigner(
     private_key: string,
     provider: ethers.Provider,
@@ -48,6 +56,9 @@ export class BlockchainService {
       signer = await this.getSigner(details.signerKey, provider);
     } else if (details.network === 'sepolia' && details.apiKey) {
       const provider = await this.getSepoliaProvider(details.apiKey);
+      signer = await this.getSigner(details.signerKey, provider);
+    } else if (details.network === 'amoy') {
+      const provider = await this.getAmoyProvider(details.apiKey);
       signer = await this.getSigner(details.signerKey, provider);
     } else {
       throw new RpcException(

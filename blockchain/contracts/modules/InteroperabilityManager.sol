@@ -3,7 +3,6 @@ pragma solidity ^0.8.20;
 
 import "./common/BaseModule.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "hardhat/console.sol";
 
 /**
  * @title InteroperabilityManager
@@ -23,6 +22,7 @@ abstract contract InteroperabilityManager is BaseModule {
 
     struct InteroperabilityCall {
         BridgeCallType callType;
+        uint chainId;
         address to;
         uint256 value;
         bytes data;
@@ -112,6 +112,7 @@ abstract contract InteroperabilityManager is BaseModule {
             revert("InteroperabilityManager: Invalid transaction type");
         }
 
+        IWallet(_wallet).addChain(_transaction.chainId);
         emit BridgeCall(bridgeCallCount++, _wallet, _transaction.callType, _transaction.to, _transaction.value, _transaction.data, _transaction.signature, owner);
         return bridgeCallCount;
     }

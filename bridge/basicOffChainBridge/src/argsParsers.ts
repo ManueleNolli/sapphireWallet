@@ -18,8 +18,8 @@ function parseArgentModuleAddress(network: string): string {
     return process.env.LOCALHOST_ARGENT_MODULE_ADDRESS;
   } else if(network === 'sepolia' && process.env.SEPOLIA_ARGENT_MODULE_ADDRESS){
     return process.env.SEPOLIA_ARGENT_MODULE_ADDRESS;
-  } else if(network === 'mumbai' && process.env.MUMBAI_ARGENT_MODULE_ADDRESS){
-    return process.env.MUMBAI_ARGENT_MODULE_ADDRESS;
+  } else if(network === 'amoy' && process.env.AMOY_ARGENT_MODULE_ADDRESS){
+    return process.env.AMOY_ARGENT_MODULE_ADDRESS;
   }  else {
     throw new Error(`Argent module address not found for network ${network}`);
   }
@@ -30,8 +30,8 @@ function parseArgentWrappedAccountsAddress(network: string): string {
     return process.env.LOCALHOST_ARGENT_WRAPPED_ACCOUNTS_ADDRESS;
   } else if(network === 'sepolia' && process.env.SEPOLIA_ARGENT_WRAPPED_ACCOUNTS_ADDRESS){
     return process.env.SEPOLIA_ARGENT_WRAPPED_ACCOUNTS_ADDRESS;
-  } else if(network === 'mumbai' && process.env.MUMBAI_ARGENT_WRAPPED_ACCOUNTS_ADDRESS){
-    return process.env.MUMBAI_ARGENT_WRAPPED_ACCOUNTS_ADDRESS;
+  } else if(network === 'amoy' && process.env.AMOY_ARGENT_WRAPPED_ACCOUNTS_ADDRESS){
+    return process.env.AMOY_ARGENT_WRAPPED_ACCOUNTS_ADDRESS;
   }  else {
     throw new Error(`Argent wrapped accounts address not found for network ${network}`);
   }

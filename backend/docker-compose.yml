@@ -1,4 +1,13 @@
 services:
+  sapphire-portfolio:
+    build:
+      context: ./sapphire-portfolio
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    networks:
+      - backend
+
   sapphire-relayer:
     build:
       context: ./sapphire-relayer
