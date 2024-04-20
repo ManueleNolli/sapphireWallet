@@ -21,13 +21,14 @@ import "./common/BaseModule.sol";
 import "./RelayerManager.sol";
 import "./TransactionManager.sol";
 import "./InteroperabilityManager.sol";
+import "./SapphireSecurityManager.sol";
 
 /**
  * @title ArgentModule
  * @notice Single module for the Argent wallet with interoperability features.
  * @author Manuele Nolli - <manuele.nolli@supsi.ch>
  */
-contract ArgentModule is BaseModule, RelayerManager, TransactionManager, InteroperabilityManager {
+contract ArgentModule is BaseModule, RelayerManager, TransactionManager, InteroperabilityManager, SapphireSecurityManager {
 
     bytes32 constant public NAME = "ArgentModule";
 
