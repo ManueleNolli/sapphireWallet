@@ -78,6 +78,9 @@ export class SapphirePortfolioService {
     const balance = await nftStorage.balanceOf(walletAddress);
     const balanceInt = parseInt(balance.toString());
 
+    const name = await nftStorage.name();
+    const symbol = await nftStorage.symbol();
+
     const tokens: NFT[] = [];
 
     for (let i = 0; i < balanceInt; i++) {
@@ -104,10 +107,12 @@ export class SapphirePortfolioService {
         description: metadata.description,
         image: metadata.image,
         tokenId: parseInt(tokenId.toString()),
-        collectionName: metadata.collectionName ? metadata.collectionName : '',
+        collectionName: metadata.collectionName
+          ? metadata.collectionName
+          : name,
         collectionDescription: metadata.collectionDescription
           ? metadata.collectionDescription
-          : '',
+          : symbol,
         collectionAddress: nftStorageAddress,
         network: network,
       };

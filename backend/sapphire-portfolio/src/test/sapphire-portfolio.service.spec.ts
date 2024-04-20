@@ -121,11 +121,86 @@ describe('SapphireRelyerService', () => {
   });
 
   describe('getNFTMetadata', () => {
-    it('should get all nfts', async () => {
+    it('should get all nfts with collection name and description', async () => {
       const ERC721EnumerableMock = {
         balanceOf: jest.fn().mockResolvedValue(2),
         tokenOfOwnerByIndex: jest.fn().mockImplementation((_, i) => i),
         tokenURI: jest.fn().mockImplementation((i) => `ipfs://aaaa/${i}`),
+        name: jest.fn().mockResolvedValue('mockName'),
+        symbol: jest.fn().mockResolvedValue('mockSymbol'),
+      };
+
+      jest
+        .spyOn(ERC721Enumerable__factory, 'connect')
+        .mockReturnValue(ERC721EnumerableMock as any);
+
+      const fetchMock = jest.fn().mockImplementation(() => {
+        return {
+          json: jest.fn().mockResolvedValue({
+            name: `mockName0`,
+            description: `mockDescription0`,
+            image: `ipfs://mockImage0.png`,
+            attributes: [],
+            collectionName: 'collectionName',
+            collectionDescription: 'collectionDescription',
+          }),
+        };
+      });
+      const fetchMock2 = jest.fn().mockImplementation(() => {
+        return {
+          json: jest.fn().mockResolvedValue({
+            name: `mockName1`,
+            description: `mockDescription1`,
+            image: `ipfs://mockImage1.png`,
+            attributes: [],
+            collectionName: 'collectionName2',
+            collectionDescription: 'collectionDescription2',
+          }),
+        };
+      });
+
+      jest.spyOn(global, 'fetch').mockImplementationOnce(fetchMock);
+      jest.spyOn(global, 'fetch').mockImplementationOnce(fetchMock2);
+
+      const result = await sapphireRelayerPortfolio.getNFTMetadata(
+        {} as Wallet,
+        '0x0000000',
+        '0x0000001',
+        'mockNetwork',
+        'https://mockIpfsGateway/',
+      );
+
+      expect(result).toEqual([
+        {
+          collectionAddress: '0x0000001',
+          collectionDescription: 'collectionDescription',
+          collectionName: 'collectionName',
+          description: 'mockDescription0',
+          image: 'https://mockIpfsGateway/mockImage0.png',
+          name: 'mockName0',
+          network: 'mockNetwork',
+          tokenId: 0,
+        },
+        {
+          collectionAddress: '0x0000001',
+          collectionDescription: 'collectionDescription2',
+          collectionName: 'collectionName2',
+          description: 'mockDescription1',
+          image: 'https://mockIpfsGateway/mockImage1.png',
+          name: 'mockName1',
+          network: 'mockNetwork',
+          tokenId: 1,
+        },
+      ]);
+    });
+
+    it('should get all nfts without collection name and description', async () => {
+      const ERC721EnumerableMock = {
+        balanceOf: jest.fn().mockResolvedValue(2),
+        tokenOfOwnerByIndex: jest.fn().mockImplementation((_, i) => i),
+        tokenURI: jest.fn().mockImplementation((i) => `ipfs://aaaa/${i}`),
+        name: jest.fn().mockResolvedValue('mockName'),
+        symbol: jest.fn().mockResolvedValue('mockSymbol'),
       };
 
       jest
@@ -167,8 +242,8 @@ describe('SapphireRelyerService', () => {
       expect(result).toEqual([
         {
           collectionAddress: '0x0000001',
-          collectionDescription: '',
-          collectionName: '',
+          collectionDescription: 'mockSymbol',
+          collectionName: 'mockName',
           description: 'mockDescription0',
           image: 'https://mockIpfsGateway/mockImage0.png',
           name: 'mockName0',
@@ -177,8 +252,8 @@ describe('SapphireRelyerService', () => {
         },
         {
           collectionAddress: '0x0000001',
-          collectionDescription: '',
-          collectionName: '',
+          collectionDescription: 'mockSymbol',
+          collectionName: 'mockName',
           description: 'mockDescription1',
           image: 'https://mockIpfsGateway/mockImage1.png',
           name: 'mockName1',
@@ -193,6 +268,8 @@ describe('SapphireRelyerService', () => {
         balanceOf: jest.fn().mockResolvedValue(2),
         tokenOfOwnerByIndex: jest.fn().mockImplementation((_, i) => i),
         tokenURI: jest.fn().mockImplementationOnce((i) => `ipfs://aaaa/${i}`), // first token has tokenURI
+        name: jest.fn().mockResolvedValue('mockName'),
+        symbol: jest.fn().mockResolvedValue('mockSymbol'),
       };
 
       jest
@@ -223,8 +300,8 @@ describe('SapphireRelyerService', () => {
       expect(result).toEqual([
         {
           collectionAddress: '0x0000001',
-          collectionDescription: '',
-          collectionName: '',
+          collectionDescription: 'mockSymbol',
+          collectionName: 'mockName',
           description: 'mockDescription0',
           image: 'https://mockIpfsGateway/mockImage0.png',
           name: 'mockName0',
