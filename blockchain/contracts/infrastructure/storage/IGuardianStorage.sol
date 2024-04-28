@@ -50,5 +50,7 @@ interface IGuardianStorage {
 
     function getGuardians(address _wallet) external view returns (address[] memory);
 
+    function getGuardianWallets(address _guardian) external view returns (address[] memory);
+
     function guardianCount(address _wallet) external view returns (uint256);
 }

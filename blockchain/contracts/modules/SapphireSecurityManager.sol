@@ -82,11 +82,19 @@ abstract contract SapphireSecurityManager is BaseModule {
         return guardianStorage.getGuardians(_wallet);
     }
 
+    /*
+    * @notice Returns the wallets that a guardian is a guardian of.
+    * @param _guardian The guardian.
+    * @return _wallets the wallets that a guardian is a guardian of.
+    */
+    function getGuardianWallets(address _guardian) external view returns (address[] memory _wallets) {
+        return guardianStorage.getGuardianWallets(_guardian);
+    }
 
     // *************** Public functions ************************ //
 
-        /**
-     * @notice Checks if an address is a guardian for a wallet.
+    /**
+ * @notice Checks if an address is a guardian for a wallet.
      * @param _wallet The target wallet.
      * @param _guardian The address to check.
      * @return _isGuardian `true` if the address is a guardian for the wallet otherwise `false`.

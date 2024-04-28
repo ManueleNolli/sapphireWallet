@@ -39,6 +39,12 @@ describe('SapphireSecurityManager', function () {
       expect(guardianList.length).to.be.equal(1)
       expect(guardianList[0]).to.be.equal(guardian1.address)
     })
+
+    it('Should return the correct list of wallet for guardian', async function () {
+      const wallets = await infrastructure.argentModule.connect(walletOwner).getGuardianWallets(guardian1.address)
+      expect(wallets.length).to.be.equal(1)
+      expect(wallets[0]).to.be.equal(walletAccountAbstraction)
+    })
   })
 
   describe('addGuardian', async function () {
@@ -77,6 +83,18 @@ describe('SapphireSecurityManager', function () {
         'BM: must be wallet owner/self'
       )
     })
+
+    it('Should add a wallet to the guardian', async function () {
+      const wallets = await infrastructure.argentModule.connect(walletOwner).getGuardianWallets(guardian2.address)
+      expect(wallets.length).to.be.equal(0)
+
+      // Add guardian2
+      await infrastructure.argentModule.connect(walletOwner).addGuardian(walletAccountAbstraction, guardian2.address)
+
+      const wallets2 = await infrastructure.argentModule.connect(walletOwner).getGuardianWallets(guardian2.address)
+      expect(wallets2.length).to.be.equal(1)
+      expect(wallets2[0]).to.be.equal(walletAccountAbstraction)
+    })
   })
 
   describe('revokeGuardian', async function () {
@@ -101,6 +119,17 @@ describe('SapphireSecurityManager', function () {
       await expect(infrastructure.argentModule.connect(walletOwner).revokeGuardian(walletAccountAbstraction, guardian2.address)).to.be.revertedWith(
         'SSM: must be existing guardian'
       )
+    })
+
+    it('Should remove the wallet from the guardian', async function () {
+      const wallets = await infrastructure.argentModule.connect(walletOwner).getGuardianWallets(guardian1.address)
+      expect(wallets.length).to.be.equal(1)
+
+      // Remove guardian1
+      await infrastructure.argentModule.connect(walletOwner).revokeGuardian(walletAccountAbstraction, guardian1.address)
+
+      const wallets2 = await infrastructure.argentModule.connect(walletOwner).getGuardianWallets(guardian1.address)
+      expect(wallets2.length).to.be.equal(0)
     })
   })
 

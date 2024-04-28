@@ -25,6 +25,7 @@ import "../../infrastructure/storage/IGuardianStorage.sol";
  * for a wallet can modify its state.
  * @author Julien Niset - <julien@argent.im>
  * @author Olivier Van Den Biggelaar - <olivier@argent.im>
+ * @author Manuele Nolli - <manuele.nolli@supsi.ch> - Adapted for Sapphire
  */
 contract GuardianStorage is IGuardianStorage, Storage {
 
@@ -47,6 +48,9 @@ contract GuardianStorage is IGuardianStorage, Storage {
     // wallet specific storage
     mapping (address => GuardianStorageConfig) internal configs;
 
+    mapping(address => address[]) public guardiansOf; // guardian -> wallets. It is a redundant information
+
+
     // *************** External Functions ********************* //
 
     /**
@@ -60,7 +64,7 @@ contract GuardianStorage is IGuardianStorage, Storage {
 //        config.info[_guardian].index = uint128(config.guardians.push(_guardian) - 1);
         config.info[_guardian].index = uint128(config.guardians.length);
         config.guardians.push(_guardian);
-
+        guardiansOf[_guardian].push(_wallet);
     }
 
     /**
@@ -79,6 +83,14 @@ contract GuardianStorage is IGuardianStorage, Storage {
         config.guardians.pop();
 //        config.guardians.length--;
         delete config.info[_guardian];
+        address[] storage guardians = guardiansOf[_guardian];
+        for (uint i = 0; i < guardians.length; i++) {
+            if (guardians[i] == _wallet) {
+                guardians[i] = guardians[guardians.length - 1];
+                guardians.pop();
+                break;
+            }
+        }
     }
 
     /**
@@ -102,6 +114,15 @@ contract GuardianStorage is IGuardianStorage, Storage {
             guardians[i] = config.guardians[i];
         }
         return guardians;
+    }
+
+    /**
+     * @notice Returns the wallets that a guardian is a guardian of.
+     * @param _guardian The guardian.
+     * @return the wallets that a guardian is a guardian of.
+     */
+    function getGuardianWallets(address _guardian) external view returns (address[] memory) {
+        return guardiansOf[_guardian];
     }
 
     /**
