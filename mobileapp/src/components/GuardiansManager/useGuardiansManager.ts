@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { addGuardian, getGuardians, requestERC721TokenTransfer } from '../../services/transactions/'
+import { addGuardian, getGuardians } from '../../services/transactions/'
 import { WalletContext } from '../../context/WalletContext'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import Toast from 'react-native-toast-message'
