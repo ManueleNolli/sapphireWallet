@@ -11,9 +11,8 @@ import { FlashList } from '@shopify/flash-list'
 import { MnemonicViewerProps } from '../../../navigation/FirstAccessStack'
 import Loading from '../../Loading/Loading'
 
-export default function MnemonicViewer({ route }: MnemonicViewerProps) {
-  const { mnemonic, copyMnemonicToClipboard, finishFirstAccess, isLoading } =
-    useMnemonicViewer(route)
+export default function MnemonicViewer({ navigation, route }: MnemonicViewerProps) {
+  const { mnemonic, copyMnemonicToClipboard, savedPressed } = useMnemonicViewer({ navigation, route })
 
   const MnemonicBox = (word: string) => {
     return (
@@ -21,10 +20,6 @@ export default function MnemonicViewer({ route }: MnemonicViewerProps) {
         <Text category={'s1'}>{word}</Text>
       </Layout>
     )
-  }
-
-  if (isLoading) {
-    return <Loading text={'Deploying smart contract wallet...'} />
   }
 
   return (
@@ -52,7 +47,7 @@ export default function MnemonicViewer({ route }: MnemonicViewerProps) {
           />
         </TouchableOpacity>
         <View>
-          <Button appearance="outline" onPress={finishFirstAccess}>
+          <Button appearance="outline" onPress={savedPressed}>
             I saved these words
           </Button>
         </View>

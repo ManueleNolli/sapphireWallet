@@ -10,22 +10,17 @@ type InputAddressProps = {
   isValid: boolean
   setIsValid: (isValid: boolean) => void
   setIsQRCodeScanning: (isQRCodeScanning: boolean) => void
+  label: string
 }
 
-export default function InputAddress({
-  value,
-  setValue,
-  isValid,
-  setIsValid,
-  setIsQRCodeScanning,
-}: InputAddressProps) {
+export default function InputAddress({ value, setValue, isValid, setIsValid, setIsQRCodeScanning, label }: InputAddressProps) {
   useEffect(() => {
     isAddress(value) ? setIsValid(true) : setIsValid(false)
   }, [value])
 
   const QrCodeIcon = (props: any): React.ReactElement => (
     <TouchableWithoutFeedback
-      testID={'qr-code-icon'}
+      testID="qr-code-icon"
       onPress={() => {
         setIsQRCodeScanning(true)
       }}
@@ -46,7 +41,7 @@ export default function InputAddress({
   return (
     <Input
       value={value}
-      label="To"
+      label={label}
       placeholder="Address"
       status={status()}
       accessoryRight={QrCodeIcon}
