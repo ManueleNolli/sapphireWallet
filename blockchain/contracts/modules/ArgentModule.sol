@@ -83,7 +83,7 @@ contract ArgentModule is BaseModule, RelayerManager, TransactionManager, Interop
         if (methodId == TransactionManager.multiCallWithSession.selector) {
             return (1, OwnerSignature.Session);
         }
-        if (methodId == TransactionManager.multiCallWithGuardians.selector ||
+        if (
             methodId == TransactionManager.multiCallWithGuardiansAndStartSession.selector
             )
         {
@@ -91,6 +91,12 @@ contract ArgentModule is BaseModule, RelayerManager, TransactionManager, Interop
             uint majorityGuardians = _majorityOfGuardians(_wallet);
             uint numberOfSignaturesRequired = majorityGuardians + 1;
             return (numberOfSignaturesRequired, OwnerSignature.Required);
+        }
+        if (methodId == TransactionManager.multiCallWithGuardians.selector)
+        {
+            // just one guardian. This has to be fixed, it should be majority of guardians.
+            // Used for recovery in Sapphire systems, just a PoC
+            return (1, OwnerSignature.Optional);
         }
         revert("SM: unknown method");
     }

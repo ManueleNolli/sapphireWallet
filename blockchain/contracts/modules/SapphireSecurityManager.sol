@@ -22,8 +22,16 @@ abstract contract SapphireSecurityManager is BaseModule {
     /**
      * @notice Throws if the caller is not a guardian for the wallet or the module itself.
      */
-    modifier onlyWalletOwnerOrGuardianOrSelf(address _wallet) {
-        require(_isOwner(_wallet, msg.sender) || _isSelf(msg.sender) || isGuardian(_wallet, msg.sender), "SSM: must be owner/guardian/self");
+    modifier onlyGuardianOrWallet(address _wallet) {
+        require(isGuardian(_wallet, msg.sender) || msg.sender == _wallet, "SSM: must be guardian/self");
+        _;
+    }
+
+    /**
+        * @dev Throws if the sender is not the target wallet or the owner of the target wallet.
+     */
+    modifier onlyWalletOrWalletOwner(address _wallet) {
+        require(msg.sender == _wallet || _isOwner(_wallet, msg.sender), "SSM: caller must be wallet/wallet owner");
         _;
     }
 
@@ -34,7 +42,7 @@ abstract contract SapphireSecurityManager is BaseModule {
      * @param _wallet The target wallet.
      * @param _guardian The guardian to add.
      */
-    function addGuardian(address _wallet, address _guardian) external onlyWalletOwnerOrSelf(_wallet) {
+    function addGuardian(address _wallet, address _guardian) external onlyWalletOrWalletOwner(_wallet) {
         require(!_isOwner(_wallet, _guardian), "SSM: guardian cannot be owner");
         require(!isGuardian(_wallet, _guardian), "SSM: duplicate guardian");
         // Guardians must either be an EOA or a contract with an owner()
@@ -52,7 +60,7 @@ abstract contract SapphireSecurityManager is BaseModule {
      * @param _wallet The target wallet.
      * @param _guardian The guardian to revoke.
      */
-    function revokeGuardian(address _wallet, address _guardian) external onlyWalletOwnerOrSelf(_wallet) {
+    function revokeGuardian(address _wallet, address _guardian) external onlyWalletOrWalletOwner(_wallet) {
         require(isGuardian(_wallet, _guardian), "SSM: must be existing guardian");
 
         guardianStorage.revokeGuardian(_wallet, _guardian);
@@ -66,7 +74,7 @@ abstract contract SapphireSecurityManager is BaseModule {
      * @param _wallet The target wallet.
      * @param _recovery The address to which ownership should be transferred.
      */
-    function executeRecovery(address _wallet, address _recovery) external onlyWalletOwnerOrGuardianOrSelf(_wallet) {
+    function executeRecovery(address _wallet, address _recovery) external onlyGuardianOrWallet(_wallet) {
         validateNewOwner(_wallet, _recovery);
         _clearSession(_wallet);
         IWallet(_wallet).setOwner(_recovery);
