@@ -50,6 +50,7 @@ describe('AppController', () => {
 
       const createWalletResponse = await apiGatewayController.createWallet({
         eoaAddress: '0x0',
+        guardianAddress: '0x0',
         network: 'localhost',
       });
 

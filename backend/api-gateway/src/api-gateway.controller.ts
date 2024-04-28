@@ -24,9 +24,15 @@ export class ApiGatewayController {
         schema: {
           type: 'object',
           properties: {
-            address: {
+            eoaAddress: {
               type: 'string',
               example: '0x1234567890123456789012345678901234567890',
+            },
+            guardianAddress: {
+              type: 'string',
+              example: '0x1234567890123456789012345678901234567890',
+              description:
+                'If the ZeroAddress is passed, the guardian will be the signer address',
             },
             network: {
               type: 'string',
