@@ -41,27 +41,4 @@ describe('MnemonicViewer', () => {
     )
     expect(tree).toMatchSnapshot()
   })
-
-  it('renders correctly when loading', () => {
-    ;(useMnemonicViewer as jest.Mock).mockReturnValue({
-      mnemonic: [],
-      copyMnemonicToClipboard: jest.fn(),
-      finishFirstAccess: jest.fn(),
-      isLoading: true,
-    })
-
-    const tree = renderWithTheme(
-      <MnemonicViewer
-        {...({
-          route: {
-            params: {
-              mnemonic: [],
-            },
-          },
-        } as any)}
-      />
-    )
-    expect(tree).toMatchSnapshot()
-    expect(tree.getByText('Deploying smart contract wallet...')).toBeTruthy()
-  })
 })

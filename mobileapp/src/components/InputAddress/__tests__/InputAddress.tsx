@@ -11,6 +11,7 @@ describe('InputAddress Component', () => {
   it('renders correctly', () => {
     const tree = renderWithTheme(
       <InputAddress
+        label="To"
         value=""
         setValue={() => {}}
         isValid={false}
@@ -30,6 +31,7 @@ describe('InputAddress Component', () => {
     const setIsValidMock = jest.fn()
     const tree = renderWithTheme(
       <InputAddress
+        label="to"
         value=""
         setValue={() => {}}
         isValid={false}
@@ -49,6 +51,7 @@ describe('InputAddress Component', () => {
   it('displays correct status', () => {
     const { getByTestId } = renderWithTheme(
       <InputAddress
+        label=""
         value=""
         setValue={() => {}}
         isValid={false}
@@ -64,9 +67,10 @@ describe('InputAddress Component', () => {
     ;(isAddress as unknown as jest.Mock).mockReturnValue(true)
     const { getByTestId } = renderWithTheme(
       <InputAddress
+        label=""
         value="Address"
         setValue={() => {}}
-        isValid={true}
+        isValid
         setIsValid={() => {}}
         setIsQRCodeScanning={() => {}}
       />
@@ -78,6 +82,7 @@ describe('InputAddress Component', () => {
   it('displays danger status when isValid is false and value length is greater than 0', () => {
     const { getByTestId } = renderWithTheme(
       <InputAddress
+        label=""
         value="invalidAddress"
         setValue={() => {}}
         isValid={false}
@@ -94,6 +99,7 @@ describe('InputAddress Component', () => {
     const setIsQRCodeScanningMock = jest.fn()
     const { getByTestId } = renderWithTheme(
       <InputAddress
+        label=""
         value=""
         setValue={() => {}}
         isValid={false}

@@ -7,6 +7,7 @@ import renderWithTheme from '../../TestHelper'
 
 jest.mock('../../pages/FirstAccess/CreateWallet/CreateWallet')
 jest.mock('../../pages/FirstAccess/MnemonicViewer/MnemonicViewer')
+jest.mock('../../pages/FirstAccess/AddGuardian/AddGuardian')
 
 describe('FirstAccessStackNavigator', () => {
   it('Navigates between CreateWallet and MnemonicViewer screens', async () => {

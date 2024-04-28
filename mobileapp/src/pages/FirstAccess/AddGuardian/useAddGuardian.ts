@@ -1,12 +1,12 @@
 import { useContext, useState } from 'react'
-import * as Clipboard from 'expo-clipboard'
 import { FirstAccessContext } from '../../../context/FirstAccessContext'
-import { AddGuardianProps, MnemonicViewerProps } from '../../../navigation/FirstAccessStack'
+import { AddGuardianProps } from '../../../navigation/FirstAccessStack'
 import useLoading from '../../../hooks/useLoading'
 import { requestContractWallet } from '../../../services/wallet'
 import { WalletContext } from '../../../context/WalletContext'
 import { BlockchainContext } from '../../../context/BlockchainContext'
 import { ZeroAddress } from 'ethers'
+import Toast from 'react-native-toast-message'
 
 export default function useAddGuardian(navigation: AddGuardianProps['navigation']) {
   const { toggleFirstAccess } = useContext(FirstAccessContext)
@@ -18,18 +18,31 @@ export default function useAddGuardian(navigation: AddGuardianProps['navigation'
   const [isQRCodeScanning, setIsQRCodeScanning] = useState<boolean>(false)
 
   const skipGuardian = () => {
-    setWalletContractAddress(ZeroAddress).then(toggleFirstAccess)
+    finishFirstAccess(ZeroAddress)
   }
 
-  const finishFirstAccess = async () => {
+  const withGuardian = () => {
+    finishFirstAccess(valueAddress)
+  }
+
+  const finishFirstAccess = async (guardian: string) => {
     setIsLoading(true)
     try {
-      const contractWalletAddress = await requestContractWallet(currentNetwork, getEOAAddress(), valueAddress)
+      const contractWalletAddress = await requestContractWallet(currentNetwork, getEOAAddress(), guardian)
       await setWalletContractAddress(contractWalletAddress.address)
-
+      Toast.show({
+        type: 'success',
+        text1: 'Account created! 👛',
+      })
       await toggleFirstAccess()
-    } catch (error) {
-      console.error(error)
+    } catch (e: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Transaction failed! 😢',
+        text2: e.message,
+      })
+      setIsLoading(false)
+      navigation.goBack()
     }
   }
 
@@ -46,8 +59,8 @@ export default function useAddGuardian(navigation: AddGuardianProps['navigation'
     isQRCodeScanning,
     setIsQRCodeScanning,
     QRCodeFinishedScanning,
-    finishFirstAccess,
     skipGuardian,
+    withGuardian,
     isLoading,
   }
 }

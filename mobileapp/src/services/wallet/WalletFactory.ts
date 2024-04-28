@@ -1,15 +1,15 @@
 import { BACKEND_ENDPOINTS, backendErrorResponse, contactBackend, createWalletResponse } from '../backend/'
 import { NETWORKS } from '../../constants/Networks'
-import { ZeroAddress } from 'ethers'
 
 /**
  * Service to contact wallet factory microservice through API
  */
-export async function requestContractWallet(network: NETWORKS, eoaAddress: string, guardianAddress?: string) {
+export async function requestContractWallet(network: NETWORKS, eoaAddress: string, guardianAddress: string) {
+  console.log("calling backend with: ", network, eoaAddress, guardianAddress)
   const result = (await contactBackend(BACKEND_ENDPOINTS.CREATE_WALLET, {
     network: network,
     eoaAddress,
-    guardianAddress: guardianAddress === undefined ? ZeroAddress : guardianAddress,
+    guardianAddress,
   })) as createWalletResponse | backendErrorResponse
 
   if ('error' in result) {

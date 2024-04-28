@@ -19,7 +19,7 @@ export default function AddGuardian({ navigation }: AddGuardianProps) {
     isQRCodeScanning,
     setIsQRCodeScanning,
     QRCodeFinishedScanning,
-    finishFirstAccess,
+    withGuardian,
     skipGuardian,
     isLoading,
   } = useAddGuardian(navigation)
@@ -56,7 +56,7 @@ export default function AddGuardian({ navigation }: AddGuardianProps) {
           setIsQRCodeScanning={setIsQRCodeScanning}
         />
         <View>
-          <Button appearance="outline" onPress={finishFirstAccess} style={{ marginVertical: 2 * vh }}>
+          <Button appearance="outline" onPress={withGuardian} style={{ marginVertical: 2 * vh }}>
             Create wallet
           </Button>
 
