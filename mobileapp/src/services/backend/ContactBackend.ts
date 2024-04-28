@@ -30,6 +30,7 @@ interface backendBaseBody {
 
 interface createWalletBody extends backendBaseBody {
   eoaAddress: string
+  guardianAddress: string
 }
 
 interface addAuthorisedBody extends backendBaseBody {
