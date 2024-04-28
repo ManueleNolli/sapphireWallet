@@ -39,6 +39,8 @@ const networkLogo = (network: NETWORKS | BRIDGE_NETWORKS) => {
 const qrCode = require(assetsPath + 'QrCode.png')
 const qrCodeSmall = require(assetsPath + 'QrCodeSmall.png')
 
+const deleteSmall = require(assetsPath + 'DeleteSmall.png')
+
 const sendETH = require(assetsPath + 'SendETH.png')
 const sendNFTsBaseChain = require(assetsPath + 'SendNFTsBaseChain.png')
 const sendNFTsAmoy = require(assetsPath + 'SendNFTsAmoy.png')
@@ -59,6 +61,7 @@ export {
   networkLogo,
   qrCode,
   qrCodeSmall,
+  deleteSmall,
   sendETH,
   sendMATIC,
   sendNFTsBaseChain,
