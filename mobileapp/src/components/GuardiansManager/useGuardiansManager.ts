@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { addGuardian, getGuardians } from '../../services/transactions/'
+import { addGuardian, getGuardians, removeGuardian } from '../../services/transactions/'
 import { WalletContext } from '../../context/WalletContext'
 import { BlockchainContext } from '../../context/BlockchainContext'
 import Toast from 'react-native-toast-message'
@@ -16,6 +16,7 @@ export default function useGuardiansManager() {
   const [valueAddress, setValueAddress] = useState<string>('')
   const [isAddressValid, setIsAddressValid] = useState<boolean>(false)
   const [isQRCodeScanning, setIsQRCodeScanning] = useState<boolean>(false)
+  const [removingGuardians, setRemovingGuardians] = useState<string[]>([])
 
   const fetchGuardians = async () => {
     setGuardians(await getGuardians(ethersProvider, currentNetwork, getWalletContractAddress()))
@@ -35,23 +36,43 @@ export default function useGuardiansManager() {
       setValueAddress('')
       await addGuardian(signer, currentNetwork, getWalletContractAddress(), newGuardian)
       fetchGuardians()
-      setIsAdding(false)
-      setIsSendLoading(false)
       Toast.show({
         type: 'success',
         text1: 'Guardian Added! 🛡️',
       })
     } catch (e: any) {
-      setIsSendLoading(false)
       Toast.show({
         type: 'error',
         text1: 'Transaction failed! 😢',
         text2: e.message,
       })
+    } finally {
+      setIsAdding(false)
+      setIsSendLoading(false)
     }
   }
 
-  const removeGuardian = async (guardian: string) => {}
+  const sendRemoveGuardian = async (guardian: string) => {
+    setRemovingGuardians([...removingGuardians, guardian])
+
+    const signer = await getSigner(await getPrivateKey('Sign transaction to remove a guardian'), currentNetwork)
+    try {
+      await removeGuardian(signer, currentNetwork, getWalletContractAddress(), guardian)
+      fetchGuardians()
+      Toast.show({
+        type: 'success',
+        text1: 'Guardian Removed! 🧹️',
+      })
+    } catch (e: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Transaction failed! 😢',
+        text2: e.message,
+      })
+    } finally {
+      setRemovingGuardians(removingGuardians.filter((g) => g !== guardian))
+    }
+  }
 
   const QRCodeFinishedScanning = (data: string) => {
     setValueAddress(data)
@@ -77,5 +98,7 @@ export default function useGuardiansManager() {
     setIsQRCodeScanning,
     QRCodeFinishedScanning,
     closeQRCodeScanner,
+    sendRemoveGuardian,
+    removingGuardians,
   }
 }

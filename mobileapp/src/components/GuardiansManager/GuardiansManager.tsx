@@ -24,6 +24,8 @@ export default function GuardiansManager() {
     setIsQRCodeScanning,
     QRCodeFinishedScanning,
     closeQRCodeScanner,
+    sendRemoveGuardian,
+    removingGuardians,
   } = useGuardiansManager()
   const { theme } = useContext(ThemeContext)
 
@@ -41,20 +43,28 @@ export default function GuardiansManager() {
   })
   const styles = useStyleSheet(themedStyles)
 
-  const RemoveIcon = (props: any, guardian: string): React.ReactElement => (
-    <TouchableWithoutFeedback
-      testID="delete-icon"
-      onPress={() => {
-        console.log('props', props)
-        console.log('guardian', guardian)
-      }}
-    >
-      <Image
-        style={{ height: props.style.height, marginHorizontal: props.style.marginHorizontal, width: props.style.width }}
-        source={deleteSmall}
-      />
-    </TouchableWithoutFeedback>
-  )
+  const RemoveIcon = (props: any, guardian: string): React.ReactElement => {
+    if (removingGuardians.includes(guardian)) {
+      return (
+        <View style={[props.style, styles.indicator, { top: 10 }]}>
+          <Spinner size="tiny" />
+        </View>
+      )
+    } else {
+      return (
+        <TouchableWithoutFeedback testID="delete-icon" onPress={() => sendRemoveGuardian(guardian)}>
+          <Image
+            style={{
+              height: props.style.height,
+              marginHorizontal: props.style.marginHorizontal,
+              width: props.style.width,
+            }}
+            source={deleteSmall}
+          />
+        </TouchableWithoutFeedback>
+      )
+    }
+  }
 
   const LoadingIndicator = (props: any) => {
     return (
