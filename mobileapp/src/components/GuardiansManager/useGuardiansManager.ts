@@ -10,8 +10,9 @@ export default function useGuardiansManager() {
   const { getWalletContractAddress, getPrivateKey } = useContext(WalletContext)
   const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
   const [guardians, setGuardians] = useState<string[]>([])
-  const [isAdding, setIsAdding] = useState<boolean>(false)
+  const { isLoading: isAdding, setIsLoading: setIsAdding } = useLoading()
   const { isLoading: isSendLoading, setIsLoading: setIsSendLoading } = useLoading()
+  const { isLoading: iseFetchingLoading, setIsLoading: setIsFetchingLoading } = useLoading()
   const [valueAddress, setValueAddress] = useState<string>('')
   const [isAddressValid, setIsAddressValid] = useState<boolean>(false)
   const [isQRCodeScanning, setIsQRCodeScanning] = useState<boolean>(false)
@@ -21,22 +22,26 @@ export default function useGuardiansManager() {
   }
 
   useEffect(() => {
+    setIsFetchingLoading(true)
     fetchGuardians()
+    setIsFetchingLoading(false)
   }, [])
 
   const sendAddGuardian = async () => {
     setIsSendLoading(true)
     const signer = await getSigner(await getPrivateKey('Sign transaction to add a guardian'), currentNetwork)
     try {
-      await addGuardian(signer, currentNetwork, getWalletContractAddress(), valueAddress)
+      const newGuardian = valueAddress
+      setValueAddress('')
+      await addGuardian(signer, currentNetwork, getWalletContractAddress(), newGuardian)
       fetchGuardians()
+      setIsAdding(false)
       setIsSendLoading(false)
       Toast.show({
         type: 'success',
         text1: 'Guardian Added! 🛡️',
       })
     } catch (e: any) {
-      console.log('error', e)
       setIsSendLoading(false)
       Toast.show({
         type: 'error',
@@ -53,8 +58,14 @@ export default function useGuardiansManager() {
     setIsQRCodeScanning(false)
   }
 
+  const closeQRCodeScanner = () => {
+    setIsQRCodeScanning(false)
+  }
+
   return {
     guardians,
+    iseFetchingLoading,
+    isSendLoading,
     isAdding,
     setIsAdding,
     sendAddGuardian,
@@ -65,5 +76,6 @@ export default function useGuardiansManager() {
     isQRCodeScanning,
     setIsQRCodeScanning,
     QRCodeFinishedScanning,
+    closeQRCodeScanner,
   }
 }

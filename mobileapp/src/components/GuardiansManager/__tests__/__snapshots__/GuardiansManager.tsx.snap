@@ -1,0 +1,2022 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GuardiansManager Render correctly 1`] = `
+<View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian1"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian2"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "transparent",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+      }
+    }
+    testID="add-guardian"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#3366FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Add guardians
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`GuardiansManager Render correctly when fetching 1`] = `
+<View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      data-testid="spinner"
+    />
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian1"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian2"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "transparent",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+      }
+    }
+    testID="add-guardian"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#3366FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Add guardians
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`GuardiansManager Render correctly when is sending 1`] = `
+<View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian1"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian2"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "transparent",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+      }
+    }
+    testID="add-guardian"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#3366FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Add guardians
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`GuardiansManager Render correctly when isAdding true 1`] = `
+<View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian1"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian2"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <div
+    data-testid="InputAddress"
+  >
+    InputAddress
+  </div>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(51, 102, 255, 0.08)",
+        "borderColor": "#3366FF",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginTop": 13.34,
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+      }
+    }
+    testID="save-guardian"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#3366FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Add guardian
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`GuardiansManager Render correctly when qrScanning true 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  onDismiss={[MockFunction]}
+  onRequestClose={[MockFunction]}
+  statusBarTranslucent={false}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 1,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="@backdrop"
+    />
+    <View
+      backdropStyle={
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+        }
+      }
+      onBackdropPress={[MockFunction]}
+      onLayout={[Function]}
+      shouldUseContainer={true}
+      style={
+        [
+          undefined,
+          {
+            "position": "absolute",
+          },
+          {
+            "left": -999,
+            "top": -999,
+          },
+        ]
+      }
+      visible={true}
+    >
+      <div
+        data-testid="QRCodeScanner"
+      >
+        QRCodeScanner
+      </div>
+    </View>
+  </View>
+</Modal>
+`;
+
+exports[`GuardiansManager Update correctly when pressed Add guardians 1`] = `
+<View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian1"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian2"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "transparent",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+      }
+    }
+    testID="add-guardian"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#3366FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Add guardians
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`GuardiansManager Update correctly when pressed Add guardians 2`] = `
+<View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian1"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 13.34,
+        "opacity": 1,
+      }
+    }
+    testID="@undefined/container"
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#F7F9FC",
+            "borderColor": "#C5CEE0",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "minHeight": 40,
+            "paddingHorizontal": 8,
+            "paddingVertical": 7,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        appearance="default"
+        disabled={true}
+        editable={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        placeholderTextColor="rgba(143, 155, 179, 0.48)"
+        size="medium"
+        status="basic"
+        style={
+          [
+            {
+              "color": "rgba(143, 155, 179, 0.48)",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "normal",
+              "marginHorizontal": 8,
+            },
+            {
+              "flexBasis": "auto",
+              "flexGrow": 1,
+              "flexShrink": 1,
+            },
+            null,
+            {
+              "fontSize": 20.009999999999998,
+            },
+          ]
+        }
+        testID="@undefined/input"
+        value="guardian2"
+      />
+      <Image
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        source={1}
+        style={
+          {
+            "height": 24,
+            "marginHorizontal": 8,
+            "width": 24,
+          }
+        }
+        testID="delete-icon"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "transparent",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+      }
+    }
+    testID="add-guardian"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#3366FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Add guardians
+    </Text>
+  </View>
+</View>
+`;
