@@ -108,7 +108,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
   }
 
   if (isLoading) {
-    return <Loading text={'Checking wallet information...'} />
+    return <Loading text="Checking wallet information..." />
   }
 
   return (

@@ -33,7 +33,7 @@ export default function AddGuardian({ navigation }: AddGuardianProps) {
     return (
       <Modal
         visible={isQRCodeScanning}
-        backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        backdropStyle={{ backgroundColor: 'color-basic-transparent-600' }}
         onBackdropPress={closeQRCodeScanner}
       >
         <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />

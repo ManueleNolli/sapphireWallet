@@ -2,11 +2,13 @@ import React, { useContext } from 'react'
 import { Button, Input, Modal, Spinner, StyleService, useStyleSheet } from '@ui-kitten/components'
 import useGuardiansManager from './useGuardiansManager'
 import InputAddress from '../InputAddress/InputAddress'
-import { View, TouchableWithoutFeedback, Image } from 'react-native'
+import { View, TouchableWithoutFeedback, Image, Text } from 'react-native'
 import { appStyles, vh } from '../../Styles'
 import { deleteSmall } from '../../assets/AssetsRegistry'
 import { ThemeContext } from '../../context/ThemeContext'
 import QRCodeScanner from '../QRCodeScanner/QRCodeScanner'
+import { formatBlockchainAddress } from '../../utils/formatBlockchainData'
+import { wallet } from '../../contracts/contracts'
 
 export default function GuardiansManager() {
   const {
@@ -80,7 +82,7 @@ export default function GuardiansManager() {
     return (
       <Modal
         visible={isQRCodeScanning}
-        backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        backdropStyle={{ backgroundColor: 'color-basic-transparent-600' }}
         onBackdropPress={closeQRCodeScanner}
       >
         <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />
@@ -102,9 +104,9 @@ export default function GuardiansManager() {
       )}
       {guardians.map((guardian, index) => (
         <Input
-          textStyle={{ fontSize: 1.5 * vh }}
+          textStyle={{ textAlign: 'center', left: 20 }}
           key={index}
-          value={guardian}
+          value={formatBlockchainAddress(guardian)}
           style={styles.inputDisabled}
           disabled
           accessoryRight={(props) => RemoveIcon(props, guardian)}

@@ -6,6 +6,7 @@ import useSettings from './useSettings'
 import { NETWORKS } from '../../constants/Networks'
 import { ScrollView } from 'react-native'
 import GuardiansManager from '../../components/GuardiansManager/GuardiansManager'
+import RecoverableLists from '../../components/RecoverAsAGuardian/RecoverableLists/RecoverableLists'
 
 export default function Settings() {
   const { theme, resetLocalWallet, toggleThemeWithAnimation, themeIconRef, selectedIndex, onNetworkSelect } =
@@ -48,6 +49,12 @@ export default function Settings() {
           </Text>
           <Divider style={{ marginTop: 0.5 * vh, marginBottom: 2 * vh }} />
           <GuardiansManager />
+
+          <Text category="h6" style={{ marginTop: 5 * vh }}>
+            Recover as a guardian
+          </Text>
+          <Divider style={{ marginTop: 0.5 * vh, marginBottom: 2 * vh }} />
+          <RecoverableLists />
 
           <Text category="h6" style={{ marginTop: 5 * vh }}>
             Dev settings

@@ -1,8 +1,8 @@
 import renderWithTheme from '../../../../TestHelper'
-import MnemonicViewer from '../MnemonicViewer'
-import useMnemonicViewer from '../useMnemonicViewer'
+import MnemonicViewerRecoverWallet from '../MnemonicViewerRecoverWallet'
+import useMnemonicViewerRecoverWallet from '../useMnemonicViewerRecoverWallet'
 
-jest.mock('../useMnemonicViewer', () => jest.fn())
+jest.mock('../useMnemonicViewerRecoverWallet', () => jest.fn())
 
 describe('MnemonicViewer', () => {
   it('renders correctly', () => {
@@ -21,7 +21,7 @@ describe('MnemonicViewer', () => {
       'word12',
     ]
 
-    ;(useMnemonicViewer as jest.Mock).mockReturnValue({
+    ;(useMnemonicViewerRecoverWallet as jest.Mock).mockReturnValue({
       mnemonic: mnemonicMock,
       copyMnemonicToClipboard: jest.fn(),
       finishFirstAccess: jest.fn(),
@@ -29,7 +29,7 @@ describe('MnemonicViewer', () => {
     })
 
     const tree = renderWithTheme(
-      <MnemonicViewer
+      <MnemonicViewerRecoverWallet
         {...({
           route: {
             params: {

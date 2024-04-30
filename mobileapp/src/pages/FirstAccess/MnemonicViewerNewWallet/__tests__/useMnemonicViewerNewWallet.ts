@@ -1,5 +1,5 @@
 import { renderHook, act, fireEvent } from '@testing-library/react-native'
-import useMnemonicViewer from '../useMnemonicViewer'
+import useMnemonicViewerNewWallet from '../useMnemonicViewerNewWallet'
 import { setStringAsync } from 'expo-clipboard'
 import { FirstAccessContext } from '../../../../context/FirstAccessContext'
 import renderWithTheme from '../../../../TestHelper'
@@ -36,7 +36,7 @@ describe('useMnemonicViewer', () => {
       getEOAAddress: jest.fn(),
       setWalletContractAddress: jest.fn(),
     })
-    const { result } = renderHook(() => useMnemonicViewer(propsMock as unknown as MnemonicViewerProps))
+    const { result } = renderHook(() => useMnemonicViewerNewWallet(propsMock as unknown as MnemonicViewerProps))
 
     await act(async () => {
       await result.current.copyMnemonicToClipboard()
@@ -51,7 +51,7 @@ describe('useMnemonicViewer', () => {
       getEOAAddress: jest.fn(),
       setWalletContractAddress: jest.fn(),
     })
-    const { result } = renderHook(() => useMnemonicViewer(propsMock as unknown as MnemonicViewerProps))
+    const { result } = renderHook(() => useMnemonicViewerNewWallet(propsMock as unknown as MnemonicViewerProps))
     await act(async () => {
       await result.current.savedPressed()
     })

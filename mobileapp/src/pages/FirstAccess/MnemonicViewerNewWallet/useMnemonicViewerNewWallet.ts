@@ -1,21 +1,21 @@
 import { useState } from 'react'
 import * as Clipboard from 'expo-clipboard'
-import { MnemonicViewerProps } from '../../../navigation/FirstAccessStack'
+import { MnemonicViewerNewWalletProps } from '../../../navigation/FirstAccessStack'
 
-export default function useMnemonicViewer({ navigation, route }: MnemonicViewerProps) {
+export default function useMnemonicViewerNewWallet({ route, navigation }: MnemonicViewerNewWalletProps) {
   const [mnemonic, setMnemonic] = useState<string[]>(route.params.mnemonic)
 
   const copyMnemonicToClipboard = async () => {
     await Clipboard.setStringAsync(mnemonic.join(' '))
   }
 
-  const savedPressed = async () => {
+  const saveMnemonic = async () => {
     navigation.push('AddGuardian')
   }
 
   return {
     mnemonic,
     copyMnemonicToClipboard,
-    savedPressed,
+    saveMnemonic,
   }
 }

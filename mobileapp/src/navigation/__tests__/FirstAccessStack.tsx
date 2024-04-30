@@ -6,7 +6,7 @@ import renderWithTheme from '../../TestHelper'
 // MOCKS
 
 jest.mock('../../pages/FirstAccess/CreateWallet/CreateWallet')
-jest.mock('../../pages/FirstAccess/MnemonicViewer/MnemonicViewer')
+jest.mock('../../pages/FirstAccess/MnemonicViewerRecoverWallet/MnemonicViewerRecoverWallet')
 jest.mock('../../pages/FirstAccess/AddGuardian/AddGuardian')
 
 describe('FirstAccessStackNavigator', () => {

@@ -6,27 +6,26 @@ import { NETWORKS } from '../../../constants/Networks'
 import { BlockchainContext } from '../../../context/BlockchainContext'
 import { IndexPath } from '@ui-kitten/components'
 
-export default function useCreateWallet(
-  navigation: CreateWalletProps['navigation']
-) {
+export default function useCreateWallet({ route, navigation }: CreateWalletProps) {
   const { setPrivateKey, setEOAAddress } = useContext(WalletContext)
   const { currentNetwork, setEthersProvider } = useContext(BlockchainContext)
-  const [selectedNetwork, setSelectedNetwork] = useState(
-    new IndexPath(Object.values(NETWORKS).indexOf(currentNetwork))
-  )
+  const [selectedNetwork, setSelectedNetwork] = useState(new IndexPath(Object.values(NETWORKS).indexOf(currentNetwork)))
 
   const createAndNavigate = async () => {
     const wallet = createWallet()
     try {
-      await Promise.all([
-        setEOAAddress(wallet.address),
-        setPrivateKey(wallet.privateKey),
-      ])
+      await Promise.all([setEOAAddress(wallet.address), setPrivateKey(wallet.privateKey)])
 
-      navigation.push('MnemonicViewer', { mnemonic: getMnemonic(wallet) })
+      navigation.push('MnemonicViewerNewWallet', {
+        mnemonic: getMnemonic(wallet),
+      })
     } catch (errors) {
       console.error(errors)
     }
+  }
+
+  const recoverWallet = () => {
+    navigation.push('RecoverWallet')
   }
 
   const onNetworkSelect = async (index: IndexPath | IndexPath[]) => {
@@ -39,5 +38,6 @@ export default function useCreateWallet(
     createAndNavigate,
     selectedNetwork,
     onNetworkSelect,
+    recoverWallet,
   }
 }

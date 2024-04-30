@@ -1,23 +1,22 @@
 import React from 'react'
 
 import { Button, Layout, Text } from '@ui-kitten/components'
-import useMnemonicViewer from './useMnemonicViewer'
+import useMnemonicViewerNewWallet from './useMnemonicViewerNewWallet'
 import SafeAreaView from '../../../utils/SafeAreaView'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Image } from 'expo-image'
 import { appStyles, vh, vw } from '../../../Styles'
 import { logo } from '../../../assets/AssetsRegistry'
 import { FlashList } from '@shopify/flash-list'
-import { MnemonicViewerProps } from '../../../navigation/FirstAccessStack'
-import Loading from '../../Loading/Loading'
+import { MnemonicViewerNewWalletProps } from '../../../navigation/FirstAccessStack'
 
-export default function MnemonicViewer({ navigation, route }: MnemonicViewerProps) {
-  const { mnemonic, copyMnemonicToClipboard, savedPressed } = useMnemonicViewer({ navigation, route })
+export default function MnemonicViewerNewWallet({ route, navigation }: MnemonicViewerNewWalletProps) {
+  const { mnemonic, copyMnemonicToClipboard, saveMnemonic } = useMnemonicViewerNewWallet({ route, navigation })
 
   const MnemonicBox = (word: string) => {
     return (
       <Layout level="4" style={styles.mnemonicBox}>
-        <Text category={'s1'}>{word}</Text>
+        <Text category="s1">{word}</Text>
       </Layout>
     )
   }
@@ -34,7 +33,7 @@ export default function MnemonicViewer({ navigation, route }: MnemonicViewerProp
             marginVertical: 2 * vh,
           }}
         >
-          <Text category={'h6'} style={{ textAlign: 'justify' }}>
+          <Text category="h6" style={{ textAlign: 'justify' }}>
             Those 12 words are the only way to recover your local wallet
           </Text>
         </View>
@@ -47,7 +46,7 @@ export default function MnemonicViewer({ navigation, route }: MnemonicViewerProp
           />
         </TouchableOpacity>
         <View>
-          <Button appearance="outline" onPress={savedPressed}>
+          <Button appearance="outline" onPress={saveMnemonic}>
             I saved these words
           </Button>
         </View>

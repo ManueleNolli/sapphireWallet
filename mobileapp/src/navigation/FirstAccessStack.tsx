@@ -1,7 +1,9 @@
 import { CardStyleInterpolators, createStackNavigator, StackScreenProps } from '@react-navigation/stack'
 import CreateWallet from '../pages/FirstAccess/CreateWallet/CreateWallet'
-import MnemonicViewer from '../pages/FirstAccess/MnemonicViewer/MnemonicViewer'
+import MnemonicViewerRecoverWallet from '../pages/FirstAccess/MnemonicViewerRecoverWallet/MnemonicViewerRecoverWallet'
 import AddGuardian from '../pages/FirstAccess/AddGuardian/AddGuardian'
+import RecoverWallet from '../pages/FirstAccess/RecoverWallet/RecoverWallet'
+import MnemonicViewerNewWallet from '../pages/FirstAccess/MnemonicViewerNewWallet/MnemonicViewerNewWallet'
 
 ///////////
 // TYPES //
@@ -12,22 +14,34 @@ import AddGuardian from '../pages/FirstAccess/AddGuardian/AddGuardian'
  */
 type FirstAccessStackParamList = {
   CreateWallet: undefined
-  MnemonicViewer: {
+  MnemonicViewerNewWallet: {
     mnemonic: string[]
   }
+  MnemonicViewerRecoverWallet: {
+    mnemonic: string[]
+    data: any
+  }
   AddGuardian: undefined
+  RecoverWallet: undefined
 }
 
-// Steps:
+// Steps: //FIXME
 // 1. When Pressed on "Create Wallet" button it generate the new eoaAddress/private keys and set it to the walletContext
 // 2. pass the mnemonic to the MnemonicViewer
 // 3. then when pressed on "I saved these words" it goes to the AddGuardian screen that will send the request to the server to create the contract wallet
 
-export type MnemonicViewerProps = StackScreenProps<FirstAccessStackParamList, 'MnemonicViewer'>
+export type MnemonicViewerNewWalletProps = StackScreenProps<FirstAccessStackParamList, 'MnemonicViewerNewWallet'>
+
+export type MnemonicViewerRecoverWalletProps = StackScreenProps<
+  FirstAccessStackParamList,
+  'MnemonicViewerRecoverWallet'
+>
 
 export type CreateWalletProps = StackScreenProps<FirstAccessStackParamList, 'CreateWallet'>
 
 export type AddGuardianProps = StackScreenProps<FirstAccessStackParamList, 'AddGuardian'>
+
+export type RecoverWalletProps = StackScreenProps<FirstAccessStackParamList, 'RecoverWallet'>
 
 ////////////////
 // NAVIGATION //
@@ -35,18 +49,23 @@ export type AddGuardianProps = StackScreenProps<FirstAccessStackParamList, 'AddG
 
 const { Navigator, Screen } = createStackNavigator<FirstAccessStackParamList>()
 
-const FirstAccessStackNavigator = () => (
-  <Navigator
-    initialRouteName="CreateWallet"
-    screenOptions={{
-      headerShown: false,
-      gestureEnabled: true,
-      cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-    }}
-  >
-    <Screen name="CreateWallet" component={CreateWallet} />
-    <Screen name="MnemonicViewer" component={MnemonicViewer} />
-    <Screen name="AddGuardian" component={AddGuardian} />
-  </Navigator>
-)
+const FirstAccessStackNavigator = () => {
+  return (
+    <Navigator
+      initialRouteName="CreateWallet"
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+    >
+      <Screen name="CreateWallet" component={CreateWallet} />
+      <Screen name="RecoverWallet" component={RecoverWallet} />
+      <Screen name="MnemonicViewerNewWallet" component={MnemonicViewerNewWallet} />
+      <Screen name="MnemonicViewerRecoverWallet" component={MnemonicViewerRecoverWallet} />
+      <Screen name="AddGuardian" component={AddGuardian} />
+    </Navigator>
+  )
+}
+
 export default FirstAccessStackNavigator
