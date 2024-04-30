@@ -25,10 +25,14 @@ type FirstAccessStackParamList = {
   RecoverWallet: undefined
 }
 
-// Steps: //FIXME
+// Steps: // May be improved deleting the two MnemonicViewer screens
 // 1. When Pressed on "Create Wallet" button it generate the new eoaAddress/private keys and set it to the walletContext
-// 2. pass the mnemonic to the MnemonicViewer
+// 2. pass the mnemonic to the MnemonicViewerNewWallet
 // 3. then when pressed on "I saved these words" it goes to the AddGuardian screen that will send the request to the server to create the contract wallet
+
+// 1. When Pressed on "Recover Wallet" button it goes to the RecoverWallet screen
+// 2. scan the QR code
+// 3. pass the mnemonic to the MnemonicViewerRecoverWallet and contact backend
 
 export type MnemonicViewerNewWalletProps = StackScreenProps<FirstAccessStackParamList, 'MnemonicViewerNewWallet'>
 
