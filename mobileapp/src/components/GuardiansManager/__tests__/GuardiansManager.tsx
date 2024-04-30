@@ -3,7 +3,6 @@ import GuardiansManager from '../GuardiansManager'
 import useGuardiansManager from '../useGuardiansManager'
 import { act, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
-import { View } from 'react-native'
 
 // MOCKS
 jest.mock('../useGuardiansManager', () => jest.fn())
@@ -34,6 +33,8 @@ describe('GuardiansManager', () => {
       setIsQRCodeScanning: jest.fn(),
       QRCodeFinishedScanning: jest.fn(),
       closeQRCodeScanner: jest.fn(),
+      sendRemoveGuardian: jest.fn(),
+      removingGuardians: [],
     })
     let tree: any
 
@@ -59,6 +60,36 @@ describe('GuardiansManager', () => {
       setIsQRCodeScanning: jest.fn(),
       QRCodeFinishedScanning: jest.fn(),
       closeQRCodeScanner: jest.fn(),
+      sendRemoveGuardian: jest.fn(),
+      removingGuardians: [],
+    })
+
+    let tree: any
+
+    await waitFor(async () => {
+      tree = renderWithTheme(<GuardiansManager />)
+    })
+    expect(tree).toMatchSnapshot()
+  })
+
+  it('Render correctly when removing', async () => {
+    ;(useGuardiansManager as jest.Mock).mockReturnValue({
+      guardians: ['guardian1', 'guardian2'],
+      iseFetchingLoading: true,
+      isSendLoading: false,
+      isAdding: false,
+      setIsAdding: jest.fn(),
+      sendAddGuardian: jest.fn(),
+      valueAddress: 'valueAddress',
+      setValueAddress: jest.fn(),
+      isAddressValid: true,
+      setIsAddressValid: jest.fn(),
+      isQRCodeScanning: false,
+      setIsQRCodeScanning: jest.fn(),
+      QRCodeFinishedScanning: jest.fn(),
+      closeQRCodeScanner: jest.fn(),
+      sendRemoveGuardian: jest.fn(),
+      removingGuardians: ['guardian1'],
     })
 
     let tree: any
@@ -85,6 +116,8 @@ describe('GuardiansManager', () => {
       setIsQRCodeScanning: jest.fn(),
       QRCodeFinishedScanning: jest.fn(),
       closeQRCodeScanner: jest.fn(),
+      sendRemoveGuardian: jest.fn(),
+      removingGuardians: [],
     })
 
     let tree: any
@@ -111,6 +144,8 @@ describe('GuardiansManager', () => {
       setIsQRCodeScanning: jest.fn(),
       QRCodeFinishedScanning: jest.fn(),
       closeQRCodeScanner: jest.fn(),
+      sendRemoveGuardian: jest.fn(),
+      removingGuardians: [],
     })
 
     let tree: any
@@ -137,6 +172,8 @@ describe('GuardiansManager', () => {
       setIsQRCodeScanning: jest.fn(),
       QRCodeFinishedScanning: jest.fn(),
       closeQRCodeScanner: jest.fn(),
+      sendRemoveGuardian: jest.fn(),
+      removingGuardians: [],
     })
 
     let tree: any
@@ -150,6 +187,44 @@ describe('GuardiansManager', () => {
       const button = tree.getByTestId('add-guardian')
       fireEvent.press(button)
     })
+    expect(tree).toMatchSnapshot()
+  })
+
+  it('Update correctly when pressed Remove guardian', async () => {
+    const sendRemoveGuardian = jest.fn()
+    ;(useGuardiansManager as jest.Mock).mockReturnValue({
+      guardians: ['guardian1', 'guardian2'],
+      iseFetchingLoading: false,
+      isSendLoading: false,
+      isAdding: false,
+      setIsAdding: jest.fn(),
+      sendAddGuardian: jest.fn(),
+      valueAddress: 'valueAddress',
+      setValueAddress: jest.fn(),
+      isAddressValid: true,
+      setIsAddressValid: jest.fn(),
+      isQRCodeScanning: false,
+      setIsQRCodeScanning: jest.fn(),
+      QRCodeFinishedScanning: jest.fn(),
+      closeQRCodeScanner: jest.fn(),
+      sendRemoveGuardian,
+      removingGuardians: [],
+    })
+
+    let tree: any
+
+    await waitFor(async () => {
+      tree = renderWithTheme(<GuardiansManager />)
+    })
+    expect(tree).toMatchSnapshot()
+
+    await act(async () => {
+      const button = tree.getByTestId('delete-icon-guardian2')
+      fireEvent.press(button)
+    })
+
+    expect(sendRemoveGuardian).toHaveBeenCalledWith('guardian2')
+
     expect(tree).toMatchSnapshot()
   })
 
@@ -169,6 +244,8 @@ describe('GuardiansManager', () => {
       setIsQRCodeScanning: jest.fn(),
       QRCodeFinishedScanning: jest.fn(),
       closeQRCodeScanner: jest.fn(),
+      sendRemoveGuardian: jest.fn(),
+      removingGuardians: [],
     })
 
     let tree: any

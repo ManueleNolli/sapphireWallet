@@ -52,7 +52,7 @@ export default function GuardiansManager() {
       )
     } else {
       return (
-        <TouchableWithoutFeedback testID="delete-icon" onPress={() => sendRemoveGuardian(guardian)}>
+        <TouchableWithoutFeedback testID={`delete-icon-${guardian}`} onPress={() => sendRemoveGuardian(guardian)}>
           <Image
             style={{
               height: props.style.height,

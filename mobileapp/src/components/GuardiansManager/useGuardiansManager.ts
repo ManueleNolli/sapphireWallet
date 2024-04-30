@@ -35,7 +35,7 @@ export default function useGuardiansManager() {
       const newGuardian = valueAddress
       setValueAddress('')
       await addGuardian(signer, currentNetwork, getWalletContractAddress(), newGuardian)
-      fetchGuardians()
+      await fetchGuardians()
       Toast.show({
         type: 'success',
         text1: 'Guardian Added! 🛡️',
@@ -54,11 +54,10 @@ export default function useGuardiansManager() {
 
   const sendRemoveGuardian = async (guardian: string) => {
     setRemovingGuardians([...removingGuardians, guardian])
-
     const signer = await getSigner(await getPrivateKey('Sign transaction to remove a guardian'), currentNetwork)
     try {
       await removeGuardian(signer, currentNetwork, getWalletContractAddress(), guardian)
-      fetchGuardians()
+      await fetchGuardians()
       Toast.show({
         type: 'success',
         text1: 'Guardian Removed! 🧹️',
