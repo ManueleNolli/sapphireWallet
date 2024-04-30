@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-native'
+import { renderHook, act, waitFor } from '@testing-library/react-native'
 import { AddGuardianProps } from '../../../../navigation/FirstAccessStack'
 import { requestContractWallet } from '../../../../services/wallet'
 import { useContext } from 'react'
@@ -6,6 +6,7 @@ import { NETWORKS } from '../../../../constants/Networks'
 import useAddGuardian from '../useAddGuardian'
 import { ZeroAddress } from 'ethers'
 import Toast from 'react-native-toast-message'
+import useGuardiansManager from '../../../../components/GuardiansManager/useGuardiansManager'
 
 jest.mock('../../../../services/wallet', () => ({
   requestContractWallet: jest.fn(),
@@ -135,5 +136,22 @@ describe('useAddGuardian', () => {
     })
 
     expect(goBackMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('should close qrCode if closeQrCodeScanner is called', async () => {
+    ;(useContext as jest.Mock).mockReturnValue({
+      getWalletContractAddress: jest.fn(),
+      getPrivateKey: jest.fn(),
+      currentNetwork: NETWORKS.LOCALHOST,
+      ethersProvider: jest.fn(),
+    })
+
+    const { result } = renderHook(() => useAddGuardian(navigationMock as unknown as AddGuardianProps['navigation']))
+
+    await act(async () => {
+      result.current.closeQRCodeScanner()
+    })
+
+    expect(result.current.isQRCodeScanning).toBe(false)
   })
 })

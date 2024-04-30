@@ -3,9 +3,6 @@ import { addGuardian, getGuardians, removeGuardian } from '../Guardians'
 import { NETWORKS } from '../../../constants/Networks'
 import { contactBackend } from '../../backend'
 import { generateNonceForRelay, signOffChain } from '../TransactionUtils'
-import { requestETHTransfer } from '../SapphireTransactions'
-import { Animated } from 'react-native'
-import add = Animated.add
 
 jest.mock('../../backend')
 jest.mock('../TransactionUtils')

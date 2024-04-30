@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Layout, Text } from '@ui-kitten/components'
+import { Button, Layout, Modal, Text } from '@ui-kitten/components'
 import SafeAreaView from '../../../utils/SafeAreaView'
 import { StyleSheet, View } from 'react-native'
 import { vh, vw } from '../../../Styles'
@@ -18,6 +18,7 @@ export default function AddGuardian({ navigation }: AddGuardianProps) {
     setIsAddressValid,
     isQRCodeScanning,
     setIsQRCodeScanning,
+    closeQRCodeScanner,
     QRCodeFinishedScanning,
     withGuardian,
     skipGuardian,
@@ -25,10 +26,19 @@ export default function AddGuardian({ navigation }: AddGuardianProps) {
   } = useAddGuardian(navigation)
 
   if (isLoading) {
-    return <Loading text={'Deploying smart contract wallet...'} />
+    return <Loading text="Deploying smart contract wallet..." />
   }
 
-  if (isQRCodeScanning) return <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />
+  if (isQRCodeScanning)
+    return (
+      <Modal
+        visible={isQRCodeScanning}
+        backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        onBackdropPress={closeQRCodeScanner}
+      >
+        <QRCodeScanner onQRCodeScanned={QRCodeFinishedScanning} />
+      </Modal>
+    )
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -40,15 +50,15 @@ export default function AddGuardian({ navigation }: AddGuardianProps) {
             marginVertical: 2 * vh,
           }}
         >
-          <Text category={'h4'} style={styles.text}>
+          <Text category="h4" style={styles.text}>
             Add a guardian
           </Text>
-          <Text category={'p1'} style={[styles.text, styles.descriptionText]}>
+          <Text category="p1" style={[styles.text, styles.descriptionText]}>
             Guardians are able to recover your wallet if you lose your phone. You can add more guardians later.
           </Text>
         </View>
         <InputAddress
-          label={''}
+          label=""
           value={valueAddress}
           setValue={setValueAddress}
           isValid={isAddressValid}
@@ -60,7 +70,7 @@ export default function AddGuardian({ navigation }: AddGuardianProps) {
             Create wallet
           </Button>
 
-          <Button appearance="ghost" onPress={skipGuardian} style={{width: 25 * vw, alignSelf:'flex-end'}}>
+          <Button appearance="ghost" onPress={skipGuardian} style={{ width: 25 * vw, alignSelf: 'flex-end' }}>
             Skip
           </Button>
         </View>

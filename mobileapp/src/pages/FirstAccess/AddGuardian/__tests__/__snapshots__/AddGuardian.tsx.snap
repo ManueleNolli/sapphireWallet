@@ -445,9 +445,92 @@ exports[`AddGuardian renders correctly when loading 1`] = `
 `;
 
 exports[`AddGuardian renders correctly when scanning 1`] = `
-<div
-  data-testid="QRCodeScanner"
+<Modal
+  hardwareAccelerated={false}
+  statusBarTranslucent={false}
+  transparent={true}
+  visible={true}
 >
-  QRCodeScanner
-</div>
+  <View
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 1,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="@backdrop"
+    />
+    <View
+      backdropStyle={
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+        }
+      }
+      onLayout={[Function]}
+      shouldUseContainer={true}
+      style={
+        [
+          undefined,
+          {
+            "position": "absolute",
+          },
+          {
+            "left": -999,
+            "top": -999,
+          },
+        ]
+      }
+      visible={true}
+    >
+      <div
+        data-testid="QRCodeScanner"
+      >
+        QRCodeScanner
+      </div>
+    </View>
+  </View>
+</Modal>
 `;

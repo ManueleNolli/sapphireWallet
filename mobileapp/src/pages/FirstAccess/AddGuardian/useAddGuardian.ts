@@ -51,12 +51,17 @@ export default function useAddGuardian(navigation: AddGuardianProps['navigation'
     setIsQRCodeScanning(false)
   }
 
+  const closeQRCodeScanner = () => {
+    setIsQRCodeScanning(false)
+  }
+
   return {
     valueAddress,
     setValueAddress,
     isAddressValid,
     setIsAddressValid,
     isQRCodeScanning,
+    closeQRCodeScanner,
     setIsQRCodeScanning,
     QRCodeFinishedScanning,
     skipGuardian,
