@@ -85,12 +85,13 @@ exports[`GuardiansManager Render correctly 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <Image
         accessibilityState={
@@ -206,12 +207,13 @@ exports[`GuardiansManager Render correctly 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={
@@ -416,12 +418,13 @@ exports[`GuardiansManager Render correctly when fetching 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <Image
         accessibilityState={
@@ -537,12 +540,13 @@ exports[`GuardiansManager Render correctly when fetching 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={
@@ -734,12 +738,13 @@ exports[`GuardiansManager Render correctly when is sending 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <Image
         accessibilityState={
@@ -855,12 +860,13 @@ exports[`GuardiansManager Render correctly when is sending 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={
@@ -1052,12 +1058,13 @@ exports[`GuardiansManager Render correctly when isAdding true 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <Image
         accessibilityState={
@@ -1173,12 +1180,13 @@ exports[`GuardiansManager Render correctly when isAdding true 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={
@@ -1341,7 +1349,7 @@ exports[`GuardiansManager Render correctly when qrScanning true 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+          "backgroundColor": "color-basic-transparent-600",
           "bottom": 0,
           "left": 0,
           "opacity": 1,
@@ -1355,7 +1363,7 @@ exports[`GuardiansManager Render correctly when qrScanning true 1`] = `
     <View
       backdropStyle={
         {
-          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+          "backgroundColor": "color-basic-transparent-600",
         }
       }
       onBackdropPress={[MockFunction]}
@@ -1483,12 +1491,13 @@ exports[`GuardiansManager Render correctly when removing 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <View
         style={
@@ -1599,12 +1608,13 @@ exports[`GuardiansManager Render correctly when removing 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={
@@ -1796,12 +1806,13 @@ exports[`GuardiansManager Update correctly when pressed Add guardians 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <Image
         accessibilityState={
@@ -1917,12 +1928,13 @@ exports[`GuardiansManager Update correctly when pressed Add guardians 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={
@@ -2114,12 +2126,13 @@ exports[`GuardiansManager Update correctly when pressed Add guardians 2`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <Image
         accessibilityState={
@@ -2235,12 +2248,13 @@ exports[`GuardiansManager Update correctly when pressed Add guardians 2`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={
@@ -2432,12 +2446,13 @@ exports[`GuardiansManager Update correctly when pressed Remove guardian 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <Image
         accessibilityState={
@@ -2553,12 +2568,13 @@ exports[`GuardiansManager Update correctly when pressed Remove guardian 1`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={
@@ -2750,12 +2766,13 @@ exports[`GuardiansManager Update correctly when pressed Remove guardian 2`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian1"
+        value="guardi...ian1"
       />
       <Image
         accessibilityState={
@@ -2871,12 +2888,13 @@ exports[`GuardiansManager Update correctly when pressed Remove guardian 2`] = `
             },
             null,
             {
-              "fontSize": 20.009999999999998,
+              "left": 20,
+              "textAlign": "center",
             },
           ]
         }
         testID="@undefined/input"
-        value="guardian2"
+        value="guardi...ian2"
       />
       <Image
         accessibilityState={

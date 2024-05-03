@@ -4,7 +4,7 @@ import { RecoverWalletProps } from '../../../navigation/FirstAccessStack'
 import SafeAreaView from '../../../utils/SafeAreaView'
 import { appStyles, vh } from '../../../Styles'
 import QRCodeScanner from '../../../components/QRCodeScanner/QRCodeScanner'
-import { useRecoverWallet } from './useRecoverWallet'
+import useRecoverWallet from './useRecoverWallet'
 import { View } from 'react-native'
 
 export default function RecoverWallet({ route, navigation }: RecoverWalletProps) {

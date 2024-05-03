@@ -492,7 +492,7 @@ exports[`AddGuardian renders correctly when scanning 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+          "backgroundColor": "color-basic-transparent-600",
           "bottom": 0,
           "left": 0,
           "opacity": 1,
@@ -506,7 +506,7 @@ exports[`AddGuardian renders correctly when scanning 1`] = `
     <View
       backdropStyle={
         {
-          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+          "backgroundColor": "color-basic-transparent-600",
         }
       }
       onLayout={[Function]}

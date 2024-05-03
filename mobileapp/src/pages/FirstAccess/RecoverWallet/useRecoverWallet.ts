@@ -7,7 +7,7 @@ import { WalletContext } from '../../../context/WalletContext'
 import { getMnemonic } from '../../../services/wallet'
 import { RecoverWalletProps } from '../../../navigation/FirstAccessStack'
 
-export function useRecoverWallet({ route, navigation }: RecoverWalletProps) {
+export default function useRecoverWallet({ route, navigation }: RecoverWalletProps) {
   const { setPrivateKey, setEOAAddress, setWalletContractAddress } = useContext(WalletContext)
   const [isScannedOpen, setIsScannedOpen] = useState(false)
   const { isLoading, setIsLoading } = useLoading()

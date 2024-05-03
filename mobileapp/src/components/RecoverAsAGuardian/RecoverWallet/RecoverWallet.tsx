@@ -1,7 +1,7 @@
 import { Button, Layout, Spinner, StyleService, Text } from '@ui-kitten/components'
 import { appStyles, vh, vw } from '../../../Styles'
 import React from 'react'
-import { useRecoverWallet } from './useRecoverWallet'
+import useRecoverWallet from './useRecoverWallet'
 import { View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 
@@ -9,7 +9,7 @@ type RecoverWalletProps = {
   wallet: string
 }
 
-export function RecoverWallet(props: RecoverWalletProps) {
+export default function RecoverWallet(props: RecoverWalletProps) {
   const { isLoading, prepareTransactionAndShowQrCode, recoverWalletInfo } = useRecoverWallet(props)
 
   return (
@@ -43,7 +43,7 @@ export function RecoverWallet(props: RecoverWalletProps) {
             {props.wallet}
           </Text>
 
-          <Button style={{ width: '50%' }} onPress={prepareTransactionAndShowQrCode}>
+          <Button testID="button-yen" style={{ width: '50%' }} onPress={prepareTransactionAndShowQrCode}>
             Yes
           </Button>
         </>

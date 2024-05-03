@@ -1,13 +1,8 @@
-import { renderHook, act, fireEvent } from '@testing-library/react-native'
+import { renderHook, act } from '@testing-library/react-native'
 import useMnemonicViewerNewWallet from '../useMnemonicViewerNewWallet'
 import { setStringAsync } from 'expo-clipboard'
-import { FirstAccessContext } from '../../../../context/FirstAccessContext'
-import renderWithTheme from '../../../../TestHelper'
-import { Button } from 'react-native'
-import { MnemonicViewerProps } from '../../../../navigation/FirstAccessStack'
-import { requestContractWallet } from '../../../../services/wallet'
 import { useContext } from 'react'
-import { NETWORKS } from '../../../../constants/Networks'
+import { MnemonicViewerNewWalletProps } from '../../../../navigation/FirstAccessStack'
 
 jest.mock('expo-clipboard', () => ({
   setStringAsync: jest.fn(),
@@ -36,7 +31,9 @@ describe('useMnemonicViewer', () => {
       getEOAAddress: jest.fn(),
       setWalletContractAddress: jest.fn(),
     })
-    const { result } = renderHook(() => useMnemonicViewerNewWallet(propsMock as unknown as MnemonicViewerProps))
+    const { result } = renderHook(() =>
+      useMnemonicViewerNewWallet(propsMock as unknown as MnemonicViewerNewWalletProps)
+    )
 
     await act(async () => {
       await result.current.copyMnemonicToClipboard()
@@ -51,9 +48,11 @@ describe('useMnemonicViewer', () => {
       getEOAAddress: jest.fn(),
       setWalletContractAddress: jest.fn(),
     })
-    const { result } = renderHook(() => useMnemonicViewerNewWallet(propsMock as unknown as MnemonicViewerProps))
+    const { result } = renderHook(() =>
+      useMnemonicViewerNewWallet(propsMock as unknown as MnemonicViewerNewWalletProps)
+    )
     await act(async () => {
-      await result.current.savedPressed()
+      await result.current.saveMnemonic()
     })
 
     expect(pushNagivationMock).toHaveBeenCalledWith('AddGuardian')

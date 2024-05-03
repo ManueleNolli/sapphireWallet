@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
 import useLoading from '../../../hooks/useLoading'
-import { getGuardians, getGuardianWallets } from '../../../services/transactions'
+import { getGuardianWallets } from '../../../services/transactions'
 import { WalletContext } from '../../../context/WalletContext'
 import { BlockchainContext } from '../../../context/BlockchainContext'
 
-export function useRecoverableLists() {
+export default function useRecoverableLists() {
   const { getWalletContractAddress } = useContext(WalletContext)
   const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
   const [wallets, setWallets] = useState<string[]>([])

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, IconElement, Layout, StyleService, Text, useStyleSheet } from '@ui-kitten/components'
+import { Button, Layout, StyleService, Text, useStyleSheet } from '@ui-kitten/components'
 import { vh, vw } from '../../Styles'
 import QRCode from 'react-native-qrcode-svg'
 import { Share } from 'react-native'

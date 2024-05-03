@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import useLoading from '../../../hooks/useLoading'
-import { RecoverWallet, RecoverWalletToJSON } from '../../../types/RecoverWallet'
+import { RecoverWalletToJSON } from '../../../types/RecoverWallet'
 import { prepareRecoverWallet } from '../../../services/transactions'
 import { createWallet, getSigner } from '../../../services/wallet'
 import { WalletContext } from '../../../context/WalletContext'
@@ -10,7 +10,7 @@ type useRecoverWalletProps = {
   wallet: string
 }
 
-export function useRecoverWallet({ wallet }: useRecoverWalletProps) {
+export default function useRecoverWallet({ wallet }: useRecoverWalletProps) {
   const { getPrivateKey } = useContext(WalletContext)
   const { currentNetwork } = useContext(BlockchainContext)
   const { isLoading, setIsLoading } = useLoading()

@@ -1,0 +1,1627 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MnemonicViewer renders correctly 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    appearance="default"
+    level="1"
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+        },
+        {
+          "flex": 1,
+        },
+      ]
+    }
+  >
+    <RNCSafeAreaView
+      edges={
+        {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "additive",
+        }
+      }
+      style={
+        [
+          {
+            "flex": 1,
+            "marginHorizontal": 37.5,
+            "marginVertical": 66.7,
+          },
+          {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+          }
+        }
+      >
+        <ViewManagerAdapter_ExpoImage
+          contentFit="contain"
+          contentPosition={
+            {
+              "left": "50%",
+              "top": "50%",
+            }
+          }
+          flex={1}
+          onError={[Function]}
+          onLoad={[Function]}
+          onLoadStart={[Function]}
+          onProgress={[Function]}
+          placeholder={[]}
+          source={[]}
+          style={
+            {
+              "contentFit": "contain",
+              "flex": 1,
+            }
+          }
+          transition={null}
+        />
+      </View>
+      <View
+        style={
+          {
+            "justifyContent": "center",
+            "marginVertical": 26.68,
+          }
+        }
+      >
+        <Text
+          appearance="default"
+          category="h6"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#222B45",
+                "fontFamily": "System",
+                "fontSize": 18,
+                "fontWeight": "800",
+              },
+              {
+                "textAlign": "justify",
+              },
+            ]
+          }
+        >
+          Those 12 words are the only way to recover your local wallet
+        </Text>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "flex": 2,
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flex": 1,
+              "overflow": "hidden",
+            }
+          }
+        >
+          <RCTScrollView
+            applyWindowCorrection={[Function]}
+            canChangeSize={true}
+            contentContainerStyle={
+              {
+                "backgroundColor": undefined,
+                "minHeight": 1,
+                "minWidth": 1,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+              }
+            }
+            contentHeight={72}
+            contentWidth={400}
+            data={
+              [
+                "word1",
+                "word2",
+                "word3",
+                "word4",
+                "word5",
+                "word6",
+                "word7",
+                "word8",
+                "word9",
+                "word10",
+                "word11",
+                "word12",
+              ]
+            }
+            dataProvider={
+              DataProvider {
+                "_data": [
+                  "word1",
+                  "word2",
+                  "word3",
+                  "word4",
+                  "word5",
+                  "word6",
+                  "word7",
+                  "word8",
+                  "word9",
+                  "word10",
+                  "word11",
+                  "word12",
+                ],
+                "_firstIndexToProcess": 0,
+                "_hasStableIds": false,
+                "_requiresDataChangeHandling": false,
+                "_size": 12,
+                "getStableId": [Function],
+                "rowHasChanged": [Function],
+              }
+            }
+            disableRecycling={false}
+            estimatedItemSize={12}
+            extendedState={{}}
+            externalScrollView={[Function]}
+            finalRenderAheadOffset={250}
+            forceNonDeterministicRendering={true}
+            horizontal={false}
+            initialOffset={0}
+            initialRenderIndex={0}
+            isHorizontal={false}
+            layoutProvider={
+              GridLayoutProviderWithProps {
+                "_acceptableRelayoutDelta": 1,
+                "_getHeightOrWidth": [Function],
+                "_getLayoutTypeForIndex": [Function],
+                "_getSpan": [Function],
+                "_hasExpired": false,
+                "_isHorizontal": false,
+                "_lastLayoutManager": GridLayoutManager {
+                  "_acceptableRelayoutDelta": 1,
+                  "_getSpan": [Function],
+                  "_isGridHorizontal": false,
+                  "_isHorizontal": false,
+                  "_layoutProvider": [Circular],
+                  "_layouts": [
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 0,
+                      "y": 0,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 200,
+                      "y": 0,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 0,
+                      "y": 12,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 200,
+                      "y": 12,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 0,
+                      "y": 24,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 200,
+                      "y": 24,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 0,
+                      "y": 36,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 200,
+                      "y": 36,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 0,
+                      "y": 48,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 200,
+                      "y": 48,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 0,
+                      "y": 60,
+                    },
+                    {
+                      "height": 12,
+                      "type": 0,
+                      "width": 200,
+                      "x": 200,
+                      "y": 60,
+                    },
+                  ],
+                  "_maxSpan": 2,
+                  "_renderWindowSize": {
+                    "height": 900,
+                    "width": 400,
+                  },
+                  "_totalHeight": 72,
+                  "_totalWidth": 400,
+                  "_window": {
+                    "height": 900,
+                    "width": 400,
+                  },
+                },
+                "_maxSpan": 2,
+                "_renderWindowSize": {
+                  "height": 900,
+                  "width": 400,
+                },
+                "_setLayoutForType": [Function],
+                "_tempDim": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "averageWindow": AverageWindow {
+                  "currentAverage": 12,
+                  "currentCount": 1,
+                  "inputValues": [
+                    12,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                  ],
+                  "nextIndex": 1,
+                },
+                "defaultEstimatedItemSize": 100,
+                "layoutObject": {
+                  "size": undefined,
+                  "span": undefined,
+                },
+                "props": {
+                  "data": [
+                    "word1",
+                    "word2",
+                    "word3",
+                    "word4",
+                    "word5",
+                    "word6",
+                    "word7",
+                    "word8",
+                    "word9",
+                    "word10",
+                    "word11",
+                    "word12",
+                  ],
+                  "estimatedItemSize": 12,
+                  "numColumns": 2,
+                  "renderItem": [Function],
+                },
+                "renderWindowInsets": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shouldRefreshWithAnchoring": true,
+              }
+            }
+            maxRenderAhead={750}
+            numColumns={2}
+            onEndReached={[Function]}
+            onEndReachedThreshold={0}
+            onEndReachedThresholdRelative={0}
+            onItemLayout={[Function]}
+            onLayout={[Function]}
+            onScroll={[Function]}
+            onScrollBeginDrag={[Function]}
+            onSizeChanged={[Function]}
+            onVisibleIndicesChanged={[Function]}
+            removeClippedSubviews={false}
+            renderAheadOffset={0}
+            renderAheadStep={250}
+            renderContentContainer={[Function]}
+            renderItem={[Function]}
+            renderItemContainer={[Function]}
+            rowRenderer={[Function]}
+            scrollEventThrottle={16}
+            scrollThrottle={16}
+            scrollViewProps={
+              {
+                "contentContainerStyle": {
+                  "backgroundColor": undefined,
+                  "minHeight": 1,
+                  "minWidth": 1,
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
+                },
+                "onLayout": [Function],
+                "onScrollBeginDrag": [Function],
+                "refreshControl": undefined,
+                "style": {
+                  "minHeight": 1,
+                  "minWidth": 1,
+                },
+              }
+            }
+            style={
+              {
+                "minHeight": 1,
+                "minWidth": 1,
+              }
+            }
+            suppressBoundedSizeException={true}
+            windowCorrectionConfig={
+              {
+                "applyToInitialOffset": true,
+                "applyToItemScroll": true,
+                "value": {
+                  "endCorrection": 0,
+                  "startCorrection": 0,
+                  "windowShift": -0,
+                },
+              }
+            }
+          >
+            <View>
+              <View
+                style={
+                  {
+                    "flexDirection": "column",
+                  }
+                }
+              >
+                <View
+                  style={
+                    {
+                      "paddingLeft": 0,
+                      "paddingTop": 0,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    [
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                />
+                <AutoLayoutView
+                  enableInstrumentation={false}
+                  horizontal={false}
+                  onBlankAreaEvent={[Function]}
+                  onLayout={[Function]}
+                  renderAheadOffset={0}
+                  scrollOffset={0}
+                  style={
+                    {
+                      "height": 72,
+                      "width": 400,
+                    }
+                  }
+                  windowSize={900}
+                >
+                  <CellContainer
+                    index={0}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 0,
+                        "position": "absolute",
+                        "top": 0,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word1
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={1}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 200,
+                        "position": "absolute",
+                        "top": 0,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word2
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={2}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 0,
+                        "position": "absolute",
+                        "top": 12,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word3
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={3}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 200,
+                        "position": "absolute",
+                        "top": 12,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word4
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={4}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 0,
+                        "position": "absolute",
+                        "top": 24,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word5
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={5}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 200,
+                        "position": "absolute",
+                        "top": 24,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word6
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={6}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 0,
+                        "position": "absolute",
+                        "top": 36,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word7
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={7}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 200,
+                        "position": "absolute",
+                        "top": 36,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word8
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={8}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 0,
+                        "position": "absolute",
+                        "top": 48,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word9
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={9}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 200,
+                        "position": "absolute",
+                        "top": 48,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word10
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={10}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 0,
+                        "position": "absolute",
+                        "top": 60,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word11
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                  <CellContainer
+                    index={11}
+                    onLayout={[Function]}
+                    style={
+                      {
+                        "alignItems": "stretch",
+                        "flexDirection": "column",
+                        "left": 200,
+                        "position": "absolute",
+                        "top": 60,
+                        "width": 200,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        appearance="default"
+                        level="4"
+                        style={
+                          [
+                            {
+                              "backgroundColor": "#E4E9F2",
+                            },
+                            {
+                              "alignItems": "center",
+                              "borderRadius": 5,
+                              "height": 66.7,
+                              "justifyContent": "center",
+                              "marginLeft": 18.75,
+                              "marginTop": 26.68,
+                              "width": 300,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          appearance="default"
+                          category="s1"
+                          status="basic"
+                          style={
+                            [
+                              {
+                                "color": "#222B45",
+                                "fontFamily": "System",
+                                "fontSize": 15,
+                                "fontWeight": "600",
+                              },
+                              undefined,
+                            ]
+                          }
+                        >
+                          word12
+                        </Text>
+                      </View>
+                    </View>
+                  </CellContainer>
+                </AutoLayoutView>
+                <CellContainer
+                  index={-1}
+                  style={
+                    [
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    {
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                    }
+                  }
+                />
+              </View>
+            </View>
+          </RCTScrollView>
+        </View>
+      </View>
+      <View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "rgba(51, 102, 255, 0.08)",
+              "borderColor": "#3366FF",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minHeight": 40,
+              "minWidth": 40,
+              "opacity": 1,
+              "paddingHorizontal": 10,
+              "paddingVertical": 12,
+            }
+          }
+        >
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#222B45",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "color": "#3366FF",
+                  "fontFamily": "System",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "marginHorizontal": 10,
+                },
+              ]
+            }
+          >
+            I saved these words
+          </Text>
+        </View>
+      </View>
+    </RNCSafeAreaView>
+  </View>
+</View>
+`;
+
+exports[`MnemonicViewer renders correctly when loading 1`] = `
+<div
+  data-testid="Loading"
+>
+  Loading
+</div>
+`;

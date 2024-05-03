@@ -1,13 +1,11 @@
-import { renderHook, act, fireEvent } from '@testing-library/react-native'
+import { renderHook, act } from '@testing-library/react-native'
 import useMnemonicViewerRecoverWallet from '../useMnemonicViewerRecoverWallet'
 import { setStringAsync } from 'expo-clipboard'
-import { FirstAccessContext } from '../../../../context/FirstAccessContext'
-import renderWithTheme from '../../../../TestHelper'
-import { Button } from 'react-native'
-import { MnemonicViewerProps } from '../../../../navigation/FirstAccessStack'
-import { requestContractWallet } from '../../../../services/wallet'
 import { useContext } from 'react'
 import { NETWORKS } from '../../../../constants/Networks'
+import { concludeRecoverWallet } from '../../../../services/transactions'
+import Toast from 'react-native-toast-message'
+import { MnemonicViewerRecoverWalletProps } from '../../../../navigation/FirstAccessStack'
 
 jest.mock('expo-clipboard', () => ({
   setStringAsync: jest.fn(),
@@ -17,15 +15,28 @@ jest.mock('react', () => ({
   useContext: jest.fn(),
 }))
 
-const pushNagivationMock = jest.fn()
+jest.mock('../../../../services/wallet', () => ({
+  getSigner: jest.fn(),
+}))
+
+jest.mock('../../../../services/transactions', () => ({
+  concludeRecoverWallet: jest.fn(),
+}))
+
+jest.mock('react-native-toast-message', () => ({
+  show: jest.fn(),
+  hide: jest.fn(),
+}))
+
 const propsMock = {
-  route: {
-    params: {
-      mnemonic: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
+  params: {
+    mnemonic: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
+    data: {
+      walletAddress: 'walletAddressMock',
+      wrappedTransaction: 'wrappedTransactionMock',
+      signedTransaction: 'signedTransactionMock',
+      nonce: 'nonceMock',
     },
-  },
-  navigation: {
-    push: pushNagivationMock,
   },
 }
 
@@ -36,7 +47,9 @@ describe('useMnemonicViewer', () => {
       getEOAAddress: jest.fn(),
       setWalletContractAddress: jest.fn(),
     })
-    const { result } = renderHook(() => useMnemonicViewerRecoverWallet(propsMock as unknown as MnemonicViewerProps))
+    const { result } = renderHook(() =>
+      useMnemonicViewerRecoverWallet(propsMock as unknown as MnemonicViewerRecoverWalletProps['route'])
+    )
 
     await act(async () => {
       await result.current.copyMnemonicToClipboard()
@@ -45,17 +58,67 @@ describe('useMnemonicViewer', () => {
     expect(setStringAsync).toHaveBeenCalledWith('a b c d e f g h i j')
   })
 
-  it('should navigate to AddGuardian', async () => {
-    ;(setStringAsync as jest.Mock).mockResolvedValueOnce(undefined)
+  it('should conclude recover wallet', async () => {
     ;(useContext as jest.Mock).mockReturnValue({
       getEOAAddress: jest.fn(),
       setWalletContractAddress: jest.fn(),
+      currentNetwork: NETWORKS.LOCALHOST,
     })
-    const { result } = renderHook(() => useMnemonicViewerRecoverWallet(propsMock as unknown as MnemonicViewerProps))
+    ;(concludeRecoverWallet as jest.Mock).mockReturnValueOnce('concludeRecoverWalletMock')
+    ;(Toast.show as jest.Mock).mockReturnValueOnce('Toast.showMock')
+
+    const { result } = renderHook(() =>
+      useMnemonicViewerRecoverWallet(propsMock as unknown as MnemonicViewerRecoverWalletProps['route'])
+    )
     await act(async () => {
-      await result.current.savedPressed()
+      await result.current.saveMnemonic()
     })
 
-    expect(pushNagivationMock).toHaveBeenCalledWith('AddGuardian')
+    expect(concludeRecoverWallet).toHaveBeenCalledWith(
+      NETWORKS.LOCALHOST,
+      'walletAddressMock',
+      'wrappedTransactionMock',
+      'signedTransactionMock',
+      'nonceMock'
+    )
+
+    expect(Toast.show).toHaveBeenCalledWith({
+      type: 'success',
+      text1: 'Wallet recovered 🎉',
+      text2: 'Your wallet has been successfully recovered',
+    })
+  })
+
+  it('should handle recover wallet error', async () => {
+    ;(useContext as jest.Mock).mockReturnValue({
+      getEOAAddress: jest.fn(),
+      setWalletContractAddress: jest.fn(),
+      currentNetwork: NETWORKS.LOCALHOST,
+    })
+    ;(concludeRecoverWallet as jest.Mock).mockRejectedValue({
+      message: 'concludeRecoverWalletMock',
+    })
+    ;(Toast.show as jest.Mock).mockReturnValueOnce('Toast.showMock')
+
+    const { result } = renderHook(() =>
+      useMnemonicViewerRecoverWallet(propsMock as unknown as MnemonicViewerRecoverWalletProps['route'])
+    )
+    await act(async () => {
+      await result.current.saveMnemonic()
+    })
+
+    expect(concludeRecoverWallet).toHaveBeenCalledWith(
+      NETWORKS.LOCALHOST,
+      'walletAddressMock',
+      'wrappedTransactionMock',
+      'signedTransactionMock',
+      'nonceMock'
+    )
+
+    expect(Toast.show).toHaveBeenCalledWith({
+      type: 'error',
+      text1: 'Transaction failed! 😢',
+      text2: 'concludeRecoverWalletMock',
+    })
   })
 })

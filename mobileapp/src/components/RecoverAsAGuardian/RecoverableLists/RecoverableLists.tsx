@@ -1,10 +1,10 @@
 import React from 'react'
 import { View } from 'react-native'
-import { useRecoverableLists } from './useRecoverableLists'
+import useRecoverableLists from './useRecoverableLists'
 import { appStyles, vh, vw } from '../../../Styles'
-import { Button, Layout, Modal, Spinner, StyleService, useStyleSheet, Text } from '@ui-kitten/components'
+import { Button, Modal, Spinner, StyleService, useStyleSheet, Text } from '@ui-kitten/components'
 import { formatBlockchainAddress } from '../../../utils/formatBlockchainData'
-import { RecoverWallet } from '../RecoverWallet/RecoverWallet'
+import RecoverWallet from '../RecoverWallet/RecoverWallet'
 
 export default function RecoverableLists() {
   const { wallets, isFetching, isRecovering, startRecovering, recoveringWallet, modalBackdrop } = useRecoverableLists()

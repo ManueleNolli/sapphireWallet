@@ -3,6 +3,7 @@ import MnemonicViewerRecoverWallet from '../MnemonicViewerRecoverWallet'
 import useMnemonicViewerRecoverWallet from '../useMnemonicViewerRecoverWallet'
 
 jest.mock('../useMnemonicViewerRecoverWallet', () => jest.fn())
+jest.mock('../../../Loading/Loading')
 
 describe('MnemonicViewer', () => {
   it('renders correctly', () => {
@@ -34,6 +35,28 @@ describe('MnemonicViewer', () => {
           route: {
             params: {
               mnemonic: mnemonicMock,
+            },
+          },
+        } as any)}
+      />
+    )
+    expect(tree).toMatchSnapshot()
+  })
+
+  it('renders correctly when loading', () => {
+    ;(useMnemonicViewerRecoverWallet as jest.Mock).mockReturnValue({
+      mnemonic: [],
+      copyMnemonicToClipboard: jest.fn(),
+      finishFirstAccess: jest.fn(),
+      isLoading: true,
+    })
+
+    const tree = renderWithTheme(
+      <MnemonicViewerRecoverWallet
+        {...({
+          route: {
+            params: {
+              mnemonic: [],
             },
           },
         } as any)}

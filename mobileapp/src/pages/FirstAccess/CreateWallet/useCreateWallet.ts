@@ -6,7 +6,7 @@ import { NETWORKS } from '../../../constants/Networks'
 import { BlockchainContext } from '../../../context/BlockchainContext'
 import { IndexPath } from '@ui-kitten/components'
 
-export default function useCreateWallet({ route, navigation }: CreateWalletProps) {
+export default function useCreateWallet(navigation: CreateWalletProps['navigation']) {
   const { setPrivateKey, setEOAAddress } = useContext(WalletContext)
   const { currentNetwork, setEthersProvider } = useContext(BlockchainContext)
   const [selectedNetwork, setSelectedNetwork] = useState(new IndexPath(Object.values(NETWORKS).indexOf(currentNetwork)))

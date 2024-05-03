@@ -175,4 +175,6 @@ export async function concludeRecoverWallet(
   if ('error' in result) {
     throw new Error(result.error)
   }
+
+  return result
 }
