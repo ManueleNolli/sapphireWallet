@@ -12,9 +12,7 @@ export default function useSettings() {
   const { toggleFirstAccess } = useContext(FirstAccessContext)
   const { resetWallet } = useContext(WalletContext)
   const { currentNetwork, setEthersProvider } = useContext(BlockchainContext)
-  const [selectedIndex, setSelectedIndex] = React.useState(
-    Object.values(NETWORKS).indexOf(currentNetwork)
-  )
+  const [selectedIndex, setSelectedIndex] = React.useState(Object.values(NETWORKS).indexOf(currentNetwork))
 
   const themeIconRef = React.useRef<Icon<Partial<ImageProps>>>()
 
@@ -29,13 +27,7 @@ export default function useSettings() {
   }
 
   const resetLocalWallet = async () => {
-    await Promise.all(
-      [
-        resetWallet(),
-        toggleFirstAccess()
-      ]
-    )
-
+    await Promise.all([resetWallet(), toggleFirstAccess()])
   }
 
   return {

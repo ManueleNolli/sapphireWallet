@@ -31,6 +31,7 @@ export class ApiGatewayService {
         'create_wallet_request',
         new CreateWalletRequestEvent(
           createWalletRequest.eoaAddress,
+          createWalletRequest.guardianAddress,
           createWalletRequest.network,
         ),
       )

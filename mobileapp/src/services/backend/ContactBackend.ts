@@ -30,6 +30,7 @@ interface backendBaseBody {
 
 interface createWalletBody extends backendBaseBody {
   eoaAddress: string
+  guardianAddress: string
 }
 
 interface addAuthorisedBody extends backendBaseBody {
@@ -128,7 +129,6 @@ export async function contactBackend(
     })
 
     const responseJson = await response.json()
-    console.log('responseJson', responseJson)
     if ('error' in responseJson) {
       throw new Error(`${responseJson.error}: ${responseJson.message}`)
     }

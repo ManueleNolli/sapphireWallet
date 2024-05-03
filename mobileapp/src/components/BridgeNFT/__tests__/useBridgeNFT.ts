@@ -4,7 +4,7 @@ import { OwnedNFT, ownedNFTs } from '../../../services/blockchain'
 import { NETWORKS } from '../../../constants/Networks'
 import useBridgeNFT from '../useBridgeNFT'
 import { getSigner } from '../../../services/wallet'
-import { requestERC721TokenTransfer, requestNFTBridgeCall } from '../../../services/transactions'
+import { requestNFTBridgeCall } from '../../../services/transactions'
 import Toast from 'react-native-toast-message'
 
 jest.mock('react', () => ({

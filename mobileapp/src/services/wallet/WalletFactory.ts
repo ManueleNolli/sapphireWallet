@@ -1,21 +1,14 @@
-import {
-  BACKEND_ENDPOINTS,
-  backendErrorResponse,
-  contactBackend,
-  createWalletResponse,
-} from '../backend/'
+import { BACKEND_ENDPOINTS, backendErrorResponse, contactBackend, createWalletResponse } from '../backend/'
 import { NETWORKS } from '../../constants/Networks'
 
 /**
  * Service to contact wallet factory microservice through API
  */
-export async function requestContractWallet(
-  eoaAddress: string,
-  network: NETWORKS
-) {
+export async function requestContractWallet(network: NETWORKS, eoaAddress: string, guardianAddress: string) {
   const result = (await contactBackend(BACKEND_ENDPOINTS.CREATE_WALLET, {
-    network: network,
+    network,
     eoaAddress,
+    guardianAddress,
   })) as createWalletResponse | backendErrorResponse
 
   if ('error' in result) {

@@ -33,7 +33,7 @@ export function FirstAccessProvider({ children }: FirstAccessProviderProps) {
   }
 
   if (isLoading) {
-    return <Loading text={'Checking first access...'} />
+    return <Loading text="Checking first access..." />
   }
 
   return (

@@ -118,6 +118,10 @@ export function wrapInMultiCall(from: string, transactionArgent: TransactionArge
   return ArgentModule__factory.createInterface().encodeFunctionData('multiCall', [from, transactionArgent])
 }
 
+export function wrapInMultiCallWithGuardians(from: string, transactionArgent: TransactionArgent[]) {
+  return ArgentModule__factory.createInterface().encodeFunctionData('multiCallWithGuardians', [from, transactionArgent])
+}
+
 export function wrapInBridgeCall(from: string, transactionArgent: TransactionArgent) {
   return ArgentModule__factory.createInterface().encodeFunctionData('bridgeCall', [from, transactionArgent])
 }

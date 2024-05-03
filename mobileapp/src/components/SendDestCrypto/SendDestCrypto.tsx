@@ -68,6 +68,7 @@ export default function SendDestCrypto({ address, cryptoName, balance, action, c
       <Text category="h6">Send {cryptoName}</Text>
       <Text style={{ marginBottom: 2 * vh }}>Fill the form to send {cryptoName} to another wallet</Text>
       <InputAddress
+        label={"to"}
         value={valueAddress}
         setValue={setValueAddress}
         isValid={isAddressValid}

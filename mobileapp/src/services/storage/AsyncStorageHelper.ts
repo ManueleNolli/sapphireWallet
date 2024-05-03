@@ -34,5 +34,3 @@ export const removeData = async (key: string): Promise<void> => {
     console.error('Error removing data', e)
   })
 }
-
-

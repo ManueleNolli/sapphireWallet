@@ -6,7 +6,10 @@ import renderWithTheme from '../../TestHelper'
 // MOCKS
 
 jest.mock('../../pages/FirstAccess/CreateWallet/CreateWallet')
-jest.mock('../../pages/FirstAccess/MnemonicViewer/MnemonicViewer')
+jest.mock('../../pages/FirstAccess/MnemonicViewerRecoverWallet/MnemonicViewerRecoverWallet')
+jest.mock('../../pages/FirstAccess/MnemonicViewerNewWallet/MnemonicViewerNewWallet')
+jest.mock('../../pages/FirstAccess/RecoverWallet/RecoverWallet')
+jest.mock('../../pages/FirstAccess/AddGuardian/AddGuardian')
 
 describe('FirstAccessStackNavigator', () => {
   it('Navigates between CreateWallet and MnemonicViewer screens', async () => {

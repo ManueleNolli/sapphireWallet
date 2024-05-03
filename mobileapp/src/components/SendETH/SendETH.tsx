@@ -50,6 +50,7 @@ export default function SendETH({ address, balance, close }: SendETHProps) {
       <Text category={'h6'}>Send ETH</Text>
       <Text style={{ marginBottom: 2 * vh }}>Fill the form to send ETH to another wallet</Text>
       <InputAddress
+        label={"to"}
         value={valueAddress}
         setValue={setValueAddress}
         isValid={isAddressValid}
