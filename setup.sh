@@ -5,7 +5,7 @@
 ################
 
 #1. Copy env.example to env
-folders=("mobileapp" "blockchain" "backend/sapphire-relayer" "backend/wallet-factory" "bridge/basicOffChainBridge")
+folders=("mobileapp" "blockchain" "backend/sapphire-relayer" "backend/wallet-factory" "backend/sapphire-portfolio" "bridge/basicOffChainBridge")
 
 copy_env() {
   if [ -e .env.example ]; then
