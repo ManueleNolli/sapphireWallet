@@ -3,6 +3,8 @@ import Settings from '../Settings'
 import useSettings from '../useSettings'
 
 jest.mock('../useSettings', () => jest.fn())
+jest.mock('../../../components/GuardiansManager/GuardiansManager')
+jest.mock('../../../components/RecoverAsAGuardian/RecoverableLists/RecoverableLists')
 
 describe('Settings', () => {
   beforeEach(() => {

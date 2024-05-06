@@ -53,10 +53,22 @@ describe('useCreateWallet hook', () => {
       result.current.createAndNavigate()
     })
 
-    expect(navigate).toHaveBeenCalledWith('MnemonicViewer', {
+    expect(navigate).toHaveBeenCalledWith('MnemonicViewerNewWallet', {
       mnemonic: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     })
     expect(setPrivateKeyMock).toHaveBeenCalledWith('0x123')
+  })
+
+  it('should recover wallet', () => {
+    const navigate = jest.fn()
+    const navigation = { push: navigate }
+    const { result } = renderHook(() => useCreateWallet(navigation as unknown as CreateWalletProps['navigation']))
+
+    act(() => {
+      result.current.recoverWallet()
+    })
+
+    expect(navigate).toHaveBeenCalledWith('RecoverWallet')
   })
 
   it('Should console error', async () => {
@@ -105,6 +117,7 @@ describe('useCreateWallet hook', () => {
       result.current.onNetworkSelect(new IndexPath(1))
     })
   })
+
   it('should select network with Array', async () => {
     const setEthersProviderMock = jest.fn()
 

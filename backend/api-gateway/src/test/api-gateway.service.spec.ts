@@ -45,6 +45,7 @@ describe('ApiGatewayService', () => {
     it('should create a wallet successfully', async () => {
       const createWalletRequest: CreateWalletRequest = {
         eoaAddress: '0x00',
+        guardianAddress: '0x00',
         network: 'localhost',
       };
 
@@ -64,6 +65,7 @@ describe('ApiGatewayService', () => {
     it('should handle errors and throw RpcException', async () => {
       const createWalletRequest: CreateWalletRequest = {
         eoaAddress: '0x00',
+        guardianAddress: '0x00',
         network: 'localhost',
       };
 

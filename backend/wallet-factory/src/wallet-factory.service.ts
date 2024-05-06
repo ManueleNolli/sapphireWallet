@@ -26,18 +26,23 @@ export class WalletFactoryService {
       data.network,
     );
 
+    const realGuardian =
+      data.guardianAddress == ZeroAddress
+        ? signer.address
+        : data.guardianAddress;
+
     const expectedAddress =
       await walletFactory.getAddressForCounterfactualWallet(
         data.eoaAddress,
         [argentModuleAddress],
-        signer.address,
+        realGuardian,
         salt,
       );
 
     const tx = await walletFactory.createCounterfactualWallet(
       data.eoaAddress,
       [argentModuleAddress],
-      signer.address,
+      realGuardian,
       salt,
       0,
       ZeroAddress,

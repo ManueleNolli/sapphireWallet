@@ -66,6 +66,7 @@ export default function SendEthereumNFT({ address, close }: SendETHProps) {
         Select an NFT and input the address
       </Text>
       <InputAddress
+        label={"to"}
         value={valueAddress}
         setValue={setValueAddress}
         isValid={isAddressValid}

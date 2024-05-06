@@ -171,7 +171,6 @@ describe('useNFTs Hook', () => {
     })
 
     expect(ownedNFTs).toHaveBeenCalledTimes(4)
-    console.log(resultHook.current.nfts)
     expect(resultHook.current.nfts).toEqual([
       {
         name: 'Mock NFT',

@@ -5,8 +5,6 @@ import { BlockchainService } from '../blockchain/blockchain.service';
 import { EnvironmentModule } from '../environment/environment.module';
 import { BlockchainModule } from '../blockchain/blockchain.module';
 import { EnvironmentService } from '../environment/environment.service';
-import { BadRequestException } from '@nestjs/common';
-import { RpcException } from '@nestjs/microservices';
 import { CreateWalletRequestEvent } from '../events/create-wallet-request.event';
 import { Wallet } from 'ethers';
 
@@ -48,7 +46,7 @@ describe('AppController', () => {
           network: 'localhost',
         });
 
-      const data = new CreateWalletRequestEvent('0x0', 'localhost');
+      const data = new CreateWalletRequestEvent('0x0', '0x0', 'localhost');
 
       const result =
         await walletFactoryController.handleCreateWalletRequest(data);

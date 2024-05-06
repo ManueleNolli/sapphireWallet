@@ -10,17 +10,15 @@ import SafeAreaView from '../../../utils/SafeAreaView'
 import { CreateWalletProps } from '../../../navigation/FirstAccessStack'
 import { NETWORKS } from '../../../constants/Networks'
 
-export default function CreateWallet({ navigation }: CreateWalletProps) {
-  const { createAndNavigate, selectedNetwork, onNetworkSelect } =
-    useCreateWallet(navigation)
+export default function CreateWallet({ route, navigation }: CreateWalletProps) {
+  const { createAndNavigate, selectedNetwork, onNetworkSelect, recoverWallet } = useCreateWallet({ route, navigation })
 
-  const networkUppercase = (network: string) =>
-    network.charAt(0).toUpperCase() + network.slice(1)
+  const networkUppercase = (network: string) => network.charAt(0).toUpperCase() + network.slice(1)
 
   function NetworkIcon(network: NETWORKS) {
     return (
       <Image
-        contentFit={'contain'}
+        contentFit="contain"
         style={{
           width: 32,
           height: 32,
@@ -36,17 +34,18 @@ export default function CreateWallet({ navigation }: CreateWalletProps) {
       <View style={{ flex: 1, marginTop: 10 * vh }}>
         <Image style={appStyles.imageContain} source={logoWithFullText} />
       </View>
-      <View
-        style={[{ flex: 1, marginBottom: 10 * vh }, appStyles.centerNoFlex]}
-      >
-        <Button appearance="outline" size={'giant'} onPress={createAndNavigate}>
+      <View style={[{ flex: 1, marginBottom: 10 * vh }, appStyles.centerNoFlex]}>
+        <Button appearance="outline" size="giant" onPress={createAndNavigate}>
           Create wallet
+        </Button>
+        <Button appearance="ghost" onPress={recoverWallet} style={{ marginTop: 2 * vh }}>
+          Recover wallet
         </Button>
       </View>
 
       <View style={{ bottom: 0 }}>
         <Select
-          testID={'select'}
+          testID="select"
           label="Network"
           value={networkUppercase(Object.values(NETWORKS)[selectedNetwork.row])}
           selectedIndex={selectedNetwork}

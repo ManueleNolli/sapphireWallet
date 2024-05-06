@@ -67,6 +67,7 @@ export default function SendDestNFT({ address, close }: SendDestNFTprops) {
         Select an NFT to send
       </Text>
       <InputAddress
+        label={"to"}
         value={valueAddress}
         setValue={setValueAddress}
         isValid={isAddressValid}

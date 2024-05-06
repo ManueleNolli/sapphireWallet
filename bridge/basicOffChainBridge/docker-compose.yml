@@ -1,0 +1,9 @@
+services:
+  bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - BASE_CHAIN=${BASE_CHAIN}
+      - DEST_CHAIN=${DEST_CHAIN}
+    command: yarn start ${BASE_CHAIN:-sepolia} ${DEST_CHAIN:-amoy}
