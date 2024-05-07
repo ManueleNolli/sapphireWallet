@@ -5,6 +5,7 @@
 \setlength{\parindent}{0pt}
 
 
+
 % Crea un capitolo senza numerazione che pero` appare nell'indice %
 \newcommand{\problemchapter}[1]{%
   \chapter*{#1}%
@@ -21,7 +22,7 @@
 \setcounter{tocdepth}{5}		%per avere più livelli nell'indice
 
 
-\doctitle{Blockchain Interoperability}
+\doctitle{Sapphire Wallet: Blockchain Interoperability}
 \student{Nolli Manuele}
 \supervisor{Gremlich Giuliano}
 \cosupervisor{Guidi Roberto}
@@ -30,6 +31,9 @@
 
 % Image
 \graphicspath{ {./images/} }
+
+\addbibresource{linkography.lib}
+% \addbibresource{bibliografia.lib}
 
 
 \begin{document}
@@ -60,6 +64,6 @@
 \input{content/conclusions}
 
 
-\bibliographystyle{unsrt}
-\bibliography{bibliografia}
+\printbibliography[title={Bibliografia},nottype=online]
+\printbibliography[title={Linkografia},type=online]
 \end{document}

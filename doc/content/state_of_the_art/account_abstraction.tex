@@ -1,0 +1,38 @@
+\section{Account Abstraction}
+\label{sec:account_abstraction}
+
+%What is an account?
+
+The term \textit{Account Abstraction} refers to the ability to extend the capabilities of an account in a blockchain. In the context of Ethereum, there are two type of accounts: \cite{ethereum-accounts}
+
+\begin{itemize}
+    \item \textit{Externally Owned Accounts (EOA)}: controlled by anyone with the private key.
+    \item \textit{Contract Accounts}: A deployed smart contract. Controlled by the code.
+\end{itemize}
+
+% Problem with EOA: fee, lost private key, etc.
+
+EOAs are the only account type that can initiate transactions, while contract accounts can only \textit{react} \footnote{A smart contract can initiate a transaction by calling another smart contract, but the transaction is still initiated by an EOA.} to transactions, which makes it difficult to do batches of transactions and requires users to always keep an ETH balance to cover gas. Other limitations include the lack of recovery options, the need to pay a fee for each transaction, and the risk of losing the private key. Generalising, the user experience is not as seamless as in traditional web 2.0 applications. \cite{ethereum-account-abstraction}
+
+% What is account abstraction? Use a contract accounts instead of EOAs.
+% Why use account abstraction? different use cases: recovery, relaying transactions, etc.
+
+Account abstraction is a way to solve these problems by allowing users to flexibly program more security and better user experiences into their accounts. This is achieved by \textit{abstracting} the account model, allowing users to use contract accounts instead of EOAs. The use of a new type of account named \textbf{Smart Contract Wallets} unlocks new possibilities, including: \cite{ethereum-account-abstraction}
+
+\begin{itemize}
+    \item \textit{Flexible security models}: 
+    \item \textit{Recovery options}:
+    \item \textit{Multi owner accounts}:
+    \item \textit{Relayed transactions}:
+    \item \textit{Batch/Multi transactions}:
+    \item \textit{Innovative User Experience}:
+\end{itemize}
+
+
+\subsection{ERC standards}
+\label{subsec:erc_standards}
+
+EIP-86, EIP-2938, EIP-3078, EIP-4337, ERC-4337
+
+\subsection{Argent}
+\label{subsec:argent}

@@ -1,0 +1,29 @@
+@online{blockchain-statistics,
+  title   = {Essential Blockchain statistics 2023},
+  url     = {https://www.zippia.com/advice/blockchain-statistics/},
+  urldate = {2024-05-06},
+  month   = {12},
+  year    = {2022},
+}
+
+@online{evm,
+  title   = {Ethereum Virtual Machine},
+  url     = {https://crypto.com/glossary/it/ethereum-virtual-machine-evm},
+  urldate = {2024-05-07},
+}
+
+@online{ethereum-accounts,
+  title   = {Ethereum Accounts},
+  url     = {https://ethereum.org/en/developers/docs/accounts/},
+  urldate = {2024-05-07},
+  month   = {10},
+  year    = {2023},
+}
+
+@online{ethereum-account-abstraction,
+  title   = {Ethereum Account abstraction},
+  url     = {https://ethereum.org/en/roadmap/account-abstraction/},
+  urldate = {2024-05-07},
+  month   = {03},
+  year    = {2024},
+}
