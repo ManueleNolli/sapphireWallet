@@ -28,7 +28,7 @@ describe('useRecoverableLists', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useRecoverableLists())
+      const { result } = renderHook(() => useRecoverableLists({ refreshRequest: false }))
       resultHook = result
     })
 
@@ -45,7 +45,7 @@ describe('useRecoverableLists', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useRecoverableLists())
+      const { result } = renderHook(() => useRecoverableLists({ refreshRequest: false }))
       resultHook = result
     })
 
@@ -67,7 +67,7 @@ describe('useRecoverableLists', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useRecoverableLists())
+      const { result } = renderHook(() => useRecoverableLists({ refreshRequest: false }))
       resultHook = result
     })
     await act(async () => {

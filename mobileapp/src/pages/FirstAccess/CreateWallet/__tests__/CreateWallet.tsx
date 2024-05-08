@@ -7,25 +7,24 @@ import { IndexPath } from '@ui-kitten/components'
 
 // MOCKS
 jest.mock('../useCreateWallet', () => jest.fn())
-jest.mock("react-native", () => {
-  const RN = jest.requireActual("react-native");
+jest.mock('react-native', () => {
+  const RN = jest.requireActual('react-native')
 
-  RN.UIManager.measureInWindow = name => {
-    return {};
-  };
+  RN.UIManager.measureInWindow = (name) => {
+    return {}
+  }
 
-  Object.defineProperty(RN, "findNodeHandle", {
+  Object.defineProperty(RN, 'findNodeHandle', {
     get: jest.fn(() => () => 1),
-    set: jest.fn()
-  });
+    set: jest.fn(),
+  })
 
-  return RN;
-});
+  return RN
+})
 const props = {
   navigation: {
     navigate: jest.fn(),
   },
-  route: jest.fn(),
 } as unknown as CreateWalletProps
 
 describe('CreateWallet', () => {

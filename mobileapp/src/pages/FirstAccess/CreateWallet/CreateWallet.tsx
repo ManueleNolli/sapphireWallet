@@ -10,8 +10,8 @@ import SafeAreaView from '../../../utils/SafeAreaView'
 import { CreateWalletProps } from '../../../navigation/FirstAccessStack'
 import { NETWORKS } from '../../../constants/Networks'
 
-export default function CreateWallet({ route, navigation }: CreateWalletProps) {
-  const { createAndNavigate, selectedNetwork, onNetworkSelect, recoverWallet } = useCreateWallet({ route, navigation })
+export default function CreateWallet({ navigation }: CreateWalletProps) {
+  const { createAndNavigate, selectedNetwork, onNetworkSelect, recoverWallet } = useCreateWallet(navigation)
 
   const networkUppercase = (network: string) => network.charAt(0).toUpperCase() + network.slice(1)
 

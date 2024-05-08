@@ -6,8 +6,13 @@ import { Button, Modal, Spinner, StyleService, useStyleSheet, Text } from '@ui-k
 import { formatBlockchainAddress } from '../../../utils/formatBlockchainData'
 import RecoverWallet from '../RecoverWallet/RecoverWallet'
 
-export default function RecoverableLists() {
-  const { wallets, isFetching, isRecovering, startRecovering, recoveringWallet, modalBackdrop } = useRecoverableLists()
+type RecoverableListsProps = {
+  refreshRequest: boolean
+}
+
+export default function RecoverableLists(props: RecoverableListsProps) {
+  const { wallets, isFetching, isRecovering, startRecovering, recoveringWallet, modalBackdrop } =
+    useRecoverableLists(props)
   const styles = useStyleSheet(themedStyles)
 
   const renderWallet = (wallet: string) => {

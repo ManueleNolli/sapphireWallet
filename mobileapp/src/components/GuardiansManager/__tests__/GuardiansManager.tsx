@@ -39,7 +39,7 @@ describe('GuardiansManager', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<GuardiansManager />)
+      tree = renderWithTheme(<GuardiansManager refreshRequest={false} />)
     })
     expect(tree).toMatchSnapshot()
   })
@@ -67,7 +67,7 @@ describe('GuardiansManager', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<GuardiansManager />)
+      tree = renderWithTheme(<GuardiansManager refreshRequest={false} />)
     })
     expect(tree).toMatchSnapshot()
   })
@@ -95,7 +95,7 @@ describe('GuardiansManager', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<GuardiansManager />)
+      tree = renderWithTheme(<GuardiansManager refreshRequest={false} />)
     })
     expect(tree).toMatchSnapshot()
   })
@@ -123,7 +123,7 @@ describe('GuardiansManager', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<GuardiansManager />)
+      tree = renderWithTheme(<GuardiansManager refreshRequest={false} />)
     })
     expect(tree).toMatchSnapshot()
   })
@@ -151,7 +151,7 @@ describe('GuardiansManager', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<GuardiansManager />)
+      tree = renderWithTheme(<GuardiansManager refreshRequest={false} />)
     })
     expect(tree).toMatchSnapshot()
   })
@@ -179,7 +179,7 @@ describe('GuardiansManager', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<GuardiansManager />)
+      tree = renderWithTheme(<GuardiansManager refreshRequest={false} />)
     })
     expect(tree).toMatchSnapshot()
 
@@ -214,7 +214,7 @@ describe('GuardiansManager', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<GuardiansManager />)
+      tree = renderWithTheme(<GuardiansManager refreshRequest={false} />)
     })
     expect(tree).toMatchSnapshot()
 
@@ -251,7 +251,7 @@ describe('GuardiansManager', () => {
     let tree: any
 
     await waitFor(async () => {
-      tree = renderWithTheme(<GuardiansManager />)
+      tree = renderWithTheme(<GuardiansManager refreshRequest={false} />)
     })
     expect(tree).toMatchSnapshot()
   })

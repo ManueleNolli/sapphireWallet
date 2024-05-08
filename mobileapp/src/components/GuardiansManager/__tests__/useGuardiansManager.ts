@@ -42,7 +42,7 @@ describe('useGuardiansManager hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useGuardiansManager())
+      const { result } = renderHook(() => useGuardiansManager({ refreshRequest: false }))
       resultHook = result
     })
 
@@ -68,7 +68,7 @@ describe('useGuardiansManager hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useGuardiansManager())
+      const { result } = renderHook(() => useGuardiansManager({ refreshRequest: false }))
       resultHook = result
     })
 
@@ -109,7 +109,7 @@ describe('useGuardiansManager hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useGuardiansManager())
+      const { result } = renderHook(() => useGuardiansManager({ refreshRequest: false }))
       resultHook = result
     })
 
@@ -146,7 +146,7 @@ describe('useGuardiansManager hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useGuardiansManager())
+      const { result } = renderHook(() => useGuardiansManager({ refreshRequest: false }))
       resultHook = result
     })
 
@@ -180,7 +180,7 @@ describe('useGuardiansManager hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useGuardiansManager())
+      const { result } = renderHook(() => useGuardiansManager({ refreshRequest: false }))
       resultHook = result
     })
 
@@ -209,7 +209,7 @@ describe('useGuardiansManager hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useGuardiansManager())
+      const { result } = renderHook(() => useGuardiansManager({ refreshRequest: false }))
       resultHook = result
     })
 
@@ -231,7 +231,7 @@ describe('useGuardiansManager hook', () => {
 
     let resultHook: any
     await waitFor(async () => {
-      const { result } = renderHook(() => useGuardiansManager())
+      const { result } = renderHook(() => useGuardiansManager({ refreshRequest: false }))
       resultHook = result
     })
 

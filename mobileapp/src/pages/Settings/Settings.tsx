@@ -1,22 +1,41 @@
 import React from 'react'
-import { Button, Divider, Icon, IconElement, Layout, Radio, RadioGroup, Text } from '@ui-kitten/components'
+import { Button, Divider, Icon, IconElement, Layout, Radio, RadioGroup, Text, useTheme } from '@ui-kitten/components'
 import SafeAreaView from '../../utils/SafeAreaView'
 import { vh } from '../../Styles'
 import useSettings from './useSettings'
 import { NETWORKS } from '../../constants/Networks'
-import { ScrollView } from 'react-native'
+import { ScrollView, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import GuardiansManager from '../../components/GuardiansManager/GuardiansManager'
 import RecoverableLists from '../../components/RecoverAsAGuardian/RecoverableLists/RecoverableLists'
 
 export default function Settings() {
-  const { theme, resetLocalWallet, toggleThemeWithAnimation, themeIconRef, selectedIndex, onNetworkSelect } =
-    useSettings()
+  const {
+    theme,
+    resetLocalWallet,
+    toggleThemeWithAnimation,
+    themeIconRef,
+    selectedIndex,
+    onNetworkSelect,
+    guardiansRefresh,
+    setGuardiansRefresh,
+    recoverAsGuardianRefresh,
+    setRecoverAsGuardianRefresh,
+  } = useSettings()
+  const kittenTheme = useTheme()
 
   const ThemeIcon = (props: any): IconElement => (
     <Icon {...props} name={theme === 'light' ? 'moon' : 'sun'} animation="zoom" ref={themeIconRef} />
   )
 
   const DeleteIcon = (props: any): IconElement => <Icon {...props} name="alert-triangle" />
+
+  const RefreshIcon = (props: any) => {
+    return (
+      <TouchableOpacity {...props}>
+        <Icon name="refresh" style={{ tintColor: kittenTheme['color-primary-600'] }} />
+      </TouchableOpacity>
+    )
+  }
 
   const networkUppercase = (network: string) => network.charAt(0).toUpperCase() + network.slice(1)
 
@@ -44,17 +63,23 @@ export default function Settings() {
             accessoryLeft={ThemeIcon}
           />
 
-          <Text category="h6" style={{ marginTop: 5 * vh }}>
-            Guardians
-          </Text>
+          <View
+            style={{ marginTop: 5 * vh, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' }}
+          >
+            <Text category="h6">Guardians</Text>
+            <RefreshIcon style={{ width: 24, height: 24 }} onPress={setGuardiansRefresh} />
+          </View>
           <Divider style={{ marginTop: 0.5 * vh, marginBottom: 2 * vh }} />
-          <GuardiansManager />
+          <GuardiansManager refreshRequest={guardiansRefresh} />
 
-          <Text category="h6" style={{ marginTop: 5 * vh }}>
-            Recover as a guardian
-          </Text>
+          <View
+            style={{ marginTop: 5 * vh, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' }}
+          >
+            <Text category="h6">Recover as a guardian</Text>
+            <RefreshIcon style={{ width: 24, height: 24 }} onPress={setRecoverAsGuardianRefresh} />
+          </View>
           <Divider style={{ marginTop: 0.5 * vh, marginBottom: 2 * vh }} />
-          <RecoverableLists />
+          <RecoverableLists refreshRequest={recoverAsGuardianRefresh} />
 
           <Text category="h6" style={{ marginTop: 5 * vh }}>
             Dev settings

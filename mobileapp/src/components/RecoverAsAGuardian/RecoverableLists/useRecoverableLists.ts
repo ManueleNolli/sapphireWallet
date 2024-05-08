@@ -4,7 +4,11 @@ import { getGuardianWallets } from '../../../services/transactions'
 import { WalletContext } from '../../../context/WalletContext'
 import { BlockchainContext } from '../../../context/BlockchainContext'
 
-export default function useRecoverableLists() {
+type useRecoverableListsProps = {
+  refreshRequest: boolean
+}
+
+export default function useRecoverableLists({ refreshRequest }: useRecoverableListsProps) {
   const { getWalletContractAddress } = useContext(WalletContext)
   const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
   const [wallets, setWallets] = useState<string[]>([])
@@ -14,11 +18,13 @@ export default function useRecoverableLists() {
 
   useEffect(() => {
     const fetchWallets = async () => {
+      setWallets([])
       setWallets(await getGuardianWallets(ethersProvider, currentNetwork, getWalletContractAddress()))
     }
-    fetchWallets()
-    setIsFetching(false)
-  }, [])
+
+    setIsFetching(true)
+    fetchWallets().then(() => setIsFetching(false))
+  }, [refreshRequest])
 
   const startRecovering = (wallet: string) => {
     setIsRecovering(true)

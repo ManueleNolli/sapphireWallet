@@ -23,7 +23,7 @@ describe('RecoverableLists', () => {
       recoveringWallet: '',
       modalBackdrop: jest.fn(),
     })
-    const tree = renderWithTheme(<RecoverableLists />)
+    const tree = renderWithTheme(<RecoverableLists refreshRequest={false} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -37,7 +37,7 @@ describe('RecoverableLists', () => {
       recoveringWallet: 'wallet1',
       modalBackdrop: jest.fn(),
     })
-    const tree = renderWithTheme(<RecoverableLists />)
+    const tree = renderWithTheme(<RecoverableLists refreshRequest={false} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -51,7 +51,7 @@ describe('RecoverableLists', () => {
       recoveringWallet: '',
       modalBackdrop: jest.fn(),
     })
-    const tree = renderWithTheme(<RecoverableLists />)
+    const tree = renderWithTheme(<RecoverableLists refreshRequest={false} />)
 
     expect(tree.getAllByText('You are not a guardian of any wallet')).toHaveLength(1)
 
@@ -68,7 +68,7 @@ describe('RecoverableLists', () => {
       recoveringWallet: '',
       modalBackdrop: jest.fn(),
     })
-    const tree = renderWithTheme(<RecoverableLists />)
+    const tree = renderWithTheme(<RecoverableLists refreshRequest={false} />)
 
     fireEvent.press(tree.getByText(' wallet...let1'))
 

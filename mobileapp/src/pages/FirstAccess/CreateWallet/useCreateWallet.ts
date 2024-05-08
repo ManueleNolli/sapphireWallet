@@ -15,7 +15,6 @@ export default function useCreateWallet(navigation: CreateWalletProps['navigatio
     const wallet = createWallet()
     try {
       await Promise.all([setEOAAddress(wallet.address), setPrivateKey(wallet.privateKey)])
-
       navigation.push('MnemonicViewerNewWallet', {
         mnemonic: getMnemonic(wallet),
       })

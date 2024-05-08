@@ -13,6 +13,8 @@ export default function useSettings() {
   const { resetWallet } = useContext(WalletContext)
   const { currentNetwork, setEthersProvider } = useContext(BlockchainContext)
   const [selectedIndex, setSelectedIndex] = React.useState(Object.values(NETWORKS).indexOf(currentNetwork))
+  const [guardiansRefresh, setGuardiansRefresh] = React.useState(false)
+  const [recoverAsGuardianRefresh, setRecoverAsGuardianRefresh] = React.useState(false)
 
   const themeIconRef = React.useRef<Icon<Partial<ImageProps>>>()
 
@@ -37,5 +39,9 @@ export default function useSettings() {
     themeIconRef,
     selectedIndex,
     onNetworkSelect,
+    guardiansRefresh,
+    setGuardiansRefresh: () => setGuardiansRefresh(!guardiansRefresh),
+    recoverAsGuardianRefresh,
+    setRecoverAsGuardianRefresh: () => setRecoverAsGuardianRefresh(!recoverAsGuardianRefresh),
   }
 }

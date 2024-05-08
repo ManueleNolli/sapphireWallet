@@ -72,7 +72,7 @@ describe('useSettings hook', () => {
   it('should reset local wallet', async () => {
     const resetWalletMock = jest.fn()
     const toggleFirstAccessMock = jest.fn()
-        ;(useContext as jest.Mock).mockReturnValue({
+    ;(useContext as jest.Mock).mockReturnValue({
       theme: 'light',
       resetWallet: resetWalletMock,
       toggleFirstAccess: toggleFirstAccessMock,
@@ -86,5 +86,25 @@ describe('useSettings hook', () => {
 
     expect(resetWalletMock).toHaveBeenCalled()
     expect(toggleFirstAccessMock).toHaveBeenCalled()
+  })
+
+  it('should toggle guardians refresh', async () => {
+    const { result } = renderHook(() => useSettings())
+
+    await act(() => {
+      result.current.setGuardiansRefresh()
+    })
+
+    expect(result.current.guardiansRefresh).toBe(true)
+  })
+
+  it('should toggle recover as guardian refresh', async () => {
+    const { result } = renderHook(() => useSettings())
+
+    await act(() => {
+      result.current.setRecoverAsGuardianRefresh()
+    })
+
+    expect(result.current.recoverAsGuardianRefresh).toBe(true)
   })
 })

@@ -8,9 +8,12 @@ import { deleteSmall } from '../../assets/AssetsRegistry'
 import { ThemeContext } from '../../context/ThemeContext'
 import QRCodeScanner from '../QRCodeScanner/QRCodeScanner'
 import { formatBlockchainAddress } from '../../utils/formatBlockchainData'
-import { wallet } from '../../contracts/contracts'
 
-export default function GuardiansManager() {
+type GuardiansManagerProps = {
+  refreshRequest: boolean
+}
+
+export default function GuardiansManager(props: GuardiansManagerProps) {
   const {
     guardians,
     iseFetchingLoading,
@@ -28,7 +31,7 @@ export default function GuardiansManager() {
     closeQRCodeScanner,
     sendRemoveGuardian,
     removingGuardians,
-  } = useGuardiansManager()
+  } = useGuardiansManager(props)
   const { theme } = useContext(ThemeContext)
 
   const themedStyles = StyleService.create({

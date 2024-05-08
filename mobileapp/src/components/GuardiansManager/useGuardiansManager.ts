@@ -6,7 +6,11 @@ import Toast from 'react-native-toast-message'
 import { getSigner } from '../../services/wallet'
 import useLoading from '../../hooks/useLoading'
 
-export default function useGuardiansManager() {
+type useGuardiansManagerProps = {
+  refreshRequest: boolean
+}
+
+export default function useGuardiansManager({ refreshRequest }: useGuardiansManagerProps) {
   const { getWalletContractAddress, getPrivateKey } = useContext(WalletContext)
   const { currentNetwork, ethersProvider } = useContext(BlockchainContext)
   const [guardians, setGuardians] = useState<string[]>([])
@@ -19,14 +23,14 @@ export default function useGuardiansManager() {
   const [removingGuardians, setRemovingGuardians] = useState<string[]>([])
 
   const fetchGuardians = async () => {
+    setGuardians([])
     setGuardians(await getGuardians(ethersProvider, currentNetwork, getWalletContractAddress()))
   }
 
   useEffect(() => {
     setIsFetchingLoading(true)
-    fetchGuardians()
-    setIsFetchingLoading(false)
-  }, [])
+    fetchGuardians().then(() => setIsFetchingLoading(false))
+  }, [refreshRequest])
 
   const sendAddGuardian = async () => {
     setIsSendLoading(true)
