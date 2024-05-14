@@ -27,3 +27,52 @@
   month   = {03},
   year    = {2024},
 }
+
+
+@online{eip-1,
+  title   = {EIP-1},
+  url     = {https://eips.ethereum.org/EIPS/eip-1},
+  urldate = {2024-05-14},
+  month   = {10},
+  year    = {2015}
+}
+
+@online{eip-86,
+  title   = {EIP-86},
+  url     = {https://eips.ethereum.org/EIPS/eip-86},
+  urldate = {2024-05-13},
+  month   = {02},
+  year    = {2017}
+}
+
+@online{eip-2711,
+  title   = {EIP-2711},
+  url     = {https://eips.ethereum.org/EIPS/eip-2711},
+  urldate = {2024-05-13},
+  month   = {06},
+  year    = {2020}
+}
+
+@online{eip-3074,
+  title   = {EIP-3074},
+  url     = {https://eips.ethereum.org/EIPS/eip-3074},
+  urldate = {2024-05-14},
+  month   = {10},
+  year    = {2020}
+}
+
+@online{pectra-hardfork,
+  title   = {Ethereum update: PECTRA},
+  url     = {https://github.com/ethereum/pm/issues/997#issuecomment-2045893316},
+  urldate = {2024-05-14},
+  month   = {04},
+  year    = {2024}
+}
+
+@online{ECDSA,
+  title   = {Elliptic Curve Digital Signature Algorithm},
+  url     = {https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm},
+  urldate = {2024-05-13},
+  month   = {05},
+  year    = {2024},
+}

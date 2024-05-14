@@ -1,6 +1,11 @@
 \section{Account Abstraction}
 \label{sec:account_abstraction}
 
+% Different solutions
+
+Different solutions have been proposed to improve the user experience (UX), including \textit{Meta Transactions}, \textit{Smart Contract Wallets}, and \textit{Account Abstraction}. The results of the analysis done by the Institute of Information Systems and Networking at the University of Applied Sciences and Arts of Southern Switzerland (SUPSI) indicate that Account Abstraction presents the most promising solution for improving UX in decentralised systems, offering a comprehensive solution that enables smart contract logic to determine the fee payment and validation logic of transactions. \cite{isin-aa-user-experience}
+
+
 %What is an account?
 
 The term \textit{Account Abstraction} refers to the ability to extend the capabilities of an account in a blockchain. In the context of Ethereum, there are two type of accounts: \cite{ethereum-accounts}
@@ -12,27 +17,89 @@ The term \textit{Account Abstraction} refers to the ability to extend the capabi
 
 % Problem with EOA: fee, lost private key, etc.
 
-EOAs are the only account type that can initiate transactions, while contract accounts can only \textit{react} \footnote{A smart contract can initiate a transaction by calling another smart contract, but the transaction is still initiated by an EOA.} to transactions, which makes it difficult to do batches of transactions and requires users to always keep an ETH balance to cover gas. Other limitations include the lack of recovery options, the need to pay a fee for each transaction, and the risk of losing the private key. Generalising, the user experience is not as seamless as in traditional web 2.0 applications. \cite{ethereum-account-abstraction}
+EOAs are the only account type that can initiate transactions, while contract accounts can only \textit{react}\footnote{A smart contract can initiate a transaction by calling another smart contract, but the transaction is still initiated by an EOA.} to transactions, which makes it difficult to do batches of transactions and requires users to always keep an ETH balance to cover gas. Other limitations include the lack of recovery options, the need to pay a fee for each transaction, and the risk of losing the private key. Generalising, the user experience is not as seamless as in traditional web 2.0 applications. \cite{ethereum-account-abstraction}
+
 
 % What is account abstraction? Use a contract accounts instead of EOAs.
 % Why use account abstraction? different use cases: recovery, relaying transactions, etc.
 
-Account abstraction is a way to solve these problems by allowing users to flexibly program more security and better user experiences into their accounts. This is achieved by \textit{abstracting} the account model, allowing users to use contract accounts instead of EOAs. The use of a new type of account named \textbf{Smart Contract Wallets} unlocks new possibilities, including: \cite{ethereum-account-abstraction}
+Account abstraction is a way to solve these problems by allowing users to flexibly include more security and better user experiences into their accounts. This is achieved by \textit{abstracting} the account model, allowing users to use contract accounts instead of EOAs. 
 
+The use of \textit{Smart Contract Wallets} with \textit{Account Abstraction}  unlocks new possibilities, including: \cite{ethereum-account-abstraction}
 \begin{itemize}
-    \item \textit{Flexible security models}: 
-    \item \textit{Recovery options}:
-    \item \textit{Multi owner accounts}:
-    \item \textit{Relayed transactions}:
-    \item \textit{Batch/Multi transactions}:
-    \item \textit{Innovative User Experience}:
+    \item \textit{Flexible security models}: Multi-signature, account freezing, transaction limits, allowlists, etc.
+    \item \textit{Recovery options}: Social recovery, guardians, etc.
+    \item \textit{Multi owner accounts}: Shared accounts, business accounts, etc.
+    \item \textit{Relayed transactions}: Sign a transaction and let someone else pay for it.
+    \item \textit{Batch/Multi transactions}: Execute multiple transactions in a single call.
+    \item \textit{Innovative User Experience}: Seamless interaction with the blockchain.
 \end{itemize}
 
+% Write something to introduce ERC and Argent
 
-\subsection{ERC standards}
-\label{subsec:erc_standards}
+\subsection{EIPs}
+\label{subsec:eips}
 
-EIP-86, EIP-2938, EIP-3078, EIP-4337, ERC-4337
+The community of Ethereum is actively working to improve the blockchain. Everyone can propose an improvement through an EIP (Ethereum Improvement Proposal). An EIP is a design document providing information to the Ethereum community, or describing a new feature for Ethereum or its processes or environment. The EIP should provide a concise technical specification of the feature and a rationale for the feature. The EIP author is responsible for building consensus within the community and documenting dissenting opinions. \cite{eip-1}
+
+In the context of Account Abstraction, the most relevant EIPs are in the category of \textit{Standards Track EIPs}, which are changes that affect most or all Ethereum implementations. Standards Track EIPs can be classified into three categories: \cite{eip-1}
+\begin{itemize}
+    \item \textit{Core}: Changes that require a consensus fork.
+    \item \textit{Networking}: Changes that affect network protocol, including changes that are specific to the network layer.
+    \item \textit{Interface}: Includes improvements around language-level standards, like method names and contract ABIs.
+    \item \textit{ERC}: Application-level standards and conventions, including contract standards such as token standards (ERC-20), name registries (ERC-137), URI schemes, library/package formats, and wallet formats.
+\end{itemize}
+
+In the following sections, the most relevant EIPs related to Account Abstraction are presented.
+
+\subsubsection{EIP-86}
+\label{subsubsec:eip-86}
+
+Proposed by Vitalik Buterin\footnote{co-founder of Ethereum} in 2017, EIP-86 is a \textit{Core} proposal and can be considered the first step towards account abstraction. The goal of this proposal is to abstract the signature verification and the nonce scheme. This allows to develop smart contracts able to use any signature scheme in transaction verification. \cite{eip-86}
+
+The default way to secure an Ethereum account is the ECDSA\footnote{Elliptic Curve Digital Signature Algorithm \cite{ECDSA}} signature scheme. However, EIP-86 allows to use any signature scheme, including multi-signature schemes and \textbf{custom cryptography}. \cite{eip-86}
+
+It is important to notice that ECDSA cryptography is \textbf{not} quantum-resistant, the Peter Shor's algorithm can be used to break the ECDSA in polynomial time. \cite{stewart2018committing}
+
+The current status of EIP-86 is \textit{Stagnant}, as it has been inactive for more than 6 months. Nevertheless, this proposal was an inspiration for the following EIPs.
+
+\subsubsection{EIP-2711}
+\label{subsubsec:eip-2711}
+
+Proposed in 2020, The EIP-2771 is based on the EIP-2718 proposal, which introduces a new transaction type. The main features that EIP-2771 may introduce are: \cite{eip-2711} 
+
+\begin{itemize}
+    \item \textit{Sponsored Transactions}: Allow third parties to pay for a user's gas costs.
+    \item \textit{Batch Transactions}: Execute multiple transactions in a single call.
+    \item \textit{Expiring Transactions}: Set an expiration time that invalidates the transaction.
+\end{itemize}
+
+The proposal is a \textit{Core} EIP and it has been \textit{Withdrawn} by the author. The reason for the withdrawal is that the EIP-3074, proposed with the help of the author of EIP-2711, is a more complete solution. \cite{eip-2711}
+
+\subsubsection{EIP-3074}
+\label{subsubsec:eip-3074}
+
+Proposed in 2020, EIP-3074 introduces two new opcodes\footnote{An Opcode is a machine-level instruction} to the Ethereum Virtual Machine (EVM): \texttt{AUTH} and \texttt{AUTHCALL}. The first sets a context variable authorized based on an ECDSA signature. The second sends a call as the authorized account. This essentially delegates control of the externally owned account (EOA) to a smart contract called \textit{Invoker}. \cite{eip-3074}
+
+More specifically, \texttt{AUTH} enables the retrieval of a user's address from a signed message, effectively authenticating the user within EVM. \texttt{AUTHCALL}, on the other hand, simplifies the execution of authenticated calls by altering the sender of the transaction to the authorized address, thus simplifying the process of executing transactions that mimic smart contract logic directly from EOAs. \cite{ethereum-account-abstraction}
+
+This gives developers a flexible framework for developing novel transaction schemes for EOAs. A motivating use case of this EIP is that it allows any EOA to act like a smart contract wallet without deploying a contract (many EOAs may use the same \textit{Invoker} contract). \cite{eip-3074}
+
+The \textit{Invoker} contract is a trustless intermediary between the EOA and the rest of the Ethereum network. The contract can be used to implement a variety of features, such as \textit{sponsored transactions}, \textit{expiration}, \textit{batch transactions}, etc. \cite{eip-3074}
+
+As stated in the EIP: \cite{eip-3074}
+\begin{displayquote}
+    Choosing an invoker is similar to choosing a smart contract wallet implementation. It's important to choose one that has been thoroughly reviewed, tested, and accepted by the community as secure. We expect a few invoker designs to be utilized by most major transaction relay providers, with a few outliers that offer more novel mechanisms.
+\end{displayquote}
+
+EIP-3074 is currently in \textit{Review} status, and it is expected to be included in the next hard fork of Ethereum, named \textit{Pectra}. \cite{pectra-hardfork}
+
+\subsubsection{ERC-4337}
+\label{subsubsec:erc-4337}
+
+Proposed in 2021, ERC-4337 is an account abstraction proposal which completely avoids the need for consensus-layer protocol changes. Instead of adding new protocol features and changing the bottom-layer transaction type, this proposal instead introduces a higher-layer pseudo-transaction object called a \textit{UserOperation}. Users send \textit{UserOperation} objects into a separate \textit{mempool}. A special class of actor called bundlers package up a set of these objects into a transaction making a \textit{handleOps} call to a special contract, and that transaction then gets included in a block.
+
+
 
 \subsection{Argent}
 \label{subsec:argent}

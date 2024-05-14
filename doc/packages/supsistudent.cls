@@ -50,6 +50,10 @@
 % Numero pagine
 \usepackage{lastpage}
 
+% Quote 
+\usepackage{csquotes}
+
+
 \assignpagestyle{\chapter}{fancy}
 
 % Comandi
