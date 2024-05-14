@@ -28,6 +28,7 @@
 
 % Spaziatura
 \usepackage{setspace}
+\usepackage{float}
 
 % Referenze
 \usepackage{varioref}
