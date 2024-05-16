@@ -137,7 +137,11 @@ The ERC-4337 is \textit{Draft} status and the main start contract required was d
 
 \subsubsection{EIP-7702}
 
+Proposed in 2024 co-authored by Vitalik Buterin, EIP-7702 is the latest proposal for account abstraction. The main goal of this proposal is to offer the same features as \hyperref[subsubsec:eip-3074]{EIP-3074}, but without the need of the two opcodes \texttt{AUTH} and \texttt{AUTHCALL}. The reason is that, as stated in the EIP, the two opcodes will not be used in the final solution for Account Abstraction where Smart Contract Wallets will eventually be implemented. \cite{eip-7702}
 
+EIP-7702 propose to a new transaction type that adds a \texttt{contract\_code} field and signature, and converts the signing account (not necessarily the same that started the transaction) into a smart contract wallet for the duration of that transaction. \cite{eip-7702}
+
+This \textit{Core} proposal is in an early stage, as it is in \textit{Draft} status. But it is promising, as it is co-authored by Vitalik Buterin, one of the co-founders of Ethereum.
 
 \subsection{Argent}
 \label{subsec:argent}

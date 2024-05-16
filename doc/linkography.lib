@@ -77,6 +77,15 @@
   year    = {2021}
 }
 
+@online{eip-7702,
+  title   = {EIP-7702},
+  url     = {https://eips.ethereum.org/EIPS/eip-7702},
+  urldate = {2024-05-16},
+  month   = {05},
+  year    = {2024}
+}
+
+
 
 @online{pectra-hardfork,
   title   = {Ethereum update: PECTRA},
