@@ -3,12 +3,11 @@
 
 % Different solutions
 
-Different solutions have been proposed to improve the user experience (UX), including \textit{Meta Transactions}, \textit{Smart Contract Wallets}, and \textit{Account Abstraction}. The results of the analysis done by the Institute of Information Systems and Networking at the University of Applied Sciences and Arts of Southern Switzerland (SUPSI) indicate that \textit{Account Abstraction} presents the most promising solution for improving UX in decentralised systems, offering a comprehensive solution that enables smart contract logic to determine the fee payment and validation logic of transactions. \cite{isin-aa-user-experience}
+Different solutions have been proposed to improve the user experience (UX) of web3.0 applications, including \textit{Meta Transactions}, \textit{Smart Contract Wallets}, and \textit{Account Abstraction}. The results of the analysis done by the Institute of Information Systems and Networking at the University of Applied Sciences and Arts of Southern Switzerland (SUPSI) indicate that \textit{Account Abstraction} presents the most promising solution for improving UX in decentralised systems, offering a comprehensive solution that enables smart contract logic to determine the fee payment and validation logic of transactions. \cite{isin-aa-user-experience}
 
 
 %What is an account?
-In the context of Ethereum, there are two type of accounts: \cite{ethereum-accounts}
-
+To analyse the concept of Account Abstraction, it is necessary to understand what an account is in the context of Ethereum, there are two types of accounts: \cite{ethereum-accounts}
 \begin{itemize}
     \item \textit{Externally Owned Accounts (EOA)}: controlled by anyone with the private key.
     \item \textit{Contract Accounts}: A deployed smart contract. Controlled by the code.
@@ -16,8 +15,7 @@ In the context of Ethereum, there are two type of accounts: \cite{ethereum-accou
 
 % Problem with EOA: fee, lost private key, etc.
 
-EOAs are the only account type that can initiate transactions, while contract accounts can only \textit{react}\footnote{A smart contract can initiate a transaction by calling another smart contract, but the transaction is still initiated by an EOA.} to transactions, which makes it difficult to do batches of transactions and requires users to always keep an ETH balance to cover gas. Other limitations include the lack of recovery options, the need to pay a fee for each transaction, and the risk of losing the private key. With these weakness, the user experience is not as seamless as in traditional web 2.0 applications. \cite{ethereum-account-abstraction}
-
+EOAs are the only account type that can initiate transactions, while contract accounts can only \textit{react}\footnote{A smart contract can initiate a transaction by calling another smart contract, but the transaction is still initiated by an EOA.} to transactions. The main problem with EOAs is that they are not flexible enough to support the needs of modern applications. For example, EOAs can not be used to initiate batches of transactions and requires to always keep an ETH balance to cover gas. Other limitations include the lack of recovery options, the need to pay a fee for each transaction, and the risk of losing the private key. With these weaknesses, the user experience is not as seamless as in traditional web2.0 applications. \cite{ethereum-account-abstraction}
 
 % What is account abstraction? Use a contract accounts instead of EOAs.
 % Why use account abstraction? different use cases: recovery, relaying transactions, etc.
@@ -45,7 +43,7 @@ The use of \textit{Smart Contract Wallets}  unlocks new possibilities, including
 
 % Write something to introduce EIP and Argent
 
-In the following sections, the most relevant Ethereum Improvement Proposals (EIPs) related to Account Abstraction are presented. In particular, it is possible to notice how the community is proposing different solutions to achieve the same goal. %TODO: introduce Argent 
+In the following sections, the most relevant Ethereum Improvement Proposals (EIPs) related to Account Abstraction are presented. In particular, it is possible to notice how the community is advancing different solutions to achieve the same goal. %TODO: introduce Argent 
 
 \subsection{EIPs}
 \label{subsec:eips}
@@ -93,8 +91,6 @@ Proposed in 2020, The EIP-2938 is a \textit{Core} proposal that introduces a new
 
 The main concept of EIP-2938 is to remove intermediaries during a relayed transaction. The implementations that need a Relayer are technically inefficient, due to the extra 21000 gas to pay for the relayer, economically inefficient, as relayers need to make a profit on top of the gas fees that they pay. Additionally, use of intermediary protocols means that these applications cannot simply rely on base Ethereum infrastructure and need to rely on extra protocols that have smaller userbases and higher risk of no longer being available at some future date. \cite{eip-2938}
 
-As it is possible to understand, the main concept of EIP-2938 is to \textbf{upgrade} what a \textbf{Smart Contract} can do.
-
 Also the EIP-2938 is in a \textit{Stagnant} status, as it has been inactive for more than 6 months. The community is currently favouring EIP-4337. \cite{ethereum-account-abstraction}
 
 \subsubsection{EIP-3074}
@@ -118,9 +114,9 @@ EIP-3074 is currently in \textit{Review} status, and it is expected to be includ
 \subsubsection{ERC-4337}
 \label{subsubsec:erc-4337}
 
-Proposed in 2021, ERC-4337 is an account abstraction proposal which completely avoids the need for consensus-layer protocol changes by creating \textbf{separate transaction system}. \cite{eip-4337}
+Proposed in 2021, ERC-4337 is an account abstraction proposal which completely avoids the need for consensus-layer protocol changes by creating a \textbf{separate transaction system}. \cite{eip-4337}
 
-Instead of adding new protocol features and changing the bottom-layer transaction type, this proposal instead introduces a higher-layer pseudo-transaction object called a \textit{UserOperation}. 
+Instead of adding new protocol features and changing the bottom-layer transaction type, this proposal introduces a higher-layer pseudo-transaction object called a \textit{UserOperation}. 
 As illustrated by figure \ref{fig:4337-diagram}, users send \textit{UserOperation} objects into a separate \textit{mempool}. A special class of actor called bundlers package up a set of these objects into a transaction making a \textit{handleOps} call to a special contract, and that transaction then gets included in a block. 
 
 \begin{figure}[H]
@@ -133,13 +129,13 @@ As illustrated by figure \ref{fig:4337-diagram}, users send \textit{UserOperatio
 
 ERC-4337 also introduces a paymaster mechanism that can enable users to pay gas fees using ERC-20 tokens (e.g. USDC) instead of ETH or to allow a third party to sponsor their gas fees altogether, all in a decentralized fashion. \cite{isin-aa-user-experience}
 
-The ERC-4337 is \textit{Draft} status and the main start contract required was deployed in March 2023. \cite{ethereum-roadmap-ux}
+The ERC-4337 is in \textit{Draft} status and the main start contract required was deployed in March 2023. \cite{ethereum-roadmap-ux}
 
 \subsubsection{EIP-7702}
 
-Proposed in 2024 co-authored by Vitalik Buterin, EIP-7702 is the latest proposal for account abstraction. The main goal of this proposal is to offer the same features as \hyperref[subsubsec:eip-3074]{EIP-3074}, but without the need of the two opcodes \texttt{AUTH} and \texttt{AUTHCALL}. The reason is that, as stated in the EIP, the two opcodes will not be used in the final solution for Account Abstraction where Smart Contract Wallets will eventually be implemented. \cite{eip-7702}
+Proposed in 2024 co-authored by Vitalik Buterin, EIP-7702 is the latest proposal for account abstraction. The main goal of this proposal is to offer the same features as \hyperref[subsubsec:eip-3074]{EIP-3074}, but without the need of the two opcodes \texttt{AUTH} and \texttt{AUTHCALL}. The reason is that, as stated in the EIP, the two opcodes will not be used in the final solution for Account Abstraction, where Smart Contract Wallets will eventually be implemented. \cite{eip-7702}
 
-EIP-7702 propose to a new transaction type that adds a \texttt{contract\_code} field and signature, and converts the signing account (not necessarily the same that started the transaction) into a smart contract wallet for the duration of that transaction. \cite{eip-7702}
+EIP-7702 propose to a new transaction type that adds a \texttt{contract\_code} field and signature, the idea is to convert the signing account (not necessarily the same that started the transaction) into a smart contract wallet for the duration of that transaction. \cite{eip-7702}
 
 This \textit{Core} proposal is in an early stage, as it is in \textit{Draft} status. But it is promising, as it is co-authored by Vitalik Buterin, one of the co-founders of Ethereum.
 
