@@ -142,3 +142,29 @@ This \textit{Core} proposal is in an early stage, as it is in \textit{Draft} sta
 \subsection{Argent}
 \label{subsec:argent}
 
+Argent\footnote{https://www.argent.xyz/} is a well known company whose mission is to make blockchain widely used. To achieve this goal, Argent, as a pioneer in the field of Account Abstraction, has developed different solutions to improve the user experience of blockchain applications. \cite{argent-aa}
+
+One of the first solutions developed by Argent is the open source project \textit{Argent Wallet Smart Contract}. The Argent wallet is an Ethereum Smart Contract based mobile wallet. The wallet's user keeps an EOA secretly on his mobile device. This account is set as the owner of the Smart Contract. User's funds (ETH and ERC20 tokens) are stored on the Smart Contract. With that model, logic can be added to the wallet to improve both the user experience and the wallet security. \cite{argent-github}
+
+% Argent does not use the EIPs, because they are not yet implemented in the Ethereum mainnet. but with a more complex solution, they have achieved the same goal.
+
+% TODO
+
+% Argent functionalities
+
+The functionalities of the Argent wallet are: \cite{argent-smart-wallet-specifications}
+\begin{itemize}
+    \item \textit{Guardians}: Authorized accounts (EOA or smart contracts) permitted by the wallet owner to execute specific operations such as locking, unlocking, initiating recovery procedures, approving transactions to unknown accounts, or creating session keys. Guardians can be various entities including friends' wallets, EOAs, hardware wallets, or paid third-party services. Adding or removing guardians requires confirmation within a specified time frame to prevent unauthorized access.
+    \item \textit{Recovery}: Mechanism allowing wallet owners to regain access to their funds in case of loss or compromise, typically involving a predefined recovery process facilitated by designated guardians. Recovery processes require validation by the wallet's guardians and can be cancelled or finalized within a certain time frame.
+    \item \textit{Ownership Transfer}: Allows users to transfer ownership of their wallet to a new device while still in possession of the original device. The transfer is immediate to avoid service interruption but requires approval from guardians.
+    \item \textit{Multi-Call}: Enables the wallet to interact with the Ethereum ecosystem by executing a sequence of transactions one after the other. The multi-call fails if any of the transactions fail and requires specific conditions to be met for execution.
+    \item \textit{Trusted Contacts}: Allows users to maintain a list of trusted addresses managed by the wallet owner. Interacting with trusted contacts, such as sending assets, does not require additional authorization.
+    \item \textit{Dapp Registry}: Supports two registries of authorized addresses, including native integration dapps and curated dapps accessible through WalletConnect. Entries in the registry are time-locked and require guardian approvals for enabling or disabling.
+    \item \textit{Guardian Approval}: Any sequence of transactions (multi-call) executed by the wallet owner requires approval from guardians.
+    \item \textit{Session}: Users can execute multiple transactions within a given time window with guardian approval required only once by creating a session with a temporary session key.
+    \item \textit{Upgradability}: Allows for the wallet to be upgraded to add new features or fix potential bugs, with the choice left to the wallet owner without the ability for a centralized party to force an upgrade.
+    \item \textit{ETH-Less Account}: Enables owner and guardians to execute wallet operations without owning ETH or paying transaction fees by utilizing meta-transactions, where a third-party relayer executes transactions on their behalf.
+    \end{itemize}
+    
+\subsubsection{Argent Wallet Smart Contract Architecture}
+

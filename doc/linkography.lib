@@ -109,3 +109,16 @@
   month   = {05},
   year    = {2024},
 }
+
+@online{argent-aa,
+  title   = {Argent FAQ},
+  url     = {https://www.argent.xyz/faq/},
+  urldate = {2024-05-16},
+}
+
+@online{argent-github,
+  title   = {Argent contract - Github},
+  url     = {https://github.com/argentlabs/argent-contracts},
+  urldate = {2024-05-16},
+}
+

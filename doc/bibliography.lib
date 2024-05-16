@@ -10,7 +10,14 @@
   journal   = {Royal Society open science},
   volume    = {5},
   number    = {6},
-  pages     = {180410},
   year      = {2018},
   publisher = {The Royal Society Publishing}
+}
+
+@article{argent-smart-wallet-specifications,
+  title     = {Argent Smart Wallet Specification},
+  author    = {Argent},
+  number    = {6},
+  year      = {2021},
+  note      = {\url {https://github.com/argentlabs/argent-contracts/blob/develop/specifications/specifications.pdf} (visited on May 16, 2024)}
 }
