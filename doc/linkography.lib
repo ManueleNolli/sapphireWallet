@@ -122,3 +122,8 @@
   urldate = {2024-05-16},
 }
 
+@online{opcode-create2,
+  title   = {OpenZeppelin - CREATE2},
+  url     = {https://docs.openzeppelin.com/cli/2.8/deploying-with-create2},
+  urldate = {2024-05-16},
+}
