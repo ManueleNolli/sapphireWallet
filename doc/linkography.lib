@@ -127,3 +127,30 @@
   url     = {https://docs.openzeppelin.com/cli/2.8/deploying-with-create2},
   urldate = {2024-05-16},
 }
+
+
+@online{lifi-bridge,
+  title   = {LiFi - Bridge classification},
+  url     = {https://li.fi/knowledge-hub/blockchain-bridges-and-classification/},
+  urldate = {2024-05-16},
+  month   = {07},
+  year    = {2022},
+}
+
+@online{immunebytes-trust-bridge,
+  title   = {ImmuneBytes - Trustless Bridges Vs Trusted Bridges},
+  url     = {https://www.immunebytes.com/blog/trustless-bridges-vs-trusted-bridges/},
+  urldate = {2024-05-16},
+  month   = {03},
+  year    = {2023},
+}
+
+
+@online{chainlink-transfer-assets,
+  title   = {ChainLink - Bridge assets},
+  url     = {https://chain.link/education-hub/cross-chain-bridge},
+  urldate = {2024-05-16},
+  month   = {01},
+  year    = {2024},
+}
+
