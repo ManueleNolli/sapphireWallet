@@ -1,7 +1,7 @@
 \section{Cross-Chain Communication}
 \label{sec:cross_chain_communication}
 
-This section presents the state of the art of \textit{Cross-Chain communication}, categorising the bridges according to the trust model, communication model, and asset transfer model. The need for Cross-Chain communication arises from the fragmentation of the blockchain ecosystem, where each blockchain is a separate network with its own consensus mechanism and state. The goal of Cross-Chain communication is to enable the transfer of assets and information between different blockchains, allowing users to interact with multiple network seamlessly.
+This section presents the state of the art of \textit{Cross-Chain communication}, categorising the bridges according to the trust model, communication model, and asset transfer model. The need for Cross-Chain communication arises from the fragmentation of the blockchain ecosystem, where each blockchain is a separate network with its own consensus mechanism and state. The goal of Cross-Chain communication is to enable the transfer of assets and information between different blockchains, allowing users to interact with multiple network seamlessly. 
 
 \subsection{Bridge classification}
 \label{subsec:bridge_classification}
@@ -22,8 +22,8 @@ Blockchain bridges can be classified into two main trust models:
 
 The communication model of blockchain bridges can be categorised based on what type of blockchain interaction they enable:  \cite{lifi-bridge}
 \begin{itemize}
-    \item \textit{L1 $\leftrightarrow$ L1 Bridges}: connect different Layer 1 blockchains with each other.
-    \item \textit{L1/L2 $\leftrightarrow$ L2 Bridges}: connect the Mainnet with different Layer 2 solutions and the L2s with each other. 
+    \item \textit{L1 $\leftrightarrow$ L1 Bridges}: Connect different Layer 1 blockchains with each other. For example, the Avalanche Bridge\footnote{https://core.app/bridge} connects Ethereum and Avalanche.
+    \item \textit{L1/L2 $\leftrightarrow$ L2 Bridges}: Connect the Mainnet with different Layer 2 solutions and the L2s with each other. Arbitrum\footnote{https://arbitrum.io/} is an example of a Layer 2 solution that can be connected to the Ethereum Mainnet.
 \end{itemize}
 
 \subsubsection{Asset transfer model}
@@ -34,7 +34,6 @@ The asset transfer mechanisms of blockchain bridges include:  \cite{lifi-bridge}
     \item \textit{Lock \& Mint}: Assets are locked on the source blockchain and equivalent tokens are minted on the destination blockchain. 
     \item \textit{Burn \& Mint}: Assets on the source blockchain are burned, and equivalent tokens are minted on the destination blockchain.  
     \item \textit{Lock \& Unlock}: Tokens are locked on the source chain and unlocked from a liquidity pool on the destination chain. 
-    \item \textit{Atomic Swaps}: This method involves directly swapping assets between blockchains using smart contracts, ensuring a trustless exchange without the need for an intermediary. 
 \end{itemize}
 
 

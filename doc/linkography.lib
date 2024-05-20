@@ -145,7 +145,6 @@
   year    = {2023},
 }
 
-
 @online{chainlink-transfer-assets,
   title   = {ChainLink - Bridge assets},
   url     = {https://chain.link/education-hub/cross-chain-bridge},
@@ -154,3 +153,57 @@
   year    = {2024},
 }
 
+@online{icp-vision,
+  title   = {ICP vision},
+  url     = {https://internetcomputer.org/what-is-the-ic},
+  urldate = {2024-05-16},
+}
+
+@online{icp-how-it-works,
+  title   = {ICP - How it works},
+  url     = {https://internetcomputer.org/how-it-works},
+  urldate = {2024-05-17},
+}
+
+
+@online{icp-architecture,
+  title   = {ICP - Architecture},
+  url     = {https://internetcomputer.org/how-it-works/architecture-of-the-internet-computer/},
+  urldate = {2024-05-16},
+}
+
+@online{icp-chain-key,
+  title   = {ICP - Chain Key technology},
+  url     = {https://internetcomputer.org/how-it-works/chain-key-technology/},
+  urldate = {2024-05-20},
+}
+
+@online{icp-cross-chain-interoperability,
+  title   = {ICP - Cross Chain Interoperability},
+  url     = {https://internetcomputer.org/docs/current/tutorials/hackathon-prep-course/what-is-icp/#cross-chain-interoperability},
+  urldate = {2024-05-20},
+}
+
+@online{icp-https-outcalls,
+  title   = {ICP - HTTPS Outcalls},
+  url     = {https://internetcomputer.org/https-outcalls},
+  urldate = {2024-05-20},
+}
+
+@online{icp-identity,
+  title   = {ICP - Identity},
+  url     = {https://internetcomputer.org/docs/current/developer-docs/identity/internet-identity/},
+  urldate = {2024-05-20},
+}
+
+@online{icp-passkey,
+  title   = {ICP - Passkey},
+  url     = {https://identitysupport.dfinity.org/hc/en-us/articles/15738590400148-What-is-a-passkey},
+  urldate = {2024-05-20},
+}
+
+@online{icp-identity-technical,
+  title   = {ICP - Identity Technical},
+  url     = {https://wiki.internetcomputer.org/wiki/Internet_Identity_technical_overview},
+  urldate = {2024-05-20},
+}
