@@ -117,21 +117,16 @@ EIP-3074 is currently in \textit{Review} status, and it is expected to be includ
 Proposed in 2021, ERC-4337 is an account abstraction proposal which completely avoids the need for consensus-layer protocol changes by creating a \textbf{separate transaction system}. \cite{eip-4337}
 
 Instead of adding new protocol features and changing the bottom-layer transaction type, this proposal introduces a higher-layer pseudo-transaction object called a \textit{UserOperation}. 
-As illustrated by figure \ref{fig:4337-diagram}, users send \textit{UserOperation} objects into a separate \textit{mempool}. A special class of actor called bundlers package up a set of these objects into a transaction making a \textit{handleOps} call to a special contract, and that transaction then gets included in a block. 
+As illustrated by figure \ref{state_of_the_art/4337-diagram}, users send \textit{UserOperation} objects into a separate \textit{mempool}. A special class of actor called bundlers package up a set of these objects into a transaction making a \textit{handleOps} call to a special contract, and that transaction then gets included in a block. 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{state_of_the_art/4337-diagram}
-    \caption{ERC-4337 Diagram}
-    \label{fig:4337-diagram}
-\end{figure}
+\customfigure{state_of_the_art/4337-diagram}{ERC-4337 Diagram}{0.8}
 
-
-ERC-4337 also introduces a paymaster mechanism that can enable users to pay gas fees using ERC-20 tokens (e.g. USDC) instead of ETH or to allow a third party to sponsor their gas fees altogether, all in a decentralized fashion. \cite{isin-aa-user-experience}
+ERC-4337 also introduces a paymaster mechanism that can enable users to pay gas fees using ERC-20 tokens (e.g. USDC) instead of ETH or to allow a third party to sponsor their gas fees altogether, all in a decentralised fashion. \cite{isin-aa-user-experience}
 
 The ERC-4337 is in \textit{Draft} status and the main start contract required was deployed in March 2023. \cite{ethereum-roadmap-ux}
 
 \subsubsection{EIP-7702}
+\label{subsubsec:erc-7702}
 
 Proposed in 2024 co-authored by Vitalik Buterin, EIP-7702 is the latest proposal for account abstraction. The main goal of this proposal is to offer the same features as \hyperref[subsubsec:eip-3074]{EIP-3074}, but without the need of the two opcodes \texttt{AUTH} and \texttt{AUTHCALL}. The reason is that, as stated in the EIP, the two opcodes will not be used in the final solution for Account Abstraction, where Smart Contract Wallets will eventually be implemented. \cite{eip-7702}
 

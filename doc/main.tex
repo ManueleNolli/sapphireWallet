@@ -1,6 +1,19 @@
 %% Esempio per lo stile supsi
 \documentclass[twoside]{packages/supsistudent}
 
+% %figure custom command
+\definecolor{border-color}{HTML}{EDEDED}
+\newcommand{\customfigure}[3]{
+  \begin{figure}[H]
+    \centering
+    \setlength{\fboxsep}{0pt}  % remove default padding
+    \setlength{\fboxrule}{1pt}  % set the thickness of the border
+    \fcolorbox{border-color}{white}{\includegraphics[width=#3\linewidth]{#1}}
+    \caption{#2}
+    \label{fig:#1}
+  \end{figure}
+}
+
 % per settare noindent
 \setlength{\parindent}{0pt}
 

@@ -1,74 +1,15 @@
 \chapter{Problem Approach: Sapphire Wallet}
 \label{chap:problem_approach}
 
-\section{Architecture}
-\label{sec:architecture}
+In this chapter, the approach to the problem is presented. The Sapphire Wallet is a Multi-Chain account abstraction, based on an improved version of \hyperref[subsec:argent]{Argent Wallet}.
 
-\section{Blockchain}
-\label{sec:blockchain}
+The main goal of Sapphire Wallet is to give an idea of the potential of the blockchain technology in combination with Account Abstraction Layer and Multi-Chain Bridge approach. To achieve this goal, the Sapphire Wallet includes a set of features already present in the Argent Wallet, such as the Guardian, the Wallet Recovery, and the Wallet Creation. In addition, the Sapphire Wallet includes a Multi-Chain Bridge, which allows the user to interact with different blockchains. 
 
-Smart contracts deployed on the blockchain.
+It is important to notice that the Sapphire Wallet is developed on the current version of EVM\footnote{Dencun version}. There are several promising \hyperref[subsec:eips]{EIPs} that could be implemented in the future, such as the \hyperref[subsubsec:eip-3074]{EIP-3074} and the \hyperref[subsubsec:erc-7702]{EIP-7702}, but they need a hard fork of the Ethereum network. Whatever the final Account abstraction Implementation is, the Sapphire Wallet provides a realistic Proof of Concept of the future of blockchain technology.  
 
-\subsection{Base Chain}
-\label{subsec:base_chain}
+\input{content/problem_approach/architecture}
+\input{content/problem_approach/blockchain}
+\input{content/problem_approach/bridge}
+\input{content/problem_approach/backend}
+\input{content/problem_approach/mobile_application}
 
-\subsection{Dest Chain(s)}
-\label{subsec:dest_chain(s)}
-
-\section{Bridge}
-\label{sec:bridge}
-
-\section{Backend}
-\label{sec:backend}
-
-Microservices infrastructure.
-
-\subsection{API Gateway}
-\label{subsec:api_gateway}
-
-\subsection{Wallet Factory}
-\label{subsec:wallet_factory}
-
-WalletCreation.draw.io
-
-\subsection{Sapphire Relayer}
-\label{subsec:sapphire_relayer}
-
-\subsubsection{Base Chain Relayer}
-\label{subsubsec:base_chain_relayer}
-
-TransactionExecution.draw.io
-
-\subsubsection{Dest Chain Relayer}
-\label{subsubsec:dest_chain_relayer}
-
-All bridgeCall folder
-
-\subsection{Sapphire Portfolio}
-\label{subsec:sapphire_portfolio}
-
-Problem: how to retrieve the wallet info on all the chains?
-
-portfolio folder
-
-\section{Mobile Application: Sapphire Wallet}
-\label{sec:mobile_application}
-
-\subsection{Wallet Creation}
-\label{subsec:wallet_creation}
-
-\subsection{Wallet Recovery}
-\label{subsec:wallet_recovery}
-
-\subsection{Home Page}
-\label{subsec:wallet_home_page}
-
-Write all the operations, balance of chains, button.
-
-\subsection{NFTs Page}
-\label{subsec:nfts_page}
-
-\subsection{Settings Page}
-\label{subsec:settings_page}
-
-guardian

@@ -59,6 +59,11 @@
 \usepackage{hypgotoe}
 \newcommand*{\embedfileandcreatelink}[2]{\embedfile{#1}\href{gotoe:embedded=#1}{#2}}
 
+% Style
+\usepackage{fancybox}  % for custom frames
+\usepackage{xcolor}  % for color definitions
+
+
 \assignpagestyle{\chapter}{fancy}
 
 % Comandi
