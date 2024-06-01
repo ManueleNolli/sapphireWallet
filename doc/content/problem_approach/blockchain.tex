@@ -1,10 +1,16 @@
 \section{Blockchain}
 \label{sec:blockchain}
 
-Smart contracts deployed on the blockchain.
+Various smart contracts are implemented  and deployed on the blockchain to manage the Sapphire Wallet. There is a distinction between the Base Chain and the Dest Chain(s):
+\begin{itemize}
+    \item \textit{Base Chain}: smart contracts to manage Account Creation, Wallet Recovery, Transaction execution, etc.
+    \item \textit{Dest Chain(s)}: smart contracts to abstract the \textit{Base Chain} accounts and securely implement the bridge between the \textit{Base Chain} and the \textit{Dest Chain(s)}. 
+\end{itemize}
 
 \subsection{Base Chain}
 \label{subsec:base_chain}
+
+The Base Chain is the main blockchain where the Sapphire Wallet is deployed. The contracts are an extension of the \hyperref[subsec:argent]{Argent Wallet} contracts. 
 
 \subsection{Dest Chain(s)}
 \label{subsec:dest_chain(s)} 

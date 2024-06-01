@@ -55,9 +55,18 @@
 \usepackage{csquotes}
 
 % Attach files
+\usepackage{tocloft}
 \usepackage{embedfile}
 \usepackage{hypgotoe}
+
 \newcommand*{\embedfileandcreatelink}[2]{\embedfile{#1}\href{gotoe:embedded=#1}{#2}}
+\newcommand{\addattachment}[2]{
+  \embedfileandcreatelink{attachments/#1}{#2}
+  \addcontentsline{att}{attachments}{#1}
+}
+
+\newcommand{\listofattachmentsname}{List of Attachments}
+\newlistof{attachments}{att}{\listofattachmentsname}
 
 % Style
 \usepackage{fancybox}  % for custom frames
