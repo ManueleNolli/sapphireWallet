@@ -10,7 +10,29 @@ Various smart contracts are implemented  and deployed on the blockchain to manag
 \subsection{Base Chain}
 \label{subsec:base_chain}
 
-The Base Chain is the main blockchain where the Sapphire Wallet is deployed. The contracts are an extension of the \hyperref[subsec:argent]{Argent Wallet} contracts. 
+The Base Chain is the main blockchain where the Sapphire Wallet is deployed. The contracts are an extension of the \hyperref[subsec:argent]{Argent Wallet} contracts. The simplified architecture of the Base Chain is shown in the attachment \addattachment{SapphireWalletBlockchainSmartContracts.png}{SapphireWalletBlockchainSmartContracts}.
+
+The main features of the Base Chain are:
+\begin{itemize}
+    \item \textit{Account Creation}: via \textit{WalletFactory} it is possible to deploy a new \textit{Proxy} contract per user. When the proxy is called, it delegates the call to the \textit{BaseWallet} contract. It is important to note that the \textit{Proxy} will maintain its own state, but it will use the implementation of the \textit{BaseWallet} contract. This pattern is used to reduce the gas of deployment for each user.
+    \item \textit{Security} the combination of the \textit{SecurityManager} and \textit{GuardianManager} contracts allows the user to set up security features such as guardians, locks, whitelists, etc.
+    \item \textit{Relayed Transactions}: the \textit{RelayerManager} and \textit{TransactionManager} contracts allow the user to execute one or batch transactions. The transactions can be payed by a relayer, so the user does not need to have the native token of the blockchain. 
+    \item \textit{Interoperability}: the \textit{InteroperabilityManager} contract allows the user to emit, after a security check, events. The events are then relayed to the \textit{Dest Chain(s)} by the bridge.
+\end{itemize}
+
+\textcolor{red}{say that all the process are well described in the section usecases}
+
+
+For instance, it is interesting to analyse the process of a relayed ETH transfer transaction. The process is the following:
+\begin{enumerate}
+    \item The Relayer will call the \textit{RelayerManager} contract with the transaction data (including the user transaction and the related signature).
+    \item The \textit{RelayerManager} will call the \textit{TransactionManager} contract to execute the transaction on behalf of the user.
+    \item The \textit{TransactionManager} will invoke the \textit{Proxy} contract which in turn will use the implementation of the \textit{BaseWallet} contract but maintaining the context of the proxy contract.
+\end{enumerate}
+
+% talk about interoperability manager
+
+An important enhancement to the Sapphire Portfolio with regard to argent contracts is the \textit{InteroperabilityManager} contract. This contract allows the user to emit events that are then relayed to the \textit{Dest Chain(s)} by the bridge. The events are emitted after a security check. The \textit{InteroperabilityManager} contract is a key component to enable the communication between the \textit{Base Chain} and the \textit{Dest Chain(s)}.
 
 \subsection{Dest Chain(s)}
 \label{subsec:dest_chain(s)} 
