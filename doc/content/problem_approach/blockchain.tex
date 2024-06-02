@@ -15,13 +15,12 @@ The Base Chain is the main blockchain where the Sapphire Wallet is deployed. The
 The main features of the Base Chain are:
 \begin{itemize}
     \item \textit{Account Creation}: via \textit{WalletFactory} it is possible to deploy a new \textit{Proxy} contract per user. When the proxy is called, it delegates the call to the \textit{BaseWallet} contract. It is important to note that the \textit{Proxy} will maintain its own state, but it will use the implementation of the \textit{BaseWallet} contract. This pattern is used to reduce the gas of deployment for each user.
+    \item \textit{Account Abstraction}: once a user has created an account, and the \textit{Proxy} contract is deployed, the user assets will be stored in the \textit{Proxy} contract. The \textit{EOA} is a zero balance account used only to grant access to its \textit{Smart Contract Wallet}. 
     \item \textit{Security} the combination of the \textit{SecurityManager} and \textit{GuardianManager} contracts allows the user to set up security features such as guardians, locks, whitelists, etc.
     \item \textit{Relayed Transactions}: the \textit{RelayerManager} and \textit{TransactionManager} contracts allow the user to execute one or batch transactions. The transactions can be payed by a relayer, so the user does not need to have the native token of the blockchain. 
     \item \textit{Interoperability}: the \textit{InteroperabilityManager} contract allows the user to emit, after a security check, events. The events are then relayed to the \textit{Dest Chain(s)} by the bridge.
+    \item \textit{Portfolio Management}: when the \textit{InteroperabilityManager} is used, a new chain is added to the \textit{on-chain} user storage in the \textit{BaseWallet} contract. This feature allows to safely maintain a list of the \textit{Dest Chain(s)} where the user has assets.
 \end{itemize}
-
-\textcolor{red}{say that all the process are well described in the section usecases}
-
 
 For instance, it is interesting to analyse the process of a relayed ETH transfer transaction. The process is the following:
 \begin{enumerate}
@@ -32,7 +31,27 @@ For instance, it is interesting to analyse the process of a relayed ETH transfer
 
 % talk about interoperability manager
 
-An important enhancement to the Sapphire Portfolio with regard to argent contracts is the \textit{InteroperabilityManager} contract. This contract allows the user to emit events that are then relayed to the \textit{Dest Chain(s)} by the bridge. The events are emitted after a security check. The \textit{InteroperabilityManager} contract is a key component to enable the communication between the \textit{Base Chain} and the \textit{Dest Chain(s)}.
+An important enhancement to the Sapphire Portfolio with regard to  \hyperref[subsec:argent]{Argent} contracts is the \textit{InteroperabilityManager} contract. This contract allows the user to emit events that are then relayed to the \textit{Dest Chain(s)} by the bridge. The events are emitted after a security check. The \textit{InteroperabilityManager} contract is a key component to enable the communication between the \textit{Base Chain} and the \textit{Dest Chain(s)}.
 
 \subsection{Dest Chain(s)}
 \label{subsec:dest_chain(s)} 
+
+The \textit{Dest Chain(s)} are other blockchains where the user wants to interact with the Sapphire Wallet. The most common \hyperref[sec:bridge]{Bridge} approach is to transfer the user assets from an \textit{EOA} to another or the same \textit{EOA} on a different chain. This approach is not feasible for the Sapphire Wallet because the user is abstracted using the \textit{Proxy} contract. 
+
+To solve this issue, the Sapphire Wallet uses a minimal set of smart contracts on each \textit{Dest Chain(s)} to abstract the user account. The simplified architecture of the \textit{Dest Chain(s)} is shown in the figure \ref{fig:problem_approach/sapphireWalletBlockchainSmartContractsDestChains}.
+
+\customfigure{problem_approach/sapphireWalletBlockchainSmartContractsDestChains}{Sapphire Wallet Blockchain Smart Contracts - Base Chain(s)}{1}
+
+The detailed purpose of each contract is the following:
+\begin{itemize}
+    \item \textit{SapphireWrappedAccounts}: 
+        \begin{itemize}
+            \item Maintain a map of the \textit{Base Chain} accounts to the \textit{AccountContract}. 
+            \item Create a new \textit{AccountContract} for each new user.
+            \item Delegate the call to the \textit{AccountContract}.
+            \item Has native token funding to be transferred to the user. 
+            \item Mint new NFTs and transfer them to the user.
+        \end{itemize}
+    \item \textit{AccountContract}: Smart Contract Wallet on \textit{Dest Chain(s)}, similar to \textit{BaseChain Proxy} contract.
+    \item \textit{NFTStorage}: Store the NFTs minted by the \textit{SapphireWrappedAccounts} contract.
+\end{itemize}
