@@ -1,1 +1,71 @@
 \section{Operational Flow and Use Cases}
+
+\subsection{Base Chain}
+
+\subsubsection{Wallet Creation}
+
+% WalletCreation
+\customfigure{problem_approach/flows/walletCreation}{Sequence Diagram: Wallet Creation}{0.8}
+
+\subsubsection{Wallet Recovery}
+
+% WalletRecovery
+\customfigure{problem_approach/flows/walletRecovery}{Sequence Diagram: Wallet Recovery}{0.8}
+
+% improvedWalletRecovery
+\customfigure{problem_approach/flows/improvedWalletRecovery}{Sequence Diagram: Improved Wallet Recovery}{0.8}
+
+\subsubsection{General Flow}
+
+% TransactionsExecution
+\customfigure{problem_approach/flows/transactionsExecution}{Sequence Diagram: General Transaction execution}{0.8}
+
+
+% Explain that this works for crypto transfer and for general transactions (e.g. smart contracts calls).
+
+
+\subsection{Portfolio}
+
+\subsubsection{Balance}
+
+% portfolioBalance
+\customfigure{problem_approach/flows/portfolioBalance}{Sequence Diagram: Retrieve Native crypto balance in a Multi-Chain environment}{0.8}
+
+\subsubsection{NFTs}
+
+% portfolioNFTs
+\customfigure{problem_approach/flows/portfolioNFTs}{Sequence Diagram: Retrieve owned NFTs in a Multi-Chain environment}{0.8}
+
+\subsection{Multi-Chain}
+
+\subsubsection{Native Crypto Transfer}
+
+% bridgeETHBaseChainToDestChain
+\customfigure{problem_approach/flows/bridgeETHBaseChainToDestChain}{Sequence Diagram: Bridge Native Crypto from \textit{Base Chain} to \textit{Dest Chain}}{1.}
+
+% bridgeETHDestChainToBaseChain
+\customfigure{problem_approach/flows/bridgeETHDestChainToBaseChain}{Sequence Diagram: Bridge Native Crypto from \textit{Dest Chain} to \textit{Base Chain}}{1.}
+
+% bridgeETHRollback
+\customfigure{problem_approach/flows/bridgeETHRollback}{Activity Diagram: Rollback on bridge Native Crypto failure}{1.}
+
+\subsubsection{NFTs Transfer}
+
+% bridgeNFTBaseChainToDestChain
+\customfigure{problem_approach/flows/bridgeNFTBaseChainToDestChain}{Sequence Diagram: Bridge NFT from \textit{Base Chain} to \textit{Dest Chain}}{1.}
+
+% bridgeNFTDestChainToBaseChain
+\customfigure{problem_approach/flows/bridgeNFTDestChainToBaseChain}{Sequence Diagram: Bridge NFT from \textit{Dest Chain} to \textit{Base Chain}}{1.}
+
+% bridgeNFTRollback
+\customfigure{problem_approach/flows/bridgeNFTRollback}{Activity Diagram: Rollback on bridge NFTs failure}{1.}
+
+
+\subsubsection{Generic transactions}
+
+% bridgeGenericDestChainToDestChain
+\customfigure{problem_approach/flows/bridgeGenericDestChainToDestChain}{Sequence Diagram: Bridge Generic TX}{1.}
+
+% bridgeGenericRollback
+\customfigure{problem_approach/flows/bridgeGenericTXRollback}{Activity Diagram: Rollback on bridge TX failure}{1.}
+
