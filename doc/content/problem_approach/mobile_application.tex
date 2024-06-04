@@ -1,13 +1,13 @@
 \section{Mobile Application: Sapphire Wallet}
 \label{sec:mobile_application}
 
-The Sapphire Wallet Mobile App is the main component of the Sapphire ecosystem. It is the interface that enable the users to interact seamlessly with the Blockchain. Indeed, it enables the users to manage their assets and perform transactions on multiple Blockchains without the need to know anything about the Blockchain technology.
+The Sapphire Wallet Mobile App is the main component of the Sapphire ecosystem as enables the users to interact with the Blockchains in a seamless way. The users can manage their assets and perform transactions on multiple Blockchains without the need to know anything about the Blockchain technology.
 
 The Mobile App maintains securely saved an External Owned Account keys, which are used to sign transactions that are then sent to the \hyperref[sec:backend]{Backend} to be forwarded to the \textit{Base Chain}. Each time a user wants to perform an action, the Mobile App will ask a biometric authentication to sign the transaction. The EOA keys are important because the grant the user the ownership of the \textit{Proxy} contract well described in the \hyperref[subsec:base_chain]{\textit{Base Chain}} section. But, in the case of loss of the EOA keys, the user can recover its wallet by using the \hyperref[subsec:wallet_recovery]{Wallet Recovery} process.
 
 Sapphire Wallet is composed of three main pages:
 \begin{itemize}
-    \item \textit{Home Page}: Dynamically rendered based on the user's assets. It displays the user's balance for each chain, and provides buttons to perform transactions as \textit{Send Crypto / NFTs}.
+    \item \textit{Home Page}: Dynamically rendered based on the user's assets. It displays the user's balance for each chain, and provides buttons to perform transactions like \textit{Send Crypto / NFTs}.
     \item \textit{NFTs Page}: Displays the user's NFTs by highlighting which blockchain they are stored on.
     \item \textit{Settings Page}: Allows the user to manage their preferences, settings and guardians. 
 \end{itemize}
@@ -19,18 +19,67 @@ The framework used to build the Sapphire Wallet is \textit{Expo}\footnote{https:
 \subsection{Wallet Creation}
 \label{subsec:wallet_creation}
 
+The wallet creation process is the first step that the user has to perform when launching the Sapphire Wallet for the first time. As shown in Figure \ref{fig:problem_approach/create_wallet2}, there are three steps that the user has to follow to create a new wallet:
+
+\begin{enumerate}
+    \item Press the \textit{Create Wallet} button.
+    \item Write down the \textit{Recovery Phrase} and store it in a safe place.
+    \item Add at least one \textit{Guardian} to the wallet.
+    \item Press the \textit{Create Wallet} button.
+\end{enumerate}
+
+\customfigure{problem_approach/create_wallet2}{Wallet Creation Process}{0.8}
+
 \subsection{Wallet Recovery}
 \label{subsec:wallet_recovery}
+
+The wallet recovery process is needed when the user loses the EOA keys. The balance and the assets are not lost because are stored in the \textit{Proxy} contract. This process need two entities: the user and the guardian. 
+
+Figure \ref{fig:wallet_recovery} shows the wallet recovery process. The steps are the following:
+\begin{enumerate}
+    \item \textit{Guardian}: go to the \textit{Settings Page} and press the address of the wallet that needs to be recovered.
+    \item \textit{User}: press the \textit{Recover Wallet} button.
+    \item \textit{Guardian/User}: show the QrCode to the other entity.
+    \item \textit{User}: save the new \textit{Recovery Phrase} and store it in a safe place.
+\end{enumerate}
+
+\customfigure{problem_approach/recover_wallet}{Wallet Recover}{0.5}
 
 \subsection{Home Page}
 \label{subsec:wallet_home_page}
 
-Write all the operations, balance of chains, button.
+%Write all the operations, balance of chains, button.
+
+The Home Page is the first page that the user sees when opening the Sapphire Wallet. It is dynamically rendered based on the user's assets, the balance and the Blockchains used.
+
+From the Home Page, shown in Figure \ref{fig:home_page}, the user can perform the following operations:
+\begin{itemize}
+    \item \textit{Receive}: Displays a QrCode that can be scanned by another user to send assets.
+    \item \textit{Send BaseChain Native Crypto}: Allows the user to send assets to another user on Base Chain.
+    \item \textit{Send BaseChain NFTs}: Allows the user to select and transfer an owned NFT to another user on Base Chain.
+    \item \textit{Bridge Crypto to a DestChain}: Allows the user to transfer assets from Base Chain to another chain.
+    \item \textit{Bridge NFTs to a DestChain}: Allows the user to transfer NFTs from Base Chain to another chain.
+    \item \textit{Send DestChain Native Crypto}: Allows the user to send assets to another user on the destination chain.
+    \item \textit{Send DestChain NFTs}: Allows the user to select and transfer an owned NFT to another user on the destination chain.
+\end{itemize}
 
 \subsection{NFTs Page}
 \label{subsec:nfts_page}
 
+As shown in Figure \ref{fig:nfts_page}, the NFTs Page displays the owned NFTs by the user, highlighting which blockchain they are stored on. The user can select an NFT to open a modal that shows the NFT details as Collection Name, Collection Description, Token ID. 
+
 \subsection{Settings Page}
 \label{subsec:settings_page}
 
-guardian
+The Settings Page allows the user to manage their preferences, settings and guardians. 
+
+As displayed in Figure \ref{fig:settings_page}, the user can perform the following operations:
+\begin{itemize}
+    \item Change Mobile App theme (Light/Dark).
+    \item Change the \textit{BaseChain} network. Useful in case of testnet or mainnet.
+    \item Add a new guardian.
+    \item Remove a guardian.
+    \item Viewing users of whom I am a guardian.
+    \item Start the wallet recovery process.
+\end{itemize}
+

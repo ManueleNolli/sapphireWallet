@@ -1,15 +1,15 @@
 \section{Architecture}
 \label{sec:architecture}
 
-The Sapphire Wallet system is composed of three four components:
+The Sapphire Wallet ecosystem is composed of four components:
 
 \begin{itemize}
-    \item \textit{Blockchain}: Two or more blockchains networks of which one is called \textit{BaseChain} and the others are called \textit{DestChain(s)}. In the BaseChain the main smart contracts are deployed.
-    \item \textit{Bridge}: The bridge that connects the \textit{BaseChain} to the \textit{DestChain(s)}.
-    \item \textit{Backend}: The backend infrastructure that simplifies the interaction between the blockchain and the mobile application. Moreover, the backend is the \textit{Relayer} that sends the transactions to the blockchain network.
-    \item \textit{Mobile Application}: The mobile application that interacts with the backend and the blockchain network.
+    \item \textit{Blockchain}: Two or more Blockchains networks of which one is called \textit{Base Chain} and the others are called \textit{Dest Chain(s)}. The Acccount Abstraction Layer is implemented on the \textit{Base Chain}.
+    \item \textit{Bridge}: \textit{Lock \& Mint} bridge that allows the user to transfer assets and \textit{transactions} between the \textit{Base Chain} and the \textit{Dest Chain(s)}.
+    \item \textit{Backend}: Infrastructure that simplifies the interaction between the Blockchains and the Mobile Application. Moreover, the Backend is the \textit{Relayer} that sends the transactions to the Blockchain networks.
+    \item \textit{Mobile Application}: User interface that allows the user to interact with the Sapphire Wallet ecosystem.
 \end{itemize}
 
 A simplified architecture of the Sapphire Wallet Infrastructure is shown in Figure \ref{fig:problem_approach/infrastructure}. The specific components will be described in the following sections.
 
-\customfigure{problem_approach/infrastructure}{Simplified Sapphire Infrastructure}{1}
+\borderfigure{problem_approach/infrastructure}{Simplified Sapphire Infrastructure}{1}

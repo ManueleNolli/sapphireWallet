@@ -3,7 +3,7 @@
 
 % %figure custom command
 \definecolor{border-color}{HTML}{EDEDED}
-\newcommand{\customfigure}[3]{
+\newcommand{\borderfigure}[3]{
   \begin{figure}[H]
     \centering
     \setlength{\fboxsep}{0pt}  % remove default padding
@@ -13,6 +13,17 @@
     \label{fig:#1}
   \end{figure}
 }
+
+\newcommand{\customfigure}[3]{
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=#3\linewidth]{#1}
+    \caption{#2}
+    \label{fig:#1}
+  \end{figure}
+}
+
+
 
 % per settare noindent
 \setlength{\parindent}{0pt}
@@ -80,10 +91,6 @@
 \input{content/problem_approach}
 \input{content/results}
 \input{content/conclusions}
-
-% \myequation{First equation}{E=mc^2}
-% \myequation{Second equation}{F=ma}
-
 
 \printbibliography[title={Bibliography},nottype=online]
 \printbibliography[title={Linkography},type=online]
