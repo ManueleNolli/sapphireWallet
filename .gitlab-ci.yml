@@ -1,6 +1,7 @@
 stages:
   - 🏗 compile
   - 🤞 test
+  - 📰 documentation
 
 compile_contracts:
   stage: 🏗 compile
@@ -103,8 +104,9 @@ test_sapphire-portfolio:
     - /sprint[0-9]+/
 
 compile_documentation:
-  stage: 🏗 compile
-  image: texlive/texlive:latest
+  stage: 📰 documentation
+  needs: []
+  image: blang/latex:latest
   variables:
     LATEX_ENTRYPOINT: doc/main.tex
   before_script:
