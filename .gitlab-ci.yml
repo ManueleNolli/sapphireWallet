@@ -108,12 +108,12 @@ compile_documentation:
   needs: []
   image: texlive/texlive:latest
   variables:
-    LATEX_ENTRYPOINT: doc/main.tex
+    LATEX_ENTRYPOINT: doc/main
   script:
-    - pdflatex -interaction=nonstopmode $PROJECT_NAME
+    - pdflatex $PROJECT_NAME.tex
     - biber $PROJECT_NAME
-    - pdflatex -interaction=nonstopmode $PROJECT_NAME
-    - pdflatex -interaction=nonstopmode $PROJECT_NAME
+    - pdflatex $PROJECT_NAME.tex
+    - pdflatex $PROJECT_NAME.tex
   artifacts:
     paths:
       - $PROJECT_NAME.pdf
