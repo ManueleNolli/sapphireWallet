@@ -219,3 +219,10 @@
   url     = {https://internetcomputer.org/docs/current/tutorials/developer-journey/level-0/ic-overview},
   urldate = {2024-05-24},
 }
+
+@online{icp-reverse-gas-model,
+  title   = {ICP - Reverse Gas Model},
+  url     = {https://internetcomputer.org/capabilities/reverse-gas},
+  urldate = {2024-06-07},
+}
+

@@ -33,12 +33,33 @@
 % Referenze
 \usepackage{varioref}
 
+% Style
+\usepackage{fancybox}  % for custom frames
+\usepackage{xcolor}  % for color definitions
+
 % Figure
 \usepackage{graphicx}
+% %figure custom command
+\definecolor{border-color}{HTML}{EDEDED}
+\newcommand{\borderfigure}[3]{
+    \begin{figure}[H]
+        \centering
+        \setlength{\fboxsep}{0pt}  % remove default padding
+        \setlength{\fboxrule}{1pt}  % set the thickness of the border
+        \fcolorbox{border-color}{white}{\includegraphics[width=#3\linewidth]{#1}}
+        \caption{#2}
+        \label{fig:#1}
+    \end{figure}
+}
 
-% Bibliografia
-%\usepackage{natbib}
-
+\newcommand{\customfigure}[3]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#3\linewidth]{#1}
+        \caption{#2}
+        \label{fig:#1}
+    \end{figure}
+}
 % Per adattare margini
 \usepackage[strict]{changepage}
 
@@ -48,6 +69,9 @@
 % Footer logo
 \usepackage{eso-pic}
 
+% White page
+\usepackage{emptypage}
+
 % Numero pagine
 \usepackage{lastpage}
 
@@ -55,22 +79,24 @@
 \usepackage{csquotes}
 
 % Attach files
-\usepackage{tocloft}
+% \usepackage{tocloft}
+\usepackage[titles]{tocloft}
 \usepackage{embedfile}
 \usepackage{hypgotoe}
 
-\newcommand*{\embedfileandcreatelink}[2]{\embedfile{#1}\href{gotoe:embedded=#1}{#2}}
-\newcommand{\addattachment}[2]{
-    \embedfileandcreatelink{attachments/#1}{\textit{#2}}
-    \addcontentsline{att}{attachments}{#1}
+\newcommand*{\embedfileandcreatelink}[2]{%
+    \embedfile{#1}%
+    \href{gotoe:embedded=#1}{#2}%
+}
+
+\newcommand{\addattachment}[2]{%
+    \embedfileandcreatelink{attachments/#1}{\textit{#2}}%
+    \addcontentsline{att}{attachments}{#1}%
 }
 
 \newcommand{\listofattachmentsname}{List of Attachments}
 \newlistof{attachments}{att}{\listofattachmentsname}
 
-% Style
-\usepackage{fancybox}  % for custom frames
-\usepackage{xcolor}  % for color definitions
 
 
 \assignpagestyle{\chapter}{fancy}
@@ -101,11 +127,6 @@
 \renewcommand{\sfdefault}{phv} % Helvetica
 \renewcommand{\ttdefault}{cmtt}
 \renewcommand{\familydefault}{\sfdefault} % Font standard per il documento
-%\titleformat{\chapter}{\Huge}{\thesection}{18pt}{}
-%\titleformat{\section}{\large\bfseries}{\thesubsection}{11pt}{}
-%\titleformat{\subsection}{\large\bfseries}{\thesubsubsection}{10pt}{}
-%\titleformat{\paragraph}{\large\bfseries}{\paragraph}{9pt}{}
-%\renewcommand{\normalsize}{\fontsize{11pt}{11pt}\fontseries{m}\selectfont}
 \newcommand{\etichettetitolo}{\fontsize{8pt}{8pt}\fontseries{m}\selectfont}
 \newcommand{\nomititolo}{\vspace{1em}\fontsize{14pt}{14pt}\fontseries{bx}\selectfont}
 \setlength\parindent{0pt}
