@@ -108,7 +108,9 @@ compile_documentation:
   needs: []
   image: texlive/texlive:latest
   variables:
-    LATEX_ENTRYPOINT: doc/main
+    LATEX_ENTRYPOINT: main
+  before_script:
+    - cd doc
   script:
     - pdflatex $LATEX_ENTRYPOINT.tex
     - biber $LATEX_ENTRYPOINT
@@ -116,7 +118,6 @@ compile_documentation:
     - pdflatex $LATEX_ENTRYPOINT.tex
   after_script:
     - pwd
-    - ls -la doc
     - cat $LATEX_ENTRYPOINT.log
   artifacts:
     paths:
