@@ -39,14 +39,14 @@ test_api-gateway:
   stage: 🤞 test
   image: node:latest
   script:
-      - cd backend/api-gateway
-      - yarn install
-      - yarn test:cov
+    - cd backend/api-gateway
+    - yarn install
+    - yarn test:cov
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   only:
-      - main
-      - dev
-      - /sprint[0-9]+/
+    - main
+    - dev
+    - /sprint[0-9]+/
 
 test_wallet-factory:
   stage: 🤞 test
@@ -101,3 +101,20 @@ test_sapphire-portfolio:
     - main
     - dev
     - /sprint[0-9]+/
+
+compile_documentation:
+  stage: 🏗 compile
+  image: texlive/texlive:latest
+  variables:
+    LATEX_ENTRYPOINT: doc/main.tex
+  before_script:
+    - apk update
+    - apk add biber
+  script:
+    - pdflatex -interaction=nonstopmode $PROJECT_NAME
+    - biber $PROJECT_NAME
+    - pdflatex -interaction=nonstopmode $PROJECT_NAME
+    - pdflatex -interaction=nonstopmode $PROJECT_NAME
+  artifacts:
+    paths:
+      - $PROJECT_NAME.pdf
