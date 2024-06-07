@@ -123,4 +123,4 @@ compile_documentation:
     - cat $LATEX_ENTRYPOINT.log
   artifacts:
     paths:
-      - doc/$PROJECT_NAME.pdf
+      - doc/$LATEX_ENTRYPOINT.pdf
