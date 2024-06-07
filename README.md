@@ -24,3 +24,7 @@ Go to those folders and follow the setup procedure:
 The setup script will just copy the `.env.example` files to `.env` files. You need to fill the `.env` files with the correct information, mostly the private keys and the RPC URLs.
 
 All the contracts are already deployed on testnets, more information can be found in the [blockchain](blockchain) folder. At the moment of deployment, the `.env` are filled with the addresses.
+
+## Documentation
+
+The documentation can be found in the [docs](docs) folder.
