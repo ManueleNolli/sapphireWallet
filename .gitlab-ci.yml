@@ -108,7 +108,7 @@ compile_documentation:
   needs: []
   image: texlive/texlive:latest
   variables:
-    LATEX_ENTRYPOINT: doc/main
+    LATEX_ENTRYPOINT: main
   before_script:
     - cd doc
   script:
