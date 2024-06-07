@@ -108,13 +108,15 @@ compile_documentation:
   needs: []
   image: texlive/texlive:latest
   variables:
-    LATEX_ENTRYPOINT: doc/main
+    LATEX_ENTRYPOINT: doc\main
   script:
     - pdflatex $PROJECT_NAME.tex
     - biber $PROJECT_NAME
     - pdflatex $PROJECT_NAME.tex
     - pdflatex $PROJECT_NAME.tex
   after_script:
+    - pwd
+    - ls -la
     - cat $PROJECT_NAME.log
   artifacts:
     paths:
