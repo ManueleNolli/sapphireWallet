@@ -117,8 +117,10 @@ compile_documentation:
     - pdflatex $LATEX_ENTRYPOINT.tex
     - pdflatex $LATEX_ENTRYPOINT.tex
   after_script:
+    - cd doc
     - pwd
+    - ls -la
     - cat $LATEX_ENTRYPOINT.log
   artifacts:
     paths:
-      - $PROJECT_NAME.pdf
+      - doc/$PROJECT_NAME.pdf
