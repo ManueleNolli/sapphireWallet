@@ -114,6 +114,8 @@ compile_documentation:
     - biber $PROJECT_NAME
     - pdflatex $PROJECT_NAME.tex
     - pdflatex $PROJECT_NAME.tex
+  after_script:
+    - cat $PROJECT_NAME.log
   artifacts:
     paths:
       - $PROJECT_NAME.pdf
