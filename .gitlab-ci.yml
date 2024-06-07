@@ -110,14 +110,14 @@ compile_documentation:
   variables:
     LATEX_ENTRYPOINT: doc\main
   script:
-    - pdflatex $PROJECT_NAME.tex
-    - biber $PROJECT_NAME
-    - pdflatex $PROJECT_NAME.tex
-    - pdflatex $PROJECT_NAME.tex
+    - pdflatex $LATEX_ENTRYPOINT.tex
+    - biber $LATEX_ENTRYPOINT
+    - pdflatex $LATEX_ENTRYPOINT.tex
+    - pdflatex $LATEX_ENTRYPOINT.tex
   after_script:
     - pwd
     - ls -la
-    - cat $PROJECT_NAME.log
+    - cat $LATEX_ENTRYPOINT.log
   artifacts:
     paths:
       - $PROJECT_NAME.pdf
