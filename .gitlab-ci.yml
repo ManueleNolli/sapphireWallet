@@ -106,12 +106,9 @@ test_sapphire-portfolio:
 compile_documentation:
   stage: 📰 documentation
   needs: []
-  image: blang/latex:latest
+  image: texlive/texlive:latest
   variables:
     LATEX_ENTRYPOINT: doc/main.tex
-  before_script:
-    - apk update
-    - apk add biber
   script:
     - pdflatex -interaction=nonstopmode $PROJECT_NAME
     - biber $PROJECT_NAME
