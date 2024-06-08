@@ -116,6 +116,7 @@ compile_documentation:
     - biber $LATEX_ENTRYPOINT
     - pdflatex $LATEX_ENTRYPOINT.tex
     - pdflatex $LATEX_ENTRYPOINT.tex
+    - cp $LATEX_ENTRYPOINT.pdf SapphireWallet-doc.pdf
   artifacts:
     paths:
-      - doc/$LATEX_ENTRYPOINT.pdf
+      - doc/SapphireWallet-doc.pdf
