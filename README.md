@@ -27,4 +27,4 @@ All the contracts are already deployed on testnets, more information can be foun
 
 ## Documentation
 
-The documentation can be found in the [docs](docs) folder.
+The documentation can be found in the [doc](doc) folder.
