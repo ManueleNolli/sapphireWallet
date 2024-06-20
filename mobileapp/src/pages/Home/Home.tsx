@@ -342,6 +342,7 @@ export default function Home() {
               ]}
             >
               <BlurView
+                experimentalBlurMethod="dimezisBlurView"
                 intensity={20}
                 style={[
                   styles.balanceBlurContainer,
@@ -373,8 +374,8 @@ export default function Home() {
         </ImageBackground>
 
         <View style={styles.addressContainer}>
-          <TouchableWithoutFeedback onPress={copyAddressToClipboard} style={{ flex: 1, backgroundColor: 'red' }}>
-            <BlurView style={appStyles.center} intensity={100}>
+          <TouchableWithoutFeedback onPress={copyAddressToClipboard} style={{ flex: 1 }}>
+            <BlurView style={appStyles.center} intensity={100} experimentalBlurMethod="dimezisBlurView">
               <Text category="label">{formatBlockchainAddress(getWalletContractAddress())}</Text>
             </BlurView>
           </TouchableWithoutFeedback>
@@ -464,7 +465,6 @@ const themedStyles = StyleService.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 10,
-    elevation: 15,
   },
   buttonContainer: {
     width: 90 * vw,

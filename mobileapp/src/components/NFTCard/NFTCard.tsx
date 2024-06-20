@@ -28,7 +28,7 @@ export function NFTCard({ name, tokenId, collectionName, collectionDescription, 
   )
   const NetworkIcon = () => (
     <Image
-      contentFit={'contain'}
+      contentFit="contain"
       style={{
         width: 36,
         height: 36,
@@ -39,22 +39,22 @@ export function NFTCard({ name, tokenId, collectionName, collectionDescription, 
 
   return (
     <View style={[styles.container, { ...style }]} testID={`NFTCard-${tokenId}`}>
-      <ImageBackground source={image} style={styles.imageBackground} contentFit={'cover'}>
+      <ImageBackground source={image} style={styles.imageBackground} contentFit="cover">
         <View style={styles.networkContainer}>
           <NetworkIcon />
         </View>
         <TouchableOpacity
           style={styles.blurContainerWrapper}
-          testID={'CollapsibleButton'}
+          testID="CollapsibleButton"
           onPress={() => {
             setCollapsed(!collapsed)
           }}
         >
-          <BlurView intensity={50} style={styles.blurContainer}>
+          <BlurView intensity={50} style={styles.blurContainer} experimentalBlurMethod="dimezisBlurView">
             <View style={{ width: '90%' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text category="h4">{name}</Text>
-                <Text category={'label'} style={{ marginRight: 1 * vw }}>{`#${tokenId}`}</Text>
+                <Text category="label" style={{ marginRight: 1 * vw }}>{`#${tokenId}`}</Text>
               </View>
 
               <Collapsible collapsed={collapsed}>
