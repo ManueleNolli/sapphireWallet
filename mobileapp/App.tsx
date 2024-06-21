@@ -1,6 +1,9 @@
 import './global'
 import 'react-native-gesture-handler' // MUST be before react navigation
 
+import { LogBox } from 'react-native'
+LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
+
 // UI Kitten
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import { IconRegistry, ModalService } from '@ui-kitten/components'
@@ -33,7 +36,7 @@ export default function App() {
             <BlockchainProvider>
               <FirstAccessProvider>
                 <BottomTabNavigator />
-            </FirstAccessProvider>
+              </FirstAccessProvider>
             </BlockchainProvider>
           </WalletProvider>
         </ThemeProvider>
