@@ -26,6 +26,9 @@
 \usepackage[T1]{fontenc}
 \usepackage[scaled]{helvet}
 
+% Table
+\usepackage{tabularray}
+
 % Spaziatura
 \usepackage{setspace}
 \usepackage{float}
@@ -36,6 +39,8 @@
 % Style
 \usepackage{fancybox}  % for custom frames
 \usepackage{xcolor}  % for color definitions
+\definecolor{Gallery}{rgb}{0.929,0.929,0.929}
+\definecolor{Silver}{rgb}{0.741,0.741,0.741}
 
 % Figure
 \usepackage{graphicx}
