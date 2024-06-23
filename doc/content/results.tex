@@ -49,13 +49,15 @@
 % bridge eth: none
 % bridge nft: none
 
-This chapter presents the results of the overall implementation of Sapphire Wallet, a decentralized wallet that allows users to interact with multiple blockchains in a seamless way.  
+This section presents the outcomes of the implementation of Sapphire Wallet, a decentralized application aimed at facilitating seamless interaction with multiple blockchains.
 
 % Improved UI/UX but still too slow to be used worldwide
-The user interface and user experience are clearly improved compared to the normal use of EVM networks. In particular, the user should not be aware of the underlying technology and does not need any technical knowledge to use the wallet. In fact, performing transactions on both \textit{BaseChain} and \textit{DestChain} are simple and intuitive. The \textit{recoverability} is largely improved, as the user can recover their account with the help of a friend, family member, or a trusted third party (\textit{Guardian}). Although the wallet is designed for any kind of user, the current implementation is too slow for worldwide adoption. For instance, the most time-consuming operation, a NFT bridge from \textit{BaseChain} to \textit{DestChain} may take up to 1 minute.
+The user interface and experience of Sapphire Wallet represent a significant improvement over traditional Ethereum Virtual Machine (EVM) networks. In particular, the user should not be aware of the underlying technology and does not need any technical knowledge to use the wallet. In fact, performing transactions on both \textit{BaseChain} and \textit{DestChain} are simple and intuitive. The \textit{recoverability} is largely improved, as the user can recover their account with the help of a friend, family member, or a trusted third party (\textit{Guardian}). 
+
+However, despite these advancements, the current implementation faces challenges that limit its global scalability. Transaction speeds remain a concern, with operations such as NFT bridges between \textit{BaseChain} and \textit{DestChain} taking up to one minute, which may not meet the expectations for widespread adoption.
 
 % Costs
-In addition to low performance in terms of speed, the costs of deploy the Sapphire contracts layer are also high. As shown in Table \ref{tab:costs}, the Sapphire Wallet ecosystem has deployment costs. In addition, for each created account there is the \textit{Proxy} wallet creation cost. In comparison, the actual EVM does not have these costs. 
+In addition to low performance in terms of speed, the deployment costs associated with the Sapphire Wallet ecosystem are high. As shown in Table \ref{tab:costs}, the Sapphire Wallet ecosystem has deployment costs. In addition, for each created account there is the \textit{Proxy} wallet creation cost. In comparison, the actual EVM does not have these costs. 
 
 The transactions costs ......
 
@@ -95,8 +97,8 @@ The transactions costs ......
 
 In general, Sapphire Wallet, as a \textit{Separate Transaction System}, has higher cost than the actual EVM. But, the features enabled by the Sapphire Wallet may be worth the cost. The main features are well described in the chapter \hyperref[sec:operational_flow_and_use_cases]{Operational Flow and Use Cases}. 
 
-In the long term, the \textit{Separate Transaction System} approach is not feasible and a protocol update is needed to implement the full \textit{Account Abstraction} capabilities. In my opinion, the new \hyperref[subsubsec:erc-7702]{ERC-7702} standard is a good candidate to be implemented in the Ethereum network.
+Looking ahead, the \textit{Separate Transaction System} approach is not feasible and a protocol update is needed to implement the full \textit{Account Abstraction} capabilities. In my opinion, the new \hyperref[subsubsec:erc-7702]{ERC-7702} standard is a good candidate to be implemented in the Ethereum network.
 
 % USE CASE of this kind of system. "Private business that wants to pay for the gas of their users", granting security, privacy and scalability.
 
-The main use case of \textit{Sapphire Wallet} may be for private businesses that wants to guarantee security, privacy and scalability to their users using Blockchain technology. In fact, recoverability, easy of use and the possibility to pay for the gas of their users are the main features of the wallet.
+The main use case of \textit{Sapphire Wallet} may be for private businesses that wants to guarantee security, privacy and scalability to their users through Blockchain technology. The ability to manage transaction costs and simplify user interactions makes Sapphire Wallet a promising tool for businesses exploring blockchain solutions.
