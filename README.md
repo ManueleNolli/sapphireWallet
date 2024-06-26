@@ -19,6 +19,19 @@ Go to those folders and follow the setup procedure:
 3. [mobileapp](mobileapp)
 4. [bridge](bridge)
 
+## Running
+
+It is possible to run the whole project with docker. 
+1. Fill the `.env` files of each project with the correct information.
+2. Run the following command:
+```shell
+docker-compose up
+```
+3. Run the mobile app with the following command:
+```shell
+cd mobileapp && yarn start
+```
+
 ## General Information
 
 The setup script will just copy the `.env.example` files to `.env` files. You need to fill the `.env` files with the correct information, mostly the private keys and the RPC URLs.

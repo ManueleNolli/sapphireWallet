@@ -26,8 +26,8 @@ const config: HardhatUserConfig = {
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/${SEPOLIA_API_KEY}`,
       accounts: [`0x${SEPOLIA_PRIVATE_KEY}`],
-      // gasPrice: 200000000000,
-      // gas: 84000000,
+      //gasPrice: 200000000000,
+      //gas: 84000000,
     },
     amoy: {
       url: `https://polygon-amoy.g.alchemy.com/v2/${AMOY_API_KEY}`,
