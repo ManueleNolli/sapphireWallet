@@ -206,12 +206,12 @@
         \hspace*{\fill}
         \begin{minipage}[t]{0.49\textwidth}
             \begin{flushleft}
-                \etichettetitolo{Supervisor} \\
+                \etichettetitolo{Supervisors} \\
                 \campo{\@supervisor} \\
-                \linea
-                \vspace*{0.3em} % Fix spaziatura
-                \etichettetitolo{Co-supervisor} \\
-                \campo{\@cosupervisor} \\
+                % \linea
+                % \vspace*{0.3em} % Fix spaziatura
+                % \etichettetitolo{Co-supervisor} \\
+                % \campo{\@cosupervisor} \\
                 %				\linea  
                 %				\vspace*{0.3em} % Fix spaziatura
                 %				\etichettetitolo{Committente} \\
