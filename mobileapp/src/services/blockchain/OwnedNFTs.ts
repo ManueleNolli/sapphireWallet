@@ -7,6 +7,7 @@ import {
   getWrappedAccountAddressResponse,
 } from '../backend'
 import { BRIDGE_NETWORKS } from '../../constants/BridgeNetworks'
+import { ZeroAddress } from 'ethers'
 
 export type OwnedNFT = {
   name: string
@@ -31,6 +32,9 @@ export async function ownedNFTs(address: string, network: NETWORKS | BRIDGE_NETW
       throw new Error(result.error)
     }
 
+    if (result.address === ZeroAddress) {
+      return Promise.resolve([])
+    }
     realAddress = result.address
   }
   const result = (await contactBackend(BACKEND_ENDPOINTS.GET_NFT_METADATA, {
