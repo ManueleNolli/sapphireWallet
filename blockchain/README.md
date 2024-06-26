@@ -75,7 +75,7 @@ The updated .env are:
 
 For know which keys are added/updated please check the `deployBaseChain.ts` and `deployDestinationChain.ts` files.
 
-# Alrady deployed contracts
+# Already deployed contracts
 
 The contracts are already deployed in the following networks:
 

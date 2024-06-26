@@ -16,8 +16,21 @@ Run setup file:
 Go to those folders and follow the setup procedure:
 1. [blockchain](blockchain)
 2. [backend](backend)
-3. [mobileapp](mobileapp)
+3. [mobileapp](mobileapp) (expo sdk 51 in branch `upgrade/expo51`)
 4. [bridge](bridge)
+
+## Running
+
+It is possible to run the whole project with docker. 
+1. Fill the `.env` files of each project with the correct information.
+2. Run the following command:
+```shell
+docker-compose up
+```
+3. Run the mobile app with the following command:
+```shell
+cd mobileapp && yarn start
+```
 
 ## General Information
 

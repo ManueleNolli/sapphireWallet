@@ -19,3 +19,10 @@ yarn install
 ```bash
 yarn start
 ```
+## Expo 51
+
+The project was created with Expo 49. But, few weeks before project submission, Expo 51 was released.
+An update to Expo 51 has been made, but it has not been fully tested.
+
+The update is present in the `upgrade/expo51` branch.
+
