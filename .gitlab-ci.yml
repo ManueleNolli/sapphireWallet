@@ -1,0 +1,122 @@
+stages:
+  - 🏗 compile
+  - 🤞 test
+  - 📰 documentation
+
+compile_contracts:
+  stage: 🏗 compile
+  image: node:latest
+  script:
+    - cd blockchain
+    - mv .env.example .env
+    - yarn install
+    - npx hardhat compile
+  artifacts:
+    paths:
+      - blockchain/typechain-types
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
+
+test_mobileapp:
+  stage: 🤞 test
+  image: node:latest
+  before_script:
+    - mkdir -p mobileapp/src/contracts
+    - cp -r blockchain/typechain-types/* mobileapp/src/contracts/
+  script:
+    - cd mobileapp
+    - mv .env.example .env
+    - yarn install
+    - yarn test:ci
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
+
+test_api-gateway:
+  stage: 🤞 test
+  image: node:latest
+  script:
+    - cd backend/api-gateway
+    - yarn install
+    - yarn test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
+
+test_wallet-factory:
+  stage: 🤞 test
+  image: node:latest
+  before_script:
+    - mkdir -p backend/wallet-factory/src/contracts
+    - cp -r blockchain/typechain-types/* backend/wallet-factory/src/contracts/
+  script:
+    - cd backend/wallet-factory
+    - yarn install
+    - yarn test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  dependencies:
+    - compile_contracts
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
+
+test_sapphire-relayer:
+  stage: 🤞 test
+  image: node:latest
+  before_script:
+    - mkdir -p backend/sapphire-relayer/src/contracts
+    - cp -r blockchain/typechain-types/* backend/sapphire-relayer/src/contracts/
+  script:
+    - cd backend/sapphire-relayer
+    - yarn install
+    - yarn test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  dependencies:
+    - compile_contracts
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
+
+test_sapphire-portfolio:
+  stage: 🤞 test
+  image: node:latest
+  before_script:
+    - mkdir -p backend/sapphire-portfolio/src/contracts
+    - cp -r blockchain/typechain-types/* backend/sapphire-portfolio/src/contracts/
+  script:
+    - cd backend/sapphire-portfolio
+    - yarn install
+    - yarn test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  dependencies:
+    - compile_contracts
+  only:
+    - main
+    - dev
+    - /sprint[0-9]+/
+
+compile_documentation:
+  stage: 📰 documentation
+  needs: []
+  image: texlive/texlive:latest
+  variables:
+    LATEX_ENTRYPOINT: main
+  before_script:
+    - cd doc
+  script:
+    - pdflatex $LATEX_ENTRYPOINT.tex
+    - biber $LATEX_ENTRYPOINT
+    - pdflatex $LATEX_ENTRYPOINT.tex
+    - pdflatex $LATEX_ENTRYPOINT.tex
+    - cp $LATEX_ENTRYPOINT.pdf SapphireWallet-doc.pdf
+  artifacts:
+    paths:
+      - doc/SapphireWallet-doc.pdf

@@ -1,0 +1,228 @@
+@online{blockchain-statistics,
+  title   = {Essential Blockchain statistics 2023},
+  url     = {https://www.zippia.com/advice/blockchain-statistics/},
+  urldate = {2024-05-06},
+  month   = {12},
+  year    = {2022},
+}
+
+@online{evm,
+  title   = {Ethereum Virtual Machine},
+  url     = {https://crypto.com/glossary/it/ethereum-virtual-machine-evm},
+  urldate = {2024-05-07},
+}
+
+@online{ethereum-accounts,
+  title   = {Ethereum Accounts},
+  url     = {https://ethereum.org/en/developers/docs/accounts/},
+  urldate = {2024-05-07},
+  month   = {10},
+  year    = {2023},
+}
+
+@online{ethereum-account-abstraction,
+  title   = {Ethereum Account abstraction},
+  url     = {https://ethereum.org/en/roadmap/account-abstraction/},
+  urldate = {2024-05-07},
+  month   = {03},
+  year    = {2024},
+}
+
+
+@online{eip-1,
+  title   = {EIP-1},
+  url     = {https://eips.ethereum.org/EIPS/eip-1},
+  urldate = {2024-05-14},
+  month   = {10},
+  year    = {2015}
+}
+
+@online{eip-86,
+  title   = {EIP-86},
+  url     = {https://eips.ethereum.org/EIPS/eip-86},
+  urldate = {2024-05-13},
+  month   = {02},
+  year    = {2017}
+}
+
+@online{eip-2711,
+  title   = {EIP-2711},
+  url     = {https://eips.ethereum.org/EIPS/eip-2711},
+  urldate = {2024-05-13},
+  month   = {06},
+  year    = {2020}
+}
+
+@online{eip-2938,
+  title   = {EIP-2938},
+  url     = {https://eips.ethereum.org/EIPS/eip-2938},
+  urldate = {2024-05-14},
+  month   = {09},
+  year    = {2020}
+}
+
+@online{eip-3074,
+  title   = {EIP-3074},
+  url     = {https://eips.ethereum.org/EIPS/eip-3074},
+  urldate = {2024-05-14},
+  month   = {10},
+  year    = {2020}
+}
+
+@online{eip-4337,
+  title   = {EIP-4337},
+  url     = {https://eips.ethereum.org/EIPS/eip-4337},
+  urldate = {2024-05-14},
+  month   = {09},
+  year    = {2021}
+}
+
+@online{eip-7702,
+  title   = {EIP-7702},
+  url     = {https://eips.ethereum.org/EIPS/eip-7702},
+  urldate = {2024-05-16},
+  month   = {05},
+  year    = {2024}
+}
+
+
+
+@online{pectra-hardfork,
+  title   = {Ethereum update: PECTRA},
+  url     = {https://github.com/ethereum/pm/issues/997#issuecomment-2045893316},
+  urldate = {2024-05-14},
+  month   = {04},
+  year    = {2024}
+}
+
+@online{ethereum-roadmap-ux,
+  title   = {Ethereum roadmap user experience},
+  url     = {https://ethereum.org/en/roadmap/user-experience/},
+  urldate = {2024-05-14},
+}
+
+
+@online{ECDSA,
+  title   = {Elliptic Curve Digital Signature Algorithm},
+  url     = {https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm},
+  urldate = {2024-05-13},
+  month   = {05},
+  year    = {2024},
+}
+
+@online{argent-aa,
+  title   = {Argent FAQ},
+  url     = {https://www.argent.xyz/faq/},
+  urldate = {2024-05-16},
+}
+
+@online{argent-github,
+  title   = {Argent contract - Github},
+  url     = {https://github.com/argentlabs/argent-contracts},
+  urldate = {2024-05-16},
+}
+
+@online{opcode-create2,
+  title   = {OpenZeppelin - CREATE2},
+  url     = {https://docs.openzeppelin.com/cli/2.8/deploying-with-create2},
+  urldate = {2024-05-16},
+}
+
+
+@online{lifi-bridge,
+  title   = {LiFi - Bridge classification},
+  url     = {https://li.fi/knowledge-hub/blockchain-bridges-and-classification/},
+  urldate = {2024-05-16},
+  month   = {07},
+  year    = {2022},
+}
+
+@online{immunebytes-trust-bridge,
+  title   = {ImmuneBytes - Trustless Bridges Vs Trusted Bridges},
+  url     = {https://www.immunebytes.com/blog/trustless-bridges-vs-trusted-bridges/},
+  urldate = {2024-05-16},
+  month   = {03},
+  year    = {2023},
+}
+
+@online{chainlink-transfer-assets,
+  title   = {ChainLink - Bridge assets},
+  url     = {https://chain.link/education-hub/cross-chain-bridge},
+  urldate = {2024-05-16},
+  month   = {01},
+  year    = {2024},
+}
+
+@online{icp-vision,
+  title   = {ICP vision},
+  url     = {https://internetcomputer.org/what-is-the-ic},
+  urldate = {2024-05-16},
+}
+
+@online{icp-how-it-works,
+  title   = {ICP - How it works},
+  url     = {https://internetcomputer.org/how-it-works},
+  urldate = {2024-05-17},
+}
+
+
+@online{icp-architecture,
+  title   = {ICP - Architecture},
+  url     = {https://internetcomputer.org/how-it-works/architecture-of-the-internet-computer/},
+  urldate = {2024-05-16},
+}
+
+@online{icp-chain-key,
+  title   = {ICP - Chain Key technology},
+  url     = {https://internetcomputer.org/how-it-works/chain-key-technology/},
+  urldate = {2024-05-20},
+}
+
+@online{icp-cross-chain-interoperability,
+  title   = {ICP - Cross Chain Interoperability},
+  url     = {https://internetcomputer.org/docs/current/tutorials/hackathon-prep-course/what-is-icp/#cross-chain-interoperability},
+  urldate = {2024-05-20},
+}
+
+@online{icp-https-outcalls,
+  title   = {ICP - HTTPS Outcalls},
+  url     = {https://internetcomputer.org/https-outcalls},
+  urldate = {2024-05-20},
+}
+
+@online{icp-identity,
+  title   = {ICP - Identity},
+  url     = {https://internetcomputer.org/docs/current/developer-docs/identity/internet-identity/},
+  urldate = {2024-05-20},
+}
+
+@online{icp-passkey,
+  title   = {ICP - Passkey},
+  url     = {https://identitysupport.dfinity.org/hc/en-us/articles/15738590400148-What-is-a-passkey},
+  urldate = {2024-05-20},
+}
+
+@online{icp-identity-technical,
+  title   = {ICP - Identity Technical},
+  url     = {https://wiki.internetcomputer.org/wiki/Internet_Identity_technical_overview},
+  urldate = {2024-05-20},
+}
+
+@online{icp-identity-technical,
+  title   = {ICP - Identity Technical},
+  url     = {https://wiki.internetcomputer.org/wiki/Internet_Identity_technical_overview},
+  urldate = {2024-05-20},
+}
+
+@online{icp-developer-journey,
+  title   = {ICP - Developer Journey},
+  url     = {https://internetcomputer.org/docs/current/tutorials/developer-journey/level-0/ic-overview},
+  urldate = {2024-05-24},
+}
+
+@online{icp-reverse-gas-model,
+  title   = {ICP - Reverse Gas Model},
+  url     = {https://internetcomputer.org/capabilities/reverse-gas},
+  urldate = {2024-06-07},
+}
+

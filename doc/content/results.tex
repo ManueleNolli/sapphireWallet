@@ -1,0 +1,136 @@
+\chapter{Results}
+\label{chap:results}
+
+%%%%%%%%%
+% WITH SAPPHIRE
+%%%%%%%%%
+
+% Deployment of contracts: 
+% https://sepolia.etherscan.io/tx/0xeca9946ce552bcdaf05bebc7e0708e0a83fb4b35a6c40e3cfbcf1298f5836fa0
+% https://sepolia.etherscan.io/tx/0xfc5e5ad4553769e5e95985d568ee6417a9ed77222afda2b9f4aef74a25b28c06
+% https://sepolia.etherscan.io/tx/0xfead6d10fe5190a3e6a85fa3d3c384ed6ae196db0b154ae0fb04c627931c3bab
+% https://sepolia.etherscan.io/tx/0xa1a74bbafacbf28ac3d1d41d65ba5b8cbb9c6f2dc8ef9873a776b62b19a550fc
+% https://sepolia.etherscan.io/tx/0x8cb2d7c617f3bb2d1e0cfe0b8fc2c87051e05e7ec060f876441de83c493260d0
+% https://sepolia.etherscan.io/tx/0x2164279fbd3bd5c7305f269af0c5823447f4aa09d978f9b8a0252438bc0733e5
+% https://sepolia.etherscan.io/tx/0xdc1455a9f9dcbd99c3a97fe8b1b4f9f2e9c7090347f58f3ab0f94301f619cb34
+% https://sepolia.etherscan.io/tx/0xc34b7037aa27c4c0b775d6e09f1f489ef9904158f747eab723f013acf771f04d
+% https://sepolia.etherscan.io/tx/0xf7801500c8e2761e4ffad8d84a06ba8fd2f611c0b832af7512968d53b6443193
+% total eth to deploy: 0.12872771
+% https://www.oklink.com/amoy/tx/0x43ae451a87a7ebd40c70f55554accf690bd7da81ebc35fe7ce234de7c4b221bb
+% https://www.oklink.com/amoy/tx/0x660e7ddf39f21279a1292de99e0a3128e5e0af28ce7269561142700ceea2cb5d
+% total matic: 0.06276498
+
+% create account:
+% https://sepolia.etherscan.io/tx/0xc75871d3be9c35b0b3412ae406d56559a18d957e3c9b8b9a11aa4bd44d61e115
+% https://sepolia.etherscan.io/tx/0xae5026183af3a12f9ab6cebc7351290bfdd3769109ae29e048dc9e972af4a8d1
+% total eth to create a account: 0.014
+% on destchain: 
+%https://www.oklink.com/amoy/tx/0x09c5d18e296a1ba860cf939a1b59de9924d64cb9140674aafe5a272907619313
+% total matic: 0.018
+
+% execute a transfer of eth (baseCHain):
+% https://sepolia.etherscan.io/tx/0x8aa452cddc52dc9104b38272446688a2dc0f527d4271bda451a51fb9844758b5
+% 0.003 ETH
+
+% execute a transfer of nft (baseCHain):
+% https://sepolia.etherscan.io/tx/0x438e6d330c46e1795380d82154fad342d1c06835baa81debca3dfb338df45a9a
+%  0.0048 ETH
+
+% bridge eth:
+%https://sepolia.etherscan.io/tx/0x1a8235ad8deabb88326e476a5ece1aee8156ee1f2f9da4f43571cd7bfea09cc4
+%https://www.oklink.com/amoy/tx/0x6261bdb038be42562fbdfb6e055ce3382163c356b55dc37c3df4c73ad1e7c310
+%0.003 ETH + 0.001 MATIC  
+
+% bridge nft:
+%https://sepolia.etherscan.io/tx/0x086619799ec19fbb43bf47183279c28d0ffd5b95246389591511390970c36fcb
+%https://www.oklink.com/amoy/tx/0x01110003842cd8764f9135e7ae62e1f1a97e7bf4d574553e4c7808472251d171
+%0.0063 ETH + 0.0106 MATIC 
+
+% send destchain matic:
+%https://sepolia.etherscan.io/tx/0x3ce555b5f350647856d93bccd3bcbadc52cbe78d7446860e7629599f53268a3c
+%https://www.oklink.com/amoy/tx/0xc67efbe8eee3ffe1392b3f17f75c09ef2be0a8c3b577ba97402ffb01f3e6fb55
+%0.0086 ETH + 0.0017 MATIC 
+
+% send destchain nft:
+%https://sepolia.etherscan.io/tx/0x6c527aa87a2a0c66759a74a86a29dad431903365939307b3fbffe23ab5ae5023
+%https://www.oklink.com/amoy/tx/0x87db8ecd117b6b96834368f5e5f6901f04bdc41376911b3e7c351a0bdb748530
+%0.005 ETH + 0.0035 MATIC
+
+% Add Guardian
+%https://sepolia.etherscan.io/tx/0x35a71f6c720224dc524f75dc4a7a5915aa2012b05da59f7007c232b867d7ab46
+% 0.0043 ETH 
+
+% Remove Guardian
+%https://sepolia.etherscan.io/tx/0x306901ca6bfcc2c5cd7318c1a01e81ff8a0f0683a1d3be6e4c9dd2403d0513e9
+%0.0022 ETH
+
+% Recovery
+%https://sepolia.etherscan.io/tx/0x399bfd853c32563d3c2801ae93e1cf9fab51b0c6dc20dd538e7f6f7060e52da4
+%0.003 ETH
+
+This section presents the outcomes of the implementation of Sapphire Wallet, a decentralized application aimed at facilitating seamless interaction with multiple Blockchains.
+
+% Improved UI/UX but still too slow to be used worldwide
+The user interface and experience of Sapphire Wallet represent a significant improvement over traditional Ethereum Virtual Machine (EVM) networks. In particular, the user should not be aware of the underlying technology and does not need any technical knowledge to use the wallet. In fact, performing transactions on both \textit{BaseChain} and \textit{DestChain} are simple and intuitive. The \textit{recoverability} is largely improved, as the user can recover their account with the help of a friend, family member, or a trusted third party (\textit{Guardian}). 
+
+However, despite these advancements, the current implementation faces challenges that limit its global scalability. Transaction speeds remain a concern, with operations such as NFT bridges between \textit{BaseChain} and \textit{DestChain} taking up to one minute, which may not meet the expectations for widespread adoption.
+
+% Costs
+In terms of costs, the Sapphire Wallet ecosystem requires an initial deployment of Smart Contracts and one Contract per user. Moreover, as shown in Table \ref{tab:costs}, Sapphire Wallet features increase the cost of transferring cryptocurrencies or NFTs. Due to its \textit{Separate Transaction System} nature, Sapphire Wallet has higher cost than the actual EVM. But, the features enabled by the Sapphire Wallet may be worth the cost. In fact, in the current state of EVM networks, features such as recoverability and interoperability are not achievable.
+
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        width = \linewidth,
+        colspec = {Q[420]Q[270]Q[270]},
+        cell{1}{2} = {Gallery, halign = c, valign = m},
+        cell{1}{3} = {Gallery, halign = c, valign = m},
+        cell{2}{1} = {Gallery, halign = l, valign = m},
+        cell{3}{1} = {Gallery, halign = l, valign = m},
+        cell{4}{1} = {Gallery, halign = l, valign = m},
+        cell{5}{1} = {Gallery, halign = l, valign = m},
+        cell{6}{1} = {Gallery, halign = l, valign = m},
+        cell{7}{1} = {Gallery, halign = l, valign = m},
+        cell{8}{1} = {Gallery, halign = l, valign = m},
+        cell{9}{1} = {Gallery, halign = l, valign = m},
+        cell{10}{1} = {Gallery, halign = l, valign = m},
+        cell{11}{1} = {Gallery, halign = l, valign = m},
+        cell{12}{1} = {Gallery, halign = l, valign = m},
+        vline{2-4} = {1}{Silver},
+        vline{-} = {2-12}{Silver},
+        hline{1} = {2-3}{Silver},
+        hline{2-13} = {-}{Silver},
+        cell{2-12}{2,3} = {c, m},
+    }
+    & Sapphire Wallet ecosystem & Actual EVM \\
+    Deploy infrastructure & {0.129 ETH \\ 0.063 MATIC} & (1) \\
+    Deploy per user & {0.014 ETH 0.018 MATIC} & (1)\\
+    ETH transfer on Ethereum (BaseChain) & 0.003 ETH & 0.00085 ETH\\
+    NFT transfer on Ethereum (BaseChain) & 0.0048 ETH & 0.00182 ETH \\
+    ETH bridge on Ethereum-Polygon (BaseChain-DestChain) & {0.003 ETH \\ 0.0011 MATIC}& (2)\\
+    NFT bridge on Ethereum-Polygon (BaseChain-DestChain) & {0.0063 ETH \\ 0.0106 MATIC} & (2)\\
+    DestChain MATIC transfer & {0.0086 ETH \\ 0.0017 MATIC} & (2)\\
+    DestChain NFT transfer & {0.005 ETH \\ 0.0035 MATIC} & (2)\\
+    Add Guardian & 0.0043 ETH & (1)\\
+    Remove Guardian & 0022 ETH & (1)\\
+    Wallet recovery & 0.003 ETH & (1)\\
+    \end{tblr}
+    \label{tab:costs}
+    \caption{Costs comparison between Sapphire Wallet ecosystem and actual EVM}
+
+    (1) not necessary
+    (2) not possible or realizable with external service
+
+    \textit{BaseChain} is Sepolia (Ethereum) and \textit{DestChain} is Amoy (Polygon)
+\end{table}
+
+
+
+% "Separate the transaction system" like Argent are not feasible in a long run, need to implement AA with protocol update
+
+
+Looking ahead, the \textit{Separate Transaction System} approach is not feasible and a protocol update is needed to implement the full \textit{Account Abstraction} capabilities. In my opinion, the new \hyperref[subsubsec:erc-7702]{ERC-7702} standard is a good candidate to be implemented in the Ethereum network.
+
+% USE CASE of this kind of system. "Private business that wants to pay for the gas of their users", granting security, privacy and scalability.
+
+For the moment, the main use case of \textit{Sapphire Wallet} may be for private businesses that wants to guarantee security, privacy and scalability to their users through Blockchain technology. The ability to manage transaction costs and simplify user interactions makes Sapphire Wallet a promising tool for businesses exploring blockchain solutions.

@@ -1,0 +1,49 @@
+\section{Backend}
+\label{sec:backend}
+
+The backend of the Sapphire Wallet is a set of microservices that delegate and simplify the interaction between the user and the Blockchain. Moreover, the backend is the \textbf{Relayer} of the Sapphire Wallet ecosystem. The general process includes the \hyperref[sec:mobile_application]{Mobile Application} sending a signed transaction to the Backend, which will execute (and pay) it on behalf of the user.
+
+As shown in the figure \ref{fig:problem_approach/backend_infrastructure}, the Backend is composed of the following components:
+\begin{itemize}
+    \item \textit{API Gateway}: Entry point of the Backend. It is responsible for the routing of the requests to the correct microservice.
+    \item \textit{Wallet Factory}: Creates the user wallet on the \textit{Base Chain}.
+    \item \textit{Sapphire Relayer}: Executes the transactions on behalf of the user.
+    \item \textit{Sapphire Portfolio}: Retrieves the user wallet information on all the chains.
+\end{itemize}
+
+\borderfigure{problem_approach/backend_infrastructure}{Sapphire Wallet Backend Infrastructure}{1}
+
+The backend is developed in Typescript and uses the \textit{NestJS}\footnote{https://nestjs.com/} framework. The communication between the microservices is done via \textit{TCP} protocol to ensure a better performance. 
+
+\subsection{API Gateway}
+\label{subsec:api_gateway}
+
+The API Gateway is the entry point of the Backend. It is responsible for the routing of the requests to the correct microservice. The communication is done using NestJs Event-Based Pattern. 
+
+The API Gateway provides \textit{Swagger}\footnote{https://swagger.io/} OpenAPI documentation.
+
+\subsection{Wallet Factory}
+\label{subsec:wallet_factory}
+
+The Wallet Factory is the microservice that creates the user wallet on the \textit{Base Chain}. The user wallet is created using the \textit{WalletFactory} smart contract.  
+
+The Microservice will wait until the transaction is fully confirmed on the Blockchain before returning the wallet address to the user.
+
+\subsection{Sapphire Relayer}
+\label{subsec:sapphire_relayer}
+
+The Sapphire Relayer has two main tasks:
+
+\begin{itemize}
+    \item \textit{Execute} the transactions on behalf of the user. The transactions are sent by the \hyperref[sec:mobile_application]{Mobile Application} signed by the user. The Relayer will execute the transaction and pay the gas fee.
+    \item \textit{Authorise} new wallets address. Each Sapphire Wallet has a list of authorised wallets with which it can interact.
+\end{itemize}
+
+The Microservice will wait until the transaction is fully confirmed on the Blockchain before returning a confirmation or an error to the user.
+
+\subsection{Sapphire Portfolio}
+\label{subsec:sapphire_portfolio}
+
+In a Multi-Chains context, the retrieval of the wallet information is a complex task. Especially because the ownership of NFT and tokens are stored in different smart contracts.
+
+The Sapphire Portfolio is the microservice that retrieves the wallet info on all the chains. The microservice will firstly fetch the \textit{AccountContract} address of each \textit{Dest Chain} used by the user. Then, it will retrieve the NFTs and the tokens owned by the user on each chain. Finally, it will return the wallet info to the user.

@@ -1,0 +1,110 @@
+\section{Operational Flow and Use Cases}
+\label{sec:operational_flow_and_use_cases}
+
+In the previous sections, the components of Sapphire Wallet were described. This section presents how they collaborate to provide a seamless experience to the user. The following subsections describe the operational flow of the wallet and the use cases that are supported by the system.
+
+\subsection{Base Chain}
+
+In the \textit{Base Chain} environment, the user can create a wallet, recover it, and execute transactions. The following sequence diagrams illustrate the flow of these operations.
+
+\subsubsection{Wallet Creation}
+
+% WalletCreatio
+
+As shown in Figure \ref{fig:problem_approach/flows/walletCreation}, the user interacts with the \textit{Mobile App} to generate an Externally Owned Account (EOA) private key. Moreover, the user can choose to insert a guardian to recover the wallet in case of loss. After the wallet is created, the user send the EOA public address and the guardian's public address to the \textit{Backend}. The \textit{Backend} will call the \textit{Base Chain} to create the wallet and return the Smart Contract Address to the \textit{Mobile App}.
+
+\borderfigure{problem_approach/flows/walletCreation}{Sequence Diagram: Wallet Creation}{1}
+
+\subsubsection{Wallet Recovery}
+
+% WalletRecovery
+
+The wallet recovery process is illustrated in figure \ref{fig:problem_approach/flows/walletRecovery}. In the flow used by Sapphire Wallet, the recovery process is initiated by the guardian, who generate a new private key and create and sign a recovery request that will set the new public address as the owner of the lost wallet. Then, the guardian will pass the information about the private key by a qr code to the user. The user will set the new EOA private key in the \textit{Mobile App} and send the recovery request signed by the guardian to the \textit{Backend}. Finally, the \textit{Backend} will call the \textit{Base Chain} to recover the wallet.
+
+\borderfigure{problem_approach/flows/walletRecovery}{Sequence Diagram: Wallet Recovery}{1}
+
+% improvedWalletRecovery
+The procedure described above can be improved by letting the user initiate the recovery process, as show by figure \ref{fig:problem_approach/flows/improvedWalletRecovery}. In this case, the procedure will not be completely procedural but asynchronous. Indeed, I decided to implement the above procedure to avoid complexities. However, from a security perspective, it is better to let the user create its own future private key. With this improved procedure, more than one guardian can be added to the wallet, so that the wallet can be recovered only with a quorum of guardians.
+\borderfigure{problem_approach/flows/improvedWalletRecovery}{Sequence Diagram: Improved Wallet Recovery}{1}
+
+\subsubsection{General Flow}
+\label{subsubsec:transactionsExecution}
+
+% TransactionsExecution
+The figure \ref{fig:problem_approach/flows/transactionsExecution} illustrates the general transaction execution flow. The term "general transaction" refers to any transaction that can be executed on the \textit{Base Chain}, such as a native crypto transfer or a smart contract call. 
+
+The user initiates the transaction by interacting with the graphical interface of the \textit{Mobile App}. The \textit{Mobile App} will generate a non-signed transaction(1) that includes the fields \texttt{to}, \texttt{value}, and \texttt{data}. This transaction(1) will be wrapped in a more secure Argent transaction(2) that includes nonce, gas limit, Argent Module smart contract address, etc. This last transaction(2) will be encrypted in a preferred way, in this case, signed by the user via private key (using biometric authentication) and sent to the \textit{Backend}. The \textit{Backend} will forward and pay the transaction(2) to the \textit{Base Chain}. The \textit{Base Chain} will decrypt the first layer of the transaction(2), as a result the original transaction(1) remains, it will be validated and executed. Finally, the \textit{Base Chain} will emit a \textit{TransactionExecuted} event that include a boolean value that indicates if the transaction was successful or not. The \textit{Backend} will listen to this event and forward the result to the \textit{Mobile App}.
+
+It must be pointed out that the additional layer of security by encrypting the transaction(2) can be modified, as mentioned in the \hyperref[subsubsec:eip-86]{EIP 86}, ECDSA signature (the signature scheme used by Ethereum) is not quantum-resistant.
+
+% Explain that this works for crypto transfer and for general transactions (e.g. smart contracts calls).
+\borderfigure{problem_approach/flows/transactionsExecution}{Sequence Diagram: General Transaction execution}{1}
+
+
+\subsection{Portfolio}
+
+As stated in the \hyperref[subsec:sapphire_portfolio]{Sapphire Portfolio} section, the retrieval of the wallet information in a Multi-Chain environment is a complex task. The Sapphire Wallet avoid using an external data storage by saving in the Blockchain the information about the used chains by each user. In fact, every time a user interacts with a new chain, this will be added to the user's \textit{Proxy} contract storage.
+
+\subsubsection{Balance}
+\label{subsubsec:balance}
+
+% portfolioBalance
+
+The figure \ref{fig:problem_approach/flows/portfolioBalance} illustrates the flow to retrieve the native crypto balance in a Multi-Chain environment. When the user is in the \hyperref[subsec:wallet_home_page]{Home Page}, the \textit{Mobile App} will automatically call the \textit{Backend} to obtain the user's balance. The \textit{Backend} will call the \textit{Base Chain} to retrieve the list of chains used by the user. Then, the \textit{Backend} will fetch the balance of each chain presents in the list and return the information to the \textit{Mobile App}.
+
+\borderfigure{problem_approach/flows/portfolioBalance}{Sequence Diagram: Retrieve Native crypto balance in a Multi-Chain environment}{1}
+
+\subsubsection{NFTs}
+
+% portfolioNFTs
+The procedure of retrieving the NFTs owned by the user is similar to the one used to  \hyperref[subsubsec:balance]{\textit{retrieve the native crypto balance}}. As shown in figure \ref{fig:problem_approach/flows/portfolioNFTs}, the only difference is that for each NFT is also necessary to fetch the metadata from the \textit{IPFS} network. For doing that, Sapphire Portfolio follows the ERC-721 Metadata Standard\footnote{https://eips.ethereum.org/EIPS/eip-721}. 
+
+Since Sapphire Wallet is a PoC, the NFTs are checked only on one contract address for each chain. In a real scenario, different approach may be taken, such as checking a list of contract addresses, analyse the \textit{Transfer} event, etc. 
+\borderfigure{problem_approach/flows/portfolioNFTs}{Sequence Diagram: Retrieve owned NFTs in a Multi-Chain environment}{1}
+
+\subsection{Multi-Chain}
+
+In this section, the flow of the operations that involve more than one Blockchain is described. The operations that are supported by the Sapphire Wallet are the transfer of native crypto, the transfer of NFTs, and the execution of generic transactions.
+
+For each operation, the flow is divided into two parts:
+\begin{itemize}
+    \item Bi-directional communication between the \textit{Base Chain} and the \textit{Dest Chain}. (Not for the generic transactions)
+    \item Rollback in case of failure.
+\end{itemize}
+
+The Bi-directional communication transactions are based on the \hyperref[subsubsec:transactionsExecution]{\textit{General Flow}} with an additional field in the wrapped transaction that indicates the type of call:
+\begin{itemize}
+    \item \texttt{BRIDGE\_ETH}: Bridge Native Crypto from \textit{Base Chain} to \textit{Dest Chain}.
+    \item \texttt{BRIDGE\_NFT}: Bridge NFT from \textit{Base Chain} to \textit{Dest Chain}.
+    \item \texttt{DEST}: Generic transaction on the \textit{Dest Chain}.
+    \item \texttt{WITHDRAW}: Bridge Native Crypto or NFT from \textit{Dest Chain} to \textit{Base Chain}.
+\end{itemize}
+
+\subsubsection{Native Crypto Bridge}
+\label{subsubsec:native_crypto_bridge}
+
+The flow of the native crypto bridge requires that the \textit{SapphireWrappedAccounts}, described in the \hyperref[subsec:dest_chain(s)]{\textit{Dest Chain(s)}}, hold a native token funding to be transferred to the user. The Sapphire Wallet ecosystem does not include an exchange service.
+
+% bridgeETHBaseChainToDestChain
+The \textit{Base Chain} to \textit{Dest Chain(s)} sequence diagram can be observed from the attachment \addattachment{bridgeETHBaseChainToDestChain.png}{bridgeETHBaseChainToDestChain}. The important part to focus on are the \textit{Bridge} and the steps that are executed on the \textit{Dest Chain}. The \textit{Bridge} is in a continuous loop that listens the emission of \textit{bridgeCall} event, inside that event there are information about the \textit{Base Chain Smart Contract Wallet} and the value to transfer. The \textit{Bridge} will then call the \textit{SapphireWrappedAccounts} contract to deposit the native token to the \textit{AccountContract} of the user. During the process, the \textit{Backend} will listen events from both the \textit{Base Chain} and the \textit{Dest Chain} to confirm the success of the operation.
+
+% bridgeETHDestChainToBaseChain
+The process of transferring back the native crypto from the \textit{Dest Chain} to the \textit{Base Chain} is similar to the one described above and visible in the attachment \addattachment{bridgeETHDestChainToBaseChain.png}{bridgeETHDestChainToBaseChain}. The only difference is what happens on the \textit{Dest Chain}. In fact, the Mobile App prepare \hyperref[subsubsec:generic_transactions]{\textit{Multi-chain generic transaction}} that will call the method \texttt{withdraw} of the \textit{AccountContract} wallet, which will emit a \textit{Withdraw} causing a backward cascade effect.
+
+% bridgeETHRollback
+The rollback  process is illustrated in the attached activity diagram \addattachment{bridgeETHRollback.png}{bridgeETHRollback}. The rollback will be triggered in case of failure during the execution of the transactions. In case of failure, the \textit{Bridge} will call the respective contracts to refund the user.
+
+\subsubsection{NFTs Bridge}
+
+The flow of the NFTs bridge is equivalent to the \hyperref[subsubsec:native_crypto_bridge]{\textit{Native Crypto Bridge}}. The variance is that the \textit{Bridge} will fetch the NFT metadata URI and then mint the NFT on the \textit{Dest Chain NFT Storage} contract with the same \texttt{tokenURI}.
+
+The sequence diagrams of the NFTs bridge and the activity diagram of the rollback process are attached respectively in the \addattachment{bridgeNFTBaseChainToDestChain.png}{bridgeNFTBaseChainToDestChain}, \addattachment{bridgeNFTDestChainToBaseChain.png}{bridgeNFTDestChainToBaseChain}, and \addattachment{bridgeNFTRollback.png}{bridgeNFTRollback}.
+
+\subsubsection{Generic transactions}
+\label{subsubsec:generic_transactions}
+
+The generic transactions are a particular case where the \textit{Mobile App} create a transaction(1) to be executed on the \textit{Dest Chain}, wrapped in the \textit{ArgentWappedAccounts} \texttt{execute} method transaction(2) and wrapped again in a transaction(3) to be performed on the \textit{Base Chain}. The \textit{Base Chain} will decrypt the first layer and validate it, then will emit a \textit{BridgeCall} event with the \textit{Dest Chain} transaction(2). The \textit{Bridge} will listen to this event and call the \textit{ArgentWappedAccounts} that will decrypt the transaction(2), validate it, and forwarded the transaction(1) to the \textit{AccountContract} of the user, which will finally execute it. 
+
+This process enables the user to call smart contracts on the \textit{Dest Chain} from the \textit{Base Chain} without the need to have \textbf{any kind of information about itself} in the \textit{Dest Chain}. 
+
+The sequence diagram of the generic transaction is attached in the \addattachment{bridgeGenericDestChainToDestChain.png}{bridgeGenericDestChainToDestChain} and the rollback process in the \addattachment{bridgeGenericTXRollback.png}{bridgeGenericTXRollback}.

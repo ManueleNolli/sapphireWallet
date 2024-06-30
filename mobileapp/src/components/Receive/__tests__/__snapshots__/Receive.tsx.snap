@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Receive should render correctly 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "alignItems": "center",
+        "borderRadius": 10,
+        "maxHeight": 1000.5,
+        "maxWidth": 675,
+        "paddingHorizontal": 30,
+        "paddingVertical": 53.36,
+      },
+    ]
+  }
+>
+  <Text
+    appearance="default"
+    category="h6"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 18,
+          "fontWeight": "800",
+        },
+        undefined,
+      ]
+    }
+  >
+    Receive
+  </Text>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "marginBottom": 26.68,
+        },
+      ]
+    }
+  >
+    Show this QR code to receive Crypto or NFTs
+  </Text>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight="562.5"
+    bbWidth="562.5"
+    focusable={false}
+    height={562.5}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 562,
+          "width": 562,
+        },
+      ]
+    }
+    vbHeight={562.5}
+    vbWidth={562.5}
+    width={562.5}
+  >
+    <RNSVGGroup
+      fill={
+        {
+          "payload": 4278190080,
+          "type": 0,
+        }
+      }
+    >
+      <RNSVGDefs>
+        <RNSVGLinearGradient
+          gradient={
+            [
+              0,
+              -65536,
+              1,
+              -16711681,
+            ]
+          }
+          gradientTransform={null}
+          gradientUnits={0}
+          name="grad"
+          x1="0%"
+          x2="100%"
+          y1="0%"
+          y2="100%"
+        />
+      </RNSVGDefs>
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGRect
+          fill={
+            {
+              "payload": 4294967295,
+              "type": 0,
+            }
+          }
+          height="562.5"
+          propList={
+            [
+              "fill",
+            ]
+          }
+          width="562.5"
+          x="0"
+          y="0"
+        />
+      </RNSVGGroup>
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGPath
+          d="M0 11.25 L157.5 11.25 M202.5 11.25 L247.5 11.25 M270 11.25 L292.5 11.25 M337.5 11.25 L382.5 11.25 M405 11.25 L562.5 11.25 M0 33.75 L22.5 33.75 M135 33.75 L157.5 33.75 M180 33.75 L247.5 33.75 M315 33.75 L337.5 33.75 M360 33.75 L382.5 33.75 M405 33.75 L427.5 33.75 M540 33.75 L562.5 33.75 M0 56.25 L22.5 56.25 M45 56.25 L112.5 56.25 M135 56.25 L157.5 56.25 M202.5 56.25 L225 56.25 M247.5 56.25 L292.5 56.25 M337.5 56.25 L360 56.25 M405 56.25 L427.5 56.25 M450 56.25 L517.5 56.25 M540 56.25 L562.5 56.25 M0 78.75 L22.5 78.75 M45 78.75 L112.5 78.75 M135 78.75 L157.5 78.75 M202.5 78.75 L270 78.75 M337.5 78.75 L360 78.75 M405 78.75 L427.5 78.75 M450 78.75 L517.5 78.75 M540 78.75 L562.5 78.75 M0 101.25 L22.5 101.25 M45 101.25 L112.5 101.25 M135 101.25 L157.5 101.25 M180 101.25 L202.5 101.25 M247.5 101.25 L292.5 101.25 M315 101.25 L337.5 101.25 M360 101.25 L382.5 101.25 M405 101.25 L427.5 101.25 M450 101.25 L517.5 101.25 M540 101.25 L562.5 101.25 M0 123.75 L22.5 123.75 M135 123.75 L157.5 123.75 M202.5 123.75 L225 123.75 M247.5 123.75 L292.5 123.75 M405 123.75 L427.5 123.75 M540 123.75 L562.5 123.75 M0 146.25 L157.5 146.25 M180 146.25 L202.5 146.25 M225 146.25 L247.5 146.25 M270 146.25 L292.5 146.25 M315 146.25 L337.5 146.25 M360 146.25 L382.5 146.25 M405 146.25 L562.5 146.25 M202.5 168.75 L225 168.75 M270 168.75 L337.5 168.75 M360 168.75 L382.5 168.75 M0 191.25 L22.5 191.25 M45 191.25 L67.5 191.25 M90 191.25 L112.5 191.25 M135 191.25 L157.5 191.25 M315 191.25 L360 191.25 M450 191.25 L472.5 191.25 M517.5 191.25 L540 191.25 M0 213.75 L90 213.75 M202.5 213.75 L247.5 213.75 M292.5 213.75 L382.5 213.75 M472.5 213.75 L495 213.75 M0 236.25 L22.5 236.25 M45 236.25 L90 236.25 M135 236.25 L225 236.25 M247.5 236.25 L292.5 236.25 M337.5 236.25 L360 236.25 M427.5 236.25 L472.5 236.25 M495 236.25 L517.5 236.25 M540 236.25 L562.5 236.25 M67.5 258.75 L135 258.75 M157.5 258.75 L202.5 258.75 M247.5 258.75 L270 258.75 M292.5 258.75 L337.5 258.75 M360 258.75 L382.5 258.75 M427.5 258.75 L450 258.75 M472.5 258.75 L540 258.75 M22.5 281.25 L157.5 281.25 M225 281.25 L292.5 281.25 M315 281.25 L337.5 281.25 M427.5 281.25 L450 281.25 M22.5 303.75 L90 303.75 M112.5 303.75 L135 303.75 M180 303.75 L315 303.75 M382.5 303.75 L450 303.75 M472.5 303.75 L495 303.75 M540 303.75 L562.5 303.75 M0 326.25 L22.5 326.25 M45 326.25 L112.5 326.25 M135 326.25 L157.5 326.25 M180 326.25 L292.5 326.25 M315 326.25 L337.5 326.25 M360 326.25 L382.5 326.25 M450 326.25 L472.5 326.25 M495 326.25 L562.5 326.25 M22.5 348.75 L45 348.75 M112.5 348.75 L135 348.75 M202.5 348.75 L225 348.75 M270 348.75 L315 348.75 M427.5 348.75 L450 348.75 M517.5 348.75 L540 348.75 M0 371.25 L22.5 371.25 M67.5 371.25 L90 371.25 M112.5 371.25 L202.5 371.25 M247.5 371.25 L270 371.25 M315 371.25 L495 371.25 M540 371.25 L562.5 371.25 M180 393.75 L270 393.75 M337.5 393.75 L382.5 393.75 M450 393.75 L517.5 393.75 M540 393.75 L562.5 393.75 M0 416.25 L157.5 416.25 M225 416.25 L247.5 416.25 M292.5 416.25 L315 416.25 M337.5 416.25 L382.5 416.25 M405 416.25 L427.5 416.25 M450 416.25 L495 416.25 M540 416.25 L562.5 416.25 M0 438.75 L22.5 438.75 M135 438.75 L157.5 438.75 M225 438.75 L270 438.75 M337.5 438.75 L382.5 438.75 M450 438.75 L472.5 438.75 M517.5 438.75 L562.5 438.75 M0 461.25 L22.5 461.25 M45 461.25 L112.5 461.25 M135 461.25 L157.5 461.25 M180 461.25 L202.5 461.25 M225 461.25 L247.5 461.25 M270 461.25 L292.5 461.25 M337.5 461.25 L495 461.25 M540 461.25 L562.5 461.25 M0 483.75 L22.5 483.75 M45 483.75 L112.5 483.75 M135 483.75 L157.5 483.75 M247.5 483.75 L315 483.75 M360 483.75 L427.5 483.75 M472.5 483.75 L495 483.75 M517.5 483.75 L540 483.75 M0 506.25 L22.5 506.25 M45 506.25 L112.5 506.25 M135 506.25 L157.5 506.25 M180 506.25 L292.5 506.25 M315 506.25 L337.5 506.25 M360 506.25 L405 506.25 M427.5 506.25 L472.5 506.25 M540 506.25 L562.5 506.25 M0 528.75 L22.5 528.75 M135 528.75 L157.5 528.75 M225 528.75 L247.5 528.75 M270 528.75 L337.5 528.75 M382.5 528.75 L427.5 528.75 M472.5 528.75 L495 528.75 M517.5 528.75 L540 528.75 M0 551.25 L157.5 551.25 M180 551.25 L225 551.25 M247.5 551.25 L270 551.25 M315 551.25 L382.5 551.25 M405 551.25 L427.5 551.25 M450 551.25 L495 551.25 M517.5 551.25 L562.5 551.25 "
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          propList={
+            [
+              "stroke",
+              "strokeWidth",
+              "strokeLinecap",
+            ]
+          }
+          stroke={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          strokeLinecap={0}
+          strokeWidth="22.5"
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "marginTop": 26.68,
+        },
+      ]
+    }
+  >
+    Alternatively, share your wallet address:
+  </Text>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0, 149, 255, 0.08)",
+        "borderColor": "#0095FF",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginTop": 13.34,
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+        "width": "100%",
+      }
+    }
+    testID="share-button"
+  >
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#0095FF",
+            "fontFamily": "System",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "marginHorizontal": 10,
+          },
+        ]
+      }
+    >
+      Share
+    </Text>
+  </View>
+</View>
+`;

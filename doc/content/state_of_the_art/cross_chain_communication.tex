@@ -1,0 +1,40 @@
+\section{Cross-Chain Communication}
+\label{sec:cross_chain_communication}
+
+This section presents the state of the art of \textit{Cross-Chain communication}, categorising the bridges according to the trust model, communication model, and asset transfer model. The need for Cross-Chain communication arises from the fragmentation of the blockchain ecosystem, where each blockchain is a separate network with its own consensus mechanism and state. The goal of Cross-Chain communication is to enable the transfer of assets and information between different blockchains, allowing users to interact with multiple network seamlessly. 
+
+\subsection{Bridge classification}
+\label{subsec:bridge_classification}
+
+Cross-chain bridges can be classified based on various criteria, each highlighting different aspects of their functionality and security. Understanding these classifications helps in assessing the suitability of a bridge for specific applications and in recognizing the trade-offs involved. This section categorises bridges according to their trust model, communication model, and asset transfer model, providing a comprehensive overview of the current landscape in cross-chain technology. \cite{lifi-bridge}
+
+\subsubsection{Trust model}
+\label{subsubsec:trust_model}
+
+Blockchain bridges can be classified into two main trust models: 
+\begin{itemize}
+    \item \textit{Trusted Bridges} rely on a central authority to facilitate Cross-Chain transactions. \textit{Users must trust this authority} to manage their funds securely. These bridges are generally easier to implement but come with the risk of centralization, which can lead to single points of failure and security vulnerabilities. \cite{immunebytes-trust-bridge} An example is \textit{Multichain}\footnote{https://multichain.xyz/}.
+    \item \textit{Trustless Bridges} eliminate the need for a central authority by using smart contracts and \textit{cryptographic algorithms}. These bridges ensure users retain control over their assets throughout the transaction process. However, they can be complex to design and are susceptible to smart contract bugs. \cite{immunebytes-trust-bridge} Trustless bridges are in a early stage of development, with projects like \textit{EOS Network}\footnote{https://eosnetwork.com/}.
+\end{itemize}
+
+\subsubsection{Communication model}
+\label{subsubsec:communication_model}
+
+The communication model of blockchain bridges can be categorised based on what type of blockchain interaction they enable:  \cite{lifi-bridge}
+\begin{itemize}
+    \item \textit{L1 $\leftrightarrow$ L1 Bridges}: Connect different Layer 1 blockchains with each other. For example, the Avalanche Bridge\footnote{https://core.app/bridge} connects Ethereum and Avalanche.
+    \item \textit{L1/L2 $\leftrightarrow$ L2 Bridges}: Connect the Mainnet with different Layer 2 solutions and the L2s with each other. Arbitrum\footnote{https://arbitrum.io/} is an example of a Layer 2 solution that can be connected to the Ethereum Mainnet.
+\end{itemize}
+
+\subsubsection{Asset transfer model}
+\label{subsubsec:asset_transfer_model}
+
+The asset transfer mechanisms of blockchain bridges include:  \cite{lifi-bridge}  \cite{chainlink-transfer-assets}
+\begin{itemize}
+    \item \textit{Lock \& Mint}: Assets are locked on the source blockchain and equivalent tokens are minted on the destination blockchain. 
+    \item \textit{Burn \& Mint}: Assets on the source blockchain are burned, and equivalent tokens are minted on the destination blockchain.  
+    \item \textit{Lock \& Unlock}: Tokens are locked on the source chain and unlocked from a liquidity pool on the destination chain. 
+\end{itemize}
+
+
+

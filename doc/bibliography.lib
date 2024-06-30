@@ -1,0 +1,23 @@
+@article{isin-aa-user-experience,
+  title     = {Account Abstraction: User Experience in Blockchain Systems},
+  author    = {Ambrosini, Luca and Gremlich, Giuliano and Agnola, Tommaso and Ronzani, Lorento and Guidi, Roberto and Leidi, Tiziano},
+  year      = {2023},
+}
+
+@article{stewart2018committing,
+  title     = {Committing to quantum resistance: A slow defence for Bitcoin against a fast quantum computing attack},
+  author    = {Stewart, Iain and Ilie, Daniel and Zamyatin, Alexei and Werner, Sam and Torshizi, MF and Knottenbelt, William J},
+  journal   = {Royal Society open science},
+  volume    = {5},
+  number    = {6},
+  year      = {2018},
+  publisher = {The Royal Society Publishing}
+}
+
+@article{argent-smart-wallet-specifications,
+  title     = {Argent Smart Wallet Specification},
+  author    = {Argent},
+  number    = {6},
+  year      = {2021},
+  note      = {\url {https://github.com/argentlabs/argent-contracts/blob/develop/specifications/specifications.pdf} (visited on May 16, 2024)}
+}
