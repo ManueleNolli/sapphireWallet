@@ -8,6 +8,14 @@ This project highlights the potential of Account Abstraction and underscores the
 
 ## Features
 
+* Multi-Chain Account Abstraction: Allows users to manage assets across multiple blockchains seamlessly.
+* Guardian System: Provides a security feature for wallet recovery through trusted third parties.
+* Wallet Creation: Simplified process for creating new wallets within the ecosystem.
+* Wallet Recovery: User-friendly recovery process for regaining access to lost or compromised wallets.
+* Multi-Chain Bridge: Facilitates interaction and asset transfer between different blockchains.
+* Improved User Experience: Based on enhancements from the Argent Wallet, focusing on user-friendly design.
+* EVM Compatibility: Developed on the current version of the Ethereum Virtual Machine (EVM).
+
 ## Demo
 
 I prepared three video demos:
